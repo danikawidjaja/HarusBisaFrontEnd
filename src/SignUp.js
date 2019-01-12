@@ -147,6 +147,3 @@ class SignUp extends Component{
     );
   }
 }
-
-
-export default App;

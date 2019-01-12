@@ -28,34 +28,24 @@ class Login extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username: null,
+      email: null,
       password: null,
     };
-    this.handleInputChangeName = this.handleInputChangeName.bind(this);
-    this.handleInputChangePassword = this.handleInputChangePassword.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
-  handleInputChangeName(event){
-    const target = event.target;
-    const name = target.name;
-    this.setState({
-      [name]: target.value
-    });
+  handleChangeEmail(event) {
+    this.setState({email: event.target.value});
   }
-
-  handleInputChangePassword(event){
-    const target = event.target;
-    const password = target.password;
-    this.setState({
-      [password]: target.value
-    });
+  handleChangePassword(event){
+    this.setState({password: event.target.value});
   }
-
 
   handleSubmit(event){
-    alert("Welcome " + this.state.username)
+  {/* Must check if correct or not before proceeding to next page*/}
+    alert("Welcome " + this.state.email)
     event.preventDefault();
   }
 
@@ -64,32 +54,29 @@ class Login extends Component{
       <form onSubmit={this.handleSubmit}>
      
       <p className="App-caption-text">
-            Username: &nbsp; 
+            Email: &nbsp; 
             <input
-              name= "username"
+              name= "email"
               type= "textarea"
-              value = {this.state.username}
-              onChange = {this.handleInputChangeName} />
+              value = {this.state.email}
+              onChange = {this.handleChangeEmail} />
       </p>
+      <br/>
       <p className="App-caption-text">
             Password: &nbsp;
             <input
               name= "password"
               type= "password"
               value= {this.state.password}
-              onChange = {this.handleInputChangePassword} />
+              onChange = {this.handleChangePassword} />
       </p>
-
       <br/>
-
       <input type="submit" value ="Submit"/>
 
       <p className="App-caption-text" style={{fontSize: 15}}>
         Don't have an account yet? Sign up
       </p>
       </form>
-
-
     );
   }
 }
