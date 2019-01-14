@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './Page.css';
 import Select from 'react-select';
 import { options } from './UniversityList';
@@ -16,7 +15,6 @@ class SignUp extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo"/>
           <p className="App-header-text">
             Sign Up
           </p>
@@ -41,6 +39,9 @@ class SignUpForm extends Component{
       lastname: '',
       school: '',
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   validateForm() {
@@ -76,7 +77,7 @@ class SignUpForm extends Component{
         <FormGroup controlId="firstname" bsSize="large">
           <ControlLabel>First Name</ControlLabel>
           <FormControl
-            type="firstname"
+            type="text"
             value={this.state.firstname}
             onChange={this.handleChange}
           />
@@ -85,7 +86,7 @@ class SignUpForm extends Component{
         <FormGroup controlId="lastname" bsSize="large">
           <ControlLabel>Last Name</ControlLabel>
           <FormControl
-            type="lastname"
+            type="text"
             value={this.state.lastname}
             onChange={this.handleChange}
           />

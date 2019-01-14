@@ -4,5 +4,12 @@
 
 .App .navbar-brand {
   font-weight: bold;
+  display: flex;
+  color: maroon;
+}
+
+.App-image{
+	height: 100%;
+	padding-right: 5px;
 }
 

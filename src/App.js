@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import logo from './logokrul.png';
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
@@ -12,7 +13,7 @@ class App extends Component {
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Harus Bisa</Link>
+              <Link to="/"><img class="App-image" src={logo}/>Harus Bisa</Link>
             </Navbar.Brand>
              <Navbar.Toggle />
           </Navbar.Header>

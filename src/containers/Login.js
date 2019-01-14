@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './Page.css';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
-import SignUp from './SignUp';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
@@ -12,7 +9,6 @@ class Login extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo"/>
           <p className="App-header-text">
             Login
           </p>
@@ -33,6 +29,9 @@ class LoginForm extends Component{
       email: '',
       password: '',
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   validateForm(){
