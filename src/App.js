@@ -1,152 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Select from 'react-select';
-import CreatableSelect from 'react-select/lib/Creatable';
-import { options } from './UniversityList';
-
-type School = {
-  options: [{ [string]: string}],
-  value: string | void,
-};
-
-const createOption = (label: string) => ({
-  label,
-  value: label.toLowerCase().replace(/\W/g, ''),
-});
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
+import "./App.css";
+import Routes from "./Routes";
+import { LinkContainer } from "react-router-bootstrap";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo"/>
-          <p className="App-header-text">
-            Sign Up
-          </p>
-          <p className="App-caption-text">
-            Create your account below:
-          </p>
-          <SignUp/>
-        </header>
+      <div className="App container">
+        <Navbar fluid collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">Harus Bisa</Link>
+            </Navbar.Brand>
+             <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+          <Nav pullRight>
+              <LinkContainer to="/signup">
+                <NavItem >Sign up</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/login">
+                <NavItem >Login</NavItem>
+              </LinkContainer>
+          </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Routes />
       </div>
     );
   }
 }
 
-class SignUp extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      password: '',
-      email: '',
-      firstname: '',
-      lastname: '',
-      school: '',
-    };
-    this.handleChangePassword = this.handleChangePassword.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangeFirstname = this.handleChangeFirstname.bind(this);
-    this.handleChangeLastname = this.handleChangeLastname.bind(this);
-    this.handleChangeSchool = this.handleChangeSchool.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-
-  handleChangeFirstname(event){
-    this.setState({
-      firstname: event.target.value
-    });
-  }
-
- handleChangeLastname(event){
-    this.setState({
-      lastname: event.target.value
-    });
-  }
-  handleChangePassword(event){
-    this.setState({
-      password: event.target.value
-    });
-  }
-  handleChangeEmail(event){
-    this.setState({
-      email: event.target.value
-    });
-  }
-
-  handleChangeSchool = (school) => {
-    this.setState({ school });
-  }
-
-  handleCreateSchool = (inputValue: any) => {
-    const newOption = createOption(inputValue);
-    this.setState({school: newOption});
-  }
-
-
-  handleSubmit(event){
-    alert('Welcome ' + this.state.firstname)
-    event.preventDefault();
-  }
-
-  render(){
-    return(
-      <form onSubmit={this.handleSubmit}>
-      <p className="App-caption-text">
-            School: &nbsp;
-             <CreatableSelect
-                isClearable
-                value={this.state.school}
-                onChange={this.handleChangeSchool}
-                onCreateOption ={this.handleCreateSchool}
-                options={options}
-              />
-              
-      </p>
-      <p className="App-caption-text">
-            First Name: &nbsp; 
-            <input
-              name= "firstname"
-              type= "text"
-              value = {this.state.firstname}
-              onChange = {this.handleChangeFirstname} />
-      </p>
-      <p className="App-caption-text">
-            Last Name: &nbsp; 
-            <input
-              name= "lastname"
-              type= "text"
-              value = {this.state.lastname}
-              onChange = {this.handleChangeLastname} />
-      </p>
-      <p className="App-caption-text">
-            Email Address: &nbsp; 
-            <input
-              name= "email"
-              type= "text"
-              value = {this.state.email}
-              onChange = {this.handleChangeEmail} />
-      </p>
-      <p className="App-caption-text">
-            Password: &nbsp;
-            <input
-              name= "password"
-              type= "password"
-              value= {this.state.password}
-              onChange = {this.handleChangePassword} />
-      </p>
-
-
-      <br/>
-
-      <input type="submit" value ="Submit"/>
-      </form>
-
-
-    );
-  }
-}
-
-
-export default App;
+export default App

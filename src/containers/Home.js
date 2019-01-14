@@ -1,0 +1,17 @@
+import React, { Component } from "react";
+import "./Home.css";
+import logo from './logo.svg';
+
+export default class Home extends Component {
+  render() {
+    return (
+      <div className="Home">
+        <div className="lander">
+          <img src={logo} className="App-logo"/>
+          <h1>Harus Bisa</h1>
+          <p>Something something</p>
+        </div>
+      </div>
+    );
+  }
+}

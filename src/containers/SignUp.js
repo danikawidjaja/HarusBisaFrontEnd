@@ -117,7 +117,7 @@ class SignUpForm extends Component{
             onChange={this.handleChange}
           />
         </FormGroup>
-
+          
         <FormGroup controlId="school" bsSize="large">
           <ControlLabel> School </ControlLabel>
           <Select
