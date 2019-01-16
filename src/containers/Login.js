@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import AuthService from './AuthService';
 
 class Login extends Component {
-
   render() {
     return (
       <div className="App">
@@ -32,7 +31,7 @@ class LoginForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      email: '',
+      username: '',
       password: '',
     };
 
@@ -42,7 +41,7 @@ class LoginForm extends Component{
   }
 
   validateForm(){
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -53,10 +52,10 @@ class LoginForm extends Component{
 
   handleSubmit(event){
     event.preventDefault();
-    alert("Welcome " + this.state.email);
-    this.Auth.login(this.state.email, this.state.password)
+    alert("Welcome " + this.state.username);
+    this.Auth.login(this.state.username, this.state.password)
       .then(res =>{
-        this.props.history.replace('/');
+        this.props.history.replace('/courses');
       })
       .catch(err =>{
         alert(err);
@@ -65,7 +64,7 @@ class LoginForm extends Component{
 
   componentWillMount(){
     if(this.Auth.loggedIn()){
-      this.props.history.replace('/');
+      this.props.history.replace('/courses');
     }
   }
 
@@ -73,12 +72,12 @@ class LoginForm extends Component{
     return(
       <div className="App">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
+          <FormGroup controlId="username" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
               autofocus
-              type="email"
-              value={this.state.email}
+              type="text"
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </FormGroup>

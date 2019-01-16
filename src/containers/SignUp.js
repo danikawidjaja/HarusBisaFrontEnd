@@ -7,7 +7,9 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
-  Button
+  Button,
+  ToggleButtonGroup,
+  ToggleButton
 } from "react-bootstrap";
 
 class SignUp extends Component {
@@ -38,6 +40,9 @@ class SignUpForm extends Component{
       firstname: '',
       lastname: '',
       school: '',
+      status:'',
+      schoolSelected: false,
+      statusSelected: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,7 +55,8 @@ class SignUpForm extends Component{
       this.state.password.length > 0 &&
       this.state.password === this.state.confirmPassword &&
       this.state.firstname.length > 0 &&
-      this.state.lastname.length >0
+      this.state.lastname.length >0 &&
+      this.state.schoolSelected && this.state.statusSelected
     );
   }
 
@@ -61,7 +67,11 @@ class SignUpForm extends Component{
   }
 
   handleChangeSchool = (school) => {
-    this.setState({ school });
+    this.setState({ school, schoolSelected:true });
+  }
+
+  handleChangeStatus = (status) =>{
+    this.setState({status, statusSelected:true});
   }
 
 
@@ -73,6 +83,22 @@ class SignUpForm extends Component{
   render(){
     return(
       <form onSubmit={this.handleSubmit}>
+        <div className='form-row'>
+        <FormGroup className="form-element" controlId="status" bsSize='large'>
+          <ControlLabel> Faculty/Student: </ControlLabel>
+          <ToggleButtonGroup 
+            className="form-element"
+            bsSize='large'
+            type='radio'
+            name='options'
+            value={this.state.status}
+            onChange={this.handleChangeStatus}>
+            <ToggleButton value={'faculty'}> Faculty </ToggleButton>
+            <ToggleButton value={'student'}> Student </ToggleButton>
+          </ToggleButtonGroup>
+        </FormGroup>
+        </div>
+
         <div className="form-row">
         <FormGroup className="form-element" controlId="firstname" bsSize="large">
           <ControlLabel>First Name</ControlLabel>
@@ -100,8 +126,9 @@ class SignUpForm extends Component{
             value={this.state.email}
             onChange={this.handleChange}
           />
-        </FormGroup>      
+        </FormGroup>
 
+        <div className="form-row">      
         <FormGroup className="form-element" controlId="password" bsSize="large">
           <ControlLabel>Password</ControlLabel>
           <FormControl
@@ -119,6 +146,7 @@ class SignUpForm extends Component{
             onChange={this.handleChange}
           />
         </FormGroup>
+        </div>
           
         <FormGroup className="form-element" controlId="school" bsSize="large">
           <ControlLabel> School </ControlLabel>

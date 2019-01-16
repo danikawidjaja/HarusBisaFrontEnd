@@ -14,6 +14,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
+  padding: 15px;
 }
 
 .App-link {
@@ -46,8 +47,21 @@
 .form-row{
   display: flex;
   flex-direction: row;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.form-column{
+  display:inline-flex;
+  flex-direction: column;
+  text-align: center;
+  margin: auto
 }
 
 .form-element{
   padding: 5px;
+  text-align: center;
 }
+
+

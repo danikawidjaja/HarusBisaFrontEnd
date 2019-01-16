@@ -13,6 +13,7 @@ export default function withAuth(AuthComponent){
 
 		componentWillMount(){
 			if (!Auth.loggedIn()){
+				alert('You are not logged in!')
 				this.props.history.replace('/login')
 			}
 			else{

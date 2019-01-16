@@ -9,7 +9,7 @@ export default class Home extends Component {
         <div className="lander">
           <img src={logo} className="App-logo"/>
           <h1>Harus Bisa</h1>
-          <p>Something something</p>
+          <p>Classroom engagement web application</p>
         </div>
       </div>
     );
