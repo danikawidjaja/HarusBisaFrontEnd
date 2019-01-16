@@ -16,15 +16,18 @@ class SignUp extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <p className="App-header-text">
+        <div className="App-header">
+          <h2 className="App-header-text">
             Sign Up
-          </p>
+          </h2>
+        </div>
+
+        <div className='App-content'>
           <p className="App-caption-text">
             Create your account below:
           </p>
           <SignUpForm/>
-        </header>
+        </div>
       </div>
     );
   }

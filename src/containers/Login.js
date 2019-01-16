@@ -8,10 +8,13 @@ class Login extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-header-text">
+        <div className="App-header">
+          <h2 className="App-header-text">
             Login
-          </h1>
+          </h2>
+        </div>
+
+        <div className="App-content">
           <label className="App-caption-text">
             Welcome back! Please log in below
           </label>
@@ -20,7 +23,7 @@ class Login extends Component {
             Don't have an account?
           </h5>
           <Link to="/signup" className="App-link"> Sign up here </Link>
-        </header>
+        </div>
       </div>
 
     );
@@ -79,6 +82,7 @@ class LoginForm extends Component{
               type="text"
               value={this.state.username}
               onChange={this.handleChange}
+              placeholder='Email address'
             />
           </FormGroup>
 

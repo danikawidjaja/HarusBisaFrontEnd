@@ -25,6 +25,12 @@ class App extends Component {
               <LinkContainer to="/login">
                 <NavItem >Login</NavItem>
               </LinkContainer>
+              <LinkContainer to="/classes">
+                <NavItem >Courses</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/lectures">
+                <NavItem >Lectures</NavItem>
+              </LinkContainer>
           </Nav>
           </Navbar.Collapse>
         </Navbar>

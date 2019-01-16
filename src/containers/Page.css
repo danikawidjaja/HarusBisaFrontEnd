@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -7,14 +9,25 @@
 }
 
 .App-header {
-  background-color: white;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
-  padding: 15px;
+  border-bottom: 1px solid grey;
+}
+
+.App-content{
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+  padding: 10px;
 }
 
 .App-link {
@@ -42,6 +55,7 @@
   transition: 0.3s opacity ease;
   cursor: pointer;
   color: white;
+  width: 100%;
 }
 
 .form-row{
@@ -64,4 +78,26 @@
   text-align: center;
 }
 
+.class-card{
+  border-radius: 15px;
+  padding: 0.8rem;
+  background-color: gold;
+  color: black;
+  padding: 15px;
+  margin: 10px;
+  justify-content: space-between;
+}
+
+.class-card-container{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-width: 1px;
+  justify-content: center;
+  margin:10px;
+}
+
+.lectures-entry{
+  text-decoration-color: black;
+}
 
