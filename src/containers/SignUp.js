@@ -73,8 +73,8 @@ class SignUpForm extends Component{
   render(){
     return(
       <form onSubmit={this.handleSubmit}>
-
-        <FormGroup controlId="firstname" bsSize="large">
+        <div className="form-row">
+        <FormGroup className="form-element" controlId="firstname" bsSize="large">
           <ControlLabel>First Name</ControlLabel>
           <FormControl
             type="text"
@@ -83,7 +83,7 @@ class SignUpForm extends Component{
           />
         </FormGroup>
 
-        <FormGroup controlId="lastname" bsSize="large">
+        <FormGroup className="form-element" controlId="lastname" bsSize="large">
           <ControlLabel>Last Name</ControlLabel>
           <FormControl
             type="text"
@@ -91,8 +91,9 @@ class SignUpForm extends Component{
             onChange={this.handleChange}
           />
         </FormGroup>
+        </div>
 
-        <FormGroup controlId="email" bsSize="large">
+        <FormGroup className="form-element" controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
             type="email"
@@ -101,7 +102,7 @@ class SignUpForm extends Component{
           />
         </FormGroup>      
 
-        <FormGroup controlId="password" bsSize="large">
+        <FormGroup className="form-element" controlId="password" bsSize="large">
           <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
@@ -110,7 +111,7 @@ class SignUpForm extends Component{
           />
         </FormGroup> 
 
-        <FormGroup controlId="confirmPassword" bsSize="large">
+        <FormGroup className="form-element" controlId="confirmPassword" bsSize="large">
           <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             type="password"
@@ -119,7 +120,7 @@ class SignUpForm extends Component{
           />
         </FormGroup>
           
-        <FormGroup controlId="school" bsSize="large">
+        <FormGroup className="form-element" controlId="school" bsSize="large">
           <ControlLabel> School </ControlLabel>
           <Select
             isClearable
@@ -134,6 +135,7 @@ class SignUpForm extends Component{
           bsSize="large"
           disabled={!this.validateForm()}
           type="submit"
+          className="button"
         >
           Sign Up
         </Button> 

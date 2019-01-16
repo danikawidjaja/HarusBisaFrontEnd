@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './Page.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
+import AuthService from './AuthService';
 
 class Login extends Component {
 
@@ -9,15 +10,20 @@ class Login extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p className="App-header-text">
+          <h1 className="App-header-text">
             Login
-          </p>
+          </h1>
           <label className="App-caption-text">
             Welcome back! Please log in below
           </label>
           <LoginForm/>
+          <h5 className="App-caption-text">
+            Don't have an account?
+          </h5>
+          <Link to="/signup" className="App-link"> Sign up here </Link>
         </header>
       </div>
+
     );
   }
 }
@@ -32,6 +38,7 @@ class LoginForm extends Component{
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.Auth = new AuthService();
   }
 
   validateForm(){
@@ -44,12 +51,22 @@ class LoginForm extends Component{
     });
   }
 
- 
-
   handleSubmit(event){
-  {/* Must check if correct or not before proceeding to next page*/}
-    alert("Welcome " + this.state.email)
     event.preventDefault();
+    alert("Welcome " + this.state.email);
+    this.Auth.login(this.state.email, this.state.password)
+      .then(res =>{
+        this.props.history.replace('/');
+      })
+      .catch(err =>{
+        alert(err);
+      })
+  }
+
+  componentWillMount(){
+    if(this.Auth.loggedIn()){
+      this.props.history.replace('/');
+    }
   }
 
   render(){
@@ -80,6 +97,7 @@ class LoginForm extends Component{
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
+            className="button"
           >
             Login
           </Button>
