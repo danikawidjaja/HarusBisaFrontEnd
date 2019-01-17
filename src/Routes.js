@@ -13,7 +13,7 @@ export default ({ childProps }) =>
     <AppliedRoute path="/" exact component={Home} props={childProps} />
     <Route path ="/signup" exact component = {SignUp}/>
     <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
-    <Route path="/courses" component ={Courses}/>
+    <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
     <Route path='/lectures' component={Lectures}/>
     <Route component={NotFound} />
   </Switch>;

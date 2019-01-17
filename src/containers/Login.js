@@ -59,7 +59,6 @@ class LoginForm extends Component{
     this.Auth.login(this.state.email, this.state.password)
       .then(res =>{
         if (this.Auth.loggedIn()){
-          console.log(this.props)
           this.props.userHasAuthenticated(true);
           this.props.history.push('/courses');
         }
@@ -71,6 +70,7 @@ class LoginForm extends Component{
 
   async componentWillMount(){
     if(this.Auth.loggedIn()){
+      this.props.userHasAuthenticated(true);
       this.props.history.push('/courses');
     }
   }

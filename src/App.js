@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isAuthenticated: true
+      isAuthenticated: false,
     };
   }
 
@@ -48,9 +48,6 @@ class App extends Component {
                 <Fragment>
                   <LinkContainer to="/courses">
                     <NavItem >Courses</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/lectures">
-                    <NavItem >Lectures</NavItem>
                   </LinkContainer>
                   <NavItem onClick={this.handleLogout}>Logout</NavItem>
                 </Fragment>

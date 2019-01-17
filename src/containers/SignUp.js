@@ -85,19 +85,16 @@ class SignUpForm extends Component{
     this.setState({role, roleSelected:true});
   }
 
-  handleSubmit(event){
-    /*alert('Welcome ' + this.state.firstname);*/
+  handleSubmit= async event =>{
+    event.preventDefault();
     this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
       .then(res =>{
-        if (res){
-          /*this.props.history.replace('/courses');*/
-          alert("you are in");
-        } 
+        this.props.history.push('/login'); 
+        alert("Account made! Please login to continue");
       })
       .catch(err =>{
-        alert(err);
+        alert(err.message);
       })
-    event.preventDefault();
   }
 
   render(){
