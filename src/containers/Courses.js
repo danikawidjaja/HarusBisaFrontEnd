@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './Page.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import AuthService from './AuthService';
+import { Button } from "react-bootstrap";
+import { Link, Redirect } from "react-router-dom";
 import withAuth from './withAuth';
-const Auth = new AuthService();
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 
 
 class Courses extends Component{
@@ -12,20 +16,57 @@ class Courses extends Component{
 		return(
     		<div className="App">
 		        <div className="App-header">
-		            <h2>Welcome {this.props.user.email}</h2>
+		            <h2 className="App-header-text">Courses</h2>
 		        </div>
-		        <p>
-		            <button type="button" className="button" onClick={this.handleLogout.bind(this)}>Logout</button>
-		        </p>
+		        <div className="class-card-container">
+			        <Course history={this.props.history}/>
+			        <Course history={this.props.history}/>
+				    <Fab color='primary' aria-label='Add' /*component={Link} to="/"*/>
+				    	<AddIcon/>
+				    </Fab>
+			    </div>    
+		         
+
         	</div>
 		)
 	}
+}
 
-	handleLogout(){
-		Auth.logout()
-		console.log(this.props)
-		this.props.history.replace('/login')
+class Course extends Component{
+
+	constructor(props){
+	    super(props);
+	    this.state = {
+	      course_code:'BME 352',
+	      course_name:'BME 352 Engineering Biomaterials',
+	      course_id:'886958',
+	      teacher:'Laura Suggs'
+	    };  
+
+	    this.handleClick = this.handleClick.bind(this);
+  	}
+
+  	handleClick(){
+  		this.props.history.push('/lectures');
+  	}
+
+
+  	render(){
+		return(
+			<Card className='class-card' raised='true'>
+				<CardContent>
+					<h5> {this.state.course_code} </h5>
+					<p> {this.state.course_name} </p>
+					<p> Join code: {this.state.course_id} </p>
+					<p> Professor: {this.state.teacher} </p>
+				</CardContent>
+				<CardActions>
+					<Button className='button' onClick={this.handleClick}> Enter course </Button>
+				</CardActions>
+			 </Card>
+		)
 	}
 }
 
+//export default Courses;
 export default withAuth(Courses);

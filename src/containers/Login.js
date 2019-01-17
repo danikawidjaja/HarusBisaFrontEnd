@@ -18,7 +18,7 @@ class Login extends Component {
           <label className="App-caption-text">
             Welcome back! Please log in below
           </label>
-          <LoginForm/>
+          <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
           <h5 className="App-caption-text">
             Don't have an account?
           </h5>
@@ -53,29 +53,26 @@ class LoginForm extends Component{
     });
   }
 
-  handleSubmit(event){
+  handleSubmit= async event =>{
     event.preventDefault();
-    alert("Welcome " + this.state.email);
+
     this.Auth.login(this.state.email, this.state.password)
       .then(res =>{
         if (this.Auth.loggedIn()){
-          this.props.history.push('/courses')
+          console.log(this.props)
+          this.props.userHasAuthenticated(true);
+          this.props.history.push('/courses');
         }
       })
       .catch(err =>{
-        alert(err.message);
+        alert(err.message); 
       })
   }
 
-  componentWillMount(){
+  async componentWillMount(){
     if(this.Auth.loggedIn()){
-      this.renderRedirect();
+      this.props.history.push('/courses');
     }
-  }
-
-  renderRedirect = () => {
-    console.log("test");
-    return <Redirect to='/courses'/>
   }
 
   render(){
@@ -85,7 +82,7 @@ class LoginForm extends Component{
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email Address</ControlLabel>
             <FormControl
-              autofocus
+              autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
@@ -116,4 +113,4 @@ class LoginForm extends Component{
     );
   }
 }
-export default withRouter(Login);
+export default Login;

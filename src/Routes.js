@@ -5,16 +5,15 @@ import SignUp from "./containers/SignUp";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Courses from './containers/Courses';
-import Classes from './containers/ClassesTEMP';
 import Lectures from './containers/Lectures';
+import AppliedRoute from './components/AppliedRoute';
 
-export default () =>
+export default ({ childProps }) =>
   <Switch>
-    <Route path="/" exact component={Home} />
-    <Route path ="/signup" component = {SignUp}/>
-    <Route path ="/login" component = {Login}/>
+    <AppliedRoute path="/" exact component={Home} props={childProps} />
+    <Route path ="/signup" exact component = {SignUp}/>
+    <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
     <Route path="/courses" component ={Courses}/>
-    <Route path='/classes' component={Classes}/>
     <Route path='/lectures' component={Lectures}/>
     <Route component={NotFound} />
   </Switch>;

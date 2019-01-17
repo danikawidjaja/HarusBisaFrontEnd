@@ -28,7 +28,7 @@ class SignUp extends Component {
           <p className="App-caption-text">
             Create your account below:
           </p>
-          <SignUpForm/>
+          <SignUpForm history={this.props.history}/>
         </div>
       </div>
     );
@@ -52,6 +52,12 @@ class SignUpForm extends Component{
     this.Auth = new AuthService();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  async componentWillMount(){
+    if(this.Auth.loggedIn()){
+      this.props.history.push('/courses');
+    }
   }
 
   validateForm() {
