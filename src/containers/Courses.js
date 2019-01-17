@@ -12,7 +12,7 @@ class Courses extends Component{
 		return(
     		<div className="App">
 		        <div className="App-header">
-		            <h2>Welcome {this.props.user.username}</h2>
+		            <h2>Welcome {this.props.user.email}</h2>
 		        </div>
 		        <p>
 		            <button type="button" className="button" onClick={this.handleLogout.bind(this)}>Logout</button>
@@ -23,7 +23,8 @@ class Courses extends Component{
 
 	handleLogout(){
 		Auth.logout()
-		this.props.history.replace('/')
+		console.log(this.props)
+		this.props.history.replace('/login')
 	}
 }
 

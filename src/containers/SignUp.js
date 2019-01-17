@@ -12,6 +12,8 @@ import {
   ToggleButton
 } from "react-bootstrap";
 
+import AuthService from './AuthService';
+
 class SignUp extends Component {
   render() {
     return (
@@ -43,11 +45,11 @@ class SignUpForm extends Component{
       firstname: '',
       lastname: '',
       school: '',
-      status:'',
+      role:'',
       schoolSelected: false,
-      statusSelected: false
+      roleSelected: false
     };
-
+    this.Auth = new AuthService();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -59,7 +61,7 @@ class SignUpForm extends Component{
       this.state.password === this.state.confirmPassword &&
       this.state.firstname.length > 0 &&
       this.state.lastname.length >0 &&
-      this.state.schoolSelected && this.state.statusSelected
+      this.state.schoolSelected && this.state.roleSelected
     );
   }
 
@@ -73,13 +75,22 @@ class SignUpForm extends Component{
     this.setState({ school, schoolSelected:true });
   }
 
-  handleChangeStatus = (status) =>{
-    this.setState({status, statusSelected:true});
+  handleChangeRole = (role) =>{
+    this.setState({role, roleSelected:true});
   }
 
-
   handleSubmit(event){
-    alert('Welcome ' + this.state.firstname)
+    /*alert('Welcome ' + this.state.firstname);*/
+    this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
+      .then(res =>{
+        if (res){
+          /*this.props.history.replace('/courses');*/
+          alert("you are in");
+        } 
+      })
+      .catch(err =>{
+        alert(err);
+      })
     event.preventDefault();
   }
 
@@ -87,15 +98,15 @@ class SignUpForm extends Component{
     return(
       <form onSubmit={this.handleSubmit}>
         <div className='form-row'>
-        <FormGroup className="form-element" controlId="status" bsSize='large'>
+        <FormGroup className="form-element" controlId="role" bsSize='large'>
           <ControlLabel> Faculty/Student: </ControlLabel>
           <ToggleButtonGroup 
             className="form-element"
             bsSize='large'
             type='radio'
             name='options'
-            value={this.state.status}
-            onChange={this.handleChangeStatus}>
+            value={this.state.role}
+            onChange={this.handleChangeRole}>
             <ToggleButton value={'faculty'}> Faculty </ToggleButton>
             <ToggleButton value={'student'}> Student </ToggleButton>
           </ToggleButtonGroup>

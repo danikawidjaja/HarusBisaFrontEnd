@@ -3,18 +3,36 @@ export default class AuthService {
 
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'http://localhost:8080' // API server domain
+        this.domain = 'http://ec2-54-174-154-58.compute-1.amazonaws.com:8080/api' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
+        this.signup= this.signup.bind(this)
         this.getProfile = this.getProfile.bind(this)
     }
 
-    login(username, password) {
+    signup(password,email,firstname,lastname,school,role){
+        return this.fetch(`${this.domain}/signup`, {
+            method: 'POST',
+            body: JSON.stringify({
+                password,
+                email,
+                firstname,
+                lastname,
+                school,
+                role
+            })
+        }).then(res => {
+            return Promise.resolve(res);
+        })
+    }
+
+
+    login(email, password) {
         // Get a token from api server using the fetch api
         return this.fetch(`${this.domain}/login`, {
             method: 'POST',
             body: JSON.stringify({
-                username,
+                email,
                 password
             })
         }).then(res => {

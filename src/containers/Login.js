@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Page.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter} from "react-router-dom";
 import AuthService from './AuthService';
 
 class Login extends Component {
@@ -34,7 +34,7 @@ class LoginForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
     };
 
@@ -44,7 +44,7 @@ class LoginForm extends Component{
   }
 
   validateForm(){
-    return this.state.username.length > 0 && this.state.password.length > 0;
+    return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -55,32 +55,39 @@ class LoginForm extends Component{
 
   handleSubmit(event){
     event.preventDefault();
-    alert("Welcome " + this.state.username);
-    this.Auth.login(this.state.username, this.state.password)
+    alert("Welcome " + this.state.email);
+    this.Auth.login(this.state.email, this.state.password)
       .then(res =>{
-        this.props.history.replace('/courses');
+        if (this.Auth.loggedIn()){
+          this.props.history.push('/courses')
+        }
       })
       .catch(err =>{
-        alert(err);
+        alert(err.message);
       })
   }
 
   componentWillMount(){
     if(this.Auth.loggedIn()){
-      this.props.history.replace('/courses');
+      this.renderRedirect();
     }
+  }
+
+  renderRedirect = () => {
+    console.log("test");
+    return <Redirect to='/courses'/>
   }
 
   render(){
     return(
       <div className="App">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="username" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email Address</ControlLabel>
             <FormControl
               autofocus
-              type="text"
-              value={this.state.username}
+              type="email"
+              value={this.state.email}
               onChange={this.handleChange}
               placeholder='Email address'
             />
@@ -109,4 +116,4 @@ class LoginForm extends Component{
     );
   }
 }
-export default Login;
+export default withRouter(Login);
