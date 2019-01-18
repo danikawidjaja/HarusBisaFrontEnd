@@ -77,8 +77,15 @@ export default class AuthService {
     }
 
     getProfile() {
-        // Using jwt-decode npm package to decode the token
-        return decode(this.getToken());
+        {/* Using jwt-decode npm package to decode the token
+        //return decode(this.getToken());*/}
+
+        return this.fetch(`${this.domain}/courses`, {
+            method: 'GET',
+        }).then(res => {
+            //return Promise.resolve(res);
+            return res;
+        })
     }
 
 

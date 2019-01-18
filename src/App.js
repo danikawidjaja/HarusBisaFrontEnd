@@ -14,6 +14,8 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
     };
+
+    Auth : new AuthService();
   }
 
   userHasAuthenticated = authenticated => {
@@ -29,7 +31,8 @@ class App extends Component {
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
+      Auth: this.Auth,
     };
 
     return (

@@ -11,9 +11,9 @@ import AppliedRoute from './components/AppliedRoute';
 export default ({ childProps }) =>
   <Switch>
     <AppliedRoute path="/" exact component={Home} props={childProps} />
-    <Route path ="/signup" exact component = {SignUp}/>
+    <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
     <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
     <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
-    <Route path='/lectures' component={Lectures}/>
-    <Route component={NotFound} />
+    <AppliedRoute path='/lectures' component={Lectures} props={childProps}/>
+    <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

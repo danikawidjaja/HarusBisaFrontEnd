@@ -18,7 +18,7 @@ class Login extends Component {
           <label className="App-caption-text">
             Welcome back! Please log in below
           </label>
-          <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
+          <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
           <h5 className="App-caption-text">
             Don't have an account?
           </h5>

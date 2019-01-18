@@ -13,10 +13,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 
 class Courses extends Component{
 	render(){
+		const data = this.props.user.then(function(result){
+			return result
+		});
+
 		return(
     		<div className="App">
 		        <div className="App-header">
-		            <h2 className="App-header-text">Courses</h2>
+		            <h2 className="App-header-text">Courses {this.props.user.email}</h2>
 		        </div>
 		        <div className="class-card-container">
 			        <Course history={this.props.history}/>
@@ -29,6 +33,7 @@ class Courses extends Component{
 
         	</div>
 		)
+
 	}
 }
 

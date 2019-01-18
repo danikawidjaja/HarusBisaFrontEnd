@@ -28,7 +28,7 @@ class SignUp extends Component {
           <p className="App-caption-text">
             Create your account below:
           </p>
-          <SignUpForm history={this.props.history}/>
+          <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
         </div>
       </div>
     );
@@ -89,8 +89,16 @@ class SignUpForm extends Component{
     event.preventDefault();
     this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
       .then(res =>{
-        this.props.history.push('/login'); 
-        alert("Account made! Please login to continue");
+        this.Auth.login(this.state.email, this.state.password)
+          .then(res=>{
+            if (this.Auth.loggedIn()){
+              this.props.userHasAuthenticated(true);
+              this.props.history.push('/courses');
+            }
+          })
+          .catch(err =>{
+            alert(err.message);
+          })
       })
       .catch(err =>{
         alert(err.message);

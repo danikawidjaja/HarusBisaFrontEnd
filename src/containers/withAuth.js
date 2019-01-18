@@ -11,6 +11,9 @@ export default function withAuth(AuthComponent){
 			}
 		}
 
+		getData(x){
+			return x.json();
+		}
 		componentWillMount(){
 			if (!Auth.loggedIn()){
 				alert('You are not logged in!')
@@ -18,12 +21,15 @@ export default function withAuth(AuthComponent){
 			}
 			else{
 				try{
-					const profile = Auth.getProfile()
+					const profile =  Auth.getProfile()
+
+					{/*CONVERT THIS FROM PROMISE TO JSON FILE*/}
 					this.setState({
 						user: profile
 					})
 				}
 				catch(err){
+					alert(err.message)
 					Auth.logout()
 					this.props.history.replace('/login')
 				}
