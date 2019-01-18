@@ -10,10 +10,6 @@ export default function withAuth(AuthComponent){
 				user: null
 			}
 		}
-
-		getData(x){
-			return x.json();
-		}
 		componentWillMount(){
 			if (!Auth.loggedIn()){
 				alert('You are not logged in!')
@@ -21,12 +17,10 @@ export default function withAuth(AuthComponent){
 			}
 			else{
 				try{
-					const profile =  Auth.getProfile()
+					Auth.getProfile().then(res => this.setState({
+						user: res
+					}))
 
-					{/*CONVERT THIS FROM PROMISE TO JSON FILE*/}
-					this.setState({
-						user: profile
-					})
 				}
 				catch(err){
 					alert(err.message)

@@ -40,8 +40,10 @@ class LoginForm extends Component{
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.Auth = new AuthService();
+    //this.Auth = new AuthService();
   }
+
+  Auth = this.props.Auth
 
   validateForm(){
     return this.state.email.length > 0 && this.state.password.length > 0;

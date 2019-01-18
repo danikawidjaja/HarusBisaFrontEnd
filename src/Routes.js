@@ -7,6 +7,7 @@ import NotFound from "./containers/NotFound";
 import Courses from './containers/Courses';
 import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
+import Profile from './containers/Profile';
 
 export default ({ childProps }) =>
   <Switch>
@@ -15,5 +16,6 @@ export default ({ childProps }) =>
     <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
     <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
     <AppliedRoute path='/lectures' component={Lectures} props={childProps}/>
+    <AppliedRoute path='/profile' component = {Profile} props={childProps} />
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

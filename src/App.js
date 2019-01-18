@@ -6,7 +6,7 @@ import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
-const Auth = new AuthService();
+const auth = new AuthService();
 
 class App extends Component {
   constructor(props){
@@ -14,16 +14,15 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
     };
-
-    Auth : new AuthService();
   }
 
+  Auth = auth;
   userHasAuthenticated = authenticated => {
     this.setState({isAuthenticated: authenticated});
   }
 
   handleLogout = async event => {
-    await Auth.logout();
+    await this.Auth.logout();
     this.userHasAuthenticated(false);
     this.props.history.push('/');
   }
@@ -49,6 +48,9 @@ class App extends Component {
             <Nav pullRight>
               {this.state.isAuthenticated ?
                 <Fragment>
+                  <LinkContainer to="/profile">
+                    <NavItem >Profile</NavItem>
+                  </LinkContainer>
                   <LinkContainer to="/courses">
                     <NavItem >Courses</NavItem>
                   </LinkContainer>

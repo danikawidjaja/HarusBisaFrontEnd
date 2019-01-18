@@ -50,12 +50,14 @@ class SignUpForm extends Component{
       roleSelected: false
     };
     this.Auth = new AuthService();
+    //this.Auth = this.props.Auth
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
+  Auth = this.props.Auth
   async componentWillMount(){
-    if(this.Auth.loggedIn()){
+    //if(this.Auth.loggedIn()){
+    if(this.props.isAuthenticated){
       this.props.history.push('/courses');
     }
   }
