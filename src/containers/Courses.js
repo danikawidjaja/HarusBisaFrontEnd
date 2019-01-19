@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Page.css';
-import { Button } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import withAuth from './withAuth';
 import Fab from '@material-ui/core/Fab';
@@ -9,6 +9,12 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Popup from 'reactjs-popup';
+import CloseIcon from '@material-ui/icons/Close';
+
+
 
 
 class Courses extends Component{
@@ -17,17 +23,17 @@ class Courses extends Component{
 
 		this.state = {
 			courses: this.props.user.courses,
-			history: this.props.history
+			history: this.props.history,
 		};
 		
 	}
 
 	makingCourses(listOfCourse){
-		let numberOfCourses = 1//listOfCourse.length;
+		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []
 		if (numberOfCourses > 0){
 			for (let i=0; i<numberOfCourses; i++){
-			coursesComponent.push(<Course course={listOfCourse[i]} history={this.state.history}/>)
+				coursesComponent.push(<Course course={listOfCourse[i]} history={this.state.history}/>)
 			} 
 		} else {
 			coursesComponent.push(<p className="App-caption-text"> You are not enrolled in any course </p>)
@@ -35,20 +41,37 @@ class Courses extends Component{
 		
 		return coursesComponent
 	}
+
 	render(){
-		console.log(this.props.user);
 		return(
     		<div className="App">
 		        <div className="App-header">
 		            <h2 className="App-header-text">Courses</h2>
 		        </div>
-		        <div className="class-card-container">
+		        <div className="course-card-container">
 		        	{this.makingCourses(this.state.courses)}
+		        
 		        	<div>
-					    <Fab color='primary' aria-label='Add' /*component={Link} to="/"*/>
-					    	<AddIcon/>
-					    </Fab>
+		        		<Popup
+						    trigger={
+						    	<Fab color='primary' aria-label='Add'>
+					    			<AddIcon/>
+					    		</Fab>}
+						    modal
+  						>
+  						{close => (
+  							<div>
+  							<div className= "App-header">
+        						<h2 className = "App-header-text"> Add Course </h2>
+	    					</div>
+  							<AddCourse/>
+  							</div>
+  						)}
+  							
+  						</Popup>
+
 				    </div>
+					
 			    </div>    
 		         
 
@@ -58,15 +81,59 @@ class Courses extends Component{
 	}
 }
 
+class AddCourse extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			join_code: ''
+		}
+	}
+	handleChange = event => {
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+
+  	handleSubmit(event){
+  		alert(this.state.join_code+' course added')
+  	}
+	render(){
+	    return(
+	      	<div className="App-content">
+	        	<form onSubmit={this.handleSubmit}>
+	          		<FormGroup controlId="join_code" bsSize="large">
+	            		<ControlLabel>Join Code</ControlLabel>
+			            <FormControl
+			              autoFocus
+			              type="text"
+			              value={this.state.join_code}
+			              onChange={this.handleChange}
+			            />
+	          		</FormGroup>
+
+		          	<Button
+			           block
+			           bsSize="large"
+			           disabled={!this.state.join_code}
+			           type="submit"
+			           className="button"
+			        >
+		            Add Course
+		          	</Button>
+	        	</form>
+	      	</div>
+	    );
+  	}
+}
 class Course extends Component{
 
 	constructor(props){
 	    super(props);
 	    this.state = {
-	      course_code:'BME 352', //this.props.course.course_code
-	      course_name:'BME 352 Engineering Biomaterials', //this.props.course.course_name
-	      join_code:'886958', // this.props.course.join_code
-	      instructors:'Laura Suggs' //this.props.course.instructors
+	      course_code: this.props.course.course_code,
+	      course_name: this.props.course.course_name,
+	      join_code: this.props.course.join_code,
+	      instructors: this.props.course.instructors,
 	    };  
 
 	    this.handleClick = this.handleClick.bind(this);
@@ -76,15 +143,38 @@ class Course extends Component{
   		this.props.history.push('/lectures');
   	}
 
-
+  	renderInstructor(instructors){
+  		if (instructors.length > 0){
+  			let sentence = 'Instructors: '
+  			for (let i=0; i<instructors.length-1; i++){
+  				sentence = sentence + instructors[i] + ', '
+  			}
+  			sentence = sentence + instructors[instructors.length -1];
+  			return sentence
+  		}
+  		else{
+  			return 'instructors missing';
+  		}
+  	}
   	render(){
 		return(
-			<Card className='class-card' raised='true'>
+			<Card className='course-card' raised='true'>
 				<CardContent>
-					<h5> {this.state.course_code} </h5>
+					<div className='course-card-header'> 
+						<h5 className='course-card-title'> {this.state.course_code} </h5>
+						<IconButton>
+							<Popup
+								trigger={<MoreVertIcon />}
+								position="bottom right"
+							>
+								Delete course
+							</Popup>
+				            
+				        </IconButton>	
+					</div>
 					<p> {this.state.course_name} </p>
 					<p> Join code: {this.state.join_code} </p>
-					<p> Professor: {this.state.instructors} </p>
+					<p> {this.renderInstructor(this.state.instructors)} </p>
 				</CardContent>
 				<CardActions>
 					<Button className='button' onClick={this.handleClick}> Enter course </Button>

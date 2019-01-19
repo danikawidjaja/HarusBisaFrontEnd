@@ -78,17 +78,16 @@
   text-align: center;
 }
 
-.class-card{
+.course-card{
   border-radius: 15px;
   padding: 0.8rem;
-  background-color: gold;
   color: black;
   padding: 15px;
   margin: 10px;
   justify-content: space-between;
 }
 
-.class-card-container{
+.course-card-container{
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -97,7 +96,31 @@
   margin:10px;
 }
 
+.course-card-header{
+  display: flex;
+  flex: row;
+  justify-content: center;
+}
+
+.course-card-title{
+  padding-left: 45px;
+  width: 98%
+}
+
 .lectures-entry{
   text-decoration-color: black;
 }
 
+.close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
