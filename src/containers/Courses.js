@@ -25,6 +25,8 @@ class Courses extends Component{
 			courses: this.props.user.courses,
 			history: this.props.history,
 		};
+
+		this.Auth= this.props.Auth;
 		
 	}
 

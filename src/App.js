@@ -58,6 +58,12 @@ class App extends Component {
                 </Fragment>
                 : 
                 <Fragment>
+                  <LinkContainer to="/why">
+                    <NavItem >Why Harus Bisa?</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/pricing">
+                    <NavItem >Pricing</NavItem>
+                  </LinkContainer>
                   <LinkContainer to="/signup">
                     <NavItem >Sign up</NavItem>
                   </LinkContainer>

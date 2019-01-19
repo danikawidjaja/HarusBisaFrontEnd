@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.App-page{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
 .App-logo {
   height: 30vmin;
 }
@@ -19,6 +25,9 @@
   border-bottom: 1px solid grey;
 }
 
+.App-main{
+  padding: 20px;
+}
 .App-content{
   background-color: transparent;
   display: flex;
@@ -30,14 +39,25 @@
   padding: 10px;
 }
 
+.App-side-content{
+  background-color: transparent;
+  border-left: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 70%
+}
 .App-link {
-  color: maroon;
+  color: #502075;
   text-decoration: underline;
+  font-size: 15px;
 }
 
 .App-header-text{
   text-align: center;
-  color: maroon;
+  color: #502075;
   font-size: calc(20px + 2vmin);
   font-weight: bold;
 }
@@ -50,7 +70,7 @@
 }
 
 .button{
-  background-color: maroon;
+  background-color: #502075;
   border: none;
   transition: 0.3s opacity ease;
   cursor: pointer;
@@ -107,20 +127,20 @@
   width: 98%
 }
 
+.course-popup-header{
+  display: flex;
+  flex: row;
+  justify-content: center;
+  text-align: center;
+  color: #502075;
+  font-size: calc(20px + 2vmin);
+  font-weight: bold;
+}
+
 .lectures-entry{
   text-decoration-color: black;
 }
 
-.close {
-  cursor: pointer;
-  position: absolute;
-  display: block;
-  padding: 2px 5px;
-  line-height: 20px;
-  right: -10px;
-  top: -10px;
-  font-size: 24px;
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #cfcece;
-}
+
+
+

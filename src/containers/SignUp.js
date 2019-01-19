@@ -28,7 +28,7 @@ class SignUp extends Component {
           <p className="App-caption-text">
             Create your account below:
           </p>
-          <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
+          <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
         </div>
       </div>
     );
@@ -49,15 +49,14 @@ class SignUpForm extends Component{
       schoolSelected: false,
       roleSelected: false
     };
-    this.Auth = new AuthService();
-    //this.Auth = this.props.Auth
+    //this.Auth = new AuthService();
+    this.Auth = this.props.Auth
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  Auth = this.props.Auth
+  //Auth = this.props.Auth
   async componentWillMount(){
-    //if(this.Auth.loggedIn()){
-    if(this.props.isAuthenticated){
+    if(this.Auth.loggedIn()){
       this.props.history.push('/courses');
     }
   }
@@ -107,12 +106,19 @@ class SignUpForm extends Component{
       })
   }
 
+  async componentWillMount(){
+    if(this.Auth.loggedIn()){
+      this.props.userHasAuthenticated(true);
+      this.props.history.push('/courses');
+    }
+  }
+  
   render(){
     return(
       <form onSubmit={this.handleSubmit}>
         <div className='form-row'>
         <FormGroup className="form-element" controlId="role" bsSize='large'>
-          <ControlLabel> Faculty/Student: </ControlLabel>
+          <ControlLabel> I am a: </ControlLabel>
           <ToggleButtonGroup 
             className="form-element"
             bsSize='large'
