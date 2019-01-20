@@ -13,7 +13,7 @@ import WhyHarusBisa from './containers/WhyHarusBisa';
 
 export default ({ childProps }) =>
   <Switch>
-    <AppliedRoute path="/" exact component={Home} props={childProps} />
+    <AppliedRoute path="/" exact component={Home} props={childProps}/>
     <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
     <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
     <AppliedRoute path='/pricing' exact component = {Pricing} props={childProps} />
