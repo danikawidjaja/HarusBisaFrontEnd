@@ -63,10 +63,13 @@ class Courses extends Component{
   						>
   						{close => (
   							<div>
-  							<div className= "App-header">
-        						<h2 className = "App-header-text"> Add Course </h2>
-	    					</div>
-  							<AddCourse/>
+	  							<div className= "course-popup-header">
+	        						<h2 className = "course-popup-title"> Add Course </h2>
+	        						<IconButton aria-label="Close" onClick={close}>
+          								<CloseIcon />
+        							</IconButton>
+		    					</div>
+  								<AddCourse/>
   							</div>
   						)}
   							

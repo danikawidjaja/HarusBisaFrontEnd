@@ -130,7 +130,15 @@
 .course-popup-header{
   display: flex;
   flex: row;
-  justify-content: center;
+  justify-content: space-between;
+  text-align: center;
+  color: #502075;
+  font-size: calc(20px + 2vmin);
+  font-weight: bold;
+  border-bottom: 1px solid grey;
+}
+.course-popup-title{
+  width: 100%;
   text-align: center;
   color: #502075;
   font-size: calc(20px + 2vmin);
@@ -139,6 +147,11 @@
 
 .lectures-entry{
   text-decoration-color: black;
+}
+
+.lectures-table-header{
+  font-weight: bold;
+  color: #502075;
 }
 
 

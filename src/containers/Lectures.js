@@ -4,7 +4,6 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import {makeData} from './TableFunctions';
 
 class Lectures extends Component{
 	constructor(props){
@@ -31,7 +30,7 @@ class LectureTable extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-      		data: makeData()
+      		data: [{date: '10/1', acc: 100}, {date:'9/2', acc:50}, {date:'10/2', acc:90}],
     	};
 	}
 
@@ -45,13 +44,17 @@ class LectureTable extends Component{
 					columns={[
 						{
 							Header: "Lecture Date",
-							accessor: 'date'
+							accessor: 'date',
+							headerClassName: 'lectures-table-header'
 						},
 						{
 							Header: "Accuracy (%)",
-							accessor: 'accuracy'
+							accessor: 'acc',
+							headerClassName: 'lectures-table-header'
 						}
 					]}
+					defaultPageSize = {this.state.data.length > 10 ?  10: this.state.data.length}
+					showPageSizeOptions = {false}
 				/>
 			</div>
 		)
