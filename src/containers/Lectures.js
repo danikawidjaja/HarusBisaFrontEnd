@@ -37,6 +37,15 @@ class LectureTable extends Component{
 
 	render(){
 		const {data} = this.state
+		if (data.length == 0){
+			return(
+				<div>
+					<p className='App-caption-text'> No lectures yet </p>
+					<p className='App-caption-text'> Contact your instructor(s) for more information </p>
+				</div>
+			)
+		}
+		else{
 		return(
 			<div>
 				<ReactTable
@@ -44,8 +53,10 @@ class LectureTable extends Component{
 					columns={[
 						{
 							Header: "Lecture Date",
-							accessor: 'date',
-							headerClassName: 'lectures-table-header'
+							accessor: data => data.date,
+							id: 'date',
+							headerClassName: 'lectures-table-header',
+							Cell: props => ( <Link to={'/questions'} className='lectures-table-link'> {props.value} </Link>)
 						},
 						{
 							Header: "Accuracy (%)",
@@ -58,6 +69,7 @@ class LectureTable extends Component{
 				/>
 			</div>
 		)
+	}
 	}
 }
 

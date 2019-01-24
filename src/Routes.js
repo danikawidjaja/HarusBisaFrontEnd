@@ -10,6 +10,7 @@ import AppliedRoute from './components/AppliedRoute';
 import Profile from './containers/Profile';
 import Pricing from './containers/Pricing';
 import WhyHarusBisa from './containers/WhyHarusBisa';
+import Questions from './containers/Questions';
 
 export default ({ childProps }) =>
   <Switch>
@@ -21,5 +22,6 @@ export default ({ childProps }) =>
     <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
     <AppliedRoute path='/lectures' component={Lectures} props={childProps}/>
     <AppliedRoute path='/profile' component = {Profile} props={childProps} />
+    <AppliedRoute path='/questions' component = {Questions} props={childProps} />
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

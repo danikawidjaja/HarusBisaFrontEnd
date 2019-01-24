@@ -171,8 +171,15 @@ class Course extends Component{
 							<Popup
 								trigger={<MoreVertIcon />}
 								position="bottom right"
+								on = "click"
 							>
-								Delete course
+								<Popup
+									trigger = {<p> Delete course </p>}
+									modal
+								>
+									<p className='app-caption-text'> Are you sure? </p>
+									
+								</Popup>
 							</Popup>
 				            
 				        </IconButton>	

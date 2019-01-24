@@ -37,6 +37,7 @@
   font-size: calc(10px + 2vmin);
   color: black;
   padding: 10px;
+  width: 100%;
 }
 
 .App-side-content{
@@ -143,6 +144,7 @@
   color: #502075;
   font-size: calc(20px + 2vmin);
   font-weight: bold;
+  padding-left: 50px;
 }
 
 .lectures-entry{
@@ -151,6 +153,11 @@
 
 .lectures-table-header{
   font-weight: bold;
+  color: #502075;
+}
+
+.lectures-table-link{
+  text-decoration: underline;
   color: #502075;
 }
 
