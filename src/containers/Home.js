@@ -17,6 +17,13 @@ export default class Home extends Component {
     this.props.history.push('/signup');
   }
 
+  async componentWillMount(){
+    if(this.props.Auth.loggedIn()){
+      this.props.userHasAuthenticated(true);
+      this.props.history.push('/courses');
+    }
+  }
+
   render() {
     return (
       <div className="Home">

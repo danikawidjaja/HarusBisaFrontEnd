@@ -9,11 +9,12 @@ class Profile extends Component{
 		super(props);
 
 		this.state = {
-			firstname: this.props.user.first_name,
-			lastname: this.props.user.last_name,
+			firstname: this.props.user.first_name.slice(0,1).toUpperCase() + this.props.user.first_name.slice(1, this.props.user.first_name.length),
+			lastname: this.props.user.last_name.slice(0,1).toUpperCase() + this.props.user.last_name.slice(1, this.props.user.last_name.length),
 			email: this.props.user.email,
 			courses: this.props.user.courses,
 			school: this.props.user.school,
+			numberOfCourses: this.props.user.courses.length,
 		};
 		
 	}
@@ -28,6 +29,7 @@ class Profile extends Component{
 		        	<p> {this.state.firstname} &nbsp;{this.state.lastname} </p>
 		        	<p> {this.state.email} </p>
 		        	<p> {this.state.school} </p>
+		        	<p> Number of courses enrolled: {this.state.numberOfCourses} </p>
 		        </div> 
         	</div>
 		)

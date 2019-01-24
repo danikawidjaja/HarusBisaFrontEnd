@@ -5,6 +5,13 @@ import { Button} from "react-bootstrap";
 
 
 export default class Pricing extends Component {
+  async componentWillMount(){
+    if(this.props.Auth.loggedIn()){
+      this.props.userHasAuthenticated(true);
+      this.props.history.push('/courses');
+    }
+  }
+
   render() {
     return (
       <div className="App">

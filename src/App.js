@@ -13,7 +13,10 @@ class App extends Component {
     super(props);
     this.state = {
       isAuthenticated: false,
+      navExpanded: false,
     };
+
+    this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
   }
 
   Auth = auth;
@@ -21,10 +24,24 @@ class App extends Component {
     this.setState({isAuthenticated: authenticated});
   }
 
+  setNavExpanded(expanded){
+    this.setState({navExpanded: expanded});
+  }
+
+  closeNav(){
+    this.setState({navExpanded: false});
+  }
+
   handleLogout = async event => {
     await this.Auth.logout();
     this.userHasAuthenticated(false);
     this.props.history.push('/');
+  }
+
+  async componentDidMount(){
+    if (this.Auth.loggedIn()){
+      this.userHasAuthenticated(true)
+    }
   }
 
   render() {
@@ -34,9 +51,10 @@ class App extends Component {
       Auth: this.Auth,
     };
 
+    
     return (
       <div className="App container">
-        <Navbar fluid collapseOnSelect>
+        <Navbar collapseOnSelect={true} fluid>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/"><img class="App-image" src={logo}/>Harus Bisa</Link>
