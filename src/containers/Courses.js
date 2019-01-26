@@ -15,10 +15,6 @@ import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 
-
-
-
-
 class Courses extends Component{
 	constructor(props){
 		super(props);
@@ -52,15 +48,24 @@ class Courses extends Component{
 		        <div className="App-header">
 		            <h2 className="App-header-text">Courses</h2>
 		        </div>
-		        <div className="course-card-container">
+		        <div className='course-card-container'>
 		        	{this.makingCourses(this.state.courses)}
 		        
 		        	<div>
 		        		<Popup
 						    trigger={
-						    	<Fab color='primary' aria-label='Add'>
-					    			<AddIcon/>
-					    		</Fab>}
+						    	<div>
+						    	<OverrideMaterialUICss>
+						    		<Card className='course-add-card'>
+						    			<CardContent>
+						    				<div className='course-add-button'>
+						    					<AddIcon/>
+						    				</div>
+						    			</CardContent>
+						    		</Card>
+					    		</OverrideMaterialUICss>
+					    		</div>
+					    	}
 						    modal
   						>
   						{close => (
@@ -132,8 +137,6 @@ class AddCourse extends Component{
 	    );
   	}
 }
-
-
 class Course extends Component{
 
 	constructor(props){
@@ -165,10 +168,9 @@ class Course extends Component{
   			return 'instructors missing';
   		}
   	}
-
   	render(){
 		return(
-			//<OverrideMaterialUICss>
+			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
 				<CardContent>
 					<div className='course-card-header'> 
@@ -198,9 +200,13 @@ class Course extends Component{
 					<Button className='button' onClick={this.handleClick}> Enter course </Button>
 				</CardActions>
 			 </Card>
-			 //</OverrideMaterialUICss>
+			 </OverrideMaterialUICss>
 		)
 	}
 }
+
+
+
+
 
 export default withAuth(Courses);

@@ -106,16 +106,21 @@
   margin: 10px;
   justify-content: space-between;
   background-color: white;
+  width: 30%;
+  height: 30%;
 };
 
+.card-container{
+  display: flex;
+  flex-direction: row;
+}
 .course-card-container{
   display: flex;
   flex-direction: row;
   padding: 20px;
   border-width: 1px;
-  justify-content: center;
+  justify-content: left;
   margin:10px;
-  background-color: pink;
 }
 
 .course-card-header{
@@ -126,7 +131,7 @@
 
 .course-card-title{
   padding-left: 45px;
-  width: 98%
+  width: 98%;
 }
 
 .course-popup-header{
@@ -148,6 +153,20 @@
   padding-left: 50px;
 }
 
+.course-add-card{
+  background-color: #d3d3d3;
+  border: 1px dashed #a8a8a8;
+  padding: 0.8rem;
+  padding: 15px;
+  margin: 10px;
+  justify-content: center;
+}
+
+.course-add-button{
+  padding: 40px;
+  padding-top: 85px;
+  padding-bottom: 85px;
+}
 .lectures-entry{
   text-decoration-color: black;
 }
