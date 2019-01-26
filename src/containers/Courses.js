@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
+import { OverrideMaterialUICss } from "override-material-ui-css";
+
 
 
 
@@ -130,6 +132,8 @@ class AddCourse extends Component{
 	    );
   	}
 }
+
+
 class Course extends Component{
 
 	constructor(props){
@@ -161,8 +165,10 @@ class Course extends Component{
   			return 'instructors missing';
   		}
   	}
+
   	render(){
 		return(
+			//<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
 				<CardContent>
 					<div className='course-card-header'> 
@@ -192,9 +198,9 @@ class Course extends Component{
 					<Button className='button' onClick={this.handleClick}> Enter course </Button>
 				</CardActions>
 			 </Card>
+			 //</OverrideMaterialUICss>
 		)
 	}
 }
 
-//export default Courses;
 export default withAuth(Courses);

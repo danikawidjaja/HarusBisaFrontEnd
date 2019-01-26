@@ -100,13 +100,13 @@
 }
 
 .course-card{
-  border-radius: 15px;
   padding: 0.8rem;
   color: black;
   padding: 15px;
   margin: 10px;
   justify-content: space-between;
-}
+  background-color: white;
+};
 
 .course-card-container{
   display: flex;
@@ -115,6 +115,7 @@
   border-width: 1px;
   justify-content: center;
   margin:10px;
+  background-color: pink;
 }
 
 .course-card-header{

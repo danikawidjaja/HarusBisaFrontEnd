@@ -15,6 +15,7 @@ class Profile extends Component{
 			courses: this.props.user.courses,
 			school: this.props.user.school,
 			numberOfCourses: this.props.user.courses.length,
+			role: this.props.user.role
 		};
 		
 	}
@@ -26,9 +27,10 @@ class Profile extends Component{
 		            <h2 className="App-header-text">Profile </h2>
 		        </div>
 		        <div className="App-content">
-		        	<p> {this.state.firstname} &nbsp;{this.state.lastname} </p>
+		        	<p> {this.state.firstname} {this.state.lastname} </p>
 		        	<p> {this.state.email} </p>
 		        	<p> {this.state.school} </p>
+		        	<p> I am a {this.state.role} </p>
 		        	<p> Number of courses enrolled: {this.state.numberOfCourses} </p>
 		        </div> 
         	</div>
