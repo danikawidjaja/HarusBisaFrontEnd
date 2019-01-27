@@ -107,7 +107,7 @@
   justify-content: space-between;
   background-color: white;
   width: 30%;
-  height: 30%;
+  height: 100%;
 };
 
 .card-container{
@@ -160,12 +160,16 @@
   padding: 15px;
   margin: 10px;
   justify-content: center;
+  height: 10%;
+  width: 100%;
 }
 
 .course-add-button{
-  padding: 40px;
+  padding: 20px;
   padding-top: 85px;
   padding-bottom: 85px;
+  height: 100%;
+  width: 100%
 }
 .lectures-entry{
   text-decoration-color: black;
@@ -179,6 +183,25 @@
 .lectures-table-link{
   text-decoration: underline;
   color: #502075;
+}
+
+.course-content-content{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px;
+}
+.course-content-lecture-side{
+  border-right: 1px solid grey;
+  width: 40%;
+  height: 100%;
+  margin-left: 10px;
+}
+
+.course-content-question-side{
+  width: 60%;
+  height:100%;
+  margin-right: 10px;
 }
 
 

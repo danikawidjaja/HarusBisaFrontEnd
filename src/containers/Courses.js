@@ -14,6 +14,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
+import Grid from '@material-ui/core/Grid';
 
 class Courses extends Component{
 	constructor(props){
@@ -33,7 +34,7 @@ class Courses extends Component{
 		let coursesComponent = []
 		if (numberOfCourses > 0){
 			for (let i=0; i<numberOfCourses; i++){
-				coursesComponent.push(<Course course={listOfCourse[i]} history={this.state.history}/>)
+				coursesComponent.push(<CourseCard course={listOfCourse[i]} history={this.state.history}/>)
 			} 
 		} else {
 			coursesComponent.push(<p className="App-caption-text"> You are not enrolled in any course </p>)
@@ -48,12 +49,18 @@ class Courses extends Component{
 		        <div className="App-header">
 		            <h2 className="App-header-text">Courses</h2>
 		        </div>
-		        <div className='course-card-container'>
+		        {/*<div className='course-card-container'>*/}
+		        <Grid container
+				  direction="row"
+				  justify="space-evenly"
+				  alignItems="center">
+
 		        	{this.makingCourses(this.state.courses)}
 		        
 		        	<div>
 		        		<Popup
 						    trigger={
+						    	<Grid item xs>
 						    	<div>
 						    	<OverrideMaterialUICss>
 						    		<Card className='course-add-card'>
@@ -65,6 +72,7 @@ class Courses extends Component{
 						    		</Card>
 					    		</OverrideMaterialUICss>
 					    		</div>
+					    		</Grid>
 					    	}
 						    modal
   						>
@@ -83,8 +91,8 @@ class Courses extends Component{
   						</Popup>
 
 				    </div>
-					
-			    </div>    
+				</Grid>	
+			    {/*</div>*/}    
 		         
 
         	</div>
@@ -137,7 +145,7 @@ class AddCourse extends Component{
 	    );
   	}
 }
-class Course extends Component{
+class CourseCard extends Component{
 
 	constructor(props){
 	    super(props);
