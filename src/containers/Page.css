@@ -23,6 +23,7 @@
   font-size: calc(10px + 2vmin);
   color: black;
   border-bottom: 1px solid grey;
+  margin-top: 40px;
 }
 
 .App-main{

@@ -29,14 +29,20 @@ export default class Home extends Component {
       <div className="Home">
         <div className="lander">
           <div>
-            <h2>Harus Bisa</h2>
-            <p>Jadikan kelas anda lebih interaktif dengan platform yang lebih baik</p>
-            <Button className="Home-button" onClick={this.handleClick}> Sign Up Now! </Button>
+            <h1>Jadikan kelas anda interaktif dan efektif</h1>
+            <Button className="Home-button" onClick={this.handleClick}> SIGN UP NOW! </Button>
           </div>
           <div>
             <img src={logo} className="App-logo"/>
           </div>
         </div>
+
+        <div className="pricing">
+          <div>
+            <h1>HARGA</h1>
+          </div>
+        </div>
+
       </div>
     );
   }

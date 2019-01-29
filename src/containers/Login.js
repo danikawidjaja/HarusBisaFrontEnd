@@ -25,7 +25,7 @@ class Login extends Component {
           </div>
 
           <div className="App-side-content">
-            <div >
+            <div>
               <p> Pembelajaran yang memberikan kesempatan kepada perserta didik untuk aktif membangun sendiri konsep dan magna </p>
               <h5> Sri Mulyani </h5>
             </div>
