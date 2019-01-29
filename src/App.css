@@ -6,10 +6,12 @@
   font-weight: bold;
   display: flex;
   color: black;
-  margin:30px;
+  margin:20px;
 }
 
-
+.navbar-default .navbar-toggle{
+	margin-top: 40px;
+}
 
 .navbar-default .navbar-brand:focus{
 	color: black;
@@ -30,6 +32,8 @@
 	border: 0px;
 }
 
+
+
 .navbar-default .navbar-nav > li > a{
 	background-color: transparent;
 	border-radius: 15px;
@@ -38,6 +42,7 @@
 	color: black;
 	font-size: 12px;
 	font-weight: bold;
+	margin-top: -10px;
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
