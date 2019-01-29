@@ -54,12 +54,11 @@ class App extends Component {
     
     return (
       <div className="App container">
-        <Navbar collapseOnSelect={true} fluid>
+        <Navbar collapseOnSelect={true} fluid fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/"><img class="App-image" src={logo}/>Harus Bisa</Link>
+              <Link to="/"><img class="App-image" src={logo}/>HARUSBISA</Link>
             </Navbar.Brand>
-             <Navbar.Toggle />
           </Navbar.Header>
 
           <Navbar.Collapse>
@@ -67,26 +66,26 @@ class App extends Component {
               {this.state.isAuthenticated ?
                 <Fragment>
                   <LinkContainer to="/profile">
-                    <NavItem >Profile</NavItem>
+                    <NavItem >PROFIL</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/courses">
-                    <NavItem >Courses</NavItem>
+                    <NavItem >MATA KULIAH</NavItem>
                   </LinkContainer>
                   <NavItem onClick={this.handleLogout}>Logout</NavItem>
                 </Fragment>
                 : 
                 <Fragment>
                   <LinkContainer to="/why">
-                    <NavItem >Why Harus Bisa?</NavItem>
+                    <NavItem >TENTANG</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/pricing">
-                    <NavItem >Pricing</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/signup">
-                    <NavItem >Sign up</NavItem>
+                    <NavItem >HARGA</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/login">
-                    <NavItem >Login</NavItem>
+                    <NavItem >LOG IN</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/signup">
+                    <NavItem >DAFTAR</NavItem>
                   </LinkContainer>
                 </Fragment>
               }    

@@ -2,14 +2,51 @@
   margin-top: 15px;
 }
 
-.App .navbar-brand {
+.navbar-default .navbar-brand {
   font-weight: bold;
   display: flex;
-  color: #502075;
+  color: black;
+  margin:30px;
+}
+
+
+
+.navbar-default .navbar-brand:focus{
+	color: black;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand>a:active {
+    color: goldenrod;
+    background-color: transparent;
 }
 
 .App-image{
 	height: 100%;
 	padding-right: 5px;
+}
+
+.navbar-default{
+	background-color: transparent;
+	border: 0px;
+}
+
+.navbar-default .navbar-nav > li > a{
+	background-color: transparent;
+	border-radius: 15px;
+	border: 1.5px solid black;
+	padding: 3px 40px 3px 40px;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
+    color: goldenrod;
+    background-color: transparent;
+    border-color: goldenrod;
+}
+
+.navbar-default .navbar-nav >li{
+	margin: 40px 20px 0px 20px;
 }
 
