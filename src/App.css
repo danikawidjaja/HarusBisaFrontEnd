@@ -35,6 +35,7 @@
 	padding-top: 40px;
 	align-items: center;
 	vertical-align: center;
+	border: 0px;
 }
 
 
@@ -42,12 +43,12 @@
 	background-color: transparent;
 	border-radius: 22px;
 	border: 2px solid black;
-	padding: 10px 0px 10px 0px;
-	width: 164px;
-	height: 44px;
+	padding: 4px 0px 0px 0px;
+	width: 120px;
+	height: 30px;
 	color: black;
 	font-size: 12px;
-	font-weight: bold;
+	
 
 }
 
@@ -58,7 +59,7 @@
 }
 
 .navbar-default .navbar-nav >li{
-	margin-left: 50px;
+	margin-left: 20px;
 	margin-right: 0px;
 }
 
