@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Home.css";
 import logo from './logokrul.png';
+import landerpic from './landerpic.png';
+import landerbackground from './landerbackground.png';
 import { Button} from "react-bootstrap";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -34,12 +36,12 @@ export default class Home extends Component {
       <div className="Home">
         <div className="lander">
           <img src="assets/images/header-bg.svg" class="img-fluid" alt=""/>
-          <div>
+          <div className='text'>
             <h1>Jadikan kelas anda interaktif dan efektif</h1>
             <Button className="Home-button" onClick={this.handleClick}> SIGN UP NOW! </Button>
           </div>
-          <div>
-            <img src={logo} className="App-logo"/>
+          <div className='image'>
+            <img src={landerpic}/>
           </div>
         </div>
 
