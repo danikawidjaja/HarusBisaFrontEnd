@@ -1,12 +1,12 @@
 .App {
   margin-top: 15px;
+  font-family: 'Rubik', sans-serif;
 }
 
 .navbar-default .navbar-brand {
   font-weight: bold;
   display: flex;
   color: black;
-  margin:20px;
 }
 
 .navbar-default .navbar-toggle{
@@ -29,20 +29,26 @@
 
 .navbar-default{
 	background-color: white;
-	border: 0px;
+	padding-right: 40px;
+	padding-left: 40px;
+	padding-bottom: 10px;
+	padding-top: 40px;
+	align-items: center;
+	vertical-align: center;
 }
-
 
 
 .navbar-default .navbar-nav > li > a{
 	background-color: transparent;
-	border-radius: 15px;
-	border: 1.5px solid black;
-	padding: 3px 40px 3px 40px;
+	border-radius: 22px;
+	border: 2px solid black;
+	padding: 10px 0px 10px 0px;
+	width: 164px;
+	height: 44px;
 	color: black;
 	font-size: 12px;
 	font-weight: bold;
-	margin-top: -10px;
+
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
@@ -52,6 +58,8 @@
 }
 
 .navbar-default .navbar-nav >li{
-	margin: 40px 20px 0px 20px;
+	margin-left: 50px;
+	margin-right: 0px;
 }
+
 
