@@ -20,18 +20,114 @@ html, body {
   justify-content: space-around;
   padding: 90px 10px 40px 10px;
   border: 1px grey solid;
-  background-color: grey;
+  background-color: transparent;
 }
 
-.Home .pricing {
-  text-align: left;
+.Home .about {
+  text-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100% !important;
   justify-content: space-around;
   padding: 40px 0px 40px 0px;
   border: 1px grey solid;
-  background-color: pink;
+  background-color: transparent;
+}
+
+.Home .about h1{
+  margin:20px;
+}
+
+.Home .about .div1{
+  text-align: left;
+  display: inline-flex;
+  flex-direction: row;
+  margin: 30px;
+  border: 1px black solid;
+}
+
+.Home .about .div1 .text{
+  text-align: left;
+  margin-top: 70px;
+  margin-left: 100px;
+  max-width: 60%;
+  justify-content: flex-start;
+}
+
+.Home .about .div1 h5{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.Home .about .div2{
+  text-align: right;
+  display: inline-flex;
+  flex-direction: row;
+  margin: 30px;
+  border: 1px black solid;
+  justify-content: flex-end;
+}
+
+.Home .about .div2 .text{
+  text-align: right;
+  margin-top: 70px;
+  margin-right: 100px;
+  max-width: 60%;
+}
+
+.Home .about .div2 h5{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.Home .pricing{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  justify-content: center;
+  padding: 40px 0px 40px 0px;
+  border: 1px grey solid;
+  background-color: transparent;
+  align-items: center;
+}
+
+.Home .pricing h1{
+  color: black;
+  font-weight: bold;
+  size: 30px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.Home .pricing .header{
+  border-bottom: 2px purple solid;
+  width: 13%;
+}
+
+.Home .pricing .content{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.Home .pricing .card{
+  height: 100%;
+  margin: 10px;
+}
+
+.Home .pricing .media{
+  height: 100%;
+}
+
+.Home .footer{
+  background-color: black;
+  color: white;
+  min-height: 100px;
+  min-width: 100%;
 }
 
 .Home  .lander h1 {
@@ -40,6 +136,7 @@ html, body {
   padding-bottom: 0px;
   font-family: "Arial", sans-serif;
   font-size: 40px;
+  margin: 20px;
 }
 
 .Home  .lander p {
@@ -58,6 +155,8 @@ html, body {
   padding-left: 50px;
   padding-right: 50px;
   font-weight: bold;
+  margin: 20px;
+  margin-top: -15px;
 
 }
 

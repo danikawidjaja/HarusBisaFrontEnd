@@ -80,10 +80,10 @@ class App extends Component {
                 </Fragment>
                 : 
                 <Fragment>
-                  <LinkContainer to="/why">
+                  <LinkContainer to="/#about">
                     <NavItem >TENTANG</NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/pricing">
+                  <LinkContainer to="/#pricing">
                     <NavItem >HARGA</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/login">
