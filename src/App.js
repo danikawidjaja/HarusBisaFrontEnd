@@ -55,7 +55,7 @@ class App extends Component {
     
     return (
       <div className="App container">
-        <Navbar collapseOnSelect={true} fluid fixedTop>
+        <Navbar collapseOnSelect={true} fluid >
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/"><img class="App-image" src={logo}/>HARUSBISA</Link>

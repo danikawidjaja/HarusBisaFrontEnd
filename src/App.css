@@ -1,6 +1,7 @@
 .App {
   margin-top: 2vw;
   font-family: 'Rubik', sans-serif;
+  background-image: url('./containers/landerbackground.png')
 }
 
 .navbar-default .navbar-brand {
@@ -41,7 +42,7 @@
 }
 
 .navbar-default{
-	background-color: white;
+	background-color: transparent;
 	padding-right: 4vw;
 	padding-left: 4vw;
 	padding-bottom: 1vw;
