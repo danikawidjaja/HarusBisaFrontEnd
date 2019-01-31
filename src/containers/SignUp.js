@@ -17,7 +17,7 @@ import AuthService from './AuthService';
 class SignUp extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="Outmost">
         <div className="App-header">
           <h2 className="App-header-text">
             Sign Up

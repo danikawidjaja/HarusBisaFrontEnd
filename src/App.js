@@ -21,10 +21,12 @@ class App extends Component {
       isAuthenticated: false,
       navExpanded: false,
       scrollTop: true,
+      toggled: false,
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   Auth = auth;
@@ -32,6 +34,15 @@ class App extends Component {
     this.setState({isAuthenticated: authenticated});
   }
 
+  handleToggle(event){
+    console.log(this.state.toggled)
+    if (this.state.toggled){
+      this.setState({toggled: false})
+    }
+    else{
+      this.setState({toggled: true})
+    }
+  }
   setNavExpanded(expanded){
     this.setState({navExpanded: expanded});
   }
@@ -76,7 +87,7 @@ class App extends Component {
     
     return (
       <div className="App">
-        <Navbar collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: this.state.scrollTop ? 'transparent' : 'white'}}>
+        <Navbar onToggle={this.handleToggle} collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: (this.state.scrollTop|| this.state.toggled) ? 'transparent' : 'white'}}>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/"><img class="App-image" src={logo}/>HARUSBISA</Link>

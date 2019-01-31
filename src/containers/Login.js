@@ -7,7 +7,7 @@ import AuthService from './AuthService';
 class Login extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="Outmost">
         <div className='App-page'>
           <div className='App-main'>
             <div className="App-header">
@@ -89,7 +89,7 @@ class LoginForm extends Component{
 
   render(){
     return(
-      <div className="App">
+      <div >
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
             <FormControl
