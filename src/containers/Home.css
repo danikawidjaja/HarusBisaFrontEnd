@@ -12,6 +12,9 @@ html, body {
   flex-direction: column;
   font-family: 'Rubik', sans-serif;
   
+  background: url('./landerbackground.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .Home .lander {
