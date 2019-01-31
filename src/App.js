@@ -100,28 +100,28 @@ class App extends Component {
               {this.state.isAuthenticated ?
                 <Fragment>
                   <LinkContainer to="/profile">
-                    <NavItem >PROFIL</NavItem>
+                    <NavItem >Profil</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/courses">
-                    <NavItem >MATA KULIAH</NavItem>
+                    <NavItem >Mata Kuliah</NavItem>
                   </LinkContainer>
-                  <NavItem onClick={this.handleLogout}>LOGOUT</NavItem>
+                  <NavItem onClick={this.handleLogout}>Logout</NavItem>
                 </Fragment>
                 : 
                 <Fragment>
                   <LinkContainer to='/#about' className='navspec'>
                     <NavItem >
-                      TENTANG
+                      Tentang
                     </NavItem>
                   </LinkContainer>
                   <LinkContainer to="/#pricing" className='navspec'>
-                    <NavItem >HARGA</NavItem>
+                    <NavItem >Harga</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/login">
-                    <NavItem >LOG IN</NavItem>
+                    <NavItem >Login</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/signup">
-                    <NavItem >DAFTAR</NavItem>
+                    <NavItem >Daftar</NavItem>
                   </LinkContainer>
                 </Fragment>
               }    

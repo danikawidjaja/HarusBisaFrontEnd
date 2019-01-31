@@ -1,8 +1,10 @@
-
-
-html, body {
-  width: 100%;
-  height: 100%;
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 .Home {
@@ -174,9 +176,38 @@ html, body {
 .Home .footer{
   background-color: black;
   color: white;
-  min-height: 100px;
+  min-height: 10vw;
   min-width: 100%;
   padding-right: 0px;
   padding-left: 0px;
+  text-align: center;
+}
+
+.Home .footer p {
+    padding-top: 1.5vw;
+    padding-bottom: 1.5vw;
+    color: white;
+    font-size: 1vw;
+    line-height: 1.5em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.Home .footer .columns{
+  display: flex;
+  flex-direction: row;
+  border: 1px white solid;
+  justify-content: center;
+}
+
+.Home .footer .columns .column{
+  border: 1px white solid;
+  margin: 1vw;
+  text-align: center;
+}
+
+.Home .footer .columns p{
+  padding: 0px;
 }
 

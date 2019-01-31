@@ -107,7 +107,17 @@ export default class Home extends Component {
         </div>
 
         <div className='footer'>
-          <p> i am foot </p>
+          <p> HarusBisa </p>
+          <div className ='columns'>
+            <div className='column'>
+              <p> a </p>
+              <p> b </p>
+            </div>
+            <div className='column'>
+              <p> a </p>
+              <p> b </p>
+            </div>
+          </div>
         </div>
 
       </div>

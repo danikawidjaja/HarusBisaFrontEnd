@@ -64,6 +64,7 @@
 	color: black;
 	font-size: 12px;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
