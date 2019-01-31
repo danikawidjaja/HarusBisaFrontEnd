@@ -20,7 +20,7 @@ html, body {
   flex-direction: row;
   width: 100% !important;
   justify-content: space-around;
-  padding: 40px 100px 40px 100px;
+  padding: 5vw;
   background-color: transparent;
   align-items: center;
   
@@ -28,7 +28,8 @@ html, body {
 }
 
 .Home .lander img{
-  height: 400px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .Home .lander .text{
@@ -42,7 +43,7 @@ html, body {
   
   color: black;
   padding-bottom: 0px;
-  font-size: 50pt;
+  font-size: 5vw;
   margin: 20px;
 }
 
@@ -59,12 +60,12 @@ html, body {
   transition: 0.3s opacity ease;
   cursor: pointer;
   color: white;
-  padding-left: 50px;
-  padding-right: 50px;
-  
+  padding-left: 1vw;
+  padding-right: 1vw;
+  font-size: 2vw;
   margin: 20px;
   margin-top: -15px;
-  width: 300px;
+  width: 50%;
 
 }
 
@@ -78,7 +79,7 @@ html, body {
   flex-direction: column;
   width: 100% !important;
   justify-content: space-around;
-  padding: 40px 100px 40px 100px;
+  padding: 5vw;
   background-color: transparent;
 }
 
@@ -136,20 +137,19 @@ html, body {
   justify-content: center;
   background-color: transparent;
   align-items: center;
-  padding: 40px 100px 40px 100px;
+  padding: 5vw;
 }
 
 .Home .pricing h1{
   color: black;
-  font-weight: bold;
-  size: 30px;
+  size: 1vw;
   margin-bottom: 0px;
   text-align: center;
 }
 
 .Home .pricing .header{
   border-bottom: 2px purple solid;
-  width: 13%;
+  width: 25vw;
 }
 
 .Home .pricing .content{

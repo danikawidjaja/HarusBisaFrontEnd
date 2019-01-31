@@ -45,7 +45,7 @@ export default class Home extends Component {
           </div>
         </div>
 
-        <div className="about" id='about'>
+        <div className="about" id='#about'>
           <div>
             <h1>Cara untuk professor dan pengajar untuk mengimplementasi active learning</h1>
           </div>
@@ -73,7 +73,7 @@ export default class Home extends Component {
           </div>
         </div>
 
-        <div className='pricing' id='pricing'>
+        <div className='pricing' id='#pricing'>
           <div className='header'>
             <h1> HARGA </h1>
           </div>

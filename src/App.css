@@ -1,5 +1,5 @@
 .App {
-  margin-top: 15px;
+  margin-top: 2vw;
   font-family: 'Rubik', sans-serif;
 }
 
@@ -9,8 +9,21 @@
   color: black;
 }
 
+.navbar-default .navbar-collapse{
+	
+}
+
 .navbar-default .navbar-toggle{
-	margin-top: 40px;
+	border: 0px;
+	background-color: transparent;
+}
+
+.navbar-default .navbar-toggle:focus,.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active{
+	background-color: transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+	background-color: black;
 }
 
 .navbar-default .navbar-brand:focus{
@@ -29,10 +42,10 @@
 
 .navbar-default{
 	background-color: white;
-	padding-right: 40px;
-	padding-left: 40px;
-	padding-bottom: 10px;
-	padding-top: 40px;
+	padding-right: 4vw;
+	padding-left: 4vw;
+	padding-bottom: 1vw;
+	padding-top: 4vw;
 	align-items: center;
 	vertical-align: center;
 	border: 0px;
@@ -43,13 +56,11 @@
 	background-color: transparent;
 	border-radius: 22px;
 	border: 2px solid black;
-	padding: 4px 0px 0px 0px;
+	padding: 0.3vw 0px 0px 0px;
 	width: 120px;
 	height: 30px;
 	color: black;
 	font-size: 12px;
-	
-
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
@@ -61,6 +72,11 @@
 .navbar-default .navbar-nav >li{
 	margin-left: 20px;
 	margin-right: 0px;
+}
+
+.navbar-default .navbar-nav> li.navspec >a{
+	border: 0px;
+	padding-top: 6px;
 }
 
 

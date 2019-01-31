@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import logo from './logokrul.png';
 import { Nav, Navbar, NavItem } from "react-bootstrap";
-
+import { HashLink as Link } from 'react-router-hash-link';
 import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
@@ -77,10 +77,12 @@ class App extends Component {
                 </Fragment>
                 : 
                 <Fragment>
-                  <LinkContainer to="/#about">
-                    <NavItem >TENTANG</NavItem>
+                  <LinkContainer to='/#about' className='navspec'>
+                    <NavItem >
+                      TENTANG
+                    </NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/#pricing">
+                  <LinkContainer to="/#pricing" className='navspec'>
                     <NavItem >HARGA</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/login">

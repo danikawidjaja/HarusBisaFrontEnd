@@ -2,6 +2,12 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding-right: 0px;
+  padding-left: 0px; 
+  font-family: 'Rubik', sans-serif;
 }
 
 .App-page{
