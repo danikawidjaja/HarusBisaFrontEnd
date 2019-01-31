@@ -7,6 +7,11 @@ import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
+import {
+MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
+MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
+} from "mdbreact";
+
 const auth = new AuthService();
 
 class App extends Component {
@@ -15,9 +20,11 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
       navExpanded: false,
+      scrollTop: true,
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   Auth = auth;
@@ -43,8 +50,22 @@ class App extends Component {
     if (this.Auth.loggedIn()){
       this.userHasAuthenticated(true)
     }
+
+    window.addEventListener('scroll', this.handleScroll);
   }
 
+  async componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll(event) {
+    if (window.scrollY == 0) {
+        this.setState({scrollTop: true});
+    }
+    else if (window.scrollY != 0 ) {
+        this.setState({scrollTop: false});
+    }
+}
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -54,13 +75,13 @@ class App extends Component {
 
     
     return (
-      <div className="App container">
-        <Navbar collapseOnSelect={true} fluid >
+      <div className="App">
+        <Navbar collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: this.state.scrollTop ? 'transparent' : 'white'}}>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/"><img class="App-image" src={logo}/>HARUSBISA</Link>
             </Navbar.Brand>
-            <Navbar.Toggle/>
+            <Navbar.Toggle />
           </Navbar.Header>
 
           <Navbar.Collapse>

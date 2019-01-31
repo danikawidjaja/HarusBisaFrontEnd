@@ -1,14 +1,10 @@
 .App {
   margin-top: 2vw;
   font-family: 'Rubik', sans-serif;
-  background-image: url('./containers/landerbackground.png')
+  width: 100%;
+  margin-top: 0px;
 }
 
-.navbar-default .navbar-brand {
-  font-weight: bold;
-  display: flex;
-  color: black;
-}
 
 .navbar-default .navbar-collapse{
 	
@@ -25,6 +21,12 @@
 
 .navbar-default .navbar-toggle .icon-bar{
 	background-color: black;
+}
+
+.navbar-default .navbar-brand {
+  font-weight: bold;
+  display: flex;
+  color: black;
 }
 
 .navbar-default .navbar-brand:focus{
@@ -46,22 +48,26 @@
 	padding-right: 4vw;
 	padding-left: 4vw;
 	padding-bottom: 1vw;
-	padding-top: 4vw;
+	padding-top: 1vw;
 	align-items: center;
 	vertical-align: center;
 	border: 0px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0);
 }
-
+.navbar-default .navbar-nav{
+	margin-top: 1vw;
+}
 
 .navbar-default .navbar-nav > li > a{
 	background-color: transparent;
 	border-radius: 22px;
 	border: 2px solid black;
-	padding: 0.3vw 0px 0px 0px;
+	padding-top: 0.3vw;
 	width: 120px;
 	height: 30px;
 	color: black;
 	font-size: 12px;
+	text-align: center;
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
@@ -73,6 +79,7 @@
 .navbar-default .navbar-nav >li{
 	margin-left: 20px;
 	margin-right: 0px;
+
 }
 
 .navbar-default .navbar-nav> li.navspec >a{
