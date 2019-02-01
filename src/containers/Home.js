@@ -3,6 +3,10 @@ import "./Home.css";
 import logo from './logokrul.png';
 import landerpic from './landerpic.png';
 import landerbackground from './landerbackground.png';
+import facebook from './facebook.png';
+import linkedin from './linkedin.png';
+import twitter from './twitter.png';
+import instagram from './instagram.png';
 import { Button} from "react-bootstrap";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,6 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { Link } from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props){
@@ -91,33 +96,36 @@ export default class Home extends Component {
               </CardContent>
               
             </Card>
-            
-            <Card raised='true' className='card'>
-              <CardMedia
-                image='https://images.fabric.com/images/200/200/DZ-506.jpg'
-                title='student'
-                style={{height:0, paddingTop: '56.25%'}}
-              />
-              <CardContent>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
         <div className='footer'>
-          <p> HarusBisa </p>
-          <div className ='columns'>
-            <div className='column'>
-              <p> a </p>
-              <p> b </p>
-            </div>
-            <div className='column'>
-              <p> a </p>
-              <p> b </p>
-            </div>
+          <div style={{border:'1px solid white', borderRadius:'15px', width:'10%', height:'100px', marginTop:'5vw'}} />
+          <div className='f-about'>
+            <p> HarusBisa menyediakan alat untuk para insturktur memberikan lecture yang berkualitas. menggunakan alat yang canggih dan dapat bisa memudahkan secara GRATIS sampai ke seluruh pelosok Indonesia. </p>
+            <br/> <br/>
+            <p> Copyright PT. HarusBisa Indonesia | HarusBisa 2018 </p>
           </div>
+
+          <div className='links'>
+            <Link to='/' className='f-link'> Home </Link>
+            <Link to='/' className='f-link'> Kenapa <br/> HarusBisa? </Link>
+            <Link to='/' className='f-link'> Pricing </Link>
+          </div>
+
+          <div className='links'>
+            <Link to='/' className='f-link'> FAQ </Link>
+            <Link to='/' className='f-link'> Syarat dan <br/> Ketentuan </Link>
+            <Link to='/' className='f-link'> Hubungi Kami </Link>
+          </div>
+
+          <div className='socialmedia'>
+            <Link to="/"><img class="socmed-i" src={facebook}/></Link>
+            <Link to="/"><img class="socmed-i" src={twitter}/></Link>
+            <Link to="/"><img class="socmed-i" src={instagram}/></Link>
+            <Link to="/"><img class="socmed-i" src={linkedin}/></Link>
+          </div>
+
         </div>
 
       </div>

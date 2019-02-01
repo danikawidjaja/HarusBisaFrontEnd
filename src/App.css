@@ -82,6 +82,7 @@
 .navbar-default .navbar-nav> li.navspec >a{
 	border: 0px;
 	padding-top: 6px;
+	width: 100%;
 }
 
 

@@ -111,7 +111,7 @@ class App extends Component {
                 <Fragment>
                   <LinkContainer to='/#about' className='navspec'>
                     <NavItem >
-                      Tentang
+                      Kenapa HarusBisa?
                     </NavItem>
                   </LinkContainer>
                   <LinkContainer to="/#pricing" className='navspec'>
