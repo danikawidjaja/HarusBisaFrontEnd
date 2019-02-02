@@ -26,7 +26,7 @@ export default class Footer extends Component {
 
           <div className='links'>
             <Link to='/' className='f-link'> FAQ </Link>
-            <Link to='/' className='f-link'> Syarat dan <br/> Ketentuan </Link>
+            <Link to='/termsandconditions' className='f-link'> Syarat dan <br/> Ketentuan </Link>
             <Link to='/' className='f-link'> Hubungi Kami </Link>
           </div>
 
