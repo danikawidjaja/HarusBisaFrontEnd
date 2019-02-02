@@ -13,6 +13,7 @@ import WhyHarusBisa from './containers/WhyHarusBisa';
 import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions';
+import FAQ from './containers/FAQ';
 
 export default ({ childProps }) =>
   <Switch>
@@ -27,5 +28,6 @@ export default ({ childProps }) =>
     <AppliedRoute path='/questions' component = {Questions} props={childProps} />
     <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>
     <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
+    <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;
