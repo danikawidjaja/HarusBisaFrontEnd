@@ -12,6 +12,7 @@ import Pricing from './containers/Pricing';
 import WhyHarusBisa from './containers/WhyHarusBisa';
 import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
+import TermsAndConditions from './containers/TermsAndConditions';
 
 export default ({ childProps }) =>
   <Switch>
@@ -25,5 +26,6 @@ export default ({ childProps }) =>
     <AppliedRoute path='/profile' component = {Profile} props={childProps} />
     <AppliedRoute path='/questions' component = {Questions} props={childProps} />
     <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>
+    <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

@@ -43,3 +43,13 @@
 	margin-left: -19vw;
 }
 
+.NotFound .text .n-button:hover{
+	border-radius: 3px;
+	background-color: #5960A3;
+	border: 0px;
+	width: 15vw;
+	margin-left: -19vw;
+	color: white;
+}
+
+
