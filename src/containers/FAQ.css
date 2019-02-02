@@ -13,6 +13,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	justify-content: space-around;
 	display: flex;
 	flex-direction: column;
+	font-family: 'Rubik', sans-serif;
+	align-items: center;
+	padding-top: 6vw;
+	text-align: left;
 }
 
 .faq h1{
@@ -24,17 +28,45 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	color: black;
 }
 
+.faq .text p{
 
+}
 
 .faq .text{
-	text-align: left;
+	text-align: justify;
 	display: flex;
 	flex-direction: column;
-	width: 80% !important;
+	width: 55%;
 	justify-content: space-around;
 	background-color: transparent;
 	align-items: left;
 	padding: 5vw;
 	margin-bottom: 1.4vw;
 	height: 100%;
+}
+
+.faq .buttons{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-top: 7vw;
+	justify-content: space-between;
+}
+
+.faq .buttons .button, .faq .buttons .button:focus{
+	background-color: black;
+	color: #ffe01c;
+	width: 15vw;
+	border: 1px solid black;
+	border-radius: 0px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 400;
+	outline: 0px;
+}
+
+.faq .buttons .button:hover, .faq .buttons .button:active{
+	color: black;
+	background-color: #ffe01c;
+	border: 1px black solid;
 }

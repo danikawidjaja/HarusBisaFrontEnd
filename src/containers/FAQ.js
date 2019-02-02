@@ -10,8 +10,19 @@ export default class FAQ extends Component {
     return (
       <div className='faq'>
         <div className='text'> 
-          <h1> Syarat dan Ketentuan </h1>
-          <p> Terima kasih telah meluangkan waktu untuk mempelajari tentang kebijakan hukum HarusBisa. Ini hal penting. Di sinilah Anda akan menemukan informasi tentang bagaimana kami melindungi privasi Anda, apa yang bisa dan tidak bisa Anda lakukan dengan HarusBisa, dan bagaimana kami menangani akun pengguna. </p>
+          <h1> F.A.Q </h1>
+          <p> Informasi mengenai HarusBisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna </p>
+          <div className='buttons'>
+            <Button className='button'> Dosen </Button>
+            <Button className='button'> Mahasiswa </Button>
+          </div>
+        </div>
+
+        <div className='info'>
+          <div className='left'>
+          </div>
+          <div className='right'>
+          </div>
         </div>
 
         <Footer/>
