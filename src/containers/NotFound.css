@@ -1,4 +1,45 @@
 .NotFound {
-  padding-top: 100px;
-  text-align: center;
+	padding: 0px;
+	padding-top: 100px;
+	padding-left: 15vw;
+	padding-right: 1.5vw;
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
+
+.NotFound .image{
+  	border: px black solid;
+}
+
+
+
+.NotFound .text{
+	border: 0px black solid;
+	height: 100%;
+	margin-left: 5vw;
+	align-items: flex-start;
+}
+.NotFound .text h1{
+	font-weight: 500;
+	font-size: 5vw;
+	padding-bottom: 0px;
+	text-align: left;
+}
+
+.NotFound .text p{
+	font-size: 1.5vw;
+	font-weight: 300;
+	padding-top: 0px;
+	text-align: left;
+}
+
+.NotFound .text .n-button{
+	border-radius: 3px;
+	background-color: #ffe01c;
+	border: 0px;
+	width: 15vw;
+	margin-left: -19vw;
+}
+
