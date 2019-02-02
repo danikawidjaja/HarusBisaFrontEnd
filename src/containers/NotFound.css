@@ -1,12 +1,10 @@
 .NotFound {
-	padding: 0px;
-	padding-top: 100px;
-	padding-left: 15vw;
-	padding-right: 1.5vw;
-	text-align: center;
+	padding: 5vw;
+	text-align: left;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 }
 
 .NotFound .image{
@@ -40,7 +38,6 @@
 	background-color: #ffe01c;
 	border: 0px;
 	width: 15vw;
-	margin-left: -19vw;
 }
 
 .NotFound .text .n-button:hover{
@@ -48,7 +45,6 @@
 	background-color: #5960A3;
 	border: 0px;
 	width: 15vw;
-	margin-left: -19vw;
 	color: white;
 }
 

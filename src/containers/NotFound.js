@@ -14,15 +14,17 @@ export default class NotFound extends Component{
   }
   render(){
     return(
-      <div className="NotFound">
-        <div className='image'>
-          <img src ={pic} />
-        </div>
-        <div className ='text'>
-          <h1> hmm.. ini aneh </h1>
-          <p> Terjadi kesalahan halaman yang anda minta </p>
-          <br/>
-          <Button className='n-button' onClick={this.handleClick}> Kembali ke Home </Button>
+      <div style={{paddingTop:'3vw'}}>
+        <div className="NotFound"> 
+          <div className='image'>
+            <img src ={pic} />
+          </div>
+          <div className ='text'>
+            <h1> hmm.. ini aneh </h1>
+            <p> Terjadi kesalahan halaman yang anda minta </p>
+            <br/>
+            <Button className='n-button' onClick={this.handleClick}> Kembali ke Home </Button>
+          </div>
         </div>
       </div>
     )
