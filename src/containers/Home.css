@@ -46,8 +46,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   
   color: black;
   padding-bottom: 0px;
-  font-size: 5vw;
+  font-size: 4.7vw;
   margin: 20px;
+  font-weight: 500;
 }
 
 .Home  .lander p {
@@ -63,17 +64,18 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   transition: 0.3s opacity ease;
   cursor: pointer;
   color: white;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  font-size: 2vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-size: 1.3vw;
   margin: 20px;
   margin-top: -15px;
-  width: 50%;
+  width: 40%;
 
 }
 
 .Home-button:hover{
-  background-color: goldenrod;
+  background-color: #5960A3;
+  color: white;
 }
 
 .Home .about {
@@ -88,6 +90,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .Home .about h1{
   margin:20px;
+  font-weight: 500;
 }
 
 .Home .about .div1{
@@ -148,6 +151,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 4vw;
   margin-bottom: 0px;
   text-align: center;
+  font-weight: 500;
 }
 
 .Home .pricing .header{

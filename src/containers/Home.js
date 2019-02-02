@@ -15,6 +15,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from "react-router-dom";
+import { OverrideMaterialUICss } from "override-material-ui-css";
 
 export default class Home extends Component {
   constructor(props){
@@ -42,8 +43,8 @@ export default class Home extends Component {
         <div className="lander">
           <img src="assets/images/header-bg.svg" class="img-fluid" alt=""/>
           <div className='text'>
-            <h1>Jadikan kelas anda interaktif dan efektif</h1>
-            <Button className="Home-button" onClick={this.handleClick}> SIGN UP NOW! </Button>
+            <h1>Jadikan kelas anda <br/> interaktif dan efektif</h1>
+            <Button className="Home-button" onClick={this.handleClick}> DAFTAR SEKARANG! </Button>
           </div>
           <div className='image'>
             <img src={landerpic}/>
@@ -79,22 +80,14 @@ export default class Home extends Component {
         </div>
 
         <div className='pricing' id='#pricing'>
-          <div className='header'>
-            <h1> HARGA </h1>
-          </div>
           <div className='content'>
             <Card raised='true' className='card'>
-              
-              <CardMedia
-                image='https://images.unsplash.com/photo-1519782202865-95bcf9f4aff5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
-                title='student'
-                style={{height:0, paddingTop: '56.25%'}}
-              />
-              <CardContent>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
-              </CardContent>
-              
+              <OverrideMaterialUICss>
+                <CardContent>
+                  <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                  Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
+                </CardContent> 
+              </OverrideMaterialUICss>
             </Card>
           </div>
         </div>

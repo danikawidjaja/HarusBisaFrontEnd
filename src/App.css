@@ -30,7 +30,7 @@
 }
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand>a:active {
-    color: goldenrod;
+    color: #5960A3;
     background-color: transparent;
 }
 
@@ -65,12 +65,13 @@
 	font-size: 12px;
 	text-align: center;
 	text-transform: uppercase;
+	font-weight: 500;
 }
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a {
-    color: goldenrod;
+    color: #5960A3;
     background-color: transparent;
-    border-color: goldenrod;
+    border-color: #5960A3;
 }
 
 .navbar-default .navbar-nav >li{
