@@ -14,6 +14,7 @@ import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions';
 import FAQ from './containers/FAQ';
+import ContactUs from './containers/ContactUs';
 
 export default ({ childProps }) =>
   <Switch>
@@ -29,5 +30,6 @@ export default ({ childProps }) =>
     <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>
     <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
     <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
+    <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;
