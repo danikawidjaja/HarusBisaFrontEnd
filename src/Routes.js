@@ -15,6 +15,7 @@ import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions';
 import FAQ from './containers/FAQ';
 import ContactUs from './containers/ContactUs';
+import ForgetPassword from './containers/ForgetPassword';
 
 export default ({ childProps }) =>
   <Switch>
@@ -31,5 +32,6 @@ export default ({ childProps }) =>
     <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
     <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
     <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
+    <AppliedRoute path='/forgetpassword' component={ForgetPassword} props={childProps}/>
     <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

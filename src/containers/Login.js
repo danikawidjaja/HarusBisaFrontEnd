@@ -20,7 +20,7 @@ class Login extends Component {
               <h5> Need a new account? </h5>
               <Link to="/signup" className="App-link"> Sign up here </Link>
               <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
-              <Link to='/' className='App-link'> Forgot your password? </Link>
+              <Link to='/forgetpassword' className='App-link'> Forgot your password? </Link>
             </div>
           </div>
 
