@@ -1,40 +1,39 @@
 import React, { Component } from 'react';
-import './Page.css';
+import './Login.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link, Redirect, withRouter} from "react-router-dom";
 import AuthService from './AuthService';
+import login1 from './login1.png';
+import login2 from './login2.png';
 
 class Login extends Component {
   render() {
     return (
-      <div className="Outmost">
-        <div className='App-page'>
-          <div className='App-main'>
-            <div className="App-header">
-              <h2 className="App-header-text">
-                Login
-              </h2>
+      <div className='login'>
+        <div className='left'>
+          <div style={{width:'50%', textAlign:'center'}}>
+            <img src={login2} style={{width:'5vw'}}/>
+            <h1> Log In </h1>
+            <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
+              <p> Tidak punya akun? </p>
+              <Link to='/signup'> Daftar sekarang </Link>
             </div>
-
-            <div className="App-content">
-              <h5> Need a new account? </h5>
-              <Link to="/signup" className="App-link"> Sign up here </Link>
-              <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
-              <Link to='/forgetpassword' className='App-link'> Forgot your password? </Link>
-            </div>
+            <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
+            <Link to='/forgetpassword'> Lupa Password anda? </Link>
           </div>
+        </div>
 
-          <div className="App-side-content">
-            <div>
-              <p> Pembelajaran yang memberikan kesempatan kepada perserta didik untuk aktif membangun sendiri konsep dan magna </p>
-              <h5> Sri Mulyani </h5>
-            </div>
+        <div className='right'>
+          <div className='text'>
+            <p> Karena kita adalah sesuatu yang harus terjadi <br/> sehingga jadikan sesuatu berarti dalam </p>
+            <h2> Sri Mulyani </h2>
           </div>
-
+          <div className='decoration'>
+            <img src={login2} style={{height: '100%', marginTop:'230px'}}/>
+            <img src={login1}/>
+          </div>
         </div>
       </div>
-
-
     );
   }
 }
@@ -90,32 +89,32 @@ class LoginForm extends Component{
   render(){
     return(
       <div >
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
+        <form className='login-form' onSubmit={this.handleSubmit}>
+          <FormGroup controlId="email" bsSize="medium">
+            <ControlLabel> Email </ControlLabel>
             <FormControl
               autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
-              placeholder='Email'
             />
           </FormGroup>
 
-          <FormGroup controlId="password" bsSize="large">
+          <FormGroup controlId="password" bsSize="medium">
+            <ControlLabel> Password </ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}
               onChange={this.handleChange}
-              placeholder='Password'
             />
           </FormGroup>
 
           <Button
             block
-            bsSize="large"
+            bsSize="medium"
             disabled={!this.validateForm()}
             type="submit"
-            className="button"
+            style={{backgroundColor: '#ffe01c', fontWeight: '300', borderRadius:'0px', border:'0px'}}
           >
             Login
           </Button>
