@@ -5,6 +5,7 @@ import { Link, Redirect, withRouter} from "react-router-dom";
 import AuthService from './AuthService';
 import login1 from './login1.png';
 import login2 from './login2.png';
+import errormessage_icon from './errormessage_icon.png';
 
 class Login extends Component {
   render() {
@@ -25,12 +26,12 @@ class Login extends Component {
 
         <div className='right'>
           <div className='text'>
-            <p> Karena kita adalah sesuatu yang harus terjadi <br/> sehingga jadikan sesuatu berarti dalam </p>
+            <p> Karena kita adalah sesuatu yang harus terjadi sehingga jadikan sesuatu berarti dalam </p>
             <h2> Sri Mulyani </h2>
           </div>
           <div className='decoration'>
-            <img src={login2} style={{height: '100%', marginTop:'230px'}}/>
-            <img src={login1}/>
+            <img src={login2} style={{maxHeight: '100%'}}/>
+            <img src={login1} style={{}}/>
           </div>
         </div>
       </div>
@@ -44,6 +45,7 @@ class LoginForm extends Component{
     this.state = {
       email: '',
       password: '',
+      error: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,6 +56,13 @@ class LoginForm extends Component{
 
   //Auth = this.props.Auth
 
+  displayErrorMessage(error){
+    console.log('hi im here')
+    if (!error){
+      
+      return(<ErrorMessage />)
+    }
+  }
   validateForm(){
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -70,12 +79,15 @@ class LoginForm extends Component{
     this.Auth.login(this.state.email, this.state.password)
       .then(res =>{
         if (this.Auth.loggedIn()){
+          this.setState({error: false});
           this.props.userHasAuthenticated(true);
           this.props.history.push('/courses');
         }
       })
       .catch(err =>{
         alert(err.message); 
+        this.setState({ error: true});
+        this.displayErrorMessage(true)
       })
   }
 
@@ -89,23 +101,26 @@ class LoginForm extends Component{
   render(){
     return(
       <div >
+        {this.displayErrorMessage}
         <form className='login-form' onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="medium">
-            <ControlLabel> Email </ControlLabel>
+          <FormGroup controlId="email" bsSize="medium" style={{marginBottom:'1vw'}}>
+            <ControlLabel style={{fontSize:'1.5vw'}}> Email </ControlLabel>
             <FormControl
               autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
+              style={{height:'3vw', borderRadius:'0px'}}
             />
           </FormGroup>
 
           <FormGroup controlId="password" bsSize="medium">
-            <ControlLabel> Password </ControlLabel>
+            <ControlLabel style={{fontSize:'1.5vw'}}> Password </ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}
               onChange={this.handleChange}
+              style={{height:'3vw', borderRadius:'0px'}}
             />
           </FormGroup>
 
@@ -114,13 +129,30 @@ class LoginForm extends Component{
             bsSize="medium"
             disabled={!this.validateForm()}
             type="submit"
-            style={{backgroundColor: '#ffe01c', fontWeight: '300', borderRadius:'0px', border:'0px'}}
+            style={{backgroundColor: '#ffe01c', fontWeight: '300', borderRadius:'0px', border:'0px', fontSize:'1.5vw'}}
           >
             Login
           </Button>
         </form>
       </div>
     );
+  }
+}
+
+class ErrorMessage extends Component{
+  constructor(props){
+    super(props);
+    this.state ={
+      error: 'Alamat email atau password tidak ditemukan' //this.props.message
+    }
+  }
+  render(){
+    return(
+      <div className='errormessage'>
+        <img src={errormessage_icon} style={{maxWidth:'100%', marginRight:'1vw'}}/>
+        <p> {this.state.error} </p>
+      </div>
+    )
   }
 }
 export default Login;
