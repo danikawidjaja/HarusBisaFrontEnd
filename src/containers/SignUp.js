@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Page.css';
+import './SignUp.css';
 import Select from 'react-select';
 import { options } from './UniversityList';
 import {
@@ -17,17 +17,12 @@ import AuthService from './AuthService';
 class SignUp extends Component {
   render() {
     return (
-      <div className="Outmost">
-        <div className="App-header">
-          <h2 className="App-header-text">
-            Sign Up
-          </h2>
+      <div className='signup'>
+        <div className='logo'>
+          <p> logo </p>
         </div>
-
-        <div className='App-content'>
-          <p className="App-caption-text">
-            Create your account below:
-          </p>
+        <div className='content'>
+          <h1> Daftar </h1>
           <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
         </div>
       </div>
@@ -115,44 +110,57 @@ class SignUpForm extends Component{
   
   render(){
     return(
+      <div className='signup-form'>
       <form onSubmit={this.handleSubmit}>
         <div className='form-row'>
-        <FormGroup className="form-element" controlId="role" bsSize='large'>
-          <ControlLabel> I am a: </ControlLabel>
-          <ToggleButtonGroup 
-            className="form-element"
-            bsSize='large'
-            type='radio'
-            name='options'
-            value={this.state.role}
-            onChange={this.handleChangeRole}>
-            <ToggleButton value={'faculty'}> Faculty </ToggleButton>
-            <ToggleButton value={'student'}> Student </ToggleButton>
-          </ToggleButtonGroup>
-        </FormGroup>
+          <FormGroup className="form-element" controlId="role" bsSize='medium'>
+            <ToggleButtonGroup 
+              className="form-element"
+              bsSize='large'
+              type='radio'
+              name='options'
+              value={this.state.role}
+              onChange={this.handleChangeRole}>
+              <ToggleButton value={'faculty'}> Dosen </ToggleButton>
+              <ToggleButton value={'student'}> Murid </ToggleButton>
+            </ToggleButtonGroup>
+          </FormGroup>
         </div>
 
         <div className="form-row">
-        <FormGroup className="form-element" controlId="firstname" bsSize="large">
-          <ControlLabel>First Name</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.firstname}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
+          <FormGroup className="form-element" controlId="firstname" bsSize="medium">
+            <ControlLabel>Nama Depan</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.firstname}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
 
-        <FormGroup className="form-element" controlId="lastname" bsSize="large">
-          <ControlLabel>Last Name</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.lastname}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
+          <FormGroup className="form-element" controlId="lastname" bsSize="medium">
+            <ControlLabel>Nama Belakang</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.lastname}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
         </div>
 
-        <FormGroup className="form-element" controlId="email" bsSize="large">
+        <div className='form-row'>
+        <FormGroup className="form-element" controlId="school" bsSize="medium">
+          <ControlLabel> Nama Universitas </ControlLabel>
+          <Select
+            isClearable
+            value={this.state.school}
+            onChange={this.handleChangeSchool}
+            options={options}
+           />
+        </FormGroup> 
+        </div>
+
+        <div className='form-row'>
+        <FormGroup className="form-element" controlId="email" bsSize="medium">
           <ControlLabel>Email</ControlLabel>
           <FormControl
             type="email"
@@ -160,9 +168,10 @@ class SignUpForm extends Component{
             onChange={this.handleChange}
           />
         </FormGroup>
+        </div>
 
         <div className="form-row">      
-        <FormGroup className="form-element" controlId="password" bsSize="large">
+        <FormGroup className="form-element" controlId="password" bsSize="medium">
           <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
@@ -171,7 +180,7 @@ class SignUpForm extends Component{
           />
         </FormGroup> 
 
-        <FormGroup className="form-element" controlId="confirmPassword" bsSize="large">
+        <FormGroup className="form-element" controlId="confirmPassword" bsSize="medium">
           <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             type="password"
@@ -181,16 +190,8 @@ class SignUpForm extends Component{
         </FormGroup>
         </div>
           
-        <FormGroup className="form-element" controlId="school" bsSize="large">
-          <ControlLabel> School </ControlLabel>
-          <Select
-            isClearable
-            value={this.state.school}
-            onChange={this.handleChangeSchool}
-            options={options}
-           />
-        </FormGroup>  
-        
+         
+        <div className="form-row">
         <Button
           block
           bsSize="large"
@@ -198,9 +199,11 @@ class SignUpForm extends Component{
           type="submit"
           className="button"
         >
-          Sign Up
+          Daftar
         </Button> 
+        </div>
       </form>
+      </div>
 
 
     );
