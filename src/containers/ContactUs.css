@@ -42,13 +42,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	height: 100%;
 }
 
-.form{
+.contactus .form{
 	align-items: flex-start;
 	text-align: left;
 	margin: 0px;
 }
 
-.form-element{
+.contactus .form .form-element{
 	text-align: left;
 	padding: 0px;
 	margin:0px;
@@ -56,7 +56,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin-bottom: 1.5vw;
 }
 
-.form-group-sm .form-control, .form-group-sm .form-control:focus{
+.contactus .form.form-group-sm .form-control, .form-group-sm .form-control:focus{
 	border: 0px;
 	border-radius: 0px;
 	padding: 0.5vw;
@@ -66,11 +66,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font-weight: 400;
 }
 
-.form-control-label{
+.contactus .form .form-control-label{
 	font-weight: 400;
 	color: black;
 }
-.form .button, .form .button:focus, .form .button:hover{
+.contactus .form .button, .form .button:focus, .form .button:hover{
 	text-transform: uppercase;
 	border-radius: 0px;
 	background-color: black;

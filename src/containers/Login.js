@@ -5,6 +5,7 @@ import { Link, Redirect, withRouter} from "react-router-dom";
 import AuthService from './AuthService';
 import login1 from './login1.png';
 import login2 from './login2.png';
+import login from './login.png';
 import errormessage_icon from './errormessage_icon.png';
 
 class Login extends Component {
@@ -30,8 +31,7 @@ class Login extends Component {
             <h2> Sri Mulyani </h2>
           </div>
           <div className='decoration'>
-            <img src={login2} style={{maxHeight: '100%'}}/>
-            <img src={login1} style={{}}/>
+            <img src={login} style={{maxHeight: '100%'}}/>
           </div>
         </div>
       </div>
@@ -103,24 +103,24 @@ class LoginForm extends Component{
       <div >
         {this.displayErrorMessage}
         <form className='login-form' onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="medium" style={{marginBottom:'1vw'}}>
-            <ControlLabel style={{fontSize:'1.5vw'}}> Email </ControlLabel>
+          <FormGroup className="form-element" controlId="email" bsSize="small" style={{marginBottom:'1vw'}}>
+            <ControlLabel className='form-control-label' style={{fontSize:'1.5vw'}}> Email </ControlLabel>
             <FormControl
               autoFocus
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
-              style={{height:'3vw', borderRadius:'0px'}}
+              /*style={{height:'3vw', borderRadius:'0px'}}*/
             />
           </FormGroup>
 
-          <FormGroup controlId="password" bsSize="medium">
-            <ControlLabel style={{fontSize:'1.5vw'}}> Password </ControlLabel>
+          <FormGroup className="form-element" controlId="password" bsSize="small">
+            <ControlLabel className='form-control-label' style={{fontSize:'1.5vw'}}> Password </ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}
               onChange={this.handleChange}
-              style={{height:'3vw', borderRadius:'0px'}}
+              /*style={{height:'3vw', borderRadius:'0px'}}*/
             />
           </FormGroup>
 

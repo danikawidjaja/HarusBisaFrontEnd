@@ -57,6 +57,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 
+.login .left .login-form .form-element{
+  text-align: left;
+  padding: 0px;
+  margin:0px;
+  margin-top: 1.5vw;
+  margin-bottom: 1.5vw;
+}
+
+.login .left .login-form .form-group-sm .form-control, .login .left .login-form .form-group-sm .form-control:focus{
+  border: 1px solid black;
+  border-radius: 0px;
+  padding: 0.5vw;
+  margin: 0px;
+  background-color: white;
+  color: black;
+  font-weight: 400;
+}
+
+.login .left .login-form .form-control-label{
+  font-weight: 400;
+  color: black;
+}
+.login .left .login-form .button, .login .left .login-form .button:focus, .login .left .login-form .button:hover{
+  text-transform: uppercase;
+  border-radius: 0px;
+  background-color: black;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: white;
+}
+
+
 .login .right{
   border: 0px solid black;
   margin: 0px;
