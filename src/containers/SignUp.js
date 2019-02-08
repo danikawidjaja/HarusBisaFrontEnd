@@ -22,7 +22,9 @@ class SignUp extends Component {
           <p> logo </p>
         </div>
         <div className='content'>
-          <h1> Daftar </h1>
+          <div style={{justifyContent:'flex-start', width:'70%'}}>
+            <h1> Daftar </h1>
+          </div>
           <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
         </div>
       </div>
@@ -77,8 +79,11 @@ class SignUpForm extends Component{
     this.setState({ school, schoolSelected:true });
   }
 
-  handleChangeRole = (role) =>{
-    this.setState({role, roleSelected:true});
+  handleChangeRole = changeEvent => {
+    this.setState({
+      role: changeEvent.target.value,
+      roleSelected: true
+    });
   }
 
   handleSubmit= async event =>{
@@ -113,22 +118,30 @@ class SignUpForm extends Component{
       <div className='signup-form'>
       <form onSubmit={this.handleSubmit}>
         <div className='form-row'>
-          <FormGroup className="form-element" controlId="role" bsSize='medium'>
-            <ToggleButtonGroup 
-              className="form-element"
-              bsSize='large'
-              type='radio'
-              name='options'
-              value={this.state.role}
-              onChange={this.handleChangeRole}>
-              <ToggleButton value={'faculty'}> Dosen </ToggleButton>
-              <ToggleButton value={'student'}> Murid </ToggleButton>
-            </ToggleButtonGroup>
-          </FormGroup>
+            <label className='radio-btn'>
+              <input
+                type='radio'
+                value='student'
+                checked={this.state.role === "student"}
+                onChange={this.handleChangeRole}
+              />
+              Mahasiswa
+            </label>
+
+            <label className='radio-btn'>
+              <input
+                type='radio'
+                value='faculty'
+                checked={this.state.role === "faculty"}
+                onChange={this.handleChangeRole}
+              />
+              Dosen
+            </label>
+          
         </div>
 
         <div className="form-row">
-          <FormGroup className="form-element" controlId="firstname" bsSize="medium">
+          <FormGroup className="form-element-l" controlId="firstname" bsSize="medium">
             <ControlLabel>Nama Depan</ControlLabel>
             <FormControl
               type="text"
@@ -137,7 +150,7 @@ class SignUpForm extends Component{
             />
           </FormGroup>
 
-          <FormGroup className="form-element" controlId="lastname" bsSize="medium">
+          <FormGroup className="form-element-r" controlId="lastname" bsSize="medium">
             <ControlLabel>Nama Belakang</ControlLabel>
             <FormControl
               type="text"
@@ -171,7 +184,7 @@ class SignUpForm extends Component{
         </div>
 
         <div className="form-row">      
-        <FormGroup className="form-element" controlId="password" bsSize="medium">
+        <FormGroup className="form-element-l" controlId="password" bsSize="medium">
           <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
@@ -180,8 +193,8 @@ class SignUpForm extends Component{
           />
         </FormGroup> 
 
-        <FormGroup className="form-element" controlId="confirmPassword" bsSize="medium">
-          <ControlLabel>Confirm Password</ControlLabel>
+        <FormGroup className="form-element-r" controlId="confirmPassword" bsSize="medium">
+          <ControlLabel>Ulangi Password</ControlLabel>
           <FormControl
             type="password"
             value={this.state.confirmPassword}
