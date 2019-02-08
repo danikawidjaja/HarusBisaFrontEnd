@@ -16,7 +16,7 @@ import TermsAndConditions from './containers/TermsAndConditions';
 import FAQ from './containers/FAQ';
 import ContactUs from './containers/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
-
+ 
 export default ({ childProps }) =>
   <Switch>
     <AppliedRoute path="/" exact component={Home} props={childProps}/>

@@ -7,13 +7,10 @@ import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
-import {
-MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
-MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
-} from "mdbreact";
+import AppliedRoute from './components/AppliedRoute';
 
 const auth = new AuthService();
-
+ 
 class App extends Component {
   constructor(props){
     super(props);
@@ -22,11 +19,26 @@ class App extends Component {
       navExpanded: false,
       scrollTop: true,
       toggled: false,
+      visibility: false
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+  }
+
+
+
+  async componentWillReceiveProps(nextProps){
+   let currentRoutes = nextProps.location;
+     if (currentRoutes.pathname === '/notfound') {
+
+      this.setState({ visibility: false });
+    }
+    else{
+      this.setState({ visibility: true });
+    }
+
   }
 
   Auth = auth;
@@ -63,6 +75,10 @@ class App extends Component {
     }
 
     window.addEventListener('scroll', this.handleScroll);
+    let currentRoutes = this.props.location;
+    if (currentRoutes.pathname === '/notfound') {
+      this.setState({ visibility: false });
+    } 
   }
 
   async componentWillUnmount(){
@@ -84,7 +100,7 @@ class App extends Component {
       Auth: this.Auth,
     };
 
-    
+    if (this.state.visibility){
     return (
       <div className="App">
         <Navbar onToggle={this.handleToggle} collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: (this.state.scrollTop|| this.state.toggled) ? 'transparent' : 'white'}}>
@@ -132,6 +148,13 @@ class App extends Component {
       </div>
     );
   }
+
+  else{
+    return(
+      <Routes childProps={childProps}/>
+      )
+  }
+}
 }
 
 export default withRouter(App);
