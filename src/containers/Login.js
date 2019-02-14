@@ -14,7 +14,7 @@ class Login extends Component {
       <div className='login'>
         <div className='left'>
           <div style={{width:'50%', textAlign:'center'}}>
-            <img src={login2} style={{width:'5vw'}}/>
+            <Link to="/"><img src={login2} style={{width:'5vw'}}/></Link>
             <h1> Log In </h1>
             <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
               <p> Tidak punya akun? </p>
@@ -30,9 +30,7 @@ class Login extends Component {
             <p> Karena kita adalah sesuatu yang harus terjadi sehingga jadikan sesuatu berarti dalam </p>
             <h2> Sri Mulyani </h2>
           </div>
-          <div className='decoration'>
-            <img src={login} style={{maxHeight: '100%'}}/>
-          </div>
+          <img src={login} style={{width:'100%', height:'25vw'}}/>
         </div>
       </div>
     );
