@@ -3,7 +3,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
+    font: inherit; 
     vertical-align: baseline;
 }
 
@@ -69,4 +69,30 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	color: black;
 	background-color: #ffe01c;
 	border: 1px black solid;
+}
+
+.faq .info{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	background-color: transparent;
+}
+
+.faq .right{
+	background-color: green;
+	display: flex;
+	flex-direction: column;
+	width: 55%;
+	padding: 2vw;
+}
+
+
+.faq .left{
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+	padding: 2vw;
+
 }
