@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './SignUp.css';
 import Select from 'react-select';
+import login2 from './login2.png';
+import { Link, Redirect, withRouter} from "react-router-dom";
 import { options } from './UniversityList';
 import {
   HelpBlock,
@@ -19,7 +21,7 @@ class SignUp extends Component {
     return (
       <div className='signup'>
         <div className='logo'>
-          <p> logo </p>
+          <Link to="/"><img src={login2} style={{width:'100%'}}/></Link>
         </div>
         <div className='content'>
           <div style={{justifyContent:'flex-start', width:'70%'}}>
