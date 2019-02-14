@@ -31,7 +31,7 @@ class App extends Component {
 
   async componentWillReceiveProps(nextProps){
    let currentRoutes = nextProps.location;
-     if (currentRoutes.pathname === '/notfound') {
+     if (currentRoutes.pathname === '/notfound' || currentRoutes.pathname === '/login' || currentRoutes.pathname === '/signup') {
 
       this.setState({ visibility: false });
     }
