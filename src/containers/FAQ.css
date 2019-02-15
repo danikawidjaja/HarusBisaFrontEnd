@@ -63,8 +63,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	letter-spacing: 2px;
 	font-weight: 400;
 	outline: 0px;
-	margin: 1px;
 }
+
 
 .faq .buttons .button:hover, .faq .buttons .button:active, .faq .btn-group>.btn.active{
 	color: black;
@@ -80,7 +80,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	background-color: transparent;
 }
 
-.faq .right{
+.faq .info .right{
 	background-color: green;
 	display: flex;
 	flex-direction: column;
@@ -89,11 +89,31 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 
-.faq .left{
+.faq .info .left{
 	background-color: white;
 	display: flex;
 	flex-direction: column;
 	width: 45%;
 	padding: 2vw;
-
+	padding-left: 3vw;
+	padding-right: 3vw;
+	justify-content: space-between;
 }
+
+.faq .info .left .i_button{
+	border: 0px;
+	font-weight: bold;
+	background-color: transparent;
+	color: black;
+	width: 100%;
+	text-align: left;
+}
+
+.faq .info .left .i_button:active{
+	border: 0px;
+	font-weight: bold;
+	background-color: transparent;
+	color: grey;
+	width: 100%;
+}
+
