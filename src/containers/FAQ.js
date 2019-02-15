@@ -49,19 +49,44 @@ export default class FAQ extends Component {
 }
 
 class Faculty extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      value:1
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(value, event) {
+    this.setState({
+      value
+    });
+  }
+
+  information(){
+    if (this.state.value === 1){
+      return(<p> This is how you change course setting </p>)
+    }
+    else if (this.state.value === 2){
+      return (<p> This is how you create a new course </p>)
+    }
+    else if (this.state.value === 3){
+      return(<p> This is how you create a new course in HarusBisa </p>)
+    }
+  }
 
   render(){
     return(
       <div className='info'>
-        <div className='left'>
-          <Button> Change Course Settings </Button>
-          <Button> Create a New Course </Button>
-          <Button> Creating a course in HarusBisa  </Button>
-        </div>
+          <ToggleButtonGroup className='left' name='information' type='radio' defaultValue={1} onChange={this.handleChange}>
+            <ToggleButton className='button' value={1} defaultChecked> Change Course Setting </ToggleButton>
+            <ToggleButton className='button' value={2}> Create a New Course </ToggleButton>
+            <ToggleButton className='button' value={3}> Creating a course in HarusBisa </ToggleButton>
+          </ToggleButtonGroup>
         
         <div className='right'>
           <h3> Faculty </h3>
-          <p> lorem ipsum </p>
+          {this.information()}
         </div>
 
       </div>
@@ -100,13 +125,11 @@ class Student extends Component{
   render(){
     return(
       <div className='info'>
-        {/*<div className='left'>*/}
           <ToggleButtonGroup className='left' name='information' type='radio' defaultValue={1} onChange={this.handleChange}>
-            <ToggleButton className='i_button' value={1} defaultChecked> Change Course Setting </ToggleButton>
-            <ToggleButton className='i_button' value={2}> Create a New Course </ToggleButton>
-            <ToggleButton className='i_button' value={3}> Creating a course in HarusBisa </ToggleButton>
+            <ToggleButton className='button' value={1} defaultChecked> Change Course Setting </ToggleButton>
+            <ToggleButton className='button' value={2}> Create a New Course </ToggleButton>
+            <ToggleButton className='button' value={3}> Creating a course in HarusBisa </ToggleButton>
           </ToggleButtonGroup>
-        {/*</div>*/}
         
         <div className='right'>
           <h3> Student </h3>

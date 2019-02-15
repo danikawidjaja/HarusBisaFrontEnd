@@ -66,10 +66,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 
-.faq .buttons .button:hover, .faq .buttons .button:active, .faq .btn-group>.btn.active{
+.faq .buttons .button:hover, .faq .buttons .button:active, .faq .buttons>.btn.active{
 	color: black;
 	background-color: #ffe01c;
 	border: 1px black solid;
+	box-shadow: 0;
+	-webkit-box-shadow: 0;
 }
 
 .faq .info{
@@ -100,7 +102,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	justify-content: space-between;
 }
 
-.faq .info .left .i_button{
+.faq .info .left .button{
 	border: 0px;
 	font-weight: bold;
 	background-color: transparent;
@@ -109,11 +111,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	text-align: left;
 }
 
-.faq .info .left .i_button:active{
+.faq .info .left>.btn.active, .faq .info .left .button:active{
 	border: 0px;
 	font-weight: bold;
-	background-color: transparent;
 	color: grey;
 	width: 100%;
+	box-shadow: none;
+
 }
 
