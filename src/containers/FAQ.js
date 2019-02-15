@@ -10,21 +10,28 @@ export default class FAQ extends Component {
     this.state ={
       role:'faculty'
     }
+
+    this.handleChangeRole = this.handleChangeRole.bind(this);
   }
 
-  handleChangeRole = changeEvent => {
-    console.log(changeEvent.target.value)
+  handleChangeRole(value, event) {
     this.setState({
-      role: changeEvent.target.value,
+      role: value
     });
   }
-  render() { 
+  render() {
     return (
       <div className='faq'>
         <div className='text'> 
           <h1> F.A.Q </h1>
           <p> Informasi mengenai HarusBisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna </p>
           <div className='buttons'>
+            <ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'faculty'} onChange={this.handleChangeRole}>
+              <ToggleButton className='button' value='faculty' defaultChecked> Dosen </ToggleButton>
+              <ToggleButton className='button' value='student'> Mahasiswa </ToggleButton>
+            </ToggleButtonGroup>
+
+            {/*
             <label className='button'>
               <input
                 type='radio'
@@ -44,6 +51,8 @@ export default class FAQ extends Component {
               />
               Mahasiswa
             </label>
+
+          */}
           </div>
         </div>
 
