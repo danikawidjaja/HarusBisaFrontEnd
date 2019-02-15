@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./FAQ.css";
-import { Button} from "react-bootstrap";
+import { Button, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Footer from './Footer';
 
@@ -25,8 +25,25 @@ export default class FAQ extends Component {
           <h1> F.A.Q </h1>
           <p> Informasi mengenai HarusBisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna </p>
           <div className='buttons'>
-            <Button className='button' onClick={this.handleChangeRole} value='faculty' (pre-checked)> Dosen </Button>
-            <Button className='button' onClick={this.handleChangeRole} value='student'> Mahasiswa </Button>
+            <label className='button'>
+              <input
+                type='radio'
+                value='faculty'
+                checked={this.state.role === "faculty"}
+                onChange={this.handleChangeRole}
+              />
+              Dosen
+            </label>
+
+            <label className='button'>
+              <input
+                type='radio'
+                value='student'
+                checked={this.state.role === "student"}
+                onChange={this.handleChangeRole}
+              />
+              Mahasiswa
+            </label>
           </div>
         </div>
 
