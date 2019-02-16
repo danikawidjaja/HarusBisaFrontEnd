@@ -13,7 +13,10 @@ import {
 } from "react-bootstrap";
 
 export default class ContactUs extends Component {
-
+  async componentWillMount(){
+    window.scrollTo(0, 0);
+  }
+  
   render() {
     return (
       <div className='contactus'>

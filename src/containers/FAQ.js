@@ -14,6 +14,10 @@ export default class FAQ extends Component {
     this.handleChangeRole = this.handleChangeRole.bind(this);
   }
 
+  async componentWillMount(){
+    window.scrollTo(0, 0);
+  }
+
   handleChangeRole(value, event) {
     this.setState({
       role: value
@@ -85,7 +89,7 @@ class Faculty extends Component{
           </ToggleButtonGroup>
         
         <div className='right'>
-          <h3> Faculty </h3>
+          <h2> Faculty </h2>
           {this.information()}
         </div>
 
@@ -132,7 +136,7 @@ class Student extends Component{
           </ToggleButtonGroup>
         
         <div className='right'>
-          <h3> Student </h3>
+          <h2> Student </h2>
           {this.information()}
         </div>
 

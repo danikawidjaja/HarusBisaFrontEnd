@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import Footer from './Footer';
 
 export default class TermsAndConditions extends Component {
-
+  async componentWillMount(){
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <div className='termsandconditions'>

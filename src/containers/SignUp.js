@@ -17,6 +17,9 @@ import {
 import AuthService from './AuthService';
 
 class SignUp extends Component {
+  async componentWillMount(){
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <div className='signup'>

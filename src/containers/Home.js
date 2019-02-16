@@ -17,6 +17,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from "react-router-dom";
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Footer from './Footer';
+import ScrollToTopOnMount from '../components/ScrollToTopOnMount';
 
 export default class Home extends Component {
   constructor(props){
@@ -31,6 +32,10 @@ export default class Home extends Component {
     this.props.history.push('/signup');
   }
 
+  async componentDidMount(){
+    window.scrollTo(0, 0);
+  }
+  
   async componentWillMount(){
     if(this.props.Auth.loggedIn()){
       this.props.userHasAuthenticated(true);
@@ -94,7 +99,6 @@ export default class Home extends Component {
         </div>
 
         <Footer />
-
       </div>
     );
   }
