@@ -19,12 +19,13 @@ class App extends Component {
       navExpanded: false,
       scrollTop: true,
       toggled: false,
-      visibility: false
+      visibility: true
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.isNavVisible = this.isNavVisible.bind(this);
   }
 
 
@@ -92,12 +93,19 @@ class App extends Component {
     else if (window.scrollY != 0 ) {
         this.setState({scrollTop: false});
     }
-}
+  }
+
+  isNavVisible = visible => {
+    this.setState({visibility: visible});
+  }
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated,
       Auth: this.Auth,
+      visibility: this.state.visibility,
+      isNavVisible: this.isNavVisible
+
     };
 
     if (this.state.visibility){

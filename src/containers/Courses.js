@@ -29,6 +29,9 @@ class Courses extends Component{
 		
 	}
 
+	async componentWillMount(){
+    	this.props.isNavVisible(true);
+  	}
 	makingCourses(listOfCourse){
 		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []

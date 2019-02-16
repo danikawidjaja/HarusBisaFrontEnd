@@ -15,6 +15,7 @@ import {
 export default class ForgetPassword extends Component {
   async componentWillMount(){
     window.scrollTo(0, 0);
+    this.props.isNavVisible(true);
   }
   render() {
     return (

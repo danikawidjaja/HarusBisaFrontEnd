@@ -40,6 +40,7 @@ export default class Home extends Component {
       this.props.userHasAuthenticated(true);
       this.props.history.push('/courses');
     }
+    this.props.isNavVisible(true);
   }
 
   render() {

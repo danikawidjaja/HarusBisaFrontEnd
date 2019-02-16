@@ -7,6 +7,7 @@ import Footer from './Footer';
 export default class TermsAndConditions extends Component {
   async componentWillMount(){
     window.scrollTo(0, 0);
+    this.props.isNavVisible(false);
   }
   render() {
     return (

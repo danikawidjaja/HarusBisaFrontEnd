@@ -12,6 +12,10 @@ export default class NotFound extends Component{
   handleClick(event){
     this.props.history.push('/');
   }
+  async componentWillMount(){
+    window.scrollTo(0, 0);
+    this.props.isNavVisible(false);
+  }
   render(){
     return(
       <div style={{paddingTop:'3vw'}}>
