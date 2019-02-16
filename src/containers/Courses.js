@@ -30,7 +30,7 @@ class Courses extends Component{
 	}
 
 	async componentWillMount(){
-    	this.props.isNavVisible(true);
+    	this.props.props.isNavVisible(true);
   	}
 	makingCourses(listOfCourse){
 		let numberOfCourses =listOfCourse.length;
@@ -40,7 +40,7 @@ class Courses extends Component{
 				coursesComponent.push(<CourseCard course={listOfCourse[i]} history={this.state.history}/>)
 			} 
 		} else {
-			coursesComponent.push(<p className="App-caption-text"> You are not enrolled in any course </p>)
+			coursesComponent.push(<p> You are not enrolled in any course </p>)
 		}
 		
 		return coursesComponent
@@ -56,8 +56,8 @@ class Courses extends Component{
 		        
 		        <Grid container
 				  direction="row"
-				  justify="space-evenly"
-				  alignItems="center"
+				  justify="center"
+				  alignItems="baseline"
 				  className='content'>
 
 		        	{this.makingCourses(this.state.courses)}
@@ -65,14 +65,14 @@ class Courses extends Component{
 		        	<div>
 		        		<Popup
 						    trigger={
-						    	<Grid item xs>
-						    	<div>
-						    	<OverrideMaterialUICss>
-						    		<Fab style={{backgroundColor: '#ffe01c'}}>
-						    			<AddIcon/>
-						    		</Fab>
-					    		</OverrideMaterialUICss>
-					    		</div>
+						    	<Grid item>
+							    	<div>
+								    	<OverrideMaterialUICss>
+								    		<Fab className='fab'>
+								    			<AddIcon/>
+								    		</Fab>
+							    		</OverrideMaterialUICss>
+						    		</div>
 					    		</Grid>
 					    	}
 						    modal
@@ -216,28 +216,31 @@ class CourseCard extends Component{
 		return(
 			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
-				<CardContent className='text'>
-						<Link to='/lectures' > {this.state.course_name} </Link>
-						<IconButton>
-							<Popup
-								trigger={<MoreVertIcon />}
-								position="bottom right"
-								on = "click"
-							>
+				<CardContent>
+						<div style={{display:'flex', justifyContent:'flex-end', margin:'0'}}>
+							<IconButton>
 								<Popup
-									trigger = {<p> Delete course </p>}
-									modal
+									trigger={<MoreVertIcon />}
+									position="bottom right"
+									on = "click"
 								>
-									<p className='app-caption-text'> Are you sure? </p>
-									
-								</Popup>
-							</Popup>
-				            
-				        </IconButton>
-						<p> Jan 2019 - Mar 2019 </p>
-						<p> {this.renderInstructor(this.state.instructors)} </p>
-						<br/>
-						<p> Kode Bergabung: {this.state.join_code} </p>
+									<Popup
+										trigger = {<p> Delete course </p>}
+										modal
+									>
+										<p className='app-caption-text'> Are you sure? </p>
+										
+									</Popup>
+								</Popup>    
+				        	</IconButton>
+						</div>
+						<div style={{margin: '2vw',marginBottom: '1vw', marginTop:'3vw'}}>
+							<Link to='/lectures' > {this.state.course_name} </Link>
+							<p> Jan 2019 - Mar 2019 </p>
+							<p> {this.renderInstructor(this.state.instructors)} </p>
+							<br/>
+							<p> Kode Bergabung: {this.state.join_code} </p>
+						</div>
 					
 				</CardContent>
 			 </Card>
