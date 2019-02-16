@@ -73,9 +73,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 }
 
-.Home-button:hover{
+.Home-button:hover, .Home-button:active, .Home-button:focus, .Home-button:focus:active{
   background-color: #5960A3;
   color: white;
+  border: none;
 }
 
 .Home .about {

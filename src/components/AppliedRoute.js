@@ -6,5 +6,4 @@ export default ({ component: C, props: cProps, ...rest }) =>
   	props => 
   		<C {...props} {...cProps} />
   	} 
-  	onUpdate={() => window.scrollTo(0, 0)}
   />;

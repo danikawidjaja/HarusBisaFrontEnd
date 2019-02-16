@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import logo from './logokrul.png';
 import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { HashLink as Link } from 'react-router-hash-link';
+import { NavHashLink as Link } from 'react-router-hash-link';
 import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
@@ -125,7 +125,7 @@ class App extends Component {
                 </Fragment>
                 : 
                 <Fragment>
-                  <LinkContainer to='/#about' className='navspec'>
+                  <LinkContainer to='/home#about' className='navspec'>
                     <NavItem >
                       Kenapa HarusBisa?
                     </NavItem>

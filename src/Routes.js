@@ -16,10 +16,10 @@ import TermsAndConditions from './containers/TermsAndConditions';
 import FAQ from './containers/FAQ';
 import ContactUs from './containers/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
-import ScrollToTop from './components/ScrollToTop';
  
 export default ({ childProps }) =>
   <Switch>
+        <AppliedRoute path="/home" exact component={Home} props={childProps}/>
         <AppliedRoute path="/" exact component={Home} props={childProps}/>
         <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />

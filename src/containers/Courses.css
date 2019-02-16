@@ -1,0 +1,196 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit; 
+    vertical-align: baseline;
+}
+
+.Courses{
+	background-color: white;
+	height: 100%;
+	justify-content: space-around;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Rubik', sans-serif;
+	align-items: center;
+	padding-top: 6vw;
+	text-align: left;
+}
+
+.Courses h1{
+	font-weight: 500;
+	font-size: 4vw;
+	justify-content: flex-start;
+	text-align: left;
+	margin-bottom: 1.5vw;
+	color: black;
+}
+
+.Courses .content p{
+
+}
+
+.Courses .content{
+	text-align: center;
+	height: 100%;
+	align-items: center;
+}
+
+.Courses .button, .Courses .button:focus{
+	background-color: black;
+	color: #ffe01c;
+	width: 15vw;
+	border: 1px solid black;
+	border-radius: 0px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 400;
+	outline: 0px;
+}
+
+
+.Courses  .button:hover, .Courses .button:active{
+	color: black;
+	background-color: #ffe01c;
+	border: 1px black solid;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+/*.Courses .info{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	background-color: transparent;
+}
+
+.Courses .info .right{
+	background-color: beige;
+	display: flex;
+	flex-direction: column;
+	width: 55%;
+	padding: 2vw;
+}
+
+
+.Courses .info .left{
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+	padding: 2vw;
+	padding-left: 3vw;
+	padding-right: 3vw;
+	justify-content: space-between;
+}
+
+.Courses .info .left .button{
+	border: 0px;
+	font-weight: bold;
+	background-color: transparent;
+	color: black;
+	width: 100%;
+	text-align: left;
+}
+
+.Courses .info .left>.btn.active, .Courses .info .left .button:active{
+	border: 0px;
+	font-weight: bold;
+	color: grey;
+	width: 100%;
+	box-shadow: none;
+
+}*/
+
+
+
+.Courses .course-card{
+  padding: 0.8rem;
+  padding: 15px;
+  margin: 10px;
+  justify-content: space-between;
+  background: url('./matakuliahbiru.jpg');
+  background-size: 100%;
+  width: 30%;
+  height: 100%;
+  text-align: left;
+  color: white;
+};
+
+
+.Courses .course-card .MuiCardContent-root-29{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-top: 5vw;
+  background-color: pink;
+}
+
+.Courses .course-card .MuiCardContent-root-29 a{
+	font-weight: 500;
+	font-size: 1.5vw;
+	color: white;
+}
+
+.Courses .course-card .MuiCardContent-root-29 a:hover{
+	color: lightgrey;
+	text-decoration: none;
+}
+
+.Courses .course-card .MuiCardContent-root-29 p{
+	font-size: 1vw;
+}
+
+.Courses .course-popup{
+	text-align: center;
+
+}
+
+.Courses .course-popup h2{
+	color: black;
+	font-weight: 400;
+	text-align: center;
+}
+
+.Courses .course-popup .course-popup-header{
+  display: flex;
+  flex: row;
+  justify-content: center;
+  text-align: center;
+  font-size: calc(20px + 2vmin);
+  font-weight: 500;
+  color: black;
+  margin-bottom: 1.5vw;
+}
+
+
+.Courses .course-popup .form{
+	align-items: center;
+	margin-right: 2vw;
+    margin-left: 2vw;
+    justify-content: flex-end;
+    
+}
+
+.Courses .course-popup label{
+	text-align: right;
+}
+
+.Courses .course-popup .button, .Courses .course-popup .button:hover, .Courses .course-popup .button:focus{
+	background-color: #ffe01c;
+	border:0px;
+	color: black;
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 400;
+	margin-left: 1vw;
+}
+
+.Courses .course-popup .buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}

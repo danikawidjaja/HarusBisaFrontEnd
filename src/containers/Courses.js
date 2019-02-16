@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Page.css';
+import './Courses.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import withAuth from './withAuth';
@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Grid from '@material-ui/core/Grid';
 
-class Courses extends Component{
+class Courses extends Component{ 
 	constructor(props){
 		super(props);
 
@@ -45,15 +45,17 @@ class Courses extends Component{
 
 	render(){
 		return(
-    		<div className="App">
-		        <div className="App-header">
-		            <h2 className="App-header-text">Courses</h2>
+    		<div className="Courses">
+		        <div >
+		            <h1>Mata Kuliah</h1>
 		        </div>
-		        {/*<div className='course-card-container'>*/}
+		        
+		        
 		        <Grid container
 				  direction="row"
 				  justify="space-evenly"
-				  alignItems="center">
+				  alignItems="center"
+				  className='content'>
 
 		        	{this.makingCourses(this.state.courses)}
 		        
@@ -63,13 +65,9 @@ class Courses extends Component{
 						    	<Grid item xs>
 						    	<div>
 						    	<OverrideMaterialUICss>
-						    		<Card className='course-add-card'>
-						    			<CardContent>
-						    				<div className='course-add-button'>
-						    					<AddIcon/>
-						    				</div>
-						    			</CardContent>
-						    		</Card>
+						    		<Fab style={{backgroundColor: '#ffe01c'}}>
+						    			<AddIcon/>
+						    		</Fab>
 					    		</OverrideMaterialUICss>
 					    		</div>
 					    		</Grid>
@@ -77,14 +75,11 @@ class Courses extends Component{
 						    modal
   						>
   						{close => (
-  							<div>
+  							<div className='course-popup'>
 	  							<div className= "course-popup-header">
-	        						<h2 className = "course-popup-title"> Add Course </h2>
-	        						<IconButton aria-label="Close" onClick={close}>
-          								<CloseIcon />
-        							</IconButton>
+	        						<h2> Tambah Mata Kuliah </h2>
 		    					</div>
-  								<AddCourse/>
+  								<AddCourse closefunction={close}/>
   							</div>
   						)}
   							
@@ -92,9 +87,6 @@ class Courses extends Component{
 
 				    </div>
 				</Grid>	
-			    {/*</div>*/}    
-		         
-
         	</div>
 		)
 
@@ -105,7 +97,10 @@ class AddCourse extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			join_code: ''
+			join_code: '',
+			course_name:'',
+			academic_year:'',
+			description:''
 		}
 	}
 	handleChange = event => {
@@ -115,31 +110,69 @@ class AddCourse extends Component{
   	}
 
   	handleSubmit(event){
-  		alert(this.state.join_code+' course added')
+  		alert(this.state.course_name+' course added')
+  	}
+
+  	validateForm(){
+  		if (this.state.course_name.length == 0 || this.state.academic_year.length == 0){
+  			return false;
+  		}
+  		else{
+  			return true;
+  		}
   	}
 	render(){
 	    return(
-	      	<div className="App-content">
+	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
-	          		<FormGroup controlId="join_code" bsSize="large">
-	            		<ControlLabel>Join Code</ControlLabel>
+	          		<FormGroup controlId="course_name">
+	            		<ControlLabel>Nama Kelas</ControlLabel>
 			            <FormControl
 			              autoFocus
 			              type="text"
-			              value={this.state.join_code}
+			              value={this.state.course_name}
 			              onChange={this.handleChange}
+			              placeholder = 'Biologi kelas A'
 			            />
 	          		</FormGroup>
 
-		          	<Button
-			           block
-			           bsSize="large"
-			           disabled={!this.state.join_code}
-			           type="submit"
-			           className="button"
-			        >
-		            Add Course
-		          	</Button>
+	          		<FormGroup controlId="academic_year">
+	            		<ControlLabel>Mulai Kelas</ControlLabel>
+			            <FormControl
+			              autoFocus
+			              type="text"
+			              value={this.state.academic_year}
+			              onChange={this.handleChange}
+			              placeholder= 'Januari 2019 - Maret 2019'
+			            />
+	          		</FormGroup>
+
+	          		<FormGroup controlId="description">
+	            		<ControlLabel>Deskripsi</ControlLabel>
+			            <FormControl
+			              autoFocus
+			              type="text"
+			              value={this.state.description}
+			              onChange={this.handleChange}
+			              placeholder= '(optional)'
+			            />
+	          		</FormGroup>
+
+	          		<div className='buttons'>
+	          			<Button
+	          				className='button'
+	          				style={{backgroundColor:'transparent'}}
+	          				onClick={this.props.closefunction}>
+			          		Batal
+			          	</Button>
+			          	<Button
+				           disabled={!this.validateForm()}
+				           type="submit"
+				           className="button"
+				        >
+			            Tambah
+			          	</Button>
+			         </div>
 	        	</form>
 	      	</div>
 	    );
@@ -180,9 +213,8 @@ class CourseCard extends Component{
 		return(
 			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
-				<CardContent>
-					<div className='course-card-header'> 
-						<h5 className='course-card-title'> {this.state.course_code} </h5>
+				<CardContent className='text'>
+						<Link to='/lectures' > {this.state.course_name} </Link>
 						<IconButton>
 							<Popup
 								trigger={<MoreVertIcon />}
@@ -198,15 +230,13 @@ class CourseCard extends Component{
 								</Popup>
 							</Popup>
 				            
-				        </IconButton>	
-					</div>
-					<p> {this.state.course_name} </p>
-					<p> Join code: {this.state.join_code} </p>
-					<p> {this.renderInstructor(this.state.instructors)} </p>
+				        </IconButton>
+						<p> Jan 2019 - Mar 2019 </p>
+						<p> {this.renderInstructor(this.state.instructors)} </p>
+						<br/>
+						<p> Kode Bergabung: {this.state.join_code} </p>
+					
 				</CardContent>
-				<CardActions>
-					<Button className='button' onClick={this.handleClick}> Enter course </Button>
-				</CardActions>
 			 </Card>
 			 </OverrideMaterialUICss>
 		)
