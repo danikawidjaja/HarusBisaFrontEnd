@@ -6,6 +6,9 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PlayArrow from '@material-ui/icons/PlayArrow';
+import PeopleOutline from '@material-ui/icons/PeopleOutline';
+import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
+import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
@@ -63,7 +66,15 @@ class DashboardRight extends Component{
 						<Link to='/courses'> Mata Kuliah </Link>
 					</div>
 					<div>
-						<p> other icons </p>
+						<IconButton to='/profile'>
+							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton>
+						<IconButton>
+							<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton>
+						<IconButton>
+							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton>
 					</div>
 
     			</div>
@@ -71,7 +82,7 @@ class DashboardRight extends Component{
     				<OverrideMaterialUICss>
     				<Card className='live-card'>
     						<div className='card-content'>
-    							<div style={{marginTop:'1vw'}}>
+    							<div style={{marginTop:'1.2vw'}}>
     								<p> Biologi Molekuler Kelas A </p>
     								<p> Kelas 2/7 </p>
     							</div>
@@ -90,7 +101,7 @@ class DashboardRight extends Component{
 	    								<Fab className='fab'>
 									    	<OverrideMaterialUICss> <AddIcon style={{color:'white'}}/> </OverrideMaterialUICss>
 									    </Fab>
-									    <p> Tambah Pertanyaan </p>
+									    <p> Tambah<br/>Pertanyaan </p>
 	    							</div>
 	    						</div>
     						</div>

@@ -102,12 +102,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 1vw;
 	padding-left: 2vw;
 	width: 100%;
+	justify-content: space-between;
 }
 
 .Dashboard .right .content .live-card .card-content .interactive{
 	background-color: white;
 	border-radius: 10px;
-	padding: 0px;
+	padding: 0.5vw;
 	display: flex;
 	flex-direction: row;
 	vertical-align: middle;
@@ -116,15 +117,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 .Dashboard .right .content .live-card .card-content .interactive .fab{
 	background-color: red;
+	margin: 0vw;
 	margin-right: 1vw;
 	margin-left: 1vw;
+	border-radius: 50%;
 }
 
 .Dashboard .right .content .live-card .card-content .interactive p{
 	color: black;
 	padding: 0px;
-	margin-top: 1.5vw;
-	margin-bottom: 1vw;
+	margin: auto;
 	margin-right: 1.25vw;
 }
 
