@@ -16,6 +16,7 @@ import TermsAndConditions from './containers/TermsAndConditions';
 import FAQ from './containers/FAQ';
 import ContactUs from './containers/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
+import Dashboard from './containers/Dashboard';
  
 export default ({ childProps }) =>
   <Switch>
@@ -26,7 +27,7 @@ export default ({ childProps }) =>
         <AppliedRoute path='/pricing' exact component = {Pricing} props={childProps} />
         <AppliedRoute path='/why' exact component = {WhyHarusBisa} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
-        <AppliedRoute path='/lectures' component={Lectures} props={childProps}/>
+        <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/profile' component = {Profile} props={childProps} />
         <AppliedRoute path='/questions' component = {Questions} props={childProps} />
         <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>

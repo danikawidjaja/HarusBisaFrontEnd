@@ -10,6 +10,9 @@ class Lectures extends Component{
 		super(props);
 	}
 
+	async componentWillMount(){
+    	this.props.isNavVisible(false);
+  	}
 	render(){
 		return(
     		<div className="App">

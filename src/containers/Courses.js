@@ -235,7 +235,7 @@ class CourseCard extends Component{
 				        	</IconButton>
 						</div>
 						<div style={{margin: '2vw',marginBottom: '1vw', marginTop:'3vw'}}>
-							<Link to='/lectures' > {this.state.course_name} </Link>
+							<Link to='/dashboard' > {this.state.course_name} </Link>
 							<p> Jan 2019 - Mar 2019 </p>
 							<p> {this.renderInstructor(this.state.instructors)} </p>
 							<br/>

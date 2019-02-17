@@ -77,14 +77,6 @@
   font-weight: normal;
 }
 
-.button{
-  background-color: #502075;
-  border: none;
-  transition: 0.3s opacity ease;
-  cursor: pointer;
-  color: white;
-  width: 100%;
-}
 
 
 .lectures-entry{
