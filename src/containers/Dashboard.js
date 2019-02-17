@@ -65,7 +65,7 @@ class DashboardRight extends Component{
 						</IconButton>
 						<Link to='/courses'> Mata Kuliah </Link>
 					</div>
-					<div>
+					<div style={{display:'flex'}}>
 						<IconButton to='/profile'>
 							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton>
@@ -75,6 +75,9 @@ class DashboardRight extends Component{
 						<IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton>
+						<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
+							<h1 style={{margin:'auto'}}> W </h1>
+						</div>
 					</div>
 
     			</div>
