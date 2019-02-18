@@ -25,7 +25,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	height: 100%;
 }
 
-.Dashboard .left .button{
+.Dashboard .left .buttons{
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+
+}
+
+.Dashboard .left .buttons .button{
 	width: 100%;
 	background-color: transparent;
 	border:none;
@@ -36,13 +43,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin-bottom: 0.25vw;
 }
 
-.Dashboard .left .button:active, .Dashboard .left .button:focus{
+.Dashboard .left .buttons .button:active, .Dashboard .left .buttons .button:focus, .Dashboard .left .buttons>.btn.active{
 	border: none;
 	border-right: 0.75vw #ffe01c solid;
 	outline: none;
+	color:#5960A3;
 }
 
-.Dashboard .left .button:hover{
+.Dashboard .left .buttons .button:hover{
 	color:#5960A3;
 }
 

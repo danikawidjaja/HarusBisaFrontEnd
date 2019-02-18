@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -22,19 +22,40 @@ import Fab from '@material-ui/core/Fab';
 class Dashboard extends Component{
 	constructor(props){
 		super(props);
+		this.state={
+			lectureDates:['2/3', '2/7', '2/10', '2/11', '2/12'],
+			class_name:'Biologi Molekuler Kelas A',
+			selectedDate:'',
+		};
+		this.changeSelectedDate= this.changeSelectedDate.bind(this);
+		this.getSelectedDate = this.getSelectedDate.bind(this);
 	}
 
+	changeSelectedDate(date){
+		this.setState={
+			selectedDate: date
+		}
+	}
+
+	getSelectedDate(){
+		return this.state.selectedDate;
+	}
 	async componentWillMount(){
     	this.props.isNavVisible(false);
+    	window.scrollTo(0, 0);
+    	this.changeSelectedDate(this.state.lectureDates[0]);
+  	}
+
+  	async componentDidMount(){
   	}
 	render(){
 		return(
     		<div className='Dashboard'>
     			<div className='left'>
-    				<DashboardLeft/>
+    				<DashboardLeft lectureDates={this.state.lectureDates} changeSelectedDate={this.changeSelectedDate}/>
     			</div>
     			<div className='right'>
-    				<DashboardRight/>
+    				<DashboardRight class_name={this.state.class_name} selectedDate={this.state.selectedDate} getSelectedDate={this.getSelectedDate}/>
     			</div>
     		</div>
 		)
@@ -42,52 +63,108 @@ class Dashboard extends Component{
 }
 
 class DashboardLeft extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			selectedDate:this.props.lectureDates[0],
+			lectureDates: this.props.lectureDates,
+		}
+		this.handleChangeDate = this.handleChangeDate.bind(this);
+	}
+	handleChangeDate(value, event) {
+	    this.setState({
+	      selectedDate: value
+	    });
+	    this.props.changeSelectedDate(value);
+  	}
+
+  	makeToggleButtons(lectureDates){
+  		let toggleButtons = []
+  		for (let i=0; i<lectureDates.length; i++){
+  			if (i==0){
+  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]} defaultChecked> Kelas {lectureDates[i]} </ToggleButton>)
+  			}
+  			else{
+  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]}> Kelas {lectureDates[i]} </ToggleButton>)
+  			}
+  		}
+  		return toggleButtons
+  	}
 	render(){
 		return(
 			<div>
-				<Button className='button'> Kelas 2/3 </Button>
-				<Button className='button'> Kelas 2/7 </Button>
-				<Button className='button'> Kelas 2/3 </Button>
+				<ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
+            		{this.makeToggleButtons(this.state.lectureDates)}
+          		</ToggleButtonGroup>
 				<Button className='addButton'> + Add Class </Button>
 			</div>
 		)
 	}
 }
 
+class DashboardNavigation extends Component{
+	render(){
+		return(
+			<div className='navigation'>
+				<div>
+					<Link to='/courses'>
+						<IconButton>
+							<KeyboardArrowLeft/>
+						</IconButton>
+					</Link>
+					<Link to='/courses'> Mata Kuliah </Link>
+				</div>
+				<div style={{display:'flex'}}>
+					<IconButton>
+						<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
+					</IconButton>
+					<IconButton>
+						<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+					</IconButton>
+					<IconButton>
+						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+					</IconButton>
+					<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
+						<h1 style={{margin:'auto'}}> W </h1>
+					</div>
+				</div>
+   			</div>
+		)
+	}
+
+}
 class DashboardRight extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			selectedDate:''
+		}
+	}
+
+	async componentWillMount(){
+		//console.log(this.props.getSelectedDate())
+		this.setState={
+			selectedDate: this.props.getSelectedDate(),
+		}
+	}
+
+	async componentDidMount(){
+		//console.log(this.props.getSelectedDate())
+		this.setState={
+			selectedDate: this.props.getSelectedDate(),
+		}
+	}
 	render(){
 		return(
 			<div>
-				<div className='navigation'>
-					<div>
-						<IconButton to='/courses'>
-							<KeyboardArrowLeft/>
-						</IconButton>
-						<Link to='/courses'> Mata Kuliah </Link>
-					</div>
-					<div style={{display:'flex'}}>
-						<IconButton to='/profile'>
-							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
-						</IconButton>
-						<IconButton>
-							<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-						</IconButton>
-						<IconButton>
-							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-						</IconButton>
-						<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
-							<h1 style={{margin:'auto'}}> W </h1>
-						</div>
-					</div>
-
-    			</div>
+				<DashboardNavigation/>
     			<div className='content'>
     				<OverrideMaterialUICss>
     				<Card className='live-card'>
     						<div className='card-content'>
     							<div style={{marginTop:'1.2vw'}}>
-    								<p> Biologi Molekuler Kelas A </p>
-    								<p> Kelas 2/7 </p>
+    								<p> {this.props.class_name} </p>
+    								<p> Kelas {this.state.selectedDate} </p>
     							</div>
     							<div style={{marginLeft:'2vw', display:'flex', flexDirection:'row'}}>
 	    							<div className='interactive'>
