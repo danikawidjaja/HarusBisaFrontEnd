@@ -307,6 +307,7 @@ class QuestionCard extends Component{
 			question: 'Di antara karakteristik struktural berikut yang dengan dengan struktur tubuhnya. Di antara pasangan tersebut yang mungkin adalah: ',
 			possible_answers: ['pisang', 'bambu', 'jati', 'cemara'],
 			correct_answer: 'pisang',
+			question_number:'1',
 			live: false,
 			expanded: false,
 		}
@@ -319,7 +320,7 @@ class QuestionCard extends Component{
 	createAnswerButtons(answerArray){
 		let answerButtons=[]
 		for (let i=0; i<answerArray.length; i++){
-			answerButtons.push(<ToggleButton className='answer'>{answerArray[i]}</ToggleButton>)
+			answerButtons.push(<ToggleButton className='answer'> &#65;. {answerArray[i]}</ToggleButton>)
 		}
 		return answerButtons;
 	}
@@ -330,8 +331,16 @@ class QuestionCard extends Component{
 				<Card className='question-card'>
 					<OverrideMaterialUICss><CardContent className='card-content'>
 						<div>
-							<p> 1. {this.state.question} </p>
+							<p> {this.state.question_number}. </p>
 						</div>
+						<div style={{width:'85%'}}>
+							<p> {this.state.question} </p>
+						</div>
+						
+							<OverrideMaterialUICss><IconButton style={{padding:'0'}}>
+								<MoreVertIcon/>
+							</IconButton> </OverrideMaterialUICss>
+						
 					</CardContent> </OverrideMaterialUICss>
 					
 					<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
