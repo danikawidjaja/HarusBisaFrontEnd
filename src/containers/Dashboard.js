@@ -17,6 +17,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Fab from '@material-ui/core/Fab';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Collapse from '@material-ui/core/Collapse';
+
+
 
 
 class Dashboard extends Component{
@@ -187,7 +192,56 @@ class DashboardRight extends Component{
     						</div>
     				</Card>
     				</OverrideMaterialUICss>
+
+    				<QuestionCard/>
     			</div>
+			</div>
+		)
+	}
+}
+
+class QuestionCard extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			question: 'Di antara karakteristik struktural berikut yang dengan dengan struktur tubuhnya. Di antara pasangan tersebut yang mungkin adalah: ',
+			possible_answers: ['pisang', 'bambu', 'jati', 'cemara'],
+			correct_answer: 'pisang',
+			live: false,
+			expanded: false,
+		}
+	}
+
+	handleExpandClick = () =>{
+		this.setState(state => ({expanded: !state.expanded}))
+	}
+	render(){
+		return(
+			<div>
+				<OverrideMaterialUICss>
+				<Card className='question-card'>
+					<CardContent>
+						<div>
+							<p> 1. {this.state.question} </p>
+						</div>
+					</CardContent>
+					<CardActions>
+						<OverrideMaterialUICss>
+						<IconButton 
+							onClick={this.handleExpandClick}
+							aria-expanded={this.state.expanded}
+							aria-label='Show more'
+							className='expand-button'
+						>
+							<ExpandMoreIcon/>
+						</IconButton>
+						</OverrideMaterialUICss>
+					</CardActions>
+					<Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+						<p> {this.state.possible_answers} </p>
+					</Collapse>
+				</Card>
+				</OverrideMaterialUICss>
 			</div>
 		)
 	}

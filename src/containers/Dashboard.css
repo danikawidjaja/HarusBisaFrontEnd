@@ -147,3 +147,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	color:#5960A3 ;
 	text-decoration: none;
 }
+
+.Dashboard .right .content .question-card{
+	display: flex;
+	flex-direction: column;
+	margin: 2vw;
+}
+
+.Dashboard .right .content .question-card .expand-button{
+	transform: rotate(0deg);
+	margin-left: auto;
+}
