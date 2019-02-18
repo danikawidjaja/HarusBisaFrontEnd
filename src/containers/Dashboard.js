@@ -319,7 +319,7 @@ class QuestionCard extends Component{
 	createAnswerButtons(answerArray){
 		let answerButtons=[]
 		for (let i=0; i<answerArray.length; i++){
-			answerButtons.push(<ToggleButton>{answerArray[i]}</ToggleButton>)
+			answerButtons.push(<ToggleButton className='answer'>{answerArray[i]}</ToggleButton>)
 		}
 		return answerButtons;
 	}
@@ -328,13 +328,13 @@ class QuestionCard extends Component{
 			<div>
 				<OverrideMaterialUICss>
 				<Card className='question-card'>
-					<CardContent>
+					<OverrideMaterialUICss><CardContent className='card-content'>
 						<div>
 							<p> 1. {this.state.question} </p>
 						</div>
-					</CardContent>
+					</CardContent> </OverrideMaterialUICss>
 					
-					<OverrideMaterialUICss> <CardActions style={{justifyContent:'space-between'}}>
+					<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
 						<OverrideMaterialUICss>
 						<IconButton 
 							onClick={this.handleExpandClick}
@@ -348,7 +348,7 @@ class QuestionCard extends Component{
 						<Button> Live </Button>
 					</CardActions></OverrideMaterialUICss>
 					<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
-						<ToggleButtonGroup style={{display:'flex',flexDirection:'column', margin:'auto'}} name='lectureDates'type='radio'>
+						<ToggleButtonGroup className='answers' name='lectureDates'type='radio'>
 							{this.createAnswerButtons(this.state.possible_answers)}
 						</ToggleButtonGroup>
 					</Collapse></OverrideMaterialUICss>
