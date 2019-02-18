@@ -7,7 +7,7 @@ import Footer from './Footer';
 export default class FAQ extends Component {
   constructor(props){
     super(props);
-    this.state ={
+    this.state ={ 
       role:'faculty'
     }
 

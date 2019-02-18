@@ -16,13 +16,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .Dashboard .left{
 	width: 15%;
 	background-color: lightgrey;
-	padding-top: 5.5vw;
+	padding-top: 10px;
 	align-items: center;
 	justify-content: center;
 	display: flex;
 	align-content: center;
 	text-align: center;
-	height: 100%;
+	min-height: 100%;
+	
 }
 
 .Dashboard .left .buttons{
@@ -70,6 +71,64 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .Dashboard .left .addButton:focus{
 	outline: none;
 }
+
+.Dashboard .popup{
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+
+}
+
+.Dashboard .popup h2{
+	color: black;
+	font-weight: 400;
+	text-align: center;
+}
+
+.Dashboard .popup .popup-header{
+  display: flex;
+  flex: row;
+  justify-content: center;
+  text-align: center;
+  font-size: calc(15px + 2vmin);
+  font-weight: 500;
+  color: black;
+  margin-bottom: 1.5vw;
+  margin-top: 1.5vw;
+}
+
+
+.Dashboard .popup .form{
+	align-items: center;
+	margin-right: 5vw;
+    margin-left: 5vw;
+    margin-bottom: 1vw;
+    justify-content: flex-end;
+    
+}
+
+.Dashboard .popup label{
+	text-align: right;
+}
+
+.Dashboard .left .popup .button, .Dashboard .left .popup .button:hover, .Dashboard .left .popup .button:focus{
+	background-color: #ffe01c;
+	border:0px;
+	color: black;
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 400;
+	margin-left: 1vw;
+	width: 50%;
+}
+
+.Dashboard .popup .buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
 
 
 
@@ -138,6 +197,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin-right: 1.25vw;
 }
 
+.Dashboard .right .content .live-card .card-content .interactive h2{
+	width: 100%;
+	border-bottom: 1px solid black;
+	margin:auto;
+	font-size: 2vw;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+}
 .Dashboard .right a{
 	color: black;
 	margin-top: 1.1vw;

@@ -142,7 +142,6 @@ class AddCourse extends Component{
 	          		<FormGroup controlId="academic_year">
 	            		<ControlLabel>Mulai Kelas</ControlLabel>
 			            <FormControl
-			              autoFocus
 			              type="text"
 			              value={this.state.academic_year}
 			              onChange={this.handleChange}
@@ -153,7 +152,6 @@ class AddCourse extends Component{
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
 			            <FormControl
-			              autoFocus
 			              type="text"
 			              value={this.state.description}
 			              onChange={this.handleChange}

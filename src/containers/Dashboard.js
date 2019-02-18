@@ -20,6 +20,7 @@ import Fab from '@material-ui/core/Fab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Collapse from '@material-ui/core/Collapse';
+import Popup from 'reactjs-popup';
 
 
 
@@ -85,28 +86,114 @@ class DashboardLeft extends Component{
 
   	makeToggleButtons(lectureDates){
   		let toggleButtons = []
-  		for (let i=0; i<lectureDates.length; i++){
-  			if (i==0){
-  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]} defaultChecked> Kelas {lectureDates[i]} </ToggleButton>)
-  			}
-  			else{
-  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]}> Kelas {lectureDates[i]} </ToggleButton>)
-  			}
+  		if (lectureDates.length == 0){
+  			toggleButtons.push(<OverrideMaterialUICss><Fab style={{backgroundColor:'#ffe01c'}}> <AddIcon/> </Fab> </OverrideMaterialUICss>)
   		}
+  		else{
+	  		for (let i=0; i<lectureDates.length; i++){
+	  			if (i==0){
+	  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]} defaultChecked> Kelas {lectureDates[i]} </ToggleButton>)
+	  			}
+	  			else{
+	  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]}> Kelas {lectureDates[i]} </ToggleButton>)
+	  			}
+	  		}
+	  	}
   		return toggleButtons
   	}
 	render(){
 		return(
 			<div>
-				<ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
-            		{this.makeToggleButtons(this.state.lectureDates)}
+				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
+            		{this.makeToggleButtons(/*[]*/this.state.lectureDates)}
           		</ToggleButtonGroup>
-				<Button className='addButton'> + Add Class </Button>
+          		<Popup trigger={<Button className='addButton'> + Add Class </Button>} modal>
+  					{close => (
+  						<div className='popup'>
+	  						<div className= "popup-header">
+	        					<h2> Tambah Kelas </h2>
+		    				</div>
+  							<AddLecture closefunction={close}/>
+  						</div>
+  					)}			
+  				</Popup>
+				
 			</div>
 		)
 	}
 }
 
+class AddLecture extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			class_date: '',
+			description:''
+		}
+	}
+	handleChange = event => {
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+
+  	handleSubmit(event){
+  		alert(this.state.class_date+' course added')
+  	}
+
+  	validateForm(){
+  		if (this.state.class_date.length == 0){
+  			return false;
+  		}
+  		else{
+  			return true;
+  		}
+  	}
+	render(){
+	    return(
+	      	<div className="form">
+	        	<form onSubmit={this.handleSubmit}>
+	          		<FormGroup controlId="class_date">
+	            		<ControlLabel>Tanggal kelas</ControlLabel>
+			            <FormControl
+			              autoFocus
+			              type="text"
+			              value={this.state.class_date}
+			              onChange={this.handleChange}
+			              placeholder = '2/3'
+			            />
+	          		</FormGroup>
+
+	          		<FormGroup controlId="description">
+	            		<ControlLabel>Deskripsi</ControlLabel>
+			            <FormControl
+			              type="text"
+			              value={this.state.description}
+			              onChange={this.handleChange}
+			              placeholder= '(optional)'
+			            />
+	          		</FormGroup>
+
+	          		<div className='buttons'>
+	          			<Button
+	          				className='button'
+	          				style={{backgroundColor:'transparent'}}
+	          				onClick={this.props.closefunction}>
+			          		Batal
+			          	</Button>
+			          	<Button
+				           disabled={!this.validateForm()}
+				           type="submit"
+				           className="button"
+				        >
+			            Tambah
+			          	</Button>
+			         </div>
+	        	</form>
+	      	</div>
+	    );
+  	}
+}
 class DashboardNavigation extends Component{
 	render(){
 		return(
@@ -182,10 +269,23 @@ class DashboardRight extends Component{
 	    								</OverrideMaterialUICss>
 	    								<p> Mulai Kelas </p>
 	    							</div>
-	    							<div className='interactive'>	    								
-	    								<Fab className='fab'>
-									    	<OverrideMaterialUICss> <AddIcon style={{color:'white'}}/> </OverrideMaterialUICss>
-									    </Fab>
+	    							<div className='interactive'>
+	    								<Popup trigger={	    								
+		    								<Fab className='fab'>
+										    	<OverrideMaterialUICss> <AddIcon style={{color:'white'}}/> </OverrideMaterialUICss>
+										    </Fab>
+											}
+											modal
+										>
+											{close => (
+						  						<div className='popup'>
+							  						<h2> Pilihan Ganda </h2>
+							  						<h2> Isian </h2>
+							  						<h2 style={{borderBottom:'none'}}> Jawaban Angka </h2>
+						  						</div>
+						  					)}			
+						  				</Popup>
+
 									    <p> Tambah<br/>Pertanyaan </p>
 	    							</div>
 	    						</div>
@@ -215,6 +315,14 @@ class QuestionCard extends Component{
 	handleExpandClick = () =>{
 		this.setState(state => ({expanded: !state.expanded}))
 	}
+
+	createAnswerButtons(answerArray){
+		let answerButtons=[]
+		for (let i=0; i<answerArray.length; i++){
+			answerButtons.push(<ToggleButton>{answerArray[i]}</ToggleButton>)
+		}
+		return answerButtons;
+	}
 	render(){
 		return(
 			<div>
@@ -225,7 +333,8 @@ class QuestionCard extends Component{
 							<p> 1. {this.state.question} </p>
 						</div>
 					</CardContent>
-					<CardActions>
+					
+					<OverrideMaterialUICss> <CardActions style={{justifyContent:'space-between'}}>
 						<OverrideMaterialUICss>
 						<IconButton 
 							onClick={this.handleExpandClick}
@@ -236,14 +345,18 @@ class QuestionCard extends Component{
 							<ExpandMoreIcon/>
 						</IconButton>
 						</OverrideMaterialUICss>
-					</CardActions>
-					<Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
-						<p> {this.state.possible_answers} </p>
-					</Collapse>
+						<Button> Live </Button>
+					</CardActions></OverrideMaterialUICss>
+					<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+						<ToggleButtonGroup style={{display:'flex',flexDirection:'column', margin:'auto'}} name='lectureDates'type='radio'>
+							{this.createAnswerButtons(this.state.possible_answers)}
+						</ToggleButtonGroup>
+					</Collapse></OverrideMaterialUICss>
 				</Card>
 				</OverrideMaterialUICss>
 			</div>
 		)
 	}
 }
+
 export default Dashboard;
