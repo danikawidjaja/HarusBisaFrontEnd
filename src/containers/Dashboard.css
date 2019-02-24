@@ -15,7 +15,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .Dashboard .left{
 	width: 15%;
-	background-color: lightgrey;
+	background-color: #f4f4f4;
 	align-items: flex-start;
 	display: flex;
 	align-content: center;
@@ -27,7 +27,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .Dashboard .left .buttons{
 	flex-direction: column;
-	justify-content: space-between;
+	margin: 0px;
+	padding:0px;
 	width: 100%;
 
 }
@@ -39,19 +40,21 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	box-shadow: none;
 	box-sizing: border-box;
 	border-radius: 0;
-	margin-top: 0.25vw;
-	margin-bottom: 0.25vw;
+	display: block;
 }
 
 .Dashboard .left .buttons .button:active, .Dashboard .left .buttons .button:focus, .Dashboard .left .buttons>.btn.active{
 	border: none;
 	border-right: 0.75vw #ffe01c solid;
 	outline: none;
-	color:#5960A3;
+	color:black;
+	font-weight: bold;
 }
 
-.Dashboard .left .buttons .button:hover{
-	color:#5960A3;
+.Dashboard .left .buttons .button:hover:not(.active){
+	font-weight: 400;
+	border-right: 0.75vw #ffe01c solid;
+	box-sizing: border-box;
 }
 
 .Dashboard .left .addButton{
@@ -63,8 +66,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Dashboard .left .addButton:hover{
-	background-color: #5960A3;
-	color: white;
+	opacity: 0.75;
 }
 
 .Dashboard .left .addButton:focus{
@@ -111,7 +113,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	text-align: right;
 }
 
-.Dashboard .left .popup .button, .Dashboard .left .popup .button:hover, .Dashboard .left .popup .button:focus{
+.Dashboard .left .popup .button, .Dashboard .left .popup .button:focus{
 	background-color: #ffe01c;
 	border:0px;
 	color: black;
@@ -122,12 +124,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	width: 50%;
 }
 
+.Dashboard .left .popup .button:hover:not(.active){
+	font-weight: 500;
+	border: none;
+}
 .Dashboard .popup .buttons{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 }
-
 
 
 
@@ -137,12 +142,18 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Dashboard .right .navigation{
-	background-color: lightgrey;
+	background-color: #f4f4f4;
 	padding: 1vw;
+	padding-top: 0.5vw;
+	padding-bottom: 0.5vw;
 	display: flex;
 	flex-direction: row;
 	vertical-align: baseline; 
 	justify-content: space-between;
+}
+
+.Dashboard .right .navigation .MuiIconButton-root-1{
+	padding:6px;
 }
 
 .Dashboard .right .content{
@@ -150,7 +161,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Dashboard .right .content .live-card{
-	background: url('./dashboard-live-background.png');
+	background: linear-gradient(90deg, #F8691E, #F9D960);;
 	background-size: 100%;
 	display: flex;
 	flex-direction: row;
@@ -174,7 +185,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .Dashboard .right .content .live-card .card-content .interactive{
 	background-color: white;
 	border-radius: 10px;
-	padding: 0.5vw;
+	padding: auto;
 	display: flex;
 	flex-direction: row;
 	vertical-align: middle;
@@ -183,10 +194,20 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 .Dashboard .right .content .live-card .card-content .interactive .fab{
 	background-color: red;
-	margin: 0vw;
+	margin: auto;
 	margin-right: 1vw;
 	margin-left: 1vw;
+	size:auto;
 	border-radius: 50%;
+	min-height: 30px;
+	height: 30px;
+	width: 30px;
+	vertical-align: center;
+	font-size:15px;
+}
+Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon-root-10{
+	font-size: 15px;
+	margin: 0px;
 }
 
 .Dashboard .right .content .live-card .card-content .interactive p{
@@ -194,15 +215,28 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 0px;
 	margin: auto;
 	margin-right: 1.25vw;
+	font-size: smaller;
 }
 
-.Dashboard .right .content .live-card .card-content .interactive h2{
+.Dashboard .right .content .live-card .card-content .interactive a{
 	width: 100%;
-	border-bottom: 1px solid black;
 	margin:auto;
-	font-size: 2vw;
+	font-size: 3.2vh;
 	padding-top: 1vw;
 	padding-bottom: 1vw;
+}
+
+.Dashboard .right .content .live-card .card-content .interactive .popup .button, .Dashboard .right .content .live-card .card-content .interactive .popup .button:active{
+	border: none;
+	border-bottom: 1.5px solid black;
+	width: 100%;
+	border-radius: 0px;
+	background-color: transparent;
+	box-shadow: none;
+}
+.Dashboard .right .content .live-card .card-content .interactive .popup .button:hover, .Dashboard .right .content .live-card .card-content .interactive .popup .button:focus{
+	font-weight: 500;
+	outline: none;
 }
 .Dashboard .right a{
 	color: black;
@@ -230,7 +264,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Dashboard .right .content .question-card .card-action{
-	background-color: lightgrey;
+	background-color: #f4f4f4;
 	padding:0;
 	margin: 0;
 	display: flex;
@@ -251,7 +285,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Dashboard .right .content .question-card .answers .answer{
-	background-color: beige;
+	background-color: #f7f3dc;
 	border-radius: 0;
 	margin: auto;
 	margin-top: 1vh;

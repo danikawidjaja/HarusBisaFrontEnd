@@ -102,7 +102,7 @@ class AddCourse extends Component{
 		this.state = {
 			join_code: '',
 			course_name:'',
-			academic_year:'',
+			term:'',
 			description:''
 		}
 	}
@@ -117,7 +117,7 @@ class AddCourse extends Component{
   	}
 
   	validateForm(){
-  		if (this.state.course_name.length == 0 || this.state.academic_year.length == 0){
+  		if (this.state.course_name.length == 0 || this.state.term.length == 0){
   			return false;
   		}
   		else{
@@ -139,11 +139,11 @@ class AddCourse extends Component{
 			            />
 	          		</FormGroup>
 
-	          		<FormGroup controlId="academic_year">
+	          		<FormGroup controlId="term">
 	            		<ControlLabel>Mulai Kelas</ControlLabel>
 			            <FormControl
 			              type="text"
-			              value={this.state.academic_year}
+			              value={this.state.term}
 			              onChange={this.handleChange}
 			              placeholder= 'Januari 2019 - Maret 2019'
 			            />
@@ -188,6 +188,7 @@ class CourseCard extends Component{
 	      course_name: this.props.course.course_name,
 	      join_code: this.props.course.join_code,
 	      instructors: this.props.course.instructors,
+	      term:'Jan 2019 - Mar 2019',
 	    };  
 
 	    this.handleClick = this.handleClick.bind(this);
@@ -234,7 +235,7 @@ class CourseCard extends Component{
 						</div>
 						<div style={{margin: '2vw',marginBottom: '1vw', marginTop:'3vw'}}>
 							<Link to='/dashboard' > {this.state.course_name} </Link>
-							<p> Jan 2019 - Mar 2019 </p>
+							<p> {this.state.term} </p>
 							<p> {this.renderInstructor(this.state.instructors)} </p>
 							<br/>
 							<p> Kode Bergabung: {this.state.join_code} </p>

@@ -21,6 +21,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Collapse from '@material-ui/core/Collapse';
 import Popup from 'reactjs-popup';
+import NumericInput from 'react-numeric-input';
 
 
 
@@ -29,9 +30,9 @@ class Dashboard extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			lectureDates:['2/3', '2/7', '2/10', '2/11', '2/12'],
+			lecture_dates:['2/3', '2/7', '2/10', '2/11', '2/12'],
 			class_name:'Biologi Molekuler Kelas A',
-			selectedDate:'',
+			selected_date:'',
 		};
 		this.changeSelectedDate= this.changeSelectedDate.bind(this);
 		this.getSelectedDate = this.getSelectedDate.bind(this);
@@ -39,17 +40,17 @@ class Dashboard extends Component{
 
 	changeSelectedDate(date){
 		this.setState={
-			selectedDate: date
+			selected_date: date
 		}
 	}
 
 	getSelectedDate(){
-		return this.state.selectedDate;
+		return this.state.selected_date;
 	}
 	async componentWillMount(){
     	this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
-    	this.changeSelectedDate(this.state.lectureDates[0]);
+    	this.changeSelectedDate(this.state.lecture_dates[0]);
   	}
 
   	async componentDidMount(){
@@ -58,10 +59,10 @@ class Dashboard extends Component{
 		return(
     		<div className='Dashboard'>
     			<div className='left'>
-    				<DashboardLeft lectureDates={this.state.lectureDates} changeSelectedDate={this.changeSelectedDate}/>
+    				<DashboardLeft lectureDates={this.state.lecture_dates} changeSelectedDate={this.changeSelectedDate}/>
     			</div>
     			<div className='right'>
-    				<DashboardRight class_name={this.state.class_name} selectedDate={this.state.selectedDate} getSelectedDate={this.getSelectedDate}/>
+    				<DashboardRight class_name={this.state.class_name} selectedDate={this.state.selected_date} getSelectedDate={this.getSelectedDate}/>
     			</div>
     		</div>
 		)
@@ -72,30 +73,30 @@ class DashboardLeft extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			selectedDate:this.props.lectureDates[0],
-			lectureDates: this.props.lectureDates,
+			selected_date:this.props.lectureDates[0],
+			lecture_dates: this.props.lectureDates,
 		}
 		this.handleChangeDate = this.handleChangeDate.bind(this);
 	}
 	handleChangeDate(value, event) {
 	    this.setState({
-	      selectedDate: value
+	      selected_date: value
 	    });
 	    this.props.changeSelectedDate(value);
   	}
 
-  	makeToggleButtons(lectureDates){
+  	makeToggleButtons(lecture_dates){
   		let toggleButtons = []
-  		if (lectureDates.length == 0){
+  		if (lecture_dates.length == 0){
   			toggleButtons.push(<OverrideMaterialUICss><Fab style={{backgroundColor:'#ffe01c'}}> <AddIcon/> </Fab> </OverrideMaterialUICss>)
   		}
   		else{
-	  		for (let i=0; i<lectureDates.length; i++){
+	  		for (let i=0; i<lecture_dates.length; i++){
 	  			if (i==0){
-	  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]} defaultChecked> Kelas {lectureDates[i]} </ToggleButton>)
+	  				toggleButtons.push(<ToggleButton className='button' value={lecture_dates[i]} defaultChecked> Kelas {lecture_dates[i]} </ToggleButton>)
 	  			}
 	  			else{
-	  				toggleButtons.push(<ToggleButton className='button' value={lectureDates[i]}> Kelas {lectureDates[i]} </ToggleButton>)
+	  				toggleButtons.push(<ToggleButton className='button' value={lecture_dates[i]}> Kelas {lecture_dates[i]} </ToggleButton>)
 	  			}
 	  		}
 	  	}
@@ -105,7 +106,7 @@ class DashboardLeft extends Component{
 		return(
 			<div>
 				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
-            		{this.makeToggleButtons(/*[]*/this.state.lectureDates)}
+            		{this.makeToggleButtons(/*[]*/this.state.lecture_dates)}
           		</ToggleButtonGroup>
           		<Popup trigger={<Button className='addButton'> + Add Class </Button>} modal>
   					{close => (
@@ -127,9 +128,12 @@ class AddLecture extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			class_date: '',
+			class_date_month: '1',
+			class_date_day:'1',
 			description:''
 		}
+		this.handleMonthChange = this.handleMonthChange.bind(this);
+		this.handleDayChange = this.handleDayChange.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -138,30 +142,45 @@ class AddLecture extends Component{
   	}
 
   	handleSubmit(event){
-  		alert(this.state.class_date+' course added')
+  		alert(this.state.class_date_month+'/'+this.state.class_date_day+ ' course added')
   	}
 
   	validateForm(){
-  		if (this.state.class_date.length == 0){
+  		if (this.state.class_date_day.length == 0){
   			return false;
   		}
   		else{
   			return true;
   		}
   	}
+
+  	handleDayChange(value){
+  		this.setState({class_date_day:value})
+  	}
+  	handleMonthChange(value){
+  		this.setState({class_date_month:value})
+  	}
 	render(){
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
-	          		<FormGroup controlId="class_date">
-	            		<ControlLabel>Tanggal kelas</ControlLabel>
+	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+	            		{/*<ControlLabel>Tanggal kelas</ControlLabel>
 			            <FormControl
 			              autoFocus
 			              type="text"
 			              value={this.state.class_date}
 			              onChange={this.handleChange}
 			              placeholder = '2/3'
-			            />
+			            />*/}
+			            <div style={{display:'flex', flexDirection:'column'}}>
+				            <ControlLabel style={{textAlign:'left'}}> Tanggal </ControlLabel>
+				            <NumericInput min={1} max={31} value={this.state.class_date_day} onChange={this.handleDayChange}/>
+				         </div>
+				        <div style={{display:'flex', flexDirection:'column'}}>
+				            <ControlLabel style={{textAlign:'left'}}> Bulan </ControlLabel>
+				            <NumericInput min={1} max={12} value={this.state.class_date_month} onChange={this.handleMonthChange}/>
+			            </div>
 	          		</FormGroup>
 
 	          		<FormGroup controlId="description">
@@ -170,7 +189,7 @@ class AddLecture extends Component{
 			              type="text"
 			              value={this.state.description}
 			              onChange={this.handleChange}
-			              placeholder= '(optional)'
+			              placeholder= 'Eg. Anatomi (optional)'
 			            />
 	          		</FormGroup>
 
@@ -207,15 +226,15 @@ class DashboardNavigation extends Component{
 					<Link to='/courses'> Mata Kuliah </Link>
 				</div>
 				<div style={{display:'flex'}}>
-					<IconButton>
+					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton>
-					<IconButton>
+					</IconButton> </OverrideMaterialUICss>
+					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton>
-					<IconButton>
+					</IconButton></OverrideMaterialUICss>
+					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton>
+					</IconButton></OverrideMaterialUICss>
 					<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
 						<h1 style={{margin:'auto'}}> W </h1>
 					</div>
@@ -229,21 +248,21 @@ class DashboardRight extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			selectedDate:''
+			selected_date:''
 		}
 	}
 
 	async componentWillMount(){
 		//console.log(this.props.getSelectedDate())
 		this.setState={
-			selectedDate: this.props.getSelectedDate(),
+			selected_date: this.props.getSelectedDate(),
 		}
 	}
 
 	async componentDidMount(){
 		//console.log(this.props.getSelectedDate())
 		this.setState={
-			selectedDate: this.props.getSelectedDate(),
+			selected_date: this.props.getSelectedDate(),
 		}
 	}
 	render(){
@@ -254,9 +273,9 @@ class DashboardRight extends Component{
     				<OverrideMaterialUICss>
     				<Card className='live-card'>
     						<div className='card-content'>
-    							<div style={{marginTop:'1.2vw'}}>
+    							<div style={{marginTop:'auto'}}>
     								<p> {this.props.class_name} </p>
-    								<p> Kelas {this.state.selectedDate} </p>
+    								<p> Kelas {this.state.selectedDate} 2/7: Anatomi </p>
     							</div>
     							<div style={{marginLeft:'2vw', display:'flex', flexDirection:'row'}}>
 	    							<div className='interactive'>
@@ -278,11 +297,7 @@ class DashboardRight extends Component{
 											modal
 										>
 											{close => (
-						  						<div className='popup'>
-							  						<h2> Pilihan Ganda </h2>
-							  						<h2> Isian </h2>
-							  						<h2 style={{borderBottom:'none'}}> Jawaban Angka </h2>
-						  						</div>
+						  						<AddQuestion/>
 						  					)}			
 						  				</Popup>
 
@@ -300,6 +315,46 @@ class DashboardRight extends Component{
 	}
 }
 
+class AddQuestion extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			question_type: ''
+		}
+	}
+	popupDisplay(question_type){
+		if (question_type === ''){
+			return(
+				<div className='popup' style={{display:'flex', flexDirection:'column'}}>
+					<Button className='button' onClick={this.setState={question_type:'multiple_choice'}}> Pilihan Ganda </Button>
+					<Button className='button' onClick={this.setState={question_type:'string_input'}}> Isian </Button>
+					<Button className='button' onClick={this.setState={question_type:'numeric_input'}}style={{borderBottom:'none'}}> Jawaban Angka </Button>
+				</div>
+			)
+		}
+		else if (question_type === 'multiple_choice'){
+			<div> <p> Multiple Choice </p> </div>
+		}
+		else if (question_type === 'string_input'){
+			<div> <p> String input </p> </div>
+		}
+		else if (question_type === 'numeric_input'){
+			<div> <p> Numeric input </p> </div>
+		}
+	}
+	render(){
+		return(
+			{/*<div className='popup' style={{display:'flex', flexDirection:'column'}}>
+				<Button className='button' onClick={this.setState={question_type:'multiple_choice'}}> Pilihan Ganda </Button>
+				<Button className='button' onClick={this.setState={question_type:'string_input'}}> Isian </Button>
+				<Button className='button' onClick={this.setState={question_type:'numeric_input'}}style={{borderBottom:'none'}}> Jawaban Angka </Button>
+			</div>*/}
+			<div>
+			{this.popupDisplay(this.state.question_type)}
+			</div>
+		)
+	}
+}
 class QuestionCard extends Component{
 	constructor(props){
 		super(props);
