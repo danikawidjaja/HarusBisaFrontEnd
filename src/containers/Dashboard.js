@@ -24,6 +24,7 @@ import Popup from 'reactjs-popup';
 import NumericInput from 'react-numeric-input';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import calIcon from './cal.png'
 
 
 
@@ -153,7 +154,7 @@ class AddLecture extends Component{
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-			            <ControlLabel style={{marginTop:'1vh'}}> Tanggal Kelas </ControlLabel>
+			            <img src={calIcon} style={{height:'5vh', marginRight:'-12vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
 			            <DatePicker 
 			            	selected={this.state.class_date}
 			            	onChange={this.handleDateChange}
