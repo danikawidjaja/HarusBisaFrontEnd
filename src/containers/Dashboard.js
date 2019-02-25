@@ -24,7 +24,8 @@ import Popup from 'reactjs-popup';
 import NumericInput from 'react-numeric-input';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import calIcon from './cal.png'
+import calIcon from './cal.png';
+import InputQuestion from './InputQuestion';
 
 
 
@@ -302,36 +303,43 @@ class AddQuestion extends Component{
 		this.state={
 			question_type: ''
 		}
+		this.handleChangeQuestionType = this.handleChangeQuestionType.bind(this)
 	}
+
+	handleChangeQuestionType(value, event) {
+	    this.setState({
+	      question_type: value
+	    });
+  	}
 	popupDisplay(question_type){
+		let returnComponents = []
 		if (question_type === ''){
-			return(
-				<div className='popup' style={{display:'flex', flexDirection:'column'}}>
-					<Button className='button' onClick={this.setState={question_type:'multiple_choice'}}> Pilihan Ganda </Button>
-					<Button className='button' onClick={this.setState={question_type:'string_input'}}> Isian </Button>
-					<Button className='button' onClick={this.setState={question_type:'numeric_input'}}style={{borderBottom:'none'}}> Jawaban Angka </Button>
-				</div>
-			)
+			returnComponents.push(
+				<ToggleButtonGroup className='buttons' name='role'type='radio' onChange={this.handleChangeQuestionType}>
+            		<ToggleButton className='button' value='multiple_choice'> Pilihan Ganda </ToggleButton>
+            		<ToggleButton className='button' value='string_input'> Isian </ToggleButton>
+            		<ToggleButton className='button' value='numeric_input' style={{border:'none'}}> Jawaban Angka </ToggleButton>
+          		</ToggleButtonGroup>
+			)	
 		}
 		else if (question_type === 'multiple_choice'){
-			return(<div> <p> Multiple Choice </p> </div>)
+			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
 		}
 		else if (question_type === 'string_input'){
-			return(<div> <p> String input </p> </div>)
+			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
 		}
 		else if (question_type === 'numeric_input'){
-			return(<div> <p> Numeric input </p> </div>)
+			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
 		}
+		return(returnComponents)
 	}
 
 	render(){
 		return(
 			<div className='popup' style={{display:'flex', flexDirection:'column'}}>
-				<Button className='button' onClick={this.setState={question_type:'multiple_choice'}}> Pilihan Ganda </Button>
-				<Button className='button' onClick={this.setState={question_type:'string_input'}}> Isian </Button>
-				<Button className='button' onClick={this.setState={question_type:'numeric_input'}}style={{borderBottom:'none'}}> Jawaban Angka </Button>
+				{this.popupDisplay(this.state.question_type)}
+				
 			</div>
-			//<div> {this.popupDisplay(this.state.question_type)} </div>
 		)
 	}
 }

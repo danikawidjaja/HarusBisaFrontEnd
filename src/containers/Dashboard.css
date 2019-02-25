@@ -178,11 +178,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font-weight: 500;
 	border: none;
 }
-.Dashboard .popup .buttons{
+.Dashboard .left .popup .buttons{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 }
+
 
 
 
@@ -283,10 +284,19 @@ Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon
 	border-radius: 0px;
 	background-color: transparent;
 	box-shadow: none;
+	text-align: center;
 }
 .Dashboard .right .content .live-card .card-content .interactive .popup .button:hover, .Dashboard .right .content .live-card .card-content .interactive .popup .button:focus{
 	font-weight: 500;
 	outline: none;
+}
+
+.Dashboard .right .content .live-card .card-content .interactive .popup .buttons{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	text-align: center;
 }
 .Dashboard .right a{
 	color: black;

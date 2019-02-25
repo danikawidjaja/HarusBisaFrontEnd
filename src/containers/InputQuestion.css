@@ -1,0 +1,9 @@
+.InputQuestion{
+	font-family: 'Rubik', sans-serif;
+	display: flex;
+	flex-direction: row;
+}
+
+.InputQuestion .header h1{
+	font-size: 4vh;
+}
