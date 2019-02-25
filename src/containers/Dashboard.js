@@ -22,6 +22,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Collapse from '@material-ui/core/Collapse';
 import Popup from 'reactjs-popup';
 import NumericInput from 'react-numeric-input';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
@@ -128,12 +130,10 @@ class AddLecture extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			class_date_month: '1',
-			class_date_day:'1',
-			description:''
+			class_date: new Date(),
+			description:'',
 		}
-		this.handleMonthChange = this.handleMonthChange.bind(this);
-		this.handleDayChange = this.handleDayChange.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -142,48 +142,29 @@ class AddLecture extends Component{
   	}
 
   	handleSubmit(event){
-  		alert(this.state.class_date_month+'/'+this.state.class_date_day+ ' course added')
+  		alert(this.state.class_date + ' course added')
   	}
 
-  	validateForm(){
-  		if (this.state.class_date_day.length == 0){
-  			return false;
-  		}
-  		else{
-  			return true;
-  		}
-  	}
-
-  	handleDayChange(value){
-  		this.setState({class_date_day:value})
-  	}
-  	handleMonthChange(value){
-  		this.setState({class_date_month:value})
+  	handleDateChange(date){
+  		this.setState({class_date: date});
   	}
 	render(){
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-	            		{/*<ControlLabel>Tanggal kelas</ControlLabel>
-			            <FormControl
-			              autoFocus
-			              type="text"
-			              value={this.state.class_date}
-			              onChange={this.handleChange}
-			              placeholder = '2/3'
-			            />*/}
-			            <div style={{display:'flex', flexDirection:'column'}}>
-				            <ControlLabel style={{textAlign:'left'}}> Tanggal </ControlLabel>
-				            <NumericInput min={1} max={31} value={this.state.class_date_day} onChange={this.handleDayChange}/>
-				         </div>
-				        <div style={{display:'flex', flexDirection:'column'}}>
-				            <ControlLabel style={{textAlign:'left'}}> Bulan </ControlLabel>
-				            <NumericInput min={1} max={12} value={this.state.class_date_month} onChange={this.handleMonthChange}/>
-			            </div>
+			            <ControlLabel style={{marginTop:'1vh'}}> Tanggal Kelas </ControlLabel>
+			            <DatePicker 
+			            	selected={this.state.class_date}
+			            	onChange={this.handleDateChange}
+			            	todayButton={'Today'}
+			            	dateFormat='d MMMM yyyy'
+			            	className='calendar'
+			            />
+
 	          		</FormGroup>
 
-	          		<FormGroup controlId="description">
+	          		<FormGroup controlId="description" >
 	            		<ControlLabel>Deskripsi</ControlLabel>
 			            <FormControl
 			              type="text"
@@ -201,7 +182,6 @@ class AddLecture extends Component{
 			          		Batal
 			          	</Button>
 			          	<Button
-				           disabled={!this.validateForm()}
 				           type="submit"
 				           className="button"
 				        >
@@ -333,25 +313,24 @@ class AddQuestion extends Component{
 			)
 		}
 		else if (question_type === 'multiple_choice'){
-			<div> <p> Multiple Choice </p> </div>
+			return(<div> <p> Multiple Choice </p> </div>)
 		}
 		else if (question_type === 'string_input'){
-			<div> <p> String input </p> </div>
+			return(<div> <p> String input </p> </div>)
 		}
 		else if (question_type === 'numeric_input'){
-			<div> <p> Numeric input </p> </div>
+			return(<div> <p> Numeric input </p> </div>)
 		}
 	}
+
 	render(){
 		return(
-			{/*<div className='popup' style={{display:'flex', flexDirection:'column'}}>
+			<div className='popup' style={{display:'flex', flexDirection:'column'}}>
 				<Button className='button' onClick={this.setState={question_type:'multiple_choice'}}> Pilihan Ganda </Button>
 				<Button className='button' onClick={this.setState={question_type:'string_input'}}> Isian </Button>
 				<Button className='button' onClick={this.setState={question_type:'numeric_input'}}style={{borderBottom:'none'}}> Jawaban Angka </Button>
-			</div>*/}
-			<div>
-			{this.popupDisplay(this.state.question_type)}
 			</div>
+			//<div> {this.popupDisplay(this.state.question_type)} </div>
 		)
 	}
 }
