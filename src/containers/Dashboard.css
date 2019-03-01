@@ -36,11 +36,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .Dashboard .left .buttons .button{
 	width: 100%;
 	background-color: transparent;
-	border:none;
+	border: none;
+	border-right:0.75vw transparent solid;
 	box-shadow: none;
 	box-sizing: border-box;
 	border-radius: 0;
 	display: block;
+	text-align: left;
+	padding-left: 4.5vw;
+	margin: none;
 }
 
 .Dashboard .left .buttons .button:active, .Dashboard .left .buttons .button:focus, .Dashboard .left .buttons>.btn.active{
@@ -54,7 +58,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .Dashboard .left .buttons .button:hover:not(.active){
 	font-weight: 400;
 	border-right: 0.75vw #ffe01c solid;
-	box-sizing: border-box;
+	outline:none;
 }
 
 .Dashboard .left .addButton{
@@ -152,11 +156,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .Dashboard .popup .form{
 	align-items: center;
-	margin-right: 5vw;
-    margin-left: 5vw;
+	width: 70%;
+	margin: auto;
     margin-bottom: 1vw;
-    justify-content: flex-end;
-    
+    justify-content: flex-end;  
 }
 
 .Dashboard .popup label{
@@ -279,7 +282,7 @@ Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon
 
 .Dashboard .right .content .live-card .card-content .interactive .popup .button, .Dashboard .right .content .live-card .card-content .interactive .popup .button:active{
 	border: none;
-	border-bottom: 1.5px solid black;
+	border-bottom: 1.5px solid #ccc;
 	width: 100%;
 	border-radius: 0px;
 	background-color: transparent;

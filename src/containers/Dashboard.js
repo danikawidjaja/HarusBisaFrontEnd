@@ -21,7 +21,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Collapse from '@material-ui/core/Collapse';
 import Popup from 'reactjs-popup';
-import NumericInput from 'react-numeric-input';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import calIcon from './cal.png';
@@ -112,7 +111,7 @@ class DashboardLeft extends Component{
 				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
             		{this.makeToggleButtons(/*[]*/this.state.lecture_dates)}
           		</ToggleButtonGroup>
-          		<Popup trigger={<Button className='addButton'> + Add Class </Button>} modal>
+          		<Popup trigger={<Button className='addButton'> + Add Class </Button>} modal closeOnDocumentClick={false}>
   					{close => (
   						<div className='popup'>
 	  						<div className= "popup-header">
@@ -155,7 +154,7 @@ class AddLecture extends Component{
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-			            <img src={calIcon} style={{height:'5vh', marginRight:'-12vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
+			            <img src={calIcon} style={{height:'5vh', marginRight:'-5vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
 			            <DatePicker 
 			            	selected={this.state.class_date}
 			            	onChange={this.handleDateChange}
@@ -277,9 +276,10 @@ class DashboardRight extends Component{
 										    </Fab>
 											}
 											modal
+											closeOnDocumentClick={false}
 										>
 											{close => (
-						  						<AddQuestion/>
+						  						<AddQuestion closefunction={close}/>
 						  					)}			
 						  				</Popup>
 
@@ -306,7 +306,7 @@ class AddQuestion extends Component{
 		this.handleChangeQuestionType = this.handleChangeQuestionType.bind(this)
 	}
 
-	handleChangeQuestionType(value, event) {
+	handleChangeQuestionType(value) {
 	    this.setState({
 	      question_type: value
 	    });
@@ -323,13 +323,13 @@ class AddQuestion extends Component{
 			)	
 		}
 		else if (question_type === 'multiple_choice'){
-			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
+			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'string_input'){
-			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
+			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'numeric_input'){
-			returnComponents.push(<InputQuestion question_type={this.state.question_type}/>)
+			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		return(returnComponents)
 	}
@@ -363,7 +363,7 @@ class QuestionCard extends Component{
 	createAnswerButtons(answerArray){
 		let answerButtons=[]
 		for (let i=0; i<answerArray.length; i++){
-			answerButtons.push(<ToggleButton className='answer'> &#65;. {answerArray[i]}</ToggleButton>)
+			answerButtons.push(<ToggleButton className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
 		}
 		return answerButtons;
 	}

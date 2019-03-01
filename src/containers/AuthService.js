@@ -80,7 +80,7 @@ export default class AuthService {
         {/* Using jwt-decode npm package to decode the token
         //return decode(this.getToken());*/}
 
-        return this.fetch(`${this.domain}/courses`, {
+        return this.fetch(`${this.domain}/student/courses`, {
             method: 'GET',
         }).then(res => {
             //return Promise.resolve(res);
@@ -116,6 +116,7 @@ export default class AuthService {
             return response
         } else {
             var error = new Error(response.statusText)
+            console.log(response)
             error.response = response
             throw error
         }
