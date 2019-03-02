@@ -21,7 +21,7 @@ class Courses extends Component{
 		super(props);
 
 		this.state = {
-			courses: this.props.user.courses,
+			courses: this.props.data.courses,
 			history: this.props.history,
 		};
 
@@ -32,12 +32,13 @@ class Courses extends Component{
 	async componentWillMount(){
     	this.props.props.isNavVisible(true);
   	}
+
 	makingCourses(listOfCourse){
 		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []
 		if (numberOfCourses > 0){
 			for (let i=0; i<numberOfCourses; i++){
-				coursesComponent.push(<CourseCard course={listOfCourse[i]} history={this.state.history}/>)
+				coursesComponent.push(<CourseCard course={listOfCourse[i]} history={this.state.history} Auth={this.Auth}/>)
 			} 
 		} else {
 			coursesComponent.push(<p> You are not enrolled in any course </p>)
@@ -76,13 +77,14 @@ class Courses extends Component{
 					    		</Grid>
 					    	}
 						    modal
+						    closeOnDocumentClick={false}
   						>
   						{close => (
   							<div className='course-popup'>
 	  							<div className= "course-popup-header">
 	        						<h2> Tambah Mata Kuliah </h2>
 		    					</div>
-  								<AddCourse closefunction={close}/>
+  								<AddCourse closefunction={close} Auth={this.Auth}/>
   							</div>
   						)}
   							
@@ -100,11 +102,12 @@ class AddCourse extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			join_code: '',
 			course_name:'',
-			term:'',
-			description:''
+			start_term:'',
+			end_term: '',
+			description:'',
 		}
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -113,17 +116,17 @@ class AddCourse extends Component{
   	}
 
   	handleSubmit(event){
-  		alert(this.state.course_name+' course added')
+  		event.preventDefault();
+  		this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
+      	.then(res =>{
+      		this.props.closefunction()
+      		alert(this.state.course_name+' course added')
+      	})
+      	.catch(err =>{
+        	console.log(err.message)
+      	})
   	}
 
-  	validateForm(){
-  		if (this.state.course_name.length == 0 || this.state.term.length == 0){
-  			return false;
-  		}
-  		else{
-  			return true;
-  		}
-  	}
 	render(){
 	    return(
 	      	<div className="form">
@@ -138,17 +141,27 @@ class AddCourse extends Component{
 			              placeholder = 'Biologi kelas A'
 			            />
 	          		</FormGroup>
-
-	          		<FormGroup controlId="term">
-	            		<ControlLabel>Mulai Kelas</ControlLabel>
-			            <FormControl
-			              type="text"
-			              value={this.state.term}
-			              onChange={this.handleChange}
-			              placeholder= 'Januari 2019 - Maret 2019'
-			            />
-	          		</FormGroup>
-
+	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+		          		<FormGroup controlId="start_term">
+		            		<ControlLabel>Mulai Kelas</ControlLabel>
+				            <FormControl
+				              type="text"
+				              value={this.state.start_term}
+				              onChange={this.handleChange}
+				              placeholder= 'Januari 2019'
+				            />
+		          		</FormGroup>
+		          		<p style={{margin:'auto'}}> - </p>
+		          		<FormGroup controlId='end_term'>
+		          			<ControlLabel> Akhir Kelas </ControlLabel>
+		          			<FormControl
+		          				type='text'
+		          				value={this.state.end_term}
+		          				onChange={this.handleChange}
+		          				placeholder='Maret 2019'
+		          			/>
+		          		</FormGroup>
+	          		</div>
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
 			            <FormControl
@@ -167,7 +180,6 @@ class AddCourse extends Component{
 			          		Batal
 			          	</Button>
 			          	<Button
-				           disabled={!this.validateForm()}
 				           type="submit"
 				           className="button"
 				        >
@@ -184,32 +196,30 @@ class CourseCard extends Component{
 	constructor(props){
 	    super(props);
 	    this.state = {
-	      course_code: this.props.course.course_code,
 	      course_name: this.props.course.course_name,
 	      join_code: this.props.course.join_code,
-	      instructors: this.props.course.instructors,
-	      term:'Jan 2019 - Mar 2019',
+	      instructor: this.props.course.instructors,
+	      term:this.props.course.term,
+	      description: this.props.course.description,
+	      course_id: this.props.course._id
 	    };  
 
 	    this.handleClick = this.handleClick.bind(this);
+	    this.deleteCourse = this.deleteCourse.bind(this);
   	}
 
   	handleClick(){
   		this.props.history.push('/lectures');
   	}
 
-  	renderInstructor(instructors){
-  		if (instructors.length > 0){
-  			let sentence = 'Instructors: '
-  			for (let i=0; i<instructors.length-1; i++){
-  				sentence = sentence + instructors[i] + ', '
-  			}
-  			sentence = sentence + instructors[instructors.length -1];
-  			return sentence
-  		}
-  		else{
-  			return 'instructors missing';
-  		}
+  	deleteCourse(){
+  		this.props.Auth.deleteCourse(this.state.course_id)
+  		.then(res =>{
+      		alert(this.state.course_name+' course deleted')
+      	})
+      	.catch(err =>{
+        	console.log(err.message)
+      	})
   	}
   	render(){
 		return(
@@ -223,20 +233,22 @@ class CourseCard extends Component{
 									position="bottom right"
 									on = "click"
 								>
+									<Button onClick={this.deleteCourse}> Delete Course </Button>
 									<Popup
-										trigger = {<p> Delete course </p>}
+										trigger = {<Button> Update Course </Button>}
+										on = 'click'
 										modal
 									>
-										<p className='app-caption-text'> Are you sure? </p>
-										
+										<AddCourse/>
 									</Popup>
 								</Popup>    
 				        	</IconButton>
 						</div>
 						<div style={{margin: '2vw',marginBottom: '1vw', marginTop:'3vw'}}>
 							<Link to='/dashboard' > {this.state.course_name} </Link>
+							<p> {this.state.description} </p>
 							<p> {this.state.term} </p>
-							<p> {this.renderInstructor(this.state.instructors)} </p>
+							<p> {this.state.instructor} </p>
 							<br/>
 							<p> Kode Bergabung: {this.state.join_code} </p>
 						</div>
