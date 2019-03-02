@@ -8,21 +8,20 @@ export default function withAuth(AuthComponent){
 		constructor(props){
 			super(props);
 			this.state = {
-				user: null
+				data: null
 			}
 			this.Auth = this.props.Auth;
 		}
-		componentWillMount(){
+		componentDidMount(){
 			if (!this.Auth.loggedIn()){
 				alert('You are not logged in!')
 				this.props.history.replace('/login')
 			}
 			else{
 				try{
-					this.Auth.getProfile().then(res => this.setState({
-						user: res
+					this.Auth.getData().then(res => this.setState({
+							data: res
 					}))
-
 				}
 				catch(err){
 					alert(err.message)
@@ -32,11 +31,9 @@ export default function withAuth(AuthComponent){
 			}
 		}
 
-		render(){
-			if(this.state.user){
-				return(
-					<AuthComponent history={this.props.history} user={this.state.user} Auth={this.props.Auth} props={this.props}/>
-				) 
+		render(){ 
+			if(this.state.data){
+				return <AuthComponent history={this.props.history} data={this.state.data} Auth={this.props.Auth} props={this.props}/>	
 			}
 			else{
 				return null

@@ -7,9 +7,45 @@ export default class AuthService {
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.signup= this.signup.bind(this)
-        this.getProfile = this.getProfile.bind(this)
+        this.getData = this.getData.bind(this)
     }
-
+    deleteCourse(course_id, course_name){
+        return this.fetch(`${this.domain}/courses/${course_id}`,{
+            method:'DELETE'
+        }).then(res => {
+            console.log(course_name + 'deleted')
+            return Promise.resolve(res);
+        })
+    }
+    addCourse(course_name, start_term, end_term, description){
+        return this.fetch(`${this.domain}/courses`, {
+            method: 'POST',
+            body: JSON.stringify({
+                course_name,
+                start_term,
+                end_term,
+                description
+            })
+        }).then(res => {
+            console.log(course_name +' added')
+            return Promise.resolve(res);
+        })
+    }
+    updateCourse(course_name, start_term, end_term, description, instructor){
+        return(this.fetch(`${this.domain}/courses/${course_id}`),{
+            method: 'PUT',
+            body: JSON.stringify({
+                course_name,
+                start_term,
+                end_term,
+                description,
+                instructor
+            })
+        }).then(res => {
+            console.log(course_name + "updated")
+            return Promise.resolve(res);
+        })
+    }
     signup(password,email,firstname,lastname,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',
@@ -22,6 +58,7 @@ export default class AuthService {
                 role
             })
         }).then(res => {
+            console.log('signed up')
             return Promise.resolve(res);
         })
     }
@@ -36,6 +73,7 @@ export default class AuthService {
                 password
             })
         }).then(res => {
+            console.log('logged in')
             this.setToken(res.token) // Setting the token in localStorage
             return Promise.resolve(res);
         })
@@ -76,15 +114,16 @@ export default class AuthService {
         localStorage.removeItem('id_token');
     }
 
-    getProfile() {
+    getData() {
         {/* Using jwt-decode npm package to decode the token
         //return decode(this.getToken());*/}
-
-        return this.fetch(`${this.domain}/student/courses`, {
+        return this.fetch(`${this.domain}/courses`, {
             method: 'GET',
         }).then(res => {
             //return Promise.resolve(res);
-            return res;
+            console.log('get profile')
+            console.log(res)
+            return (res);
         })
     }
 
