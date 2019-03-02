@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButto
 import NumericInput from 'react-numeric-input';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import Switch from 'react-toggle-switch';
 
 class InputQuestion extends Component{
 	constructor(props){
@@ -227,6 +228,7 @@ class MultipleChoiceQuestionForm extends Component{
 			question:'',
 			correct_answer:'',
 			answers:[],
+			switched:false,
 		}
 	}
 
@@ -238,6 +240,13 @@ class MultipleChoiceQuestionForm extends Component{
 	      [event.target.id]: event.target.value
 	    });
   	}
+  	toggleSwitch = () => {
+    this.setState(prevState => {
+      return {
+        switched: !prevState.switched
+      };
+    });
+  };
 	render(){
 		return(
 			<div className='form'>
@@ -262,7 +271,10 @@ class MultipleChoiceQuestionForm extends Component{
 					    		style={{border:'none', boxShadow:'none'}}
 					    	/>
 					    </div>
-					    <p> show ans </p>
+					    <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+					    	<Switch onClick={this.toggleSwitch} on={this.state.switched}/>
+					    	<label> Jawaban Benar </label>
+					    </div>
 				    </div>
 			    </FormGroup>
 
