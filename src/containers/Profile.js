@@ -9,13 +9,13 @@ class Profile extends Component{
 		super(props);
 
 		this.state = {
-			firstname: this.props.user.first_name.slice(0,1).toUpperCase() + this.props.user.first_name.slice(1, this.props.user.first_name.length),
-			lastname: this.props.user.last_name.slice(0,1).toUpperCase() + this.props.user.last_name.slice(1, this.props.user.last_name.length),
-			email: this.props.user.email,
-			courses: this.props.user.courses,
-			school: this.props.user.school,
-			numberOfCourses: this.props.user.courses.length,
-			role: this.props.user.role
+			firstname: this.props.data.first_name.slice(0,1).toUpperCase() + this.props.data.first_name.slice(1, this.props.data.first_name.length),
+			lastname: this.props.data.last_name.slice(0,1).toUpperCase() + this.props.data.last_name.slice(1, this.props.data.last_name.length),
+			email: this.props.data.email,
+			courses: this.props.data.courses,
+			school: this.props.data.school,
+			numberOfCourses: this.props.data.courses.length,
+			role: this.props.data.role
 		};
 		
 	}

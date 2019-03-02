@@ -9,7 +9,7 @@ import login from './login.png';
 import errormessage_icon from './errormessage_icon.png';
 
 class Login extends Component {
-  async componentWillMount(){
+  async componentWillMount(){ 
     window.scrollTo(0, 0);
     this.props.isNavVisible(false);
   }
