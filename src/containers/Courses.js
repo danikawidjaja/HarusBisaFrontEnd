@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Courses.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel,Dropdown } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import withAuth from './withAuth';
 import Fab from '@material-ui/core/Fab';
@@ -15,6 +15,10 @@ import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Grid from '@material-ui/core/Grid';
+import FormControlUI from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+
 
 class Courses extends Component{ 
 	constructor(props){
@@ -170,6 +174,81 @@ class Courses extends Component{
 	}
 }
 
+class TermDropdown extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			month:'',
+			year:'',
+		}
+		this.handleChange = this.handleChange.bind(this)
+	}
+
+	stringify(){
+		return (this.state.month + ' ' + this.state.year)
+	}
+
+	handleChange = name => async event =>{
+		await this.setState({[name] : event.target.value})
+		let term = this.stringify();
+		this.props.handleChange(term);
+	};
+	render(){
+		return(
+			<div style={{display:'flex', flexDirection:'column', alignText:'left'}}>
+			<label style={{textAlign:'left'}}> {this.props.label} </label>
+			<div>
+			<FormControlUI>
+				<OverrideMaterialUICss>  			
+		        <Select 
+		        	native
+		        	value={this.state.month}
+		        	onChange={this.handleChange('month')}
+		        	inputProps={{
+		        		name:'month',
+		        		id:'month'
+		        	}}
+		        >
+		        	<option value=""/>
+		        	<option value={'January'}> Januari </option>
+		          	<option value={'February'}> Februari </option>
+		          	<option value={'March'}> Maret </option>
+		          	<option value={'April'}> April </option>
+		          	<option value={'May'}> Mei </option>
+		          	<option value={'June'}> Juni </option>
+		          	<option value={'July'}> Juli </option>
+		          	<option value={'August'}> Agustus </option>
+		          	<option value={'September'}> September </option>
+		          	<option value={'October'}> Oktober </option>
+		          	<option value={'November'}> November </option>
+		          	<option value={'December'}> Desember </option>
+		         </Select>
+		         </OverrideMaterialUICss>
+		    </FormControlUI>
+		    <FormControlUI>
+		    	<Select
+		    		native
+		    		value={this.state.year}
+		    		onChange={this.handleChange('year')}
+		    		inputProps={{
+		    			name:'year',
+		    			id:'year'
+		    		}}
+		    	>
+		    		<option value=""/>
+		    		<option value={'2019'}> 2019 </option>
+		    		<option value={'2018'}> 2018 </option>
+		    		<option value={'2017'}> 2017 </option>
+		    		<option value={'2016'}> 2016 </option>
+		    		<option value={'2015'}> 2015 </option>
+		    		<option value={'2014'}> 2014 </option>
+		    	</Select>
+		    </FormControlUI>
+		    </div>
+		    </div>
+		)
+	}
+}
 class UpdateCourse extends Component{
 	constructor(props){
 		super(props);
@@ -259,7 +338,7 @@ class UpdateCourse extends Component{
 				           type="submit"
 				           className="button"
 				        >
-			            Tambah
+			            Ganti
 			          	</Button>
 			         </div>
 	        	</form>
@@ -277,11 +356,27 @@ class AddCourse extends Component{
 			description:'',
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.changeEndTerm = this.changeEndTerm.bind(this);
+		this.changeStartTerm = this.changeStartTerm.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
 	      [event.target.id]: event.target.value
 	    });
+  	}
+
+  	changeStartTerm(start_term){
+  		console.log(start_term)
+  		this.setState({
+  			start_term: start_term
+  		})
+  	}
+
+  	changeEndTerm(end_term){
+  		console.log(end_term)
+  		this.setState({
+  			end_term: end_term
+  		})
   	}
 
   	handleSubmit(event){
@@ -310,26 +405,13 @@ class AddCourse extends Component{
 			              placeholder = 'Biologi kelas A'
 			            />
 	          		</FormGroup>
-	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-		          		<FormGroup controlId="start_term">
-		            		<ControlLabel>Mulai Kelas</ControlLabel>
-				            <FormControl
-				              type="text"
-				              value={this.state.start_term}
-				              onChange={this.handleChange}
-				              placeholder= 'Januari 2019'
-				            />
-		          		</FormGroup>
+	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'2.5vh'}}> 
+		          		
+		          		
+		          		<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm}/>
 		          		<p style={{margin:'auto'}}> - </p>
-		          		<FormGroup controlId='end_term'>
-		          			<ControlLabel> Akhir Kelas </ControlLabel>
-		          			<FormControl
-		          				type='text'
-		          				value={this.state.end_term}
-		          				onChange={this.handleChange}
-		          				placeholder='Maret 2019'
-		          			/>
-		          		</FormGroup>
+		          		<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm}/>
+		          		
 	          		</div>
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
