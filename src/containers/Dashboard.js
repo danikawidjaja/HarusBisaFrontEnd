@@ -25,6 +25,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import calIcon from './cal.png';
 import InputQuestion from './InputQuestion';
+import ProfileAvatar from './ProfileAvatar';
 
 
 
@@ -216,9 +217,10 @@ class DashboardNavigation extends Component{
 					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 					</IconButton></OverrideMaterialUICss>
-					<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
+					<ProfileAvatar name={'wilson'}/>
+					{/*<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
 						<h1 style={{margin:'auto'}}> W </h1>
-					</div>
+					</div>*/}
 				</div>
    			</div>
 		)
