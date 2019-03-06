@@ -365,6 +365,18 @@ Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon
 	font-weight: 500;
 }
 
+.Dashboard .right .content .question-card .answers .answer-correct{
+	background-color: green;
+	border-radius: 0;
+	margin: auto;
+	margin-top: 1vh;
+	margin-bottom:1vh;
+	width: 100%;
+	border: none;
+	text-align: left;
+	font-weight: 500;
+}
+
 .Dashboard .right .content .question-card .switch {
     border: 1px solid #ccc;
     width: 70px;

@@ -356,7 +356,7 @@ class QuestionCard extends Component{
 			question_number:'1',
 			live: false,
 			expanded: false,
-			switched: false
+			showCorrectAns: false
 		}
 	}
 
@@ -366,7 +366,7 @@ class QuestionCard extends Component{
 	toggleSwitch = () => {
 	    this.setState(prevState => {
 	      return {
-	        switched: !prevState.switched
+	        showCorrectAns: !prevState.showCorrectAns
 	      };
 	    });
 	}
@@ -374,7 +374,13 @@ class QuestionCard extends Component{
 	createAnswerButtons(answerArray){
 		let answerButtons=[]
 		for (let i=0; i<answerArray.length; i++){
-			answerButtons.push(<ToggleButton className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
+			if (answerArray[i] == this.state.correct_answer){
+				answerButtons.push(<ToggleButton className= {this.state.showCorrectAns ? 'answer-correct' : 'answer'}> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
+			}
+			else{
+				answerButtons.push(<ToggleButton className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
+			}
+			
 		}
 		return answerButtons;
 	}
@@ -383,8 +389,8 @@ class QuestionCard extends Component{
 		if (this.state.expanded){
 			return(
 				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
-					<Switch onClick={this.toggleSwitch} on={this.state.switched}/>
-					<p style={{color: (this.state.switched) ? 'green' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
+					<Switch onClick={this.toggleSwitch} on={this.state.showCorrectAns}/>
+					<p style={{color: (this.state.showCorrectAns) ? 'green' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
 				</div>
 			)
 		}
