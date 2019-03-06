@@ -26,6 +26,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import calIcon from './cal.png';
 import InputQuestion from './InputQuestion';
 import ProfileAvatar from './ProfileAvatar';
+import Switch from 'react-toggle-switch';
 
 
 
@@ -355,11 +356,19 @@ class QuestionCard extends Component{
 			question_number:'1',
 			live: false,
 			expanded: false,
+			switched: false
 		}
 	}
 
 	handleExpandClick = () =>{
 		this.setState(state => ({expanded: !state.expanded}))
+	}
+	toggleSwitch = () => {
+	    this.setState(prevState => {
+	      return {
+	        switched: !prevState.switched
+	      };
+	    });
 	}
 
 	createAnswerButtons(answerArray){
@@ -368,6 +377,17 @@ class QuestionCard extends Component{
 			answerButtons.push(<ToggleButton className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
 		}
 		return answerButtons;
+	}
+
+	showSwitch(){
+		if (this.state.expanded){
+			return(
+				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
+					<Switch onClick={this.toggleSwitch} on={this.state.switched}/>
+					<p style={{color: (this.state.switched) ? 'green' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
+				</div>
+			)
+		}
 	}
 	render(){
 		return(
@@ -388,24 +408,32 @@ class QuestionCard extends Component{
 						
 					</CardContent> </OverrideMaterialUICss>
 					
-					<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
-						<OverrideMaterialUICss>
-						<IconButton 
-							onClick={this.handleExpandClick}
-							aria-expanded={this.state.expanded}
-							aria-label='Show more'
-							className='expand-button'
-						>
-							<ExpandMoreIcon/>
-						</IconButton>
-						</OverrideMaterialUICss>
-						<Button> Live </Button>
-					</CardActions></OverrideMaterialUICss>
-					<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+					<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit style={{marginBottom:'2vh'}}>
 						<ToggleButtonGroup className='answers' name='lectureDates'type='radio'>
 							{this.createAnswerButtons(this.state.possible_answers)}
 						</ToggleButtonGroup>
 					</Collapse></OverrideMaterialUICss>
+
+					<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
+						<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between'}}> 
+							<OverrideMaterialUICss>
+								<IconButton 
+									onClick={this.handleExpandClick}
+									aria-expanded={this.state.expanded}
+									aria-label='Show more'
+									className={this.state.expanded ? 'expand-button-expanded' : 'expand-button-normal'}
+								>
+									<ExpandMoreIcon/>
+								</IconButton>
+							</OverrideMaterialUICss>
+							{this.showSwitch()}
+						</div>
+
+						<Button> Live </Button>
+
+					</CardActions></OverrideMaterialUICss>
+
+					
 				</Card>
 				</OverrideMaterialUICss>
 			</div>

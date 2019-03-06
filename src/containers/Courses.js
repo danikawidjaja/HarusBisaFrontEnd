@@ -45,6 +45,7 @@ class Courses extends Component{
 	async componentWillMount(){
     	this.props.props.isNavVisible(true);
   	}
+
   	toggleShowDeleteCourseModal(){
   		this.setState({
   			showDeleteCourseModal: !this.state.showDeleteCourseModal
@@ -160,7 +161,7 @@ class Courses extends Component{
 	  							<div className= "course-popup-header">
 	        						<h2> Tambah Mata Kuliah </h2>
 		    					</div>
-  								<AddCourse closefunction={close} Auth={this.Auth}/>
+  								<AddCourse closefunction={close} Auth={this.Auth} />
   							</div>
   						)}
   							

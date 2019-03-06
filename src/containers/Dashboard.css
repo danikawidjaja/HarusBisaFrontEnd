@@ -336,8 +336,14 @@ Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon
 	justify-content: space-between;
 }
 
-.Dashboard .right .content .question-card .card-action .expand-button{
+.Dashboard .right .content .question-card .card-action .expand-button-normal{
 	transform: rotate(0deg);
+	font-size: 5vw;
+}
+
+.Dashboard .right .content .question-card .card-action .expand-button-expanded{
+	transform: rotate(180deg);
+	color: orange;
 }
 
 .Dashboard .right .content .question-card .answers{
@@ -357,4 +363,39 @@ Dashboard .right .content .live-card .card-content .interactive .fab .MuiSvgIcon
 	border: none;
 	text-align: left;
 	font-weight: 500;
+}
+
+.Dashboard .right .content .question-card .switch {
+    border: 1px solid #ccc;
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin: auto;
+    
+}
+
+.Dashboard .right .content .question-card .switch-toggle {
+    border: 1px solid #999;
+    box-shadow: 1px 1px 1px #ccc;
+    width: 30px;
+    height: 29px;
+    left: 0;
+    border-radius: 50%;
+    background: white;
+    position: relative;
+    transition: left .2s ease-in-out;
+}
+
+.Dashboard .right .content .question-card .switch.on {
+    background: green;
+}
+
+.Dashboard .right .content .question-card .switch.on .switch-toggle {
+    left: 37px;
+}
+
+.Dashboard .right .content .question-card .switch.disabled {
+    cursor: not-allowed;
 }
