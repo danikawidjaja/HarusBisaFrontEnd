@@ -1,0 +1,19 @@
+.ProfileAvatar{
+
+}
+
+.ProfileAvatar .avatar{
+	background:red;
+	min-width:5vw;
+	min-height:5vw;
+	border-radius:50%;
+	text-align: center;
+	display: flex;
+}
+
+.ProfileAvatar .avatar p{
+	margin: auto;
+	font-size: 5vh;
+	color: white;
+
+}

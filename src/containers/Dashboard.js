@@ -37,7 +37,7 @@ class Dashboard extends Component{
 		this.state={
 			lecture_dates:['2/3', '2/7', '2/10', '2/11', '2/12'],
 			class_name:'Biologi Molekuler Kelas A',
-			selected_date:'',
+			selected_date:'2/3',
 		};
 		this.changeSelectedDate= this.changeSelectedDate.bind(this);
 		this.getSelectedDate = this.getSelectedDate.bind(this);
@@ -47,6 +47,8 @@ class Dashboard extends Component{
 		this.setState={
 			selected_date: date
 		}
+
+		console.log(date)
 	}
 
 	getSelectedDate(){
@@ -67,7 +69,7 @@ class Dashboard extends Component{
     				<DashboardLeft lectureDates={this.state.lecture_dates} changeSelectedDate={this.changeSelectedDate}/>
     			</div>
     			<div className='right'>
-    				<DashboardRight class_name={this.state.class_name} selectedDate={this.state.selected_date} getSelectedDate={this.getSelectedDate}/>
+    				<DashboardRight class_name={this.state.class_name} selected_date={this.state.selected_date} getSelectedDate={this.getSelectedDate}/>
     			</div>
     		</div>
 		)
@@ -232,7 +234,7 @@ class DashboardRight extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			selected_date:''
+			selected_date:this.props.selectedDate
 		}
 	}
 
@@ -259,7 +261,7 @@ class DashboardRight extends Component{
     						<div className='card-content'>
     							<div style={{marginTop:'auto'}}>
     								<p> {this.props.class_name} </p>
-    								<p> Kelas {this.state.selectedDate} 2/7: Anatomi </p>
+    								<p> Kelas {this.props.selected_date}: Anatomi </p>
     							</div>
     							<div style={{marginLeft:'2vw', display:'flex', flexDirection:'row'}}>
 	    							<div className='interactive'>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from "react-bootstrap";
 import Popup from 'reactjs-popup';
+import './ProfileAvatar.css'
 
 class ProfileAvatar extends Component{
 	constructor(props){
@@ -11,7 +12,7 @@ class ProfileAvatar extends Component{
 	}
 	render(){
 		return(
-			<div>
+			<div className='ProfileAvatar'>
 				<Popup
 					trigger={
 						<Button style={{margin:'auto',borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
@@ -23,11 +24,11 @@ class ProfileAvatar extends Component{
 				>
 					<div style={{display:'flex', flexDirection:'row'}}>
 						<div>
-							<div style={{background:'red', width:'5vw', height:'5vw', borderRadius:'50%'}}>
-								<p style={{margin:'auto', textAlign:'center', verticalAlign:'center'}}>{this.state.initial}</p>
+							<div className='avatar'>
+								<p>{this.state.initial}</p>
 							</div>
 						</div>
-						<div>
+						<div style={{borderLeft:'1px solid black', marginLeft:'1vw'}}>
 							<p> {this.props.name} </p>
 						</div>
 					</div>
