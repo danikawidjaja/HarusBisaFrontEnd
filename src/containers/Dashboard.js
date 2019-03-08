@@ -35,29 +35,49 @@ class Dashboard extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			lecture_dates:['2/3', '2/7', '2/10', '2/11', '2/12'],
+			lectures:[{date:'2/3', description:'anatomi'}, {date:'2/7', description:'fisiologi'}, {date:'2/10', description:''}],
 			class_name:'Biologi Molekuler Kelas A',
-			selected_date:'2/3',
+			selected_lecture:{date:'2/3', description:'Anatomi'},
+			showUpdateLectureModal: false,
+			lectureToUpdate:null,
+			showDeleteLectureModal:false,
+			lectureToDelete:null,
 		};
-		this.changeSelectedDate= this.changeSelectedDate.bind(this);
-		this.getSelectedDate = this.getSelectedDate.bind(this);
+		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
 	}
 
-	changeSelectedDate(date){
+	async changeSelectedLecture(new_selected_lecture){
 		this.setState={
-			selected_date: date
+			selected_lecture: new_selected_lecture
 		}
-
-		console.log(date)
 	}
+	toggleShowDeleteLectureModal(){
+  		this.setState({
+  			showDeleteLectureModal: !this.state.showDeleteLectureModal
+  		})
+  	}
+  	toggleShowUpdateLectureModal(){
+  		
+  		this.setState({
+  			showUpdateLectureModal: !this.state.showUpdateLectureModal
+  		})
+  	}
+  	changeshowDeleteLectureModal(lectureToBeDeleted){
+  		this.toggleShowDeleteLectureModal()
+  		this.setState({
+  			lectureToDelete: lectureToBeDeleted,
+  		})
+  	}
+  	changeShowUpdateLectureModal(lectureToBeUpdated){
+  		this.toggleShowUpdateLectureModal()
+  		this.setState({
+  			lectureToUpdate: lectureToBeUpdated,
+  		})
+  	}
 
-	getSelectedDate(){
-		return this.state.selected_date;
-	}
 	async componentWillMount(){
     	this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
-    	this.changeSelectedDate(this.state.lecture_dates[0]);
   	}
 
   	async componentDidMount(){
@@ -65,45 +85,115 @@ class Dashboard extends Component{
 	render(){
 		return(
     		<div className='Dashboard'>
+    			<Popup
+    				open ={this.showUpdateLectureModal}
+    				modal
+    			>
+    				<AddLecture/>
+    			</Popup>
+
+    			<Popup
+    				open = {this.showDeleteLectureModal}
+    				modal
+    			>
+    				<div>
+    				<p> Are you sure ? </p>
+    				<Button> yes </Button>
+    				<Button> no </Button>
+    				</div>
+    			</Popup>
+
     			<div className='left'>
-    				<DashboardLeft lectureDates={this.state.lecture_dates} changeSelectedDate={this.changeSelectedDate}/>
+    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal}/>
     			</div>
     			<div className='right'>
-    				<DashboardRight class_name={this.state.class_name} selected_date={this.state.selected_date} getSelectedDate={this.getSelectedDate}/>
+    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} />
     			</div>
     		</div>
 		)
 	}
 }
 
+class LectureButton extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			date:this.props.date,
+			defaultLecture: this.props.default
+		}
+		
+	}
+
+	deleteLecture(){
+
+	}
+	render(){
+		if (this.props.defaultLecture){
+			return(
+				<Popup
+	  			trigger={<ToggleButton className='button' type='radio' value={this.state.date} defaultChecked > Sesi {this.state.date} </ToggleButton>}
+	  			position='right'
+	  			on = 'hover'
+	  			>
+		  			<Button> Delete lecture </Button>
+		  			<Button onClick={this.props.changeShowUpdateLectureModal}> Edit Lecture </Button>
+	  			</Popup>
+			)
+		}
+		else{
+			return(
+				<Popup
+		  			trigger={<ToggleButton className='button' type='radio' value={this.state.date} > Sesi {this.state.date} </ToggleButton>}
+		  			position='right'
+		  			on = 'hover'
+		  		>
+		  			<Button onClick={this.deleteLecture}> Delete lecture </Button>
+		  			<Button onClick={this.editLecture}> Edit Lecture </Button>
+		  		</Popup>
+			)
+		}
+	}
+
+}
 class DashboardLeft extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			selected_date:this.props.lectureDates[0],
-			lecture_dates: this.props.lectureDates,
+			lectures: this.props.lectures,
+			showContextMenu: false,
 		}
-		this.handleChangeDate = this.handleChangeDate.bind(this);
+		this.handleChangeLecture = this.handleChangeLecture.bind(this);
+		this.handleRightClick = this.handleRightClick.bind(this);
 	}
-	handleChangeDate(value, event) {
-	    this.setState({
-	      selected_date: value
-	    });
-	    this.props.changeSelectedDate(value);
+	handleChangeLecture(value, event) {
+		this.props.changeSelectedLecture(value)
   	}
 
-  	makeToggleButtons(lecture_dates){
+  	handleRightClick(e){
+  		console.log('show context menu toggle')
+  		this.setState({
+  			showContextMenu: !this.state.showContextMenu,
+  		})
+  	}
+
+  	makeToggleButtons(lectures){
   		let toggleButtons = []
-  		if (lecture_dates.length == 0){
+  		if (lectures.length == 0){
   			toggleButtons.push(<OverrideMaterialUICss><Fab style={{backgroundColor:'#ffe01c'}}> <AddIcon/> </Fab> </OverrideMaterialUICss>)
   		}
   		else{
-	  		for (let i=0; i<lecture_dates.length; i++){
+	  		for (let i=0; i<lectures.length; i++){
 	  			if (i==0){
-	  				toggleButtons.push(<ToggleButton className='button' value={lecture_dates[i]} defaultChecked> Kelas {lecture_dates[i]} </ToggleButton>)
+	  				toggleButtons.push(
+	  					//<LectureButton date={lectures[i].date} default={true}/>
+	  					<ToggleButton className='button' type='radio' value={lectures[i]} defaultChecked > Sesi {lectures[i].date} </ToggleButton>
+		  			)
 	  			}
 	  			else{
-	  				toggleButtons.push(<ToggleButton className='button' value={lecture_dates[i]}> Kelas {lecture_dates[i]} </ToggleButton>)
+	  				toggleButtons.push(
+	  					//<LectureButton date={lectures[i].date} default={false}/>
+	  					<ToggleButton className='button' type='radio' value={lectures[i]}> Sesi {lectures[i].date} </ToggleButton>
+	  				)
 	  			}
 	  		}
 	  	}
@@ -112,14 +202,14 @@ class DashboardLeft extends Component{
 	render(){
 		return(
 			<div>
-				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={'2/3'} onChange={this.handleChangeDate}>
-            		{this.makeToggleButtons(/*[]*/this.state.lecture_dates)}
+				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.state.lectures[0]} onChange={this.handleChangeLecture}>
+            		{this.makeToggleButtons(/*[]*/this.state.lectures)}
           		</ToggleButtonGroup>
-          		<Popup trigger={<Button className='addButton'> + Add Class </Button>} modal closeOnDocumentClick={false}>
+          		<Popup trigger={<Button className='addButton'> + Tambah Sesi </Button>} modal closeOnDocumentClick={false}>
   					{close => (
   						<div className='popup'>
 	  						<div className= "popup-header">
-	        					<h2> Tambah Kelas </h2>
+	        					<h2> Tambah Sesi </h2>
 		    				</div>
   							<AddLecture closefunction={close}/>
   						</div>
@@ -231,25 +321,17 @@ class DashboardNavigation extends Component{
 
 }
 class DashboardRight extends Component{
+
 	constructor(props){
 		super(props);
 		this.state={
-			selected_date:this.props.selectedDate
+			date: this.props.selectedLecture.date,
+			description: this.props.selectedLecture.description,
 		}
 	}
-
-	async componentWillMount(){
-		//console.log(this.props.getSelectedDate())
-		this.setState={
-			selected_date: this.props.getSelectedDate(),
-		}
-	}
-
-	async componentDidMount(){
-		//console.log(this.props.getSelectedDate())
-		this.setState={
-			selected_date: this.props.getSelectedDate(),
-		}
+	componentWillReceiveProps(nextProps) {
+		console.log('at will receive prop')
+  		this.setState({ date: nextProps.selectedLecture.date, description: nextProps.selectedLecture.description});  
 	}
 	render(){
 		return(
@@ -261,7 +343,7 @@ class DashboardRight extends Component{
     						<div className='card-content'>
     							<div style={{marginTop:'auto'}}>
     								<p> {this.props.class_name} </p>
-    								<p> Kelas {this.props.selected_date}: Anatomi </p>
+    								<p> Sesi {this.state.date}: {this.state.description} </p>
     							</div>
     							<div style={{marginLeft:'2vw', display:'flex', flexDirection:'row'}}>
 	    							<div className='interactive'>
@@ -272,7 +354,7 @@ class DashboardRight extends Component{
 	    										</OverrideMaterialUICss>
 	    									</Fab> 
 	    								</OverrideMaterialUICss>
-	    								<p> Mulai Kelas </p>
+	    								<p> Mulai Sesi </p>
 	    							</div>
 	    							<div className='interactive'>
 	    								<Popup trigger={	    								
