@@ -19,6 +19,7 @@ import { OverrideMaterialUICss } from "override-material-ui-css";
 import Fab from '@material-ui/core/Fab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import StatisticIcon from '@material-ui/icons/Equalizer';
 import Collapse from '@material-ui/core/Collapse';
 import Popup from 'reactjs-popup';
 import DatePicker from "react-datepicker";
@@ -338,45 +339,44 @@ class DashboardRight extends Component{
 			<div>
 				<DashboardNavigation/>
     			<div className='content'>
-    				<OverrideMaterialUICss>
-    				<Card className='live-card'>
-    						<div className='card-content'>
-    							<div style={{marginTop:'auto'}}>
-    								<p> {this.props.class_name} </p>
-    								<p> Sesi {this.state.date}: {this.state.description} </p>
-    							</div>
-    							<div style={{marginLeft:'2vw', display:'flex', flexDirection:'row'}}>
-	    							<div className='interactive'>
-	    								<OverrideMaterialUICss> 
-	    									<Fab className='fab'>
-	    										<OverrideMaterialUICss>
-	    										<PlayArrow style={{color:'white'}}/>
-	    										</OverrideMaterialUICss>
-	    									</Fab> 
-	    								</OverrideMaterialUICss>
-	    								<p> Mulai Sesi </p>
-	    							</div>
-	    							<div className='interactive'>
-	    								<Popup trigger={	    								
-		    								<Fab className='fab'>
-										    	<OverrideMaterialUICss> <AddIcon style={{color:'white'}}/> </OverrideMaterialUICss>
-										    </Fab>
-											}
-											modal
-											closeOnDocumentClick={false}
-										>
-											{close => (
-						  						<AddQuestion closefunction={close}/>
-						  					)}			
-						  				</Popup>
-
-									    <p> Tambah<br/>Pertanyaan </p>
-	    							</div>
-	    						</div>
-    						</div>
-    				</Card>
-    				</OverrideMaterialUICss>
-
+    				<div style={{display:'flex', flexDirection:'row'}}>
+    					<h1> Sesi {this.state.date} </h1>
+    					<div style={{borderRadius:'50%', backgroundColor:'green'}}> </div>
+    				</div>
+    				<div className='content-option'>
+	    				<div className='interactive'>
+	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
+	    						<PlayArrow className='icon'/>
+	    					</IconButton></OverrideMaterialUICss>
+	    					<p> Mulai Sesi </p>
+	    				</div>
+	    				<div className='interactive'>
+	    					<Popup trigger={	    								
+		    					<IconButton style={{background:'transparent', border:'None'}}>
+						    	<OverrideMaterialUICss> <AddIcon className='icon'/> </OverrideMaterialUICss>
+							    </IconButton>
+							}
+								modal
+								closeOnDocumentClick={false}
+							>
+								{close => (<AddQuestion closefunction={close}/>)}			
+						  	</Popup>
+							<p> Tambah<br/>Pertanyaan </p>
+	    				</div>
+	    				<div className='interactive'>
+	    					<OverrideMaterialUICss> <IconButton style={{background:'transparent', border:'None'}}>
+	    						<StatisticIcon className='icon'/>
+	    					</IconButton> </OverrideMaterialUICss>
+	    					<p> Statistik Sesi {this.state.date} </p>
+	    				</div>
+	    				<div className='interactive'>
+	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
+								<MoreVertIcon className='icon'/>
+							</IconButton> </OverrideMaterialUICss>
+	    					<p> Setting Sesi {this.state.date} </p>
+	    				</div>
+	    			</div>
+    						
     				<QuestionCard/>
     			</div>
 			</div>
@@ -474,7 +474,7 @@ class QuestionCard extends Component{
 			return(
 				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
 					<Switch onClick={this.toggleSwitch} on={this.state.showCorrectAns}/>
-					<p style={{color: (this.state.showCorrectAns) ? 'green' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
+					<p style={{color: (this.state.showCorrectAns) ? '#82DAA4' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
 				</div>
 			)
 		}
@@ -492,9 +492,18 @@ class QuestionCard extends Component{
 							<p> {this.state.question} </p>
 						</div>
 						
-							<OverrideMaterialUICss><IconButton style={{padding:'0'}}>
-								<MoreVertIcon/>
-							</IconButton> </OverrideMaterialUICss>
+						<IconButton>
+						<Popup
+							trigger={<MoreVertIcon/>}
+							position= 'bottom right'
+							on = 'click'
+							closeOnDocumentClick
+
+						>
+							<Button> Delete Question </Button>
+							<Button> Edit Question </Button>
+						</Popup>
+						</IconButton>
 						
 					</CardContent> </OverrideMaterialUICss>
 					
