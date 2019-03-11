@@ -185,9 +185,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	text-transform: none;
 	letter-spacing: 0;
 	font-weight: 400;
-	margin-left: 1vw;
+	display: block;
 	width: 50%;
 	text-align: center;
+	padding: 1vh 1vw 1vh 1vw;
 }
 
 .Dashboard .left .popup .buttons .button:hover:not(.active){
@@ -228,10 +229,31 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin: 2vw;
 }
 
-.Dashboard .right .content h1{
+.Dashboard .right .content .header{
+	display:flex;
+	flex-direction:row;
+	vertical-align: middle;
+	margin-bottom: 2vh;
+}
+
+.Dashboard .right .content .header .live-indicator{
+	border-radius:50%;
+	width:19px;
+	height:19px;
+	margin: auto;
+	margin-left: 2vw;
+}
+
+.Dashboard .right .content .header h1{
 	font-size: 5vh;
 	font-weight: 500;
-	margin-bottom: 2vh;
+	
+}
+
+.Dashboard .right .content .header p{
+	font-size: 2.5vh;
+	margin: auto;
+	margin-left: 0.5vw;
 }
 .Dashboard .right .content .content-option{
 	background: transparent;

@@ -328,24 +328,58 @@ class DashboardRight extends Component{
 		this.state={
 			date: this.props.selectedLecture.date,
 			description: this.props.selectedLecture.description,
+			live: false
 		}
+		this.toggleLive = this.toggleLive.bind(this)
 	}
 	componentWillReceiveProps(nextProps) {
-		console.log('at will receive prop')
-  		this.setState({ date: nextProps.selectedLecture.date, description: nextProps.selectedLecture.description});  
+		console.log(nextProps)
+  		{/*this.setState(nextProps =>{
+  			return{ 
+  				date: nextProps.selectedLecture.date, 
+  				description: nextProps.selectedLecture.description
+  			};
+  		});  */}
+	}
+
+	liveIndicator(){
+		if (this.state.live){
+			return(
+				<div style={{display: 'flex', flexDirection:'row', marginLeft:'5vw'}}>
+					<div className='live-indicator' style={{backgroundColor:'#82DAA4'}}> </div>
+					<p style={{color:'#82DAA4'}}> Aktif </p>
+				</div>
+			)
+		}
+		else{
+			return(
+				<div style={{display: 'flex', flexDirection:'row', marginLeft:'5vw'}}>
+					<div className='live-indicator' style={{backgroundColor:'#828282'}}> </div>
+					<p style={{color:'#828282'}}> Baru </p>
+				</div>
+			)
+		}
+	}
+
+	toggleLive(){
+		this.setState(prevState => {
+	      return {
+	        live: !prevState.live
+	      };
+	    });
 	}
 	render(){
 		return(
 			<div>
 				<DashboardNavigation/>
     			<div className='content'>
-    				<div style={{display:'flex', flexDirection:'row'}}>
+    				<div className='header'>
     					<h1> Sesi {this.state.date} </h1>
-    					<div style={{borderRadius:'50%', backgroundColor:'green'}}> </div>
+    					{this.liveIndicator()} 
     				</div>
     				<div className='content-option'>
 	    				<div className='interactive'>
-	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
+	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}} onClick={this.toggleLive}>
 	    						<PlayArrow className='icon'/>
 	    					</IconButton></OverrideMaterialUICss>
 	    					<p> Mulai Sesi </p>
