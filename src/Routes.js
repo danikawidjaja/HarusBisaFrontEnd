@@ -12,7 +12,7 @@ import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ/FAQ';
-import ContactUs from './containers/ContactUs';
+import ContactUs from './containers/ContactUs/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
 import Dashboard from './containers/Dashboard';
  
