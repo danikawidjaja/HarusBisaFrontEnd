@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home/Home";
 import SignUp from "./containers/SignUp/SignUp";
 import Login from "./containers/Login/Login";
-import NotFound from "./containers/NotFound";
+import NotFound from "./containers/NotFound/NotFound";
 import Courses from './containers/Courses';
 import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
