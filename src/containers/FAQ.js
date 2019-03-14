@@ -7,17 +7,15 @@ import Footer from './Footer';
 export default class FAQ extends Component {
   constructor(props){
     super(props);
-    this.state ={ 
+    this.state ={
       role:'faculty'
     }
 
     this.handleChangeRole = this.handleChangeRole.bind(this);
   }
-
-  async componentWillMount(){
+  async componentDidMount(){
     window.scrollTo(0, 0);
   }
-
   handleChangeRole(value, event) {
     this.setState({
       role: value
@@ -89,7 +87,7 @@ class Faculty extends Component{
           </ToggleButtonGroup>
         
         <div className='right'>
-          <h2> Faculty </h2>
+          <h3> Faculty </h3>
           {this.information()}
         </div>
 
@@ -136,7 +134,7 @@ class Student extends Component{
           </ToggleButtonGroup>
         
         <div className='right'>
-          <h2> Student </h2>
+          <h3> Student </h3>
           {this.information()}
         </div>
 

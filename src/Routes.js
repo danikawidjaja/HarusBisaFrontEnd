@@ -1,18 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./containers//Home";
-import SignUp from "./containers/SignUp";
-import Login from "./containers/Login";
+import Home from "./containers/Home/Home";
+import SignUp from "./containers/SignUp/SignUp";
+import Login from "./containers/Login/Login";
 import NotFound from "./containers/NotFound";
 import Courses from './containers/Courses';
 import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
 import Profile from './containers/Profile';
-import Pricing from './containers/Pricing';
-import WhyHarusBisa from './containers/WhyHarusBisa';
 import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
-import TermsAndConditions from './containers/TermsAndConditions';
+import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ';
 import ContactUs from './containers/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
@@ -24,8 +22,6 @@ export default ({ childProps }) =>
         <AppliedRoute path="/" exact component={Home} props={childProps}/>
         <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
-        <AppliedRoute path='/pricing' exact component = {Pricing} props={childProps} />
-        <AppliedRoute path='/why' exact component = {WhyHarusBisa} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/profile' component = {Profile} props={childProps} />

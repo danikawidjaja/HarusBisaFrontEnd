@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import "./TermsAndConditions.css";
 import { Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from './Footer';
+import Footer from '../Footer';
 
 export default class TermsAndConditions extends Component {
-  async componentWillMount(){
+  async componentDidMount(){
     window.scrollTo(0, 0);
-    this.props.isNavVisible(true);
   }
   render() {
     return (

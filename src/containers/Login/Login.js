@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import './Login.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link, Redirect, withRouter} from "react-router-dom";
-import AuthService from './AuthService';
 import login1 from './login1.png';
-import login2 from './login2.png'; 
+import login2 from './login2.png';
 import login from './login.png';
 import errormessage_icon from './errormessage_icon.png';
 
 class Login extends Component {
-  async componentWillMount(){ 
-    window.scrollTo(0, 0);
-    this.props.isNavVisible(false);
-  }
   render() {
     return (
       <div className='login'>
@@ -34,7 +29,7 @@ class Login extends Component {
             <p> Karena kita adalah sesuatu yang harus terjadi sehingga jadikan sesuatu berarti dalam </p>
             <h2> Sri Mulyani </h2>
           </div>
-          <img src={login} style={{width:'100%', height:'26.92vw'}}/>
+          <img src={login} style={{width:'100%', height:'25vw'}}/>
         </div>
       </div>
     );

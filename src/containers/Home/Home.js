@@ -3,10 +3,6 @@ import "./Home.css";
 import logo from './logokrul.png';
 import landerpic from './landerpic.png';
 import landerbackground from './landerbackground.png';
-import facebook from './facebook.png';
-import linkedin from './linkedin.png';
-import twitter from './twitter.png';
-import instagram from './instagram.png';
 import { Button} from "react-bootstrap";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from "react-router-dom";
 import { OverrideMaterialUICss } from "override-material-ui-css";
-import Footer from './Footer';
+import Footer from '../Footer';
 
 export default class Home extends Component {
   constructor(props){
@@ -30,19 +26,13 @@ export default class Home extends Component {
   handleClick(){
     this.props.history.push('/signup');
   }
-
   async componentDidMount(){
     window.scrollTo(0, 0);
-  }
-
-  async componentWillMount(){
     if(this.props.Auth.loggedIn()){
       this.props.userHasAuthenticated(true);
       this.props.history.push('/courses');
     }
-    this.props.isNavVisible(true);
   }
-
   render() {
     return (
       <div className="Home">
@@ -99,6 +89,7 @@ export default class Home extends Component {
         </div>
 
         <Footer />
+
       </div>
     );
   }

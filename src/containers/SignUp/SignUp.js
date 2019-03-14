@@ -14,13 +14,9 @@ import {
   ToggleButton
 } from "react-bootstrap";
 
-import AuthService from './AuthService';
+
 
 class SignUp extends Component {
-  async componentWillMount(){
-    window.scrollTo(0, 0);
-    this.props.isNavVisible(false);
-  }
   render() {
     return (
       <div className='signup'>
