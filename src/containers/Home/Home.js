@@ -48,6 +48,7 @@ export default class Home extends Component {
         </div>
 
         <div className="about" id='#about'>
+          <a name="about"></a>
           <div>
             <h1>Cara untuk professor dan pengajar untuk mengimplementasi active learning</h1>
           </div>
@@ -76,6 +77,7 @@ export default class Home extends Component {
         </div>
 
         <div className='pricing' id='#pricing'>
+          <a name="pricing"> </a>
           <div className='content'>
             <Card raised='true' className='card'>
               <OverrideMaterialUICss>

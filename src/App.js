@@ -133,7 +133,7 @@ class App extends Component {
                 </Fragment>
                 : 
                 <Fragment>
-                  <LinkContainer to='/home#about' className='navspec'>
+                  <LinkContainer to='/#about' className='navspec'>
                     <NavItem >
                       Kenapa HarusBisa?
                     </NavItem>
