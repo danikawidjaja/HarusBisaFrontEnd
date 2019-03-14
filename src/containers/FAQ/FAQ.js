@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./FAQ.css";
 import { Button, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from './Footer';
+import Footer from '../Footer';
 
 export default class FAQ extends Component {
   constructor(props){
@@ -24,10 +24,10 @@ export default class FAQ extends Component {
 
   informationDisplay(){
     if (this.state.role === 'faculty'){
-      return(<Faculty/>)
+      return(<FacultyFAQ/>)
     }
     else if (this.state.role === 'student'){
-      return (<Student/>)
+      return (<StudentFAQ/>)
     }
   }
   render() {
@@ -50,7 +50,7 @@ export default class FAQ extends Component {
   }
 }
 
-class Faculty extends Component{
+class FacultyFAQ extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -96,7 +96,7 @@ class Faculty extends Component{
   }
 }
 
-class Student extends Component{
+class StudentFAQ extends Component{
 
   constructor(props){
     super(props);

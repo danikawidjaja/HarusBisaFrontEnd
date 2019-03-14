@@ -11,7 +11,7 @@ import Profile from './containers/Profile';
 import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
-import FAQ from './containers/FAQ';
+import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
 import Dashboard from './containers/Dashboard';
