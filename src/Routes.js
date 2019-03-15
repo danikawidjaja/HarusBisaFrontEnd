@@ -13,7 +13,7 @@ import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditio
 import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
-import Dashboard from './containers/Dashboard';
+import Dashboard from './containers/Dashboard/Dashboard';
  
 export default ({ childProps }) =>
   <Switch>
