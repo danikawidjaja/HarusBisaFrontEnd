@@ -7,14 +7,13 @@ import NotFound from "./containers/NotFound/NotFound";
 import Courses from './containers/Courses';
 import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
-import Profile from './containers/Profile';
 import Questions from './containers/Questions';
 import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs/ContactUs';
 import ForgetPassword from './containers/ForgetPassword';
-import Dashboard from './containers/Dashboard';
+import Dashboard from './containers/Dashboard/Dashboard';
  
 export default ({ childProps }) =>
   <Switch>
@@ -24,7 +23,6 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
-        <AppliedRoute path='/profile' component = {Profile} props={childProps} />
         <AppliedRoute path='/questions' component = {Questions} props={childProps} />
         <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
