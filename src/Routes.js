@@ -4,7 +4,7 @@ import Home from "./containers/Home/Home";
 import SignUp from "./containers/SignUp/SignUp";
 import Login from "./containers/Login/Login";
 import NotFound from "./containers/NotFound/NotFound";
-import Courses from './containers/Courses';
+import Courses from './containers/Courses/Courses';
 import AppliedRoute from './components/AppliedRoute';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ/FAQ';

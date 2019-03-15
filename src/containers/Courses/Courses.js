@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Courses.css';
 import { Button, FormGroup, FormControl, ControlLabel,Dropdown } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
-import withAuth from './withAuth';
+import withAuth from '../withAuth';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
