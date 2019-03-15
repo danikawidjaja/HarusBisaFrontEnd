@@ -12,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from "react-router-dom";
 import { OverrideMaterialUICss } from "override-material-ui-css";
-import Footer from '../Footer';
+import Footer from '../Footer/Footer';
 
 export default class Home extends Component {
   constructor(props){

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./TermsAndConditions.css";
 import { Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from '../Footer';
+import Footer from '../Footer/Footer';
 
 export default class TermsAndConditions extends Component {
   async componentDidMount(){

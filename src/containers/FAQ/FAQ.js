@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./FAQ.css";
 import { Button, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from '../Footer';
+import Footer from '../Footer/Footer';
 
 export default class FAQ extends Component {
   constructor(props){
