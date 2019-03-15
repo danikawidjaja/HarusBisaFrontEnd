@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ForgetPassword.css";
 import { Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from './Footer';
+import Footer from '../Footer';
 import {
   HelpBlock,
   FormGroup,

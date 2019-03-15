@@ -8,11 +8,10 @@ import Courses from './containers/Courses';
 import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
 import Questions from './containers/Questions';
-import CourseContent from './containers/CourseContent';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs/ContactUs';
-import ForgetPassword from './containers/ForgetPassword';
+import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import Dashboard from './containers/Dashboard/Dashboard';
  
 export default ({ childProps }) =>
@@ -24,7 +23,6 @@ export default ({ childProps }) =>
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/questions' component = {Questions} props={childProps} />
-        <AppliedRoute path='/coursecontent' component={CourseContent} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
