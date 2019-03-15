@@ -5,9 +5,7 @@ import SignUp from "./containers/SignUp/SignUp";
 import Login from "./containers/Login/Login";
 import NotFound from "./containers/NotFound/NotFound";
 import Courses from './containers/Courses';
-import Lectures from './containers/Lectures';
 import AppliedRoute from './components/AppliedRoute';
-import Questions from './containers/Questions';
 import TermsAndConditions from './containers/TermsAndConditions/TermsAndConditions';
 import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs/ContactUs';
@@ -22,7 +20,6 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
-        <AppliedRoute path='/questions' component = {Questions} props={childProps} />
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>

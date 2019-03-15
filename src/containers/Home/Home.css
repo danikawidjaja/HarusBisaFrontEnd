@@ -18,7 +18,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-repeat: no-repeat;
   background-size: 100%;
 }
-
+ 
 .Home .lander {
   text-align: left;
   display: flex;
@@ -93,6 +93,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-weight: 500;
 }
 
+.Home .about img{
+  height: 50%;
+  width: 20%;
+  margin: auto;
+}
+
 .Home .about .div1{
   text-align: left;
   display: inline-flex;
@@ -103,10 +109,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .Home .about .div1 .text{
   text-align: left;
-  margin-top: 70px;
-  margin-left: 100px;
-  max-width: 60%;
+  width: 60%;
   justify-content: flex-start;
+  margin: auto;
 }
 
 .Home .about .div1 h5{
@@ -115,7 +120,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Home .about .div2{
-  text-align: right;
+  text-align: left;
   display: inline-flex;
   flex-direction: row;
   margin: 30px;
@@ -124,10 +129,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .Home .about .div2 .text{
-  text-align: right;
-  margin-top: 70px;
-  margin-right: 100px;
-  max-width: 60%;
+  text-align: left;
+  width: 60%;
+  margin: auto;
 }
 
 .Home .about .div2 h5{

@@ -54,9 +54,7 @@ export default class Home extends Component {
           </div>
 
           <div className='div1'>
-            <div>
-              <img src={logo} className="App-logo"/>
-            </div>
+            <img src={logo}/>
             <div className='text'>
               <h5> Memotivasi setiap Mahasiswa untuk berpartisipasi </h5>
               <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -70,9 +68,7 @@ export default class Home extends Component {
               <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
               Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
             </div>
-            <div>
-              <img src={logo} className="App-logo"/>
-            </div>
+             <img src={logo} />
           </div>
         </div>
 
