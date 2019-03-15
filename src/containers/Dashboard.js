@@ -76,7 +76,7 @@ class Dashboard extends Component{
   		})
   	}
 
-	async componentWillMount(){
+	async componentDidMount(){
     	this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
   	}
