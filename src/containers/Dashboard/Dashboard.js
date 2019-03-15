@@ -312,9 +312,6 @@ class DashboardNavigation extends Component{
 						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 					</IconButton></OverrideMaterialUICss>
 					<ProfileAvatar name={'wilson'}/>
-					{/*<div style={{borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
-						<h1 style={{margin:'auto'}}> W </h1>
-					</div>*/}
 				</div>
    			</div>
 		)

@@ -18,6 +18,10 @@ import Grid from '@material-ui/core/Grid';
 import FormControlUI from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
+import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
+import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
+import LeftPanelPicture from './left_panel_picture.png';
 
 
 class Courses extends Component{ 
@@ -31,6 +35,7 @@ class Courses extends Component{
 			courseToUpdate:null,
 			showDeleteCourseModal:false,
 			courseToDelete:null,
+			name: "Timothy",
 		};
 
 		this.Auth= this.props.Auth;
@@ -42,8 +47,9 @@ class Courses extends Component{
 		
 	}
 
-	async componentWillMount(){
+  	async componentDidMount(){
     	this.props.props.isNavVisible(true);
+    	window.scrollTo(0, 0);
   	}
 
   	toggleShowDeleteCourseModal(){
@@ -95,86 +101,102 @@ class Courses extends Component{
 	render(){
 		return(
     		<div className="Courses">
-		        <div >
-		            <h1>Mata Kuliah</h1>
-		        </div>
-		        
-		        <Popup
-		        	open={this.state.showUpdateCourseModal}
-		        	modal
-		        	closeOnDocumentClick={false}
-		        	//onClose={this.toggleShowUpdateCourseModal}
-		        >
+    			<CoursesLeft name={this.state.name}/>
+    			<div className = 'right'>
+    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<ProfileAvatar name={'wilson'}/>
+					</div>
 
-		        	{close => (
-		        	<div className='course-popup'>
-	  					<div className= "course-popup-header">
-	        				<h2> Update Mata Kuliah </h2>
-		    			</div>
-  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth}/>
-  					</div>)
-  					}
-		        </Popup>
+			        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
+			            <h1>Kelas Anda</h1>
+			            <div>
+			            	<p> Search bar </p>
+			            </div> 
+			            <Popup
+							    trigger={
+							    	<Button className="button"> + Tambah Kelas </Button>
+						    	}
+							    modal
+							    closeOnDocumentClick={false}
+	  						>
+	  						{close => (
+	  							<div className='course-popup'>
+		  							<div className= "course-popup-header">
+		        						<h2> Tambah Mata Kuliah </h2>
+			    					</div>
+	  								<AddCourse closefunction={close} Auth={this.Auth} />
+	  							</div>
+	  						)}
+	  							
+	  					</Popup>
+			        </div>
+			        
+			        <Popup
+			        	open={this.state.showUpdateCourseModal}
+			        	modal
+			        	closeOnDocumentClick={false}
+			        	//onClose={this.toggleShowUpdateCourseModal}
+			        >
+
+			        	{close => (
+			        	<div className='course-popup'>
+		  					<div className= "course-popup-header">
+		        				<h2> Update Mata Kuliah </h2>
+			    			</div>
+	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth}/>
+	  					</div>)
+	  					}
+			        </Popup>
 
 
-		        <Popup
-		        	open={this.state.showDeleteCourseModal}
-		        	modal
-		        	closeOnDocumentClick={false}
-		        	//onClose={this.toggleShowDeleteCourseModal}
-		        >
-		        	{close => (
-		        		<div>
-		        			<h3> Are you sure you want to delete {this.state.courseToDelete.course_name}? </h3>
-		        			<Button onClick={this.deleteCourse}> Yes </Button>
-		        			<Button onClick={close}> No </Button>
-		        		</div>
-		        	)}
-		        </Popup>
+			        <Popup
+			        	open={this.state.showDeleteCourseModal}
+			        	modal
+			        	closeOnDocumentClick={false}
+			        	//onClose={this.toggleShowDeleteCourseModal}
+			        >
+			        	{close => (
+			        		<div>
+			        			<h3> Are you sure you want to delete {this.state.courseToDelete.course_name}? </h3>
+			        			<Button onClick={this.deleteCourse}> Yes </Button>
+			        			<Button onClick={close}> No </Button>
+			        		</div>
+			        	)}
+			        </Popup>
 
-		        <Grid container
-				  direction="row"
-				  justify="center"
-				  alignItems="baseline"
-				  className='content'>
-
-		        	{this.makingCourses(this.state.courses)}
-		        
-		        	<div>
-		        		<Popup
-						    trigger={
-						    	<Grid item>
-							    	<div>
-								    	<OverrideMaterialUICss>
-								    		<Fab className='fab'>
-								    			<AddIcon/>
-								    		</Fab>
-							    		</OverrideMaterialUICss>
-						    		</div>
-					    		</Grid>
-					    	}
-						    modal
-						    closeOnDocumentClick={false}
-  						>
-  						{close => (
-  							<div className='course-popup'>
-	  							<div className= "course-popup-header">
-	        						<h2> Tambah Mata Kuliah </h2>
-		    					</div>
-  								<AddCourse closefunction={close} Auth={this.Auth} />
-  							</div>
-  						)}
-  							
-  						</Popup>
-
-				    </div>
-				</Grid>	
-        	</div>
+			        <div className= 'content'>
+			        	{this.makingCourses(this.state.courses)}
+			        	<div>
+			        		
+					    </div>
+					</div>
+	        	</div>
+	        </div>
 		)
 
 	}
 }
 
+class CoursesLeft extends Component{
+	constructor(props){
+		super(props);
+	}
+
+	render(){
+		return(
+			<div className='left'>
+    			<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name} </h2>
+    			<img src={LeftPanelPicture}/>
+    		</div>
+		)
+	}
+}
 class TermDropdown extends Component{
 	constructor(props){
 		super(props);
@@ -453,7 +475,9 @@ class CourseCard extends Component{
 	      instructor: this.props.course.instructors,
 	      term:this.props.course.term,
 	      description: this.props.course.description,
-	      course_id: this.props.course._id
+	      course_id: this.props.course._id,
+	      num_student:'56',
+	      num_lecture: '4',
 	    };  
 
 	    this.handleClick = this.handleClick.bind(this);
@@ -478,26 +502,37 @@ class CourseCard extends Component{
 			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
 				<CardContent>
-						<div style={{display:'flex', justifyContent:'flex-end', margin:'0'}}>
-							<IconButton>
-								<Popup
-									trigger={<MoreVertIcon />}
-									position="bottom right"
-									on = "click"
-									closeOnDocumentClick
-								>
-									<Button onClick={this.deleteCourse}> Delete Course </Button>
-									<Button onClick={this.updateCourse}> Update Course </Button>
-								</Popup>    
-				        	</IconButton>
-						</div>
-						<div style={{margin: '2vw',marginBottom: '1vw', marginTop:'3vw'}}>
-							<Link to='/dashboard' > {this.state.course_name} </Link>
-							<p> {this.state.description} </p>
-							<p> {this.state.term} </p>
-							<p> {this.state.instructor} </p>
-							<br/>
-							<p> Kode Bergabung: {this.state.join_code} </p>
+						<div style={{display:'flex', flexDirection:'row', margin: '28px', marginTop:'20px', marginBottom:'20px', flexDirection:'space-between'}}>
+							<div>
+								<Link to='/dashboard' > {this.state.course_name} </Link>
+								<p> {this.state.term} </p>
+								<p> Kode Bergabung: {this.state.join_code} </p>
+							</div>
+
+							<div style={{display:'flex', flexDirection:'row', margin:'auto'}}>
+								<div style={{display:'flex', flexDirection:'column'}}>
+									<h4 style={{color:'black', textAlign:'center'}}> {this.state.num_student} </h4>
+									<p> Mahasiswa </p>
+								</div>
+								<div style={{display:'flex', flexDirection:'column', marginLeft:'48px'}}>
+									<h4 style={{color:'black', textAlign:'center'}}> {this.state.num_lecture} </h4>
+									<p> Sesi </p>
+								</div>
+							</div>
+							<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
+								<IconButton>
+									<Popup
+										trigger={<MoreVertIcon />}
+										position="bottom right"
+										on = "click"
+										closeOnDocumentClick
+									>
+										<Button onClick={this.deleteCourse}> Delete Course </Button>
+										<Button onClick={this.updateCourse}> Update Course </Button>
+									</Popup>    
+					        	</IconButton>
+							</div>
+							
 						</div>
 					
 				</CardContent>

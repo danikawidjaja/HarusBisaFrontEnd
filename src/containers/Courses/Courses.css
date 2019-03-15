@@ -7,6 +7,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
 }
 
+html, body{
+	min-height: 100%;
+}
+
 .Courses{
 	background-color: white;
 	height: 100%;
@@ -14,130 +18,102 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	display: flex;
 	flex-direction: column;
 	font-family: 'Rubik', sans-serif;
-	align-items: center;
-	padding-top: 6vw;
+	align-items: center; 
 	text-align: left;
+	display: flex;
+	flex-direction: row;
 }
 
-.Courses h1{
+.Courses .left h2{
 	font-weight: 500;
-	font-size: 4vw;
+	margin: auto;
+	padding-left: 39px;
+	padding-right: 39px;
+	font-size: 36px;
+	padding-top: 79px;
+}
+
+.Courses .left img{
+	width: 100%;
+	margin-top: 146px;
+	padding-right: 11px;
+	margin-bottom: 50px;
+}
+
+.Courses .left{
+	border-right: 2px solid #EBEBEB;
+	width: 33%;
+}
+
+.Courses .right{
+	width: 67%;
+	padding-left: 89px;
+	padding-right: 89px;
+}
+.Courses .right h1{
+	font-weight: 400;
+	font-size: 36px;
 	justify-content: flex-start;
 	text-align: left;
-	margin-bottom: 1.5vw;
-	margin-top: 1vw;
+	margin: auto;
 	color: black;
 }
 
-.Courses .content p{
+.Courses .right .content p{
 
 }
 
-.Courses .content{
+.Courses .right .content{
 	text-align: center;
 	height: 100%;
 	align-items: center;
-	width: 80%;
+	display: flex;
+	flex-direction: column;
 }
 
-.Courses .content .fab{
+
+.Courses .right .button, .Courses .right .button:focus{
 	background-color: #ffe01c;
-	margin-left: 10.3vw;
-	margin-right: 10.3vw;
-	margin-top: 5.15vw;
-	margin-bottom: 5.15vw;
-
-}
-
-.Courses .button, .Courses .button:focus{
-	background-color: black;
-	color: #ffe01c;
-	width: 15vw;
-	border: 1px solid black;
-	border-radius: 0px;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	font-weight: 400;
-	outline: 0px;
-}
-
-
-.Courses  .button:hover, .Courses .button:active{
 	color: black;
-	background-color: #ffe01c;
-	border: 1px black solid;
+	border-radius: 8px;
+	font-weight: 500;
+	outline: 0px;
+	border: none;
+	height: 32px;
+	margin: auto;
+
+}
+
+
+.Courses .right  .button:hover, .Courses .right .button:active{
+	color: black;
+	background-color: #F7F3DC;
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
 
-/*.Courses .info{
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	width: 100%;
-	background-color: transparent;
-}
-
-.Courses .info .right{
-	background-color: beige;
-	display: flex;
-	flex-direction: column;
-	width: 55%;
-	padding: 2vw;
-}
-
-
-.Courses .info .left{
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	width: 45%;
-	padding: 2vw;
-	padding-left: 3vw;
-	padding-right: 3vw;
-	justify-content: space-between;
-}
-
-.Courses .info .left .button{
-	border: 0px;
-	font-weight: bold;
-	background-color: transparent;
-	color: black;
-	width: 100%;
-	text-align: left;
-}
-
-.Courses .info .left>.btn.active, .Courses .info .left .button:active{
-	border: 0px;
-	font-weight: bold;
-	color: grey;
-	width: 100%;
-	box-shadow: none;
-
-}*/
 
 
 
-.Courses .course-card{
+.Courses .right .course-card{
   padding: 0px;
   margin: 2vw;
   justify-content: space-between;
-  background: url('./matakuliahbiru.jpg');
-  background-size: 100%;
-  width: 40%;
-  height: 100%;
+  background-color: #F3F6F7;
   text-align: left;
   color: white;
   overflow: visible;
+  width: 100%;
+  border-right: 8px solid #FFE01C;
 };
 
 
-.Courses .course-card .MuiCardContent-root-29 .text{
+.Courses .right .course-card .MuiCardContent-root-29 .text{
 	display: flex;
 	background-color: pink;
 }
 
-.Courses .course-card .MuiCardContent-root-29{
+.Courses .right .course-card .MuiCardContent-root-29{
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -145,24 +121,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: 0;
 }
 
-.Courses .course-card .MuiCardContent-root-29 a{
+.Courses .right .course-card .MuiCardContent-root-29 a{
 	font-weight: 500;
 	font-size: 1.5vw;
-	color: white;
+	color: black;
 	margin: 0;
 	padding: 0;
 }
 
-.Courses .course-card .MuiCardContent-root-29 a:hover{
+.Courses .right .course-card .MuiCardContent-root-29 a:hover{
 	color: lightgrey;
 	text-decoration: none;
 }
 
-.Courses .course-card .MuiCardContent-root-29 p{
+.Courses .right .course-card .MuiCardContent-root-29 p{
 	font-size: 1vw;
+	color: black;
 }
 
-.Courses .course-popup{
+.Courses .right .course-popup{
 	text-align: center;
 	align-items: center;
 	justify-content: center;
@@ -170,13 +147,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 }
 
-.Courses .course-popup h2{
+.Courses .right .course-popup h2{
 	color: black;
 	font-weight: 400;
 	text-align: center;
 }
 
-.Courses .course-popup .course-popup-header{
+.Courses .right .course-popup .course-popup-header{
   display: flex;
   flex: row;
   justify-content: center;
@@ -189,7 +166,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 
-.Courses .course-popup .form{
+.Courses .right .course-popup .form{
 	align-items: center;
 	margin-right: 5vw;
     margin-left: 5vw;
@@ -198,11 +175,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     
 }
 
-.Courses .course-popup label{
+.Courses .right .course-popup label{
 	text-align: right;
 }
 
-.Courses .course-popup .button, .Courses .course-popup .button:hover, .Courses .course-popup .button:focus{
+.Courses .right .course-popup .button, .Courses .right .course-popup .button:hover, .Courses .right .course-popup .button:focus{
 	background-color: #ffe01c;
 	border:0px;
 	color: black;
@@ -212,7 +189,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin-left: 1vw;
 }
 
-.Courses .course-popup .buttons{
+.Courses .right .course-popup .buttons{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
