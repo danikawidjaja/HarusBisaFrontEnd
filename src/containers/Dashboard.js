@@ -26,7 +26,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import calIcon from './cal.png';
 import InputQuestion from './InputQuestion';
-import ProfileAvatar from '../ProfileAvatar';
+import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import Switch from 'react-toggle-switch';
 
 
