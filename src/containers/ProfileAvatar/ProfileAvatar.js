@@ -7,29 +7,46 @@ class ProfileAvatar extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			initial: this.props.name.slice(0,1).toUpperCase(),
+			initial: this.props.profile.first_name.slice(0,1).toUpperCase(),
+			first_name: this.props.profile.first_name[0].toUpperCase() + this.props.profile.first_name.slice(1, this.props.profile.first_name.length),
+			last_name: this.props.profile.last_name[0].toUpperCase() + this.props.profile.last_name.slice(1, this.props.profile.last_name.length),
+			email: this.props.profile.email,
 		}
+
 	}
+
+	handleLogout = async event => {
+    await this.props.Auth.logout();
+    this.props.userHasAuthenticated(false);
+    this.props.history.push('/');
+  }
 	render(){
 		return(
 			<div className='ProfileAvatar'>
 				<Popup
 					trigger={
-						<Button style={{margin:'auto',borderRadius:'50%', background:'red', width:'2vw', height:'2vw', margin:'auto', textAlign:'center'}}>
-						{this.state.initial}
+						<Button className='avatar-button'>
+						{this.state.initial} 
 						</Button>
 					}
+					contentStyle={{width:'auto'}}
 					position='bottom right'
 					on = 'click'
 				>
-					<div style={{display:'flex', flexDirection:'row'}}>
-						<div>
-							<div className='avatar'>
-								<p>{this.state.initial}</p>
+					<div style={{display:'flex', flexDirection:'column'}}>
+						<div className='popup-profile'>
+							<div>
+								<div className='avatar'>
+									<p>{this.state.initial}</p>
+								</div>
+							</div>
+							<div className='text'>
+								<h3> {this.state.first_name + " " + this.state.last_name} </h3>
+								<p> {this.state.email} </p>
 							</div>
 						</div>
-						<div style={{borderLeft:'1px solid black', marginLeft:'1vw'}}>
-							<p> {this.props.name} </p>
+						<div>
+							<Button onClick={this.handleLogout}> Logout </Button>
 						</div>
 					</div>
 				</Popup>

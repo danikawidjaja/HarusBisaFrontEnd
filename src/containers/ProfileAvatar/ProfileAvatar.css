@@ -1,6 +1,47 @@
 .ProfileAvatar{
+	display: flex;
+	overflow: visible;
+	text-align: center;
+	border-radius: 50%;
+	padding: 0;
+	padding-left: 6px;
+	padding-right: 6px;
 
 }
+
+
+.ProfileAvatar .avatar-button, .ProfileAvatar .avatar-button:active, .ProfileAvatar .avatar-button:focus{
+	display: inline-block;
+	border-radius: 50%;
+	background-color: red;
+	border: none;
+	margin: auto;
+	color: black;
+	padding: 3px 7px;
+}
+
+.ProfileAvatar .popup-profile{
+	display: flex;
+	flex-direction: row;
+}
+
+.ProfileAvatar .popup-profile .text{
+	border-left:1px solid black;
+	margin-left: 1vw;
+	padding: 5px;
+	text-align: left;
+}
+
+.ProfileAvatar .popup-profile .text p{
+	font-weight: 400;
+	font-size: 12px;
+}
+
+.ProfileAvatar .popup-profile .text h3{
+	font-weight: 500;
+	font-size: 15px;
+}
+
 
 .ProfileAvatar .avatar{
 	background:red;

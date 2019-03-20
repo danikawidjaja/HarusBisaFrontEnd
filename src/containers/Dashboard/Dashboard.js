@@ -84,34 +84,42 @@ class Dashboard extends Component{
   	async componentDidMount(){
   	}
 	render(){
-		return(
-    		<div className='Dashboard'>
-    			<Popup
-    				open ={this.showUpdateLectureModal}
-    				modal
-    			>
-    				<AddLecture/>
-    			</Popup>
+		if (this.props.Auth.loggedIn()){
+			return(
+	    		<div className='Dashboard'>
+	    			<Popup
+	    				open ={this.showUpdateLectureModal}
+	    				modal
+	    			>
+	    				<AddLecture/>
+	    			</Popup>
 
-    			<Popup
-    				open = {this.showDeleteLectureModal}
-    				modal
-    			>
-    				<div>
-    				<p> Are you sure ? </p>
-    				<Button> yes </Button>
-    				<Button> no </Button>
-    				</div>
-    			</Popup>
+	    			<Popup
+	    				open = {this.showDeleteLectureModal}
+	    				modal
+	    			>
+	    				<div>
+	    				<p> Are you sure ? </p>
+	    				<Button> yes </Button>
+	    				<Button> no </Button>
+	    				</div>
+	    			</Popup>
 
-    			<div className='left'>
-    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal}/>
-    			</div>
-    			<div className='right'>
-    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} />
-    			</div>
-    		</div>
-		)
+	    			<div className='left'>
+	    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal}/>
+	    			</div>
+	    			<div className='right'>
+	    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} />
+	    			</div>
+	    		</div>
+			)
+		}
+		else{
+			alert('Please login!')
+			this.props.history.push('/login');
+			return(null)
+		}
+		
 	}
 }
 
@@ -301,7 +309,7 @@ class DashboardNavigation extends Component{
 					</Link>
 					<Link to='/courses'> Mata Kuliah </Link>
 				</div>
-				<div style={{display:'flex'}}>
+				<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
 					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
 					</IconButton> </OverrideMaterialUICss>
@@ -311,7 +319,6 @@ class DashboardNavigation extends Component{
 					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 					</IconButton></OverrideMaterialUICss>
-					<ProfileAvatar name={'wilson'}/>
 				</div>
    			</div>
 		)

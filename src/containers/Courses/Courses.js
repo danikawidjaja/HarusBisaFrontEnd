@@ -27,7 +27,7 @@ import LeftPanelPicture from './left_panel_picture.png';
 class Courses extends Component{ 
 	constructor(props){
 		super(props);
-
+		console.log(this.props.data)
 		this.state = {
 			courses: this.props.data.courses,
 			history: this.props.history,
@@ -35,7 +35,12 @@ class Courses extends Component{
 			courseToUpdate:null,
 			showDeleteCourseModal:false,
 			courseToDelete:null,
-			name: "Timothy",
+			profile:{
+				first_name: this.props.data.first_name,
+				last_name: this.props.data.last_name,
+				role: this.props.data.role,
+				email: this.props.data.email
+			},
 		};
 
 		this.Auth= this.props.Auth;
@@ -48,7 +53,7 @@ class Courses extends Component{
 	}
 
   	async componentDidMount(){
-    	this.props.props.isNavVisible(true);
+    	this.props.props.isNavVisible(false);
     	window.scrollTo(0, 0);
   	}
 
@@ -101,7 +106,7 @@ class Courses extends Component{
 	render(){
 		return(
     		<div className="Courses">
-    			<CoursesLeft name={this.state.name}/>
+    			<CoursesLeft name={this.state.profile.first_name}/>
     			<div className = 'right'>
     				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
 						<OverrideMaterialUICss><IconButton>
@@ -110,7 +115,7 @@ class Courses extends Component{
 						<OverrideMaterialUICss><IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
-						<ProfileAvatar name={'wilson'}/>
+						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
 
 			        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
@@ -191,7 +196,7 @@ class CoursesLeft extends Component{
 	render(){
 		return(
 			<div className='left'>
-    			<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name} </h2>
+    			<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
     			<img src={LeftPanelPicture}/>
     		</div>
 		)

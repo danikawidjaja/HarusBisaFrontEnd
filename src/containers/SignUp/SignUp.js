@@ -17,6 +17,10 @@ import {
 
 
 class SignUp extends Component {
+  async componentDidMount(){
+      this.props.isNavVisible(false);
+      window.scrollTo(0, 0);
+    }
   render() {
     return (
       <div className='signup'>

@@ -8,6 +8,10 @@ import login from './login.png';
 import errormessage_icon from './errormessage_icon.png';
 
 class Login extends Component {
+  async componentDidMount(){
+      this.props.isNavVisible(false);
+      window.scrollTo(0, 0);
+    }
   render() {
     return (
       <div className='login'>
