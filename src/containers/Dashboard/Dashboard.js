@@ -436,15 +436,22 @@ class AddQuestion extends Component{
 	      question_type: value
 	    });
   	}
-	popupDisplay(question_type){
+	popupDisplay(question_type){ 
 		let returnComponents = []
 		if (question_type === ''){
 			returnComponents.push(
-				<ToggleButtonGroup className='buttons' name='role'type='radio' onChange={this.handleChangeQuestionType}>
-            		<ToggleButton className='button' value='multiple_choice'> Pilihan Ganda </ToggleButton>
-            		<ToggleButton className='button' value='string_input'> Isian </ToggleButton>
-            		<ToggleButton className='button' value='numeric_input' style={{border:'none'}}> Jawaban Angka </ToggleButton>
-          		</ToggleButtonGroup>
+				<div style={{display:'flex', flexDirection:'row', width:'100%'}}>
+					<div style={{width:'10%'}}>
+						<IconButton onClick={this.props.closefunction} ><KeyboardArrowLeft/></IconButton>
+					</div>
+					<div style={{width:'90%'}}>
+					<ToggleButtonGroup className='buttons' name='role'type='radio' onChange={this.handleChangeQuestionType}>
+						<ToggleButton className='button' value='multiple_choice'> Pilihan Ganda </ToggleButton>
+	            		<ToggleButton className='button' value='string_input'> Isian </ToggleButton>
+	            		<ToggleButton className='button' value='numeric_input' style={{border:'none'}}> Jawaban Angka </ToggleButton>
+	          		</ToggleButtonGroup>
+	          		</div>
+	          	</div>
 			)	
 		}
 		else if (question_type === 'multiple_choice'){

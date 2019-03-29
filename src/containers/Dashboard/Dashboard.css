@@ -329,6 +329,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	background-color: transparent;
 	box-shadow: none;
 	text-align: center;
+	height: 3rem;
+	font-size: 1.5rem;
+	vertical-align: middle;
+
 }
 .Dashboard .right .content .content-option  .interactive .popup .button:hover, .Dashboard .right .content .content-option .interactive .popup .button:focus{
 	font-weight: 500;
@@ -341,6 +345,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	width: 100%;
 	justify-content: center;
 	text-align: center;
+	padding-right: 3.5rem;
 }
 .Dashboard .right a{
 	color: black;
