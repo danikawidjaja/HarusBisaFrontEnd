@@ -22,6 +22,9 @@ import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import LeftPanelPicture from './left_panel_picture.png';
+import Edit from '@material-ui/icons/Edit';
+import PlayArrow from '@material-ui/icons/PlayArrow';
+import Delete from '@material-ui/icons/Delete';
 
 
 class Courses extends Component{ 
@@ -532,8 +535,9 @@ class CourseCard extends Component{
 										on = "click"
 										closeOnDocumentClick
 									>
-										<Button onClick={this.deleteCourse}> Delete Course </Button>
-										<Button onClick={this.updateCourse}> Update Course </Button>
+										<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
+										<Button style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
+										<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>							
 									</Popup>    
 					        	</IconButton>
 							</div>

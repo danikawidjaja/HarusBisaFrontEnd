@@ -18,7 +18,6 @@ html, body{
 	display: flex;
 	flex-direction: column;
 	font-family: 'Rubik', sans-serif;
-	align-items: center; 
 	text-align: left;
 	display: flex;
 	flex-direction: row;
@@ -35,14 +34,17 @@ html, body{
 
 .Courses .left img{
 	width: 100%;
-	margin-top: 146px;
-	padding-right: 11px;
-	margin-bottom: 50px;
+	
+	margin-top: 2rem;
+	padding-right: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 .Courses .left{
 	border-right: 2px solid #EBEBEB;
 	width: 33%;
+	position: -webkit-sticky;
+	position: sticky;
 }
 
 .Courses .right{
@@ -65,7 +67,6 @@ html, body{
 
 .Courses .right .content{
 	text-align: center;
-	height: 100%;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -106,6 +107,7 @@ html, body{
   width: 100%;
   border-right: 8px solid #FFE01C;
 };
+
 
 
 .Courses .right .course-card .MuiCardContent-root-29 .text{
@@ -175,6 +177,7 @@ html, body{
     
 }
 
+
 .Courses .right .course-popup label{
 	text-align: right;
 }
@@ -186,7 +189,9 @@ html, body{
 	text-transform: none;
 	letter-spacing: 0;
 	font-weight: 400;
-	margin-left: 1vw;
+	border-radius: 8px;
+	width: 145px;
+	margin: 0;
 }
 
 .Courses .right .course-popup .buttons{
@@ -194,3 +199,4 @@ html, body{
 	flex-direction: row;
 	justify-content: flex-end;
 }
+
