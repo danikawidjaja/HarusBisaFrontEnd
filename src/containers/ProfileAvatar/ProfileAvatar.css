@@ -18,6 +18,8 @@
 	margin: auto;
 	color: black;
 	padding: 3px 7px;
+	height: 1.5rem;
+	width: 1.5rem;
 }
 
 .ProfileAvatar .popup-profile{
@@ -26,7 +28,6 @@
 }
 
 .ProfileAvatar .popup-profile .text{
-	border-left:1px solid black;
 	margin-left: 1vw;
 	padding: 5px;
 	text-align: left;
