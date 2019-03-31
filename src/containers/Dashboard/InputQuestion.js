@@ -4,7 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButto
 import NumericInput from 'react-numeric-input';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import Switch from 'react-toggle-switch';
+import Switch from '@material-ui/core/Switch';
 
 class InputQuestion extends Component{
 	constructor(props){
@@ -272,7 +272,7 @@ class MultipleChoiceQuestionForm extends Component{
 					    	/>
 					    </div>
 					    <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-					    	<Switch onClick={this.toggleSwitch} on={this.state.switched}/>
+					    	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
 					    	<label> Jawaban Benar </label>
 					    </div>
 				    </div>

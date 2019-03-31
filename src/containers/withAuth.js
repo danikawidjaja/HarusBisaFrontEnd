@@ -22,6 +22,7 @@ export default function withAuth(AuthComponent){
 					this.Auth.getData().then(res => this.setState({
 							data: res
 					}))
+					console.log("success")
 				}
 				catch(err){
 					alert(err.message)

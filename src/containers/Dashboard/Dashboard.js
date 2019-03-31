@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -27,7 +27,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import calIcon from './cal.png';
 import InputQuestion from './InputQuestion';
 import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
-import Switch from 'react-toggle-switch';
+import Switch from '@material-ui/core/Switch';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 
@@ -37,7 +39,8 @@ class Dashboard extends Component{
 		super(props);
 		this.state={
 			lectures:[{date:'2/3', description:'anatomi'}, {date:'2/7', description:'fisiologi'}, {date:'2/10', description:''}],
-			class_name:'Biologi Molekuler Kelas A',
+			courses:['Biologi Molekuler Kelas A', 'Harus Bisa', 'ABC'],
+			selected_course:'Biologi Molekuler Kelas A',
 			selected_lecture:{date:'2/3', description:'Anatomi'},
 			showUpdateLectureModal: false,
 			lectureToUpdate:null,
@@ -109,7 +112,7 @@ class Dashboard extends Component{
 	    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal}/>
 	    			</div>
 	    			<div className='right'>
-	    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} />
+	    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} selected_course={this.state.selected_course} courses={this.state.courses}/>
 	    			</div>
 	    		</div>
 			)
@@ -297,17 +300,43 @@ class AddLecture extends Component{
 	    );
   	}
 }
+
+class CoursesOption extends Component{
+	constructor(props){
+		super(props);
+	}
+	createMenuItem(courses){
+		let length = courses.length
+		let result = []
+
+		for (let i=0; i<length; i++){
+			result.push(<Dropdown.Item> courses[i] </Dropdown.Item>)
+		}
+
+		return result;
+
+	}
+	render(){
+		return(
+			<Dropdown>
+				<Dropdown.Toggle> {this.props.selected_course} </Dropdown.Toggle>
+				
+				<Dropdown.Menu>
+					
+				</Dropdown.Menu>
+			</Dropdown>
+		)
+	}
+}
 class DashboardNavigation extends Component{
+	constructor(props){
+		super(props);
+	}
 	render(){
 		return(
 			<div className='navigation'>
 				<div>
-					<Link to='/courses'>
-						<IconButton>
-							<KeyboardArrowLeft/>
-						</IconButton>
-					</Link>
-					<Link to='/courses'> Mata Kuliah </Link>
+					<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses}/>
 				</div>
 				<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
 					<OverrideMaterialUICss><IconButton>
@@ -375,7 +404,7 @@ class DashboardRight extends Component{
 	render(){
 		return(
 			<div>
-				<DashboardNavigation/>
+				<DashboardNavigation selected_course={this.props.selected_course} courses={this.props.courses}/>
     			<div className='content'>
     				<div className='header'>
     					<h1> Sesi {this.state.date} </h1>
@@ -518,7 +547,7 @@ class QuestionCard extends Component{
 		if (this.state.expanded){
 			return(
 				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
-					<Switch onClick={this.toggleSwitch} on={this.state.showCorrectAns}/>
+					<Switch onChange={this.toggleSwitch} checked={this.state.showCorrectAns}/>
 					<p style={{color: (this.state.showCorrectAns) ? '#82DAA4' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
 				</div>
 			)
