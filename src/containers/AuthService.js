@@ -46,6 +46,28 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+
+    getLectures(course_id){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures` , {
+            method: 'GET',   
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
+
+    addLecture(course_id, date, description){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures`, {
+            method: 'POST',
+            body: JSON.stringify({
+                date,
+                description
+            })
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     signup(password,email,firstname,lastname,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',

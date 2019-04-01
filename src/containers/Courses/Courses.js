@@ -114,7 +114,6 @@ class Courses extends Component{
 	updateCoursesState(courses){
 		this.setState({
 			courses: courses,
-			needToUpdateCourse: true
 		})
 	}
 	render(){

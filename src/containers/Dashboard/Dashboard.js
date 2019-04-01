@@ -30,7 +30,8 @@ import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import Switch from '@material-ui/core/Switch';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
 
 
 
@@ -38,22 +39,35 @@ class Dashboard extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			lectures:[{date:'2/3', description:'anatomi'}, {date:'2/7', description:'fisiologi'}, {date:'2/10', description:''}],
-			courses:['Biologi Molekuler Kelas A', 'Harus Bisa', 'ABC'],
-			selected_course:'Biologi Molekuler Kelas A',
-			selected_lecture:{date:'2/3', description:'Anatomi'},
+			lectures:[],
+			courses:[],
+			profile:{
+				first_name: "",
+				last_name: "",
+				role: "",
+				email: "" 
+			},
+			selected_course:null,
+			selected_lecture:null,
 			showUpdateLectureModal: false,
 			lectureToUpdate:null,
 			showDeleteLectureModal:false,
 			lectureToDelete:null,
+			isLoading: true,
 		};
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
+		this.updateLecturesState = this.updateLecturesState.bind(this);
 	}
-
-	async changeSelectedLecture(new_selected_lecture){
-		this.setState={
+	updateLecturesState(lectures){
+		console.log('i am updating lectures state')
+		this.setState({
+			lectures: lectures
+		})
+	}
+	changeSelectedLecture(new_selected_lecture){
+		this.setState({
 			selected_lecture: new_selected_lecture
-		}
+		})
 	}
 	toggleShowDeleteLectureModal(){
   		this.setState({
@@ -79,43 +93,75 @@ class Dashboard extends Component{
   		})
   	}
 
-	async componentWillMount(){
-    	this.props.isNavVisible(false);
-    	window.scrollTo(0, 0);
-  	}
 
   	async componentDidMount(){
+  		this.props.isNavVisible(false);
+    	window.scrollTo(0, 0);
+
+		await this.props.Auth.getData()
+  		.then(async res =>{
+  			console.log(res)
+      		await this.setState({
+      			courses: res.data.courses,
+      			selected_course: res.data.courses[0],
+      			profile:{
+      				first_name : res.data.first_name,
+      				last_name : res.data.last_name,
+      				email: res.data.email,
+      				role: res.data.role,
+      				school: res.data.school
+      			},
+      		}, () =>
+      		this.props.Auth.getLectures(this.state.selected_course._id)
+	      	.then(res =>{
+	      		this.setState({
+	      			lectures: res.data.lectures,
+	      			selected_lecture: res.data.lectures[0],
+	      			isLoading: false,
+	      		})
+	      	})	
+	      )
+      	})
+      	.catch(err =>{
+        	console.log(err.message)
+      	})
+
+      	
   	}
 	render(){
 		if (this.props.Auth.loggedIn()){
-			return(
-	    		<div className='Dashboard'>
-	    			<Popup
-	    				open ={this.showUpdateLectureModal}
-	    				modal
-	    			>
-	    				<AddLecture/>
-	    			</Popup>
+			if (!this.state.isLoading){
+				return(
+		    		<div className='Dashboard'>
+		    			
 
-	    			<Popup
-	    				open = {this.showDeleteLectureModal}
-	    				modal
-	    			>
-	    				<div>
-	    				<p> Are you sure ? </p>
-	    				<Button> yes </Button>
-	    				<Button> no </Button>
-	    				</div>
-	    			</Popup>
+		    			<Popup
+		    				open = {this.showDeleteLectureModal}
+		    				modal
+		    			>
+		    				<div>
+		    				<p> Are you sure ? </p>
+		    				<Button> yes </Button>
+		    				<Button> no </Button>
+		    				</div>
+		    			</Popup>
 
-	    			<div className='left'>
-	    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal}/>
-	    			</div>
-	    			<div className='right'>
-	    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} selected_course={this.state.selected_course} courses={this.state.courses}/>
-	    			</div>
-	    		</div>
-			)
+		    			<div className='left'>
+		    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal} Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
+		    			</div>
+		    			<div className='right'>
+		    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
+		    			</div>
+		    		</div>
+				)
+			}
+			else{
+				return(
+				<div>
+					<p> data is loading. pls wait </p>
+				</div>
+				)
+			}
 		}
 		else{
 			alert('Please login!')
@@ -126,67 +172,20 @@ class Dashboard extends Component{
 	}
 }
 
-class LectureButton extends Component{
-	constructor(props){
-		super(props);
-		this.state={
-			date:this.props.date,
-			defaultLecture: this.props.default
-		}
-		
-	}
 
-	deleteLecture(){
-
-	}
-	render(){
-		if (this.props.defaultLecture){
-			return(
-				<Popup
-	  			trigger={<ToggleButton className='button' type='radio' value={this.state.date} defaultChecked > Sesi {this.state.date} </ToggleButton>}
-	  			position='right'
-	  			on = 'hover'
-	  			>
-		  			<Button> Delete lecture </Button>
-		  			<Button onClick={this.props.changeShowUpdateLectureModal}> Edit Lecture </Button>
-	  			</Popup>
-			)
-		}
-		else{
-			return(
-				<Popup
-		  			trigger={<ToggleButton className='button' type='radio' value={this.state.date} > Sesi {this.state.date} </ToggleButton>}
-		  			position='right'
-		  			on = 'hover'
-		  		>
-		  			<Button onClick={this.deleteLecture}> Delete lecture </Button>
-		  			<Button onClick={this.editLecture}> Edit Lecture </Button>
-		  		</Popup>
-			)
-		}
-	}
-
-}
 class DashboardLeft extends Component{
 	constructor(props){
 		super(props);
 		this.state={
 			lectures: this.props.lectures,
-			showContextMenu: false,
 		}
 		this.handleChangeLecture = this.handleChangeLecture.bind(this);
-		this.handleRightClick = this.handleRightClick.bind(this);
 	}
 	handleChangeLecture(value, event) {
 		this.props.changeSelectedLecture(value)
   	}
 
-  	handleRightClick(e){
-  		console.log('show context menu toggle')
-  		this.setState({
-  			showContextMenu: !this.state.showContextMenu,
-  		})
-  	}
+  	
 
   	makeToggleButtons(lectures){
   		let toggleButtons = []
@@ -197,14 +196,12 @@ class DashboardLeft extends Component{
 	  		for (let i=0; i<lectures.length; i++){
 	  			if (i==0){
 	  				toggleButtons.push(
-	  					//<LectureButton date={lectures[i].date} default={true}/>
-	  					<ToggleButton className='button' type='radio' value={lectures[i]} defaultChecked > Sesi {lectures[i].date} </ToggleButton>
+	  					<ToggleButton className='button' type='radio' value={lectures[i]} defaultChecked > Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </ToggleButton>
 		  			)
 	  			}
 	  			else{
 	  				toggleButtons.push(
-	  					//<LectureButton date={lectures[i].date} default={false}/>
-	  					<ToggleButton className='button' type='radio' value={lectures[i]}> Sesi {lectures[i].date} </ToggleButton>
+	  					<ToggleButton className='button' type='radio' value={lectures[i]}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </ToggleButton>
 	  				)
 	  			}
 	  		}
@@ -223,7 +220,7 @@ class DashboardLeft extends Component{
 	  						<div className= "popup-header">
 	        					<h2> Tambah Sesi </h2>
 		    				</div>
-  							<AddLecture closefunction={close}/>
+  							<AddLecture closefunction={close} Auth={this.props.Auth} selectedCourseId={this.props.selectedCourseId} updateLecturesState={this.props.updateLecturesState}/>
   						</div>
   					)}			
   				</Popup>
@@ -237,10 +234,11 @@ class AddLecture extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			class_date: new Date(),
+			date: new Date(),
 			description:'',
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -249,20 +247,32 @@ class AddLecture extends Component{
   	}
 
   	handleSubmit(event){
-  		alert(this.state.class_date + ' course added')
+  		event.preventDefault();
+  		
+  		this.props.Auth.addLecture(this.props.selectedCourseId, this.state.date, this.state.description)
+      	.then(res =>{
+      		this.props.closefunction()
+      		this.props.updateLecturesState(res.data.lectures)
+      		alert(this.state.date + ' course added')
+      		
+      	})
+      	.catch(err =>{
+        	console.log(err.message)
+      	})
   	}
 
   	handleDateChange(date){
-  		this.setState({class_date: date});
+  		this.setState({date: date});
   	}
 	render(){
+		console.log(this.props)
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
 			            <img src={calIcon} style={{height:'5vh', marginRight:'-5vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
 			            <DatePicker 
-			            	selected={this.state.class_date}
+			            	selected={this.state.date}
 			            	onChange={this.handleDateChange}
 			            	todayButton={'Today'}
 			            	dateFormat='d MMMM yyyy'
@@ -319,7 +329,7 @@ class CoursesOption extends Component{
 	render(){
 		return(
 			<Dropdown>
-				<Dropdown.Toggle> {this.props.selected_course} </Dropdown.Toggle>
+				<Dropdown.Toggle> {this.props.selected_course.course_name} </Dropdown.Toggle>
 				
 				<Dropdown.Menu>
 					
@@ -348,6 +358,7 @@ class DashboardNavigation extends Component{
 					<OverrideMaterialUICss><IconButton>
 						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 					</IconButton></OverrideMaterialUICss>
+					<ProfileAvatar profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
 				</div>
    			</div>
 		)
@@ -359,20 +370,33 @@ class DashboardRight extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			date: this.props.selectedLecture.date,
+			quizzes: this.props.selectedLecture.quizzes,
+			date: this.props.selectedLecture.date.split("/")[0] + '/' + this.props.selectedLecture.date.split("/")[1],
 			description: this.props.selectedLecture.description,
-			live: false
+			live: false,
+			//isLoading: true,
 		}
 		this.toggleLive = this.toggleLive.bind(this)
 	}
-	componentWillReceiveProps(nextProps) {
-		console.log(nextProps)
-  		{/*this.setState(nextProps =>{
-  			return{ 
-  				date: nextProps.selectedLecture.date, 
-  				description: nextProps.selectedLecture.description
-  			};
-  		});  */}
+	async componentDidUpdate(oldProps){		
+		const newProps = this.props
+		if (oldProps.selectedLecture.quizzes !== newProps.selectedLecture.quizzes){
+			await this.setState({
+				quizzes: newProps.selectedLecture.quizzes,
+				isLoading: false
+			}, console.log(this.state.quizzes))
+		}
+		if (oldProps.selectedLecture.date !== newProps.selectedLecture.date){
+			this.setState({
+				date: this.props.selectedLecture.date.split("/")[0] + '/' + this.props.selectedLecture.date.split("/")[1]
+			})
+		}
+		
+		if (oldProps.selectedLecture.description !== newProps.selectedLecture.description){
+			this.setState({
+				description: this.props.selectedLecture.description
+			})
+		}
 	}
 
 	liveIndicator(){
@@ -394,6 +418,30 @@ class DashboardRight extends Component{
 		}
 	}
 
+	makingQuizzes(quizzes){
+		//if (!this.state.isLoading){
+			let quizzesComponent = []
+			if (quizzes.length > 0){
+				for (let i=0; i<quizzes.length; i++){
+					//console.log(quizzes[i])
+					quizzesComponent.push(<QuizCard quiz={quizzes[i]} question_number={i+1}/>)
+				} 
+			} else {
+				quizzesComponent.push(<p> You don't have any questions yet! </p>)
+			}
+			/*this.setState(prevState => {
+				return{
+					isLoading: !prevState.isLoading
+				};
+    		})*/
+			return quizzesComponent
+		/*}
+		else{
+			return null
+		}*/
+
+		
+	}
 	toggleLive(){
 		this.setState(prevState => {
 	      return {
@@ -404,10 +452,10 @@ class DashboardRight extends Component{
 	render(){
 		return(
 			<div>
-				<DashboardNavigation selected_course={this.props.selected_course} courses={this.props.courses}/>
+				<DashboardNavigation selected_course={this.props.selected_course} courses={this.props.courses} profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
     			<div className='content'>
     				<div className='header'>
-    					<h1> Sesi {this.state.date} </h1>
+    					<h1> Sesi {this.state.date} : {this.state.description}</h1>
     					{this.liveIndicator()} 
     				</div>
     				<div className='content-option'>
@@ -444,7 +492,7 @@ class DashboardRight extends Component{
 	    				</div>
 	    			</div>
     						
-    				<QuestionCard/>
+    				{this.makingQuizzes(this.state.quizzes)}
     			</div>
 			</div>
 		)
@@ -504,14 +552,14 @@ class AddQuestion extends Component{
 		)
 	}
 }
-class QuestionCard extends Component{
+class QuizCard extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			question: 'Di antara karakteristik struktural berikut yang dengan dengan struktur tubuhnya. Di antara pasangan tersebut yang mungkin adalah: ',
-			possible_answers: ['pisang', 'bambu', 'jati', 'cemara'],
-			correct_answer: 'pisang',
-			question_number:'1',
+			question: this.props.quiz.question,
+			possible_answers: this.props.quiz.answers,
+			correct_answer: this.props.quiz.answers[this.props.quiz.correct_answer],
+			question_number:this.props.question_number,
 			live: false,
 			expanded: false,
 			showCorrectAns: false
@@ -565,19 +613,22 @@ class QuestionCard extends Component{
 						<div style={{width:'85%'}}>
 							<p> {this.state.question} </p>
 						</div>
-						
-						<IconButton>
-						<Popup
-							trigger={<MoreVertIcon/>}
-							position= 'bottom right'
-							on = 'click'
-							closeOnDocumentClick
 
-						>
-							<Button> Delete Question </Button>
-							<Button> Edit Question </Button>
-						</Popup>
-						</IconButton>
+						<IconButton>
+							<Popup
+								trigger={<MoreVertIcon />}
+								position="bottom right"
+								on = "click"
+								closeOnDocumentClick
+							>
+								{close => (
+									<div onClick={close}>
+										<Button  style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
+										<Button style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
+									</div>
+								)}							
+							</Popup>    
+					   	</IconButton>
 						
 					</CardContent> </OverrideMaterialUICss>
 					
