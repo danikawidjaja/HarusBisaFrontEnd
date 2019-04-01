@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -185,7 +185,13 @@ class DashboardLeft extends Component{
 		this.props.changeSelectedLecture(value)
   	}
 
-  	
+  	async componentDidUpdate(oldProps){
+  		if (oldProps.lectures !== this.props.lectures){
+  			this.setState({
+  				lectures: this.props.lectures
+  			})
+  		}
+  	}
 
   	makeToggleButtons(lectures){
   		let toggleButtons = []
@@ -265,7 +271,6 @@ class AddLecture extends Component{
   		this.setState({date: date});
   	}
 	render(){
-		console.log(this.props)
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
@@ -320,19 +325,20 @@ class CoursesOption extends Component{
 		let result = []
 
 		for (let i=0; i<length; i++){
-			result.push(<Dropdown.Item> courses[i] </Dropdown.Item>)
+			result.push(<Dropdown.Item> courses[i].course_name </Dropdown.Item>)
 		}
 
 		return result;
 
 	}
 	render(){
+		console.log(this.props)
 		return(
 			<Dropdown>
 				<Dropdown.Toggle> {this.props.selected_course.course_name} </Dropdown.Toggle>
 				
 				<Dropdown.Menu>
-					
+					<Button> a </Button>
 				</Dropdown.Menu>
 			</Dropdown>
 		)
@@ -370,6 +376,7 @@ class DashboardRight extends Component{
 	constructor(props){
 		super(props);
 		this.state={
+			lecture : this.props.selectedLecture,
 			quizzes: this.props.selectedLecture.quizzes,
 			date: this.props.selectedLecture.date.split("/")[0] + '/' + this.props.selectedLecture.date.split("/")[1],
 			description: this.props.selectedLecture.description,
@@ -449,13 +456,24 @@ class DashboardRight extends Component{
 	      };
 	    });
 	}
+
+	makingHeader(){
+		if (this.state.description){
+			return(
+				<h1> Sesi {this.state.date} : {this.state.description}</h1>
+			)
+		}
+		else{
+			return(<h1> Sesi {this.state.date} </h1>)
+		}
+	}
 	render(){
 		return(
 			<div>
 				<DashboardNavigation selected_course={this.props.selected_course} courses={this.props.courses} profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
     			<div className='content'>
     				<div className='header'>
-    					<h1> Sesi {this.state.date} : {this.state.description}</h1>
+    					{this.makingHeader()}
     					{this.liveIndicator()} 
     				</div>
     				<div className='content-option'>
@@ -493,6 +511,7 @@ class DashboardRight extends Component{
 	    			</div>
     						
     				{this.makingQuizzes(this.state.quizzes)}
+    				
     			</div>
 			</div>
 		)
