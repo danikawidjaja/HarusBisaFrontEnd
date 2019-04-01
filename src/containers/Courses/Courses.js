@@ -147,7 +147,7 @@ class Courses extends Component{
 	  						{close => (
 	  							<div className='course-popup'>
 		  							<div className= "course-popup-header">
-		        						<h2> Tambah Mata Kuliah </h2>
+		        						<h2> Tambah Kelas </h2>
 			    					</div>
 	  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
 	  							</div>
@@ -166,7 +166,7 @@ class Courses extends Component{
 			        	{close => (
 			        	<div className='course-popup'>
 		  					<div className= "course-popup-header">
-		        				<h2> Update Mata Kuliah </h2>
+		        				<h2> Edit Kelas </h2>
 			    			</div>
 	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
 	  					</div>)
