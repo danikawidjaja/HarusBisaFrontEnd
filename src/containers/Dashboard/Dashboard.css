@@ -7,10 +7,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
 }
 
+html{
+	height: 100%;
+}
+
 .Dashboard{
 	font-family: 'Rubik', sans-serif;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	overflow: visible
 }
 
@@ -21,8 +25,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	display: flex;
 	align-content: center;
 	text-align: center;
-	height: 100vh;
-	padding-top: 11.28vh;
 	justify-content: space-between;
 	
 }
@@ -46,7 +48,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	border-radius: 0;
 	display: flex;
 	text-align: left;
-	padding-left: 4.5vw;
+	padding-left: 3rem;
 	margin: auto;
 	padding-top: 3vh;
 	padding-bottom: 3vh;
@@ -172,6 +174,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	text-align: right;
 }
 
+
 .Dashboard .left .popup .buttons{
 	display: flex;
 	flex-direction: row;
@@ -209,7 +212,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	background-color: white;
 }
 
-.Dashboard .right .navigation{
+.Dashboard .navigation{
 	background-color: #f4f4f4;
 	padding: 1vw;
 	padding-top: 0.5vw;
@@ -218,10 +221,33 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	flex-direction: row;
 	vertical-align: baseline; 
 	justify-content: space-between;
+	padding-left: 11rem;
 }
 
-.Dashboard .right .navigation .MuiIconButton-root-1{
+.Dashboard .navigation .MuiIconButton-root-1{
 	padding:6px;
+}
+
+.Dashboard .navigation .CoursesOption .toggle-button, .Dashboard .navigation .CoursesOption .toggle-button:active {
+	background: transparent;
+	min-width: 5rem;
+	border:none;
+	box-shadow: none;
+}
+.Dashboard .navigation .CoursesOption .buttons{
+	display: flex;
+	flex-direction: column;
+}
+
+.Dashboard .navigation .CoursesOption .buttons .button{
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	border-radius: 0px;
+}
+
+.Dashboard .navigation .CoursesOption .buttons .button:hover{
+	font-weight: 500;
 }
 
 .Dashboard .right .content{

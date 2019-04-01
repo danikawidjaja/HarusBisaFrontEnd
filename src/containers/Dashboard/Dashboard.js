@@ -54,8 +54,10 @@ class Dashboard extends Component{
 			showDeleteLectureModal:false,
 			lectureToDelete:null,
 			isLoading: true,
+			changingSelectedCourse: false,
 		};
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
+		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.updateLecturesState = this.updateLecturesState.bind(this);
 	}
 	updateLecturesState(lectures){
@@ -68,6 +70,31 @@ class Dashboard extends Component{
 		this.setState({
 			selected_lecture: new_selected_lecture
 		})
+	}
+	changeSelectedCourse(new_selected_course){
+		this.setState({
+			selected_course: new_selected_course,
+			isLoading: true,
+			changingSelectedCourse: true
+		})
+	}
+	async componentDidUpdate(prevState){
+		if (prevState.selected_course !== this.state.selected_course){
+			if (this.state.changingSelectedCourse){
+				this.props.Auth.getLectures(this.state.selected_course._id)
+	      		.then(res =>{
+	      			this.setState({
+	      				lectures: res.data.lectures,
+	      				selected_lecture: res.data.lectures[0],
+	      				isLoading: false,
+	      				changingSelectedCourse: false,
+	      			})
+	      		})
+	      		.catch(err => {
+	      			console.log(err.message)
+	      		})
+			}	
+		}
 	}
 	toggleShowDeleteLectureModal(){
   		this.setState({
@@ -145,13 +172,15 @@ class Dashboard extends Component{
 		    				<Button> no </Button>
 		    				</div>
 		    			</Popup>
-
-		    			<div className='left'>
-		    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal} Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
-		    			</div>
-		    			<div className='right'>
-		    				<DashboardRight class_name={this.state.class_name} selectedLecture={this.state.selected_lecture} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated}/>
-		    			</div>
+		    			<DashboardNavigation selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
+						<div style={{display:'flex', flexDirection:'row'}}>
+			    			<div className='left'>
+			    				<DashboardLeft lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture} changeshowDeleteLectureModal={this.changeshowDeleteLectureModal} changeShowUpdateLectureModal={this.changeShowUpdateLectureModal} Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
+			    			</div>
+			    			<div className='right'>
+			    				<DashboardRight selectedLecture={this.state.selected_lecture} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} changeSelectedCourse={this.changeSelectedCourse}/>
+			    			</div>
+			    		</div>
 		    		</div>
 				)
 			}
@@ -164,7 +193,6 @@ class Dashboard extends Component{
 			}
 		}
 		else{
-			alert('Please login!')
 			this.props.history.push('/login');
 			return(null)
 		}
@@ -196,7 +224,6 @@ class DashboardLeft extends Component{
   	makeToggleButtons(lectures){
   		let toggleButtons = []
   		if (lectures.length == 0){
-  			toggleButtons.push(<OverrideMaterialUICss><Fab style={{backgroundColor:'#ffe01c'}}> <AddIcon/> </Fab> </OverrideMaterialUICss>)
   		}
   		else{
 	  		for (let i=0; i<lectures.length; i++){
@@ -216,7 +243,7 @@ class DashboardLeft extends Component{
   	}
 	render(){
 		return(
-			<div>
+			<div style={{marginLeft:'auto', marginRight:'auto', height:'100%'}}>
 				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.state.lectures[0]} onChange={this.handleChangeLecture}>
             		{this.makeToggleButtons(/*[]*/this.state.lectures)}
           		</ToggleButtonGroup>
@@ -319,26 +346,32 @@ class AddLecture extends Component{
 class CoursesOption extends Component{
 	constructor(props){
 		super(props);
+		this.handleChange = this.handleChange.bind(this);
 	}
-	createMenuItem(courses){
+	createMenuItem(courses, selected_course){
 		let length = courses.length
 		let result = []
 
 		for (let i=0; i<length; i++){
-			result.push(<Dropdown.Item> courses[i].course_name </Dropdown.Item>)
+			if (courses[i].course_name !== selected_course.course_name){
+				result.push(<ToggleButton className='button' type='radio' value={courses[i]}> {courses[i].course_name} </ToggleButton>)
+			}
 		}
-
 		return result;
+	}
 
+	handleChange(value, event){
+		this.props.changeSelectedCourse(value);
 	}
 	render(){
-		console.log(this.props)
 		return(
-			<Dropdown>
-				<Dropdown.Toggle> {this.props.selected_course.course_name} </Dropdown.Toggle>
+			<Dropdown className='CoursesOption'>
+				<Dropdown.Toggle className='toggle-button'> {this.props.selected_course.course_name} </Dropdown.Toggle>
 				
 				<Dropdown.Menu>
-					<Button> a </Button>
+					<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' onChange={this.handleChange}>
+						{this.createMenuItem(this.props.courses, this.props.selected_course)}
+					</ToggleButtonGroup>
 				</Dropdown.Menu>
 			</Dropdown>
 		)
@@ -352,7 +385,7 @@ class DashboardNavigation extends Component{
 		return(
 			<div className='navigation'>
 				<div>
-					<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses}/>
+					<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>
 				</div>
 				<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
 					<OverrideMaterialUICss><IconButton>
@@ -375,11 +408,9 @@ class DashboardRight extends Component{
 
 	constructor(props){
 		super(props);
+		console.log(props)
 		this.state={
 			lecture : this.props.selectedLecture,
-			quizzes: this.props.selectedLecture.quizzes,
-			date: this.props.selectedLecture.date.split("/")[0] + '/' + this.props.selectedLecture.date.split("/")[1],
-			description: this.props.selectedLecture.description,
 			live: false,
 			//isLoading: true,
 		}
@@ -387,21 +418,9 @@ class DashboardRight extends Component{
 	}
 	async componentDidUpdate(oldProps){		
 		const newProps = this.props
-		if (oldProps.selectedLecture.quizzes !== newProps.selectedLecture.quizzes){
-			await this.setState({
-				quizzes: newProps.selectedLecture.quizzes,
-				isLoading: false
-			}, console.log(this.state.quizzes))
-		}
-		if (oldProps.selectedLecture.date !== newProps.selectedLecture.date){
+		if (oldProps.selectedLecture !== newProps.selectedLecture){
 			this.setState({
-				date: this.props.selectedLecture.date.split("/")[0] + '/' + this.props.selectedLecture.date.split("/")[1]
-			})
-		}
-		
-		if (oldProps.selectedLecture.description !== newProps.selectedLecture.description){
-			this.setState({
-				description: this.props.selectedLecture.description
+				lecture: newProps.selectedLecture
 			})
 		}
 	}
@@ -458,20 +477,26 @@ class DashboardRight extends Component{
 	}
 
 	makingHeader(){
-		if (this.state.description){
+		if (this.state.lecture.description){
 			return(
-				<h1> Sesi {this.state.date} : {this.state.description}</h1>
+				<h1> Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} : {this.state.lecture.description}</h1>
 			)
 		}
 		else{
-			return(<h1> Sesi {this.state.date} </h1>)
+			return(<h1> Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </h1>)
 		}
 	}
 	render(){
+		if (!this.state.lecture){
+			return(
+				<div>
+					<p> New class! You have no lectures </p>
+				</div>)
+		}
+		else{
 		return(
 			<div>
-				<DashboardNavigation selected_course={this.props.selected_course} courses={this.props.courses} profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
-    			<div className='content'>
+				<div className='content'>
     				<div className='header'>
     					{this.makingHeader()}
     					{this.liveIndicator()} 
@@ -500,21 +525,22 @@ class DashboardRight extends Component{
 	    					<OverrideMaterialUICss> <IconButton style={{background:'transparent', border:'None'}}>
 	    						<StatisticIcon className='icon'/>
 	    					</IconButton> </OverrideMaterialUICss>
-	    					<p> Statistik Sesi {this.state.date} </p>
+	    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 	    				</div>
 	    				<div className='interactive'>
 	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
 								<MoreVertIcon className='icon'/>
 							</IconButton> </OverrideMaterialUICss>
-	    					<p> Setting Sesi {this.state.date} </p>
+	    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 	    				</div>
 	    			</div>
     						
-    				{this.makingQuizzes(this.state.quizzes)}
+    				{this.makingQuizzes(this.state.lecture.quizzes)}
     				
     			</div>
 			</div>
 		)
+	}
 	}
 }
 

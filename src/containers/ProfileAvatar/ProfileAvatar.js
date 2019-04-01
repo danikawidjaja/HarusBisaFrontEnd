@@ -6,6 +6,7 @@ import './ProfileAvatar.css'
 class ProfileAvatar extends Component{
 	constructor(props){
 		super(props);
+		console.log(props)
 		this.state={
 			initial: this.props.profile.first_name.slice(0,1).toUpperCase(),
 			first_name: this.props.profile.first_name[0].toUpperCase() + this.props.profile.first_name.slice(1, this.props.profile.first_name.length),
@@ -16,10 +17,14 @@ class ProfileAvatar extends Component{
 	}
 
 	handleLogout = async event => {
-    await this.props.Auth.logout();
-    this.props.userHasAuthenticated(false);
-    this.props.history.push('/');
-  }
+	    await this.props.Auth.logout();
+	    this.props.userHasAuthenticated(false);
+	    this.props.history.push('/');
+  	}
+
+  	handleAvatarClick = async event =>{
+  		this.props.history.push('/courses');
+  	}
 	render(){
 		return(
 			<div className='ProfileAvatar'>
@@ -36,7 +41,7 @@ class ProfileAvatar extends Component{
 					<div style={{display:'flex', flexDirection:'column'}}>
 						<div className='popup-profile'>
 							<div>
-								<div className='avatar'>
+								<div className='avatar' onClick={this.handleAvatarClick}>
 									<p>{this.state.initial}</p>
 								</div>
 							</div>
