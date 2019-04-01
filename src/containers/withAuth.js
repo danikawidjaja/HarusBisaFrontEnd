@@ -20,9 +20,8 @@ export default function withAuth(AuthComponent){
 			else{
 				try{
 					this.Auth.getData().then(res => this.setState({
-							data: res
+							data: res.data
 					}))
-					console.log("success")
 				}
 				catch(err){
 					alert(err.message)

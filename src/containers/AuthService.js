@@ -8,6 +8,7 @@ export default class AuthService {
         this.login = this.login.bind(this)
         this.signup= this.signup.bind(this)
         this.getData = this.getData.bind(this)
+        this.updateCourse = this.updateCourse.bind(this)
     }
     deleteCourse(course_id, course_name){
         return this.fetch(`${this.domain}/courses/${course_id}`,{
@@ -31,15 +32,14 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
-    updateCourse(course_id, course_name, start_term, end_term, description, instructor){
-        return(this.fetch(`${this.domain}/courses/${course_id}`),{
+    updateCourse(course_id, course_name, start_term, end_term, description){
+        return this.fetch(`${this.domain}/courses/${course_id}` , {
             method: 'PUT',
             body: JSON.stringify({
                 course_name,
                 start_term,
                 end_term,
                 description,
-                instructor
             })
         }).then(res => {
             console.log(course_name + "updated")
@@ -120,10 +120,10 @@ export default class AuthService {
         return this.fetch(`${this.domain}/courses`, {
             method: 'GET',
         }).then(res => {
-            //return Promise.resolve(res);
-            console.log('get profile')
-            console.log(res)
-            return (res);
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
         })
     }
 

@@ -30,7 +30,6 @@ import Delete from '@material-ui/icons/Delete';
 class Courses extends Component{ 
 	constructor(props){
 		super(props);
-		console.log(this.props.data)
 		this.state = {
 			courses: this.props.data.courses,
 			history: this.props.history,
@@ -42,7 +41,7 @@ class Courses extends Component{
 				first_name: this.props.data.first_name,
 				last_name: this.props.data.last_name,
 				role: this.props.data.role,
-				email: this.props.data.email
+				email: this.props.data.email 
 			},
 		};
 
@@ -52,6 +51,7 @@ class Courses extends Component{
 		this.changeShowUpdateCourseModal = this.changeShowUpdateCourseModal.bind(this)
 		this.changeshowDeleteCourseModal = this.changeshowDeleteCourseModal.bind(this)
 		this.deleteCourse = this.deleteCourse.bind(this)
+		this.updateCoursesState = this.updateCoursesState.bind(this)
 		
 	}
 
@@ -84,9 +84,14 @@ class Courses extends Component{
   		})
   	}
   	deleteCourse(){
+  		this.toggleShowDeleteCourseModal()
   		this.Auth.deleteCourse(this.state.courseToDelete._id)
   		.then(res =>{
+  			console.log(res)
       		alert(this.state.courseToDelete.course_name+' course deleted')
+      		this.setState({
+      			courses: res.data.courses
+      		})
       	})
       	.catch(err =>{
         	console.log(err.message)
@@ -106,6 +111,12 @@ class Courses extends Component{
 		return coursesComponent
 	}
 
+	updateCoursesState(courses){
+		this.setState({
+			courses: courses,
+			needToUpdateCourse: true
+		})
+	}
 	render(){
 		return(
     		<div className="Courses">
@@ -138,7 +149,7 @@ class Courses extends Component{
 		  							<div className= "course-popup-header">
 		        						<h2> Tambah Mata Kuliah </h2>
 			    					</div>
-	  								<AddCourse closefunction={close} Auth={this.Auth} />
+	  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
 	  							</div>
 	  						)}
 	  							
@@ -157,7 +168,7 @@ class Courses extends Component{
 		  					<div className= "course-popup-header">
 		        				<h2> Update Mata Kuliah </h2>
 			    			</div>
-	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth}/>
+	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
 	  					</div>)
 	  					}
 			        </Popup>
@@ -180,9 +191,6 @@ class Courses extends Component{
 
 			        <div className= 'content'>
 			        	{this.makingCourses(this.state.courses)}
-			        	<div>
-			        		
-					    </div>
 					</div>
 	        	</div>
 	        </div>
@@ -285,9 +293,8 @@ class UpdateCourse extends Component{
 		super(props);
 		this.state = {
 			course_name:this.props.course.course_name,
-			//start_term:this.props.course.start_term,
-			//end_term: this.props.course.end_term,
-			term: this.props.course.term,
+			start_term:this.props.course.start_term,
+			end_term: this.props.course.end_term,
 			description:this.props.course.description,
 			id: this.props.course._id
 		}
@@ -305,11 +312,14 @@ class UpdateCourse extends Component{
       	.then(res =>{
       		this.props.closefunction()
       		alert(this.state.course_name+' course updated')
+      		console.log(res.data.courses)
+      		this.props.updateCoursesState(res.data.courses)
       	})
       	.catch(err =>{
         	console.log(err.message)
       	})
   	}
+
 
 	render(){
 	    return(
@@ -330,12 +340,12 @@ class UpdateCourse extends Component{
 		            		<ControlLabel>Mulai Kelas</ControlLabel>
 				            <FormControl
 				              type="text"
-				              value={this.state.term}
+				              value={this.state.start_term}
 				              onChange={this.handleChange}
 				              placeholder= 'Januari 2019'
 				            />
 		          		</FormGroup>
-		          		{/*
+		          		
 		          		<p style={{margin:'auto'}}> - </p>
 		          		<FormGroup controlId='end_term'>
 		          			<ControlLabel> Akhir Kelas </ControlLabel>
@@ -346,7 +356,7 @@ class UpdateCourse extends Component{
 		          				placeholder='Maret 2019'
 		          			/>
 		          		</FormGroup>
-		          	*/}
+		          	
 	          		</div>
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
@@ -414,8 +424,11 @@ class AddCourse extends Component{
   		event.preventDefault();
   		this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
       	.then(res =>{
+      		console.log(res.data)
       		this.props.closefunction()
       		alert(this.state.course_name+' course added')
+      		this.props.updateCoursesState(res.data.courses)
+
       	})
       	.catch(err =>{
         	console.log(err.message)
@@ -478,14 +491,14 @@ class CourseCard extends Component{
 	constructor(props){
 	    super(props);
 	    this.state = {
-	      course_name: this.props.course.course_name,
-	      join_code: this.props.course.join_code,
-	      instructor: this.props.course.instructors,
-	      term:this.props.course.term,
-	      description: this.props.course.description,
-	      course_id: this.props.course._id,
-	      num_student:'56',
-	      num_lecture: '4',
+	      	course_name: this.props.course.course_name,
+	      	join_code: this.props.course.join_code,
+	      	start_term: this.props.course.start_term,
+	      	end_term: this.props.course.end_term,
+	      	description: this.props.course.description,
+	      	course_id: this.props.course._id,
+	      	num_student:this.props.course.number_of_students,
+	      	num_lecture: this.props.course.number_of_lectures,
 	    };  
 
 	    this.handleClick = this.handleClick.bind(this);
@@ -503,8 +516,48 @@ class CourseCard extends Component{
 
   	updateCourse(){
   		this.props.changeShowUpdateCourseModal(this.props.course)
-
   	}
+
+  	componentDidUpdate(oldProps) {
+  		const newProps = this.props
+  		
+  		if (oldProps.course.course_name !== newProps.course.course_name){
+  			this.setState({
+  				course_name: newProps.course.course_name
+  			})
+  		}
+
+  		if (oldProps.course.join_code !== newProps.course.join_code){
+  			this.setState({
+  				join_code: newProps.course.join_code
+  			})
+  		}
+  		if (oldProps.course.start_term !== newProps.course.start_term){
+  			this.setState({
+  				start_term: newProps.course.start_term
+  			})
+  		}
+  		if (oldProps.course.end_term !== newProps.course.end_term){
+  			this.setState({
+  				end_term: newProps.course.end_term
+  			})
+  		}
+  		if (oldProps.course.description !== newProps.course.description){
+  			this.setState({
+  				description: newProps.course.description
+  			})
+  		}
+  		if (oldProps.course.number_of_lectures !== newProps.course.number_of_lectures){
+  			this.setState({
+  				num_lecture: newProps.course.num_lecture
+  			})
+  		}
+  		if (oldProps.course.number_of_students !== newProps.course.number_of_students){
+  			this.setState({
+  				num_student: newProps.course.num_student
+  			})
+  		}
+	}
   	render(){
 		return(
 			<OverrideMaterialUICss>
@@ -513,7 +566,7 @@ class CourseCard extends Component{
 						<div style={{display:'flex', flexDirection:'row', margin: '28px', marginTop:'20px', marginBottom:'20px', flexDirection:'space-between'}}>
 							<div>
 								<Link to='/dashboard' > {this.state.course_name} </Link>
-								<p> {this.state.term} </p>
+								<p> {this.state.start_term} - {this.state.end_term} </p>
 								<p> Kode Bergabung: {this.state.join_code} </p>
 							</div>
 
@@ -535,9 +588,13 @@ class CourseCard extends Component{
 										on = "click"
 										closeOnDocumentClick
 									>
-										<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
-										<Button style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
-										<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>							
+										{close => (
+											<div onClick={close}>
+												<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
+												<Button onClick={close} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
+												<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+											</div>
+										)}							
 									</Popup>    
 					        	</IconButton>
 							</div>
