@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
-import logo from './logokrul.png';
+//import logo from './logokrul.png';
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { NavHashLink as Link } from 'react-router-hash-link';
 import "./App.css";
@@ -8,6 +8,7 @@ import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
 import AppliedRoute from './components/AppliedRoute';
+import Logo from './containers/Logo/Logo';
 
 const auth = new AuthService();
  
@@ -32,7 +33,7 @@ class App extends Component {
 
   async componentWillReceiveProps(nextProps){
    let currentRoutes = nextProps.location;
-     if (currentRoutes.pathname === '/notfound' || currentRoutes.pathname === '/login' || currentRoutes.pathname === '/signup') {
+     if (currentRoutes.pathname === '/notfound' || currentRoutes.pathname === '/login' || currentRoutes.pathname === '/signup' ) {
 
       this.setState({ visibility: false });
     }
@@ -114,7 +115,7 @@ class App extends Component {
         <Navbar onToggle={this.handleToggle} collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: (this.state.scrollTop|| this.state.toggled) ? 'transparent' : 'white'}}>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/"><img class="App-image" src={logo}/>HARUSBISA</Link>
+                <Logo style={{width: '11rem',height: '3rem'}} size='full' color='black' background='trans' padding='false'/>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

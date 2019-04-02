@@ -5,13 +5,14 @@ import linkedin from './linkedin.png';
 import twitter from './twitter.png';
 import instagram from './instagram.png';
 import { Link } from "react-router-dom";
+import Logo from '../Logo/Logo';
 
 export default class Footer extends Component {
 
   render() {
     return (
         <div className='footer'>
-          <div style={{border:'1px solid white', borderRadius:'15px', width:'10%', height:'100px', marginTop:'5vw'}} />
+          <Logo size='logo' color='white' background='trans' padding='false' style={{width:'10vw',height:'25vh', marginTop:'auto', marginBottom:'auto'}}/>
           <div className='f-about'>
             <p> HarusBisa menyediakan alat untuk para insturktur memberikan lecture yang berkualitas. menggunakan alat yang canggih dan dapat bisa memudahkan secara GRATIS sampai ke seluruh pelosok Indonesia. </p>
             <br/> <br/>

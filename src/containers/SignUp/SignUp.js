@@ -13,6 +13,7 @@ import {
   ToggleButtonGroup,
   ToggleButton
 } from "react-bootstrap";
+import Logo from '../Logo/Logo';
 
 
 
@@ -24,9 +25,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className='signup'>
-        <div className='logo'>
-          <Link to="/"><img src={login2} style={{width:'100%'}}/></Link>
-        </div>
+        <Link to="/"><Logo size='logo' color='black' background='trans' padding='false' style={{width:'10rem'}}/></Link>
         <div className='content'>
           <div style={{justifyContent:'flex-start', width:'70%'}}>
             <h1> Daftar </h1>

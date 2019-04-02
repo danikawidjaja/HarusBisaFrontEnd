@@ -6,6 +6,7 @@ import login1 from './login1.png';
 import login2 from './login2.png';
 import login from './login.png';
 import errormessage_icon from './errormessage_icon.png';
+import Logo from '../Logo/Logo';
 
 class Login extends Component {
   async componentDidMount(){
@@ -17,7 +18,7 @@ class Login extends Component {
       <div className='login'>
         <div className='left'>
           <div style={{width:'50%', textAlign:'center'}}>
-            <Link to="/"><img src={login2} style={{width:'5vw'}}/></Link>
+            <Link to="/"><Logo size='logo' color='black' background='trans' padding='false' style={{width:'6rem'}}/></Link>
             <h1> Log In </h1>
             <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
               <p> Tidak punya akun? </p>
