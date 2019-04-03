@@ -13,7 +13,7 @@ export default class Footer extends Component {
     return (
         <div>
         <div className='footer'>
-          <Logo size='logo' color='white' background='trans' padding='false' style={{width:'10vw',height:'25vh',margin:'auto'}}/>
+          <Logo size='logo' color='white' background='trans' padding={false} style={{width:'8vw',height:'25vh',margin:'auto'}}/>
           <div className='f-about'>
             <p> HarusBisa menyediakan alat untuk para insturktur memberikan lecture yang berkualitas. menggunakan alat yang canggih dan dapat bisa memudahkan secara GRATIS sampai ke seluruh pelosok Indonesia. </p>
             <br/> <br/>

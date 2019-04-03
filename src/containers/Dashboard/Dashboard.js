@@ -385,7 +385,7 @@ class DashboardNavigation extends Component{
 	render(){
 		return(
 			<div className='navigation'>
-				<Logo color='black' size='full' background='trans' padding='false' style={{width:'10rem', margin:'auto'}}/>
+				<Logo color='black' size='full' background='trans' padding={false} style={{width:'10rem', margin:'auto'}}/>
 				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
 					<div>
 						<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>

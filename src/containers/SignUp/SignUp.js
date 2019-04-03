@@ -25,7 +25,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className='signup'>
-        <Logo size='logo' color='black' background='trans' padding='false' style={{width:'10rem'}}/>
+        <Logo size='logo' color='black' background='trans' padding={false} style={{width:'10rem'}}/>
         <div className='content'>
           <div style={{justifyContent:'flex-start', width:'70%'}}>
             <h1> Daftar </h1>
