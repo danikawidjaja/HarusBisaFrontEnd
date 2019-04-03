@@ -32,6 +32,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
+import Logo from '../Logo/Logo';
 
 
 
@@ -384,20 +385,23 @@ class DashboardNavigation extends Component{
 	render(){
 		return(
 			<div className='navigation'>
-				<div>
-					<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>
-				</div>
-				<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
-					<OverrideMaterialUICss><IconButton>
-						<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton> </OverrideMaterialUICss>
-					<OverrideMaterialUICss><IconButton>
-						<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton></OverrideMaterialUICss>
-					<OverrideMaterialUICss><IconButton>
-						<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-					</IconButton></OverrideMaterialUICss>
-					<ProfileAvatar profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
+				<Logo color='black' size='full' background='trans' padding='false' style={{width:'10rem', margin:'auto'}}/>
+				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
+					<div>
+						<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>
+					</div>
+					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton> </OverrideMaterialUICss>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<ProfileAvatar profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
+					</div>
 				</div>
    			</div>
 		)

@@ -26,13 +26,10 @@ html, body{
 .Courses .left h2{
 	font-weight: 500;
 	margin: auto;
-	padding-left: 39px;
-	padding-right: 39px;
 	font-size: 36px;
-	padding-top: 79px;
 }
 
-.Courses .left img{
+.Courses .left .image{
 	width: 100%;
 	
 	margin-top: 2rem;

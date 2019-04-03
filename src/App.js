@@ -115,7 +115,7 @@ class App extends Component {
         <Navbar onToggle={this.handleToggle} collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: (this.state.scrollTop|| this.state.toggled) ? 'transparent' : 'white'}}>
           <Navbar.Header>
             <Navbar.Brand>
-                <Logo style={{width: '11rem',height: '3rem'}} size='full' color='black' background='trans' padding='false'/>
+                <Logo style={{width: '12rem',height: '2.5rem'}} size='full' color='black' background='trans' padding='false'/>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

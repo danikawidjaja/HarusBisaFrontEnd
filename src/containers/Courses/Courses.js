@@ -25,6 +25,7 @@ import LeftPanelPicture from './left_panel_picture.png';
 import Edit from '@material-ui/icons/Edit';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
+import Logo from '../Logo/Logo'
 
 
 class Courses extends Component{ 
@@ -206,8 +207,11 @@ class CoursesLeft extends Component{
 	render(){
 		return(
 			<div className='left'>
-    			<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
-    			<img src={LeftPanelPicture}/>
+				<div style={{padding:'2rem'}}>
+					<Logo size='full' color='black' background='trans' padding='false' style={{margin:'auto',width:'15rem', marginBottom:'1rem'}}/>
+    				<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
+    			</div>
+    			<img className='image' src={LeftPanelPicture}/>
     		</div>
 		)
 	}

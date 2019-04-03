@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: row;
   vertical-align: center;
-  
+  padding-top: 5rem;
 }
 
 .footer .f-about p {   
@@ -26,7 +26,6 @@
   padding-left: 1vw;
   padding-right: 1vw;
   margin-right: 13vw;
-  margin-top: 5vw;
   font-weight: 100;
   width: 40%;
   margin-bottom: 2vw;
@@ -37,7 +36,6 @@
   display: flex;
   flex-direction: column;
   font-size: 1vw;
-  margin-top: 5vw;
   padding-left: 1vw;
   padding-right: 1vw;
   margin-right: 1vw;
