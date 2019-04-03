@@ -140,6 +140,7 @@ html{
 	align-items: center;
 	justify-content: center;
 	align-content: center;
+	overflow: visible;
 
 }
 
@@ -174,6 +175,9 @@ html{
 	text-align: right;
 }
 
+.Dashboard .popup p{
+	color: black;
+}
 
 .Dashboard .left .popup .buttons{
 	display: flex;

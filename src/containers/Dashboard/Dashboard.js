@@ -395,9 +395,6 @@ class DashboardNavigation extends Component{
 							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton> </OverrideMaterialUICss>
 						<OverrideMaterialUICss><IconButton>
-							<OverrideMaterialUICss> <SettingsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-						</IconButton></OverrideMaterialUICss>
-						<OverrideMaterialUICss><IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
@@ -531,12 +528,16 @@ class DashboardRight extends Component{
 	    					</IconButton> </OverrideMaterialUICss>
 	    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 	    				</div>
-	    				<div className='interactive'>
-	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
-								<MoreVertIcon className='icon'/>
-							</IconButton> </OverrideMaterialUICss>
-	    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
-	    				</div>
+	    				<Popup trigger={
+		    				<div className='interactive'>
+		    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
+									<SettingsOutlined className='icon'/>
+								</IconButton> </OverrideMaterialUICss>
+		    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
+		    				</div>
+		    			} modal closeOnDocumentClick={false}>
+		    				{close => (<LectureSetting closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    			</Popup>
 	    			</div>
     						
     				{this.makingQuizzes(this.state.lecture.quizzes)}
@@ -548,6 +549,36 @@ class DashboardRight extends Component{
 	}
 }
 
+class LectureSetting extends Component{
+	constructor(props){
+		super(props)
+	}
+	render(){
+		return(
+			<div className='popup'>
+				<div style={{display:'flex', flexDirection:'row', width:'100%'}}>
+					<div style={{width:'10%',  margin:'auto'}}>
+						<IconButton onClick={this.props.closefunction} ><KeyboardArrowLeft/></IconButton>
+					</div>
+					<div style={{width:'90%'}}>
+						<div className='popup-header'>
+							<h2> Setting Sesi {this.props.date}</h2>
+						</div>
+						<div style={{display:'flex', flexDirection:'row'}}>
+							<div style={{width:"30%"}}>
+								<Button> Hapus Sesi </Button>
+								<Button> Edit Sesi </Button>
+							</div>
+							<div style={{width:'70%', color:'black'}}>
+								<p style={{width:'70%', color:'black'}}> Hapus Sesi </p>
+							</div>
+						</div>
+	          		</div>
+	          	</div>
+			</div>
+		)
+	}
+}
 class AddQuestion extends Component{
 	constructor(props){
 		super(props)
