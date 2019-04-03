@@ -506,10 +506,10 @@ class DashboardRight extends Component{
     					{this.liveIndicator()} 
     				</div>
     				<div className='content-option'>
-	    				<div className='interactive'>
-	    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}} onClick={this.toggleLive}>
+	    				<div className='interactive' onClick={this.toggleLive}>
+	    					<OverrideMaterialUICss>
 	    						<PlayArrow className='icon'/>
-	    					</IconButton></OverrideMaterialUICss>
+	    					</OverrideMaterialUICss>
 	    					<p> Mulai Sesi </p>
 	    				</div>
 	    				<div className='interactive'>
