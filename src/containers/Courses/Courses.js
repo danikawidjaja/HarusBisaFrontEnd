@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Courses.css';
+import './Courses.css'; 
 import { Button, FormGroup, FormControl, ControlLabel,Dropdown } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import withAuth from '../withAuth';
@@ -178,13 +178,16 @@ class Courses extends Component{
 			        	open={this.state.showDeleteCourseModal}
 			        	modal
 			        	closeOnDocumentClick={false}
-			        	//onClose={this.toggleShowDeleteCourseModal}
 			        >
 			        	{close => (
-			        		<div>
-			        			<h3> Are you sure you want to delete {this.state.courseToDelete.course_name}? </h3>
-			        			<Button onClick={this.deleteCourse}> Yes </Button>
-			        			<Button onClick={close}> No </Button>
+			        		<div className='course-popup'>
+			        			<div className='course-popup-header'>
+			        				<h2> Are you sure you want to delete {this.state.courseToDelete.course_name}? </h2>
+			        			</div>
+			        			<div className='buttons' style={{justifyContent:'center'}}>
+			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Yes </Button>
+			        				<Button className='button' style={{margin:'auto'}} onClick={close}> No </Button>
+			        			</div>
 			        		</div>
 			        	)}
 			        </Popup>
