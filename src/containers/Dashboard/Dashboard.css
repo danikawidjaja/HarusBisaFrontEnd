@@ -141,6 +141,7 @@ html{
 	justify-content: center;
 	align-content: center;
 	overflow: visible;
+	padding: 1rem;
 
 }
 
@@ -148,6 +149,8 @@ html{
 	color: black;
 	font-weight: 400;
 	text-align: center;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 .Dashboard .popup .popup-header{
@@ -380,7 +383,6 @@ html{
 	width: 100%;
 	justify-content: center;
 	text-align: center;
-	padding-right: 3.5rem;
 }
 .Dashboard .right a{
 	color: black;

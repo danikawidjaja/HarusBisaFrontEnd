@@ -32,6 +32,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
+import Close from '@material-ui/icons/Close';
 import Logo from '../Logo/Logo';
 
 
@@ -552,29 +553,44 @@ class DashboardRight extends Component{
 class LectureSetting extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			setting:'edit'
+		}
+		this.handleChange = this.handleChange.bind(this);
 	}
+	handleChange(value, event) {
+		this.setState({
+			setting:value
+		})
+  	}
+  	content(setting){
+  		if (setting == 'edit'){
+  			return(<AddLecture/>)
+  		}
+  		else{
+  			return(<p> Delete </p>)
+  		}
+  	}
 	render(){
 		return(
-			<div className='popup'>
-				<div style={{display:'flex', flexDirection:'row', width:'100%'}}>
-					<div style={{width:'10%',  margin:'auto'}}>
-						<IconButton onClick={this.props.closefunction} ><KeyboardArrowLeft/></IconButton>
+			<div className='popup'>					
+				<div className='popup-header'>
+					<h2> Setting Sesi {this.props.date}</h2>
+					<div >
+						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
 					</div>
-					<div style={{width:'90%'}}>
-						<div className='popup-header'>
-							<h2> Setting Sesi {this.props.date}</h2>
-						</div>
-						<div style={{display:'flex', flexDirection:'row'}}>
-							<div style={{width:"30%"}}>
-								<Button> Hapus Sesi </Button>
-								<Button> Edit Sesi </Button>
-							</div>
-							<div style={{width:'70%', color:'black'}}>
-								<p style={{width:'70%', color:'black'}}> Hapus Sesi </p>
-							</div>
-						</div>
-	          		</div>
-	          	</div>
+				</div>
+				<div style={{display:'flex', flexDirection:'row'}}>
+					<div style={{width:'30%'}}>
+						<ToggleButtonGroup name='lecture_setting'type='radio' defaultValue={'edit'} style={{display:'flex', flexDirection:'column', textAlign:'center'}} onChange={this.handleChange}>
+							<ToggleButton value={'edit'} defaultChecked> Edit Sesi </ToggleButton>
+							<ToggleButton value={'delete'}> Hapus Sesi </ToggleButton>
+						</ToggleButtonGroup>
+					</div>
+					<div style={{width: '70%'}}>
+						{this.content(this.state.setting)}
+					</div>
+				</div>
 			</div>
 		)
 	}
@@ -597,17 +613,17 @@ class AddQuestion extends Component{
 		let returnComponents = []
 		if (question_type === ''){
 			returnComponents.push(
-				<div style={{display:'flex', flexDirection:'row', width:'100%'}}>
-					<div style={{width:'10%'}}>
-						<IconButton onClick={this.props.closefunction} ><KeyboardArrowLeft/></IconButton>
-					</div>
-					<div style={{width:'90%'}}>
+				<div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'space-between'}}>
+					<div style={{width:'100%'}}>
 					<ToggleButtonGroup className='buttons' name='role'type='radio' onChange={this.handleChangeQuestionType}>
 						<ToggleButton className='button' value='multiple_choice'> Pilihan Ganda </ToggleButton>
 	            		<ToggleButton className='button' value='string_input'> Isian </ToggleButton>
 	            		<ToggleButton className='button' value='numeric_input' style={{border:'none'}}> Jawaban Angka </ToggleButton>
 	          		</ToggleButtonGroup>
 	          		</div>
+	          		<div>
+						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
+					</div>
 	          	</div>
 			)	
 		}
