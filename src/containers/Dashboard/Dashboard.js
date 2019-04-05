@@ -301,7 +301,7 @@ class AddLecture extends Component{
   	}
 	render(){
 	    return(
-	      	<div className="form">
+	      	<div className="form" style={{paddingLeft:'2rem', paddingRight:'2rem'}}>
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
 			            <img src={calIcon} style={{height:'5vh', marginRight:'-5vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
@@ -339,6 +339,73 @@ class AddLecture extends Component{
 			            Tambah
 			          	</Button>
 			         </div>
+	        	</form>
+	      	</div>
+	    );
+  	}
+}
+
+class EditLecture extends Component{
+	constructor(props){
+		super(props);
+		console.log(props)
+		this.state = {
+			date: this.convertToDateObject(this.props.lecture.date),
+			description:this.props.lecture.description,
+		}
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	handleChange = event => {
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+  	convertToDateObject(str){
+  		var split = str.split('/')
+  		var date = new Date(split[2], split[1]-1, split[0])
+  		return date
+  	}
+  	handleSubmit(event){
+  		event.preventDefault();
+  		alert(this.state.date)
+  	}
+
+  	handleDateChange(date){
+  		this.setState({date: date});
+  	}
+	render(){
+	    return(
+	      	<div className="form">
+	        	<form onSubmit={this.handleSubmit}>
+	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+			            <img src={calIcon} style={{height:'5vh', margin:'auto'}}/>
+			            <DatePicker 
+			            	selected={this.state.date}
+			            	onChange={this.handleDateChange}
+			            	todayButton={'Today'}
+			            	dateFormat='d MMMM yyyy'
+			            	className='calendar'
+			            />
+
+	          		</FormGroup>
+
+	          		<FormGroup controlId="description" >
+	            		<ControlLabel>Deskripsi</ControlLabel>
+			            <FormControl
+			              type="text"
+			              value={this.state.description}
+			              onChange={this.handleChange}
+			              placeholder= 'Eg. Anatomi (optional)'
+			            />
+	          		</FormGroup>
+	          		<Button
+				           type="submit"
+				           className="button"
+				    >
+			          Edit
+			        </Button>
+			         
 	        	</form>
 	      	</div>
 	    );
@@ -537,7 +604,7 @@ class DashboardRight extends Component{
 		    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>
 		    			} modal closeOnDocumentClick={false}>
-		    				{close => (<LectureSetting closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    				{close => (<LectureSetting closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
     						
@@ -565,10 +632,19 @@ class LectureSetting extends Component{
   	}
   	content(setting){
   		if (setting == 'edit'){
-  			return(<AddLecture/>)
+  			return(<EditLecture lecture={this.props.lecture}/>)
+  		}
+  		else if (setting =="delete"){
+  			return(
+  				<div style={{textAlign:'center'}}>
+	  				<p> Hapus Sesi {this.props.date}? </p>
+	  				<Button> Yes </Button>
+	  				<Button> No </Button>
+  				</div>
+  			)
   		}
   		else{
-  			return(<p> Delete </p>)
+  			return(null)
   		}
   	}
 	render(){
@@ -580,14 +656,14 @@ class LectureSetting extends Component{
 						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
 					</div>
 				</div>
-				<div style={{display:'flex', flexDirection:'row'}}>
-					<div style={{width:'30%'}}>
+				<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+					<div style={{width:'30%', textAlign:'center'}}>
 						<ToggleButtonGroup name='lecture_setting'type='radio' defaultValue={'edit'} style={{display:'flex', flexDirection:'column', textAlign:'center'}} onChange={this.handleChange}>
 							<ToggleButton value={'edit'} defaultChecked> Edit Sesi </ToggleButton>
 							<ToggleButton value={'delete'}> Hapus Sesi </ToggleButton>
 						</ToggleButtonGroup>
 					</div>
-					<div style={{width: '70%'}}>
+					<div>
 						{this.content(this.state.setting)}
 					</div>
 				</div>
@@ -641,7 +717,7 @@ class AddQuestion extends Component{
 
 	render(){
 		return(
-			<div className='popup' style={{display:'flex', flexDirection:'column'}}>
+			<div className='popup' style={{display:'flex', flexDirection:'column', padding:'1rem'}}>
 				{this.popupDisplay(this.state.question_type)}
 				
 			</div>

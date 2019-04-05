@@ -142,6 +142,9 @@ html{
 	align-content: center;
 	overflow: visible;
 	padding: 1rem;
+	padding-left: 3rem;
+	padding-right: 3rem;
+	color: black;
 
 }
 
@@ -168,8 +171,6 @@ html{
 
 .Dashboard .popup .form{
 	align-items: center;
-	width: 70%;
-	margin: auto;
     margin-bottom: 1vw;
     justify-content: flex-end;  
 }
@@ -296,10 +297,6 @@ html{
 	
 }
 
-.Dashboard .right .content .content-option p{
-	color: white;
-	font-weight: 500;
-}
 
 .Dashboard .right .content .content-option{
 	display: flex;

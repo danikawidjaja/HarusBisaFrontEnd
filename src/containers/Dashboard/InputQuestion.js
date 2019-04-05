@@ -276,6 +276,20 @@ class MultipleChoiceQuestionForm extends Component{
 					    	<label> Jawaban Benar </label>
 					    </div>
 				    </div>
+				    <div className='multiple-choice'>
+			    		<div style={{display:'flex', flexDirection:'row'}}> 
+				    		<p> B. </p>
+					    	<FormControl
+					    		type='text'
+					    		placeholder='Tulis jawaban disini'
+					    		style={{border:'none', boxShadow:'none'}}
+					    	/>
+					    </div>
+					    <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+					    	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
+					    	<label> Jawaban Benar </label>
+					    </div>
+				    </div>
 			    </FormGroup>
 
 			    <div>
