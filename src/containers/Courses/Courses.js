@@ -596,9 +596,9 @@ class CourseCard extends Component{
 									>
 										{close => (
 											<div onClick={close}>
-												<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
-												<Button onClick={close} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
-												<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{color:' #FFE01C', marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+												<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
+												<Button onClick={close} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
+												<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
 											</div>
 										)}							
 									</Popup>    

@@ -68,6 +68,34 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+    deleteLecture(course_id, lecture_id){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}`,{
+            method:'DELETE'
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
+    updateLecture(course_id, lecture_id, date, description ){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}` , {
+            method: 'PUT',
+            body: JSON.stringify({
+                date,
+                description
+            })
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
+    deleteQuiz(course_id,lecture_id, question_number){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes/${question_number}`,{
+            method:'DELETE'
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     signup(password,email,firstname,lastname,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',
