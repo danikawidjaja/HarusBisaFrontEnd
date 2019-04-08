@@ -16,8 +16,7 @@ class Login extends Component {
   render() {
     return (
       <div className='login'>
-        <div className='left'>
-          <div style={{width:'50%', textAlign:'center'}}>
+          <div style={{width:'30%', textAlign:'center', margin:'auto', padding:'2rem'}}>
             <Logo size='logo' color='black' background='trans' padding={false} style={{width:'6rem'}}/>
             <h1> Log In </h1>
             <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
@@ -27,15 +26,6 @@ class Login extends Component {
             <LoginForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
             <Link to='/forgetpassword'> Lupa Password anda? </Link>
           </div>
-        </div>
-
-        <div className='right'>
-          <div className='text'>
-            <p> Karena kita adalah sesuatu yang harus terjadi sehingga jadikan sesuatu berarti dalam </p>
-            <h2> Sri Mulyani </h2>
-          </div>
-          <img src={login} style={{width:'100%', height:'25vw'}}/>
-        </div>
       </div>
     );
   }

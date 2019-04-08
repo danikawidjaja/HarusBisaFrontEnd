@@ -8,42 +8,31 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
 }
 
 .login {
-  margin-top: 0vw;
-  padding-top: 5vw;
-  margin-right: 0px;
-  padding-right: 0px;
   display: flex;
   flex-direction: row;
   font-family: 'Rubik', sans-serif;
-  border: 0px solid black;
   color: black;
   width: 100%;
   height: 100%;
-}
-
-.login .left{
-  width: 40%;
-  height: 100%;
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: 0px;
+  margin: auto;
 }
 
-.login .left h1{
+
+.login h1{
   font-weight: 500;
   font-size: 3vw;
   margin-bottom: 1vw;
 }
 
-.login .left p{
+.login p{
   text-align: left;
   margin-bottom: 0.2vw;
   font-weight: 300;
   font-size: 1.2vw;
 }
 
-.login .left a{
+.login a{
   font-weight: 300;
   text-align: left;
   font-size: 1.2vw;
@@ -51,14 +40,14 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   text-decoration: underline;
 }
 
-.login .left .login-form{
+.login .login-form{
   margin-top: 1vw;
   margin-bottom: 1vw;
   text-align: left;
 }
 
 
-.login .left .login-form .form-element{
+.login .login-form .form-element{
   text-align: left;
   padding: 0px;
   margin:0px;
@@ -66,7 +55,7 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   margin-bottom: 1.5vw;
 }
 
-.login .left .login-form .form-group-sm .form-control, .login .left .login-form .form-group-sm .form-control:focus{
+.login .login-form .form-group-sm .form-control, .login .login-form .form-group-sm .form-control:focus{
   border: 1px solid black;
   border-radius: 0px;
   padding: 0.5vw;
@@ -76,11 +65,11 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   font-weight: 400;
 }
 
-.login .left .login-form .form-control-label{
+.login .login-form .form-control-label{
   font-weight: 400;
   color: black;
 }
-.login .left .login-form .button, .login .left .login-form .button:focus, .login .left .login-form .button:hover{
+.login .login-form .button, .login .login-form .button:focus, .login .login-form .button:hover{
   text-transform: uppercase;
   border-radius: 0px;
   background-color: black;
@@ -89,42 +78,6 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
   color: white;
 }
 
-
-.login .right{
-  border: 0px solid black;
-  margin: 0px;
-  padding-right: 0px;
-  width: 60%;
-  height: 100%;
-}
-.login .right .decoration{
-  display: flex;
-  flex-direction: row;
-  vertical-align: baseline;
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 60%;
-}
-
-.login .right .text{
-  width: 80%;
-  justify-content: center;
-  text-align: left;
-  margin: 5vw;
-  margin-bottom: 0vw;
-}
-
-.login .right .text h2{
-  font-family: 'Open Sans', sans-serif;
-  text-align: right;
-  font-size: 2.5vw;
-}
-
-.login .right .text p{
-  font-family: Geneva, sans-serif;
-  font-size: 2vw;
-}
 
 
 .errormessage{
