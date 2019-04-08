@@ -2,12 +2,18 @@
   background-color: black;
   color: white;
   min-width: 100%;
-  padding: 0px;
+  padding: 2rem;
+  padding-left:5vw;
+  padding-right: 5vw;
   text-align: center;
+  vertical-align: center;
+  align-items: center;
+}
+
+.footer .content{
   display: flex;
   flex-direction: row;
-  vertical-align: center;
-  padding-top: 5rem;
+  margin: auto;
 }
 
 .footer .f-about p {   
