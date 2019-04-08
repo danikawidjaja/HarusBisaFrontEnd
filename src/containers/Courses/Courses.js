@@ -57,7 +57,7 @@ class Courses extends Component{
 	}
 
   	async componentDidMount(){
-    	this.props.props.isNavVisible(false);
+    	this.props.props.isNavVisible(true);
     	window.scrollTo(0, 0);
   	}
 
@@ -205,14 +205,14 @@ class Courses extends Component{
 class CoursesLeft extends Component{
 	constructor(props){
 		super(props);
+		console.log(props)
 	}
 
 	render(){
 		return(
 			<div className='left'>
 				<div style={{padding:'2rem'}}>
-					<Logo size='full' color='black' background='trans' padding='false' style={{margin:'auto',width:'15rem', marginBottom:'1rem'}}/>
-    				<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
+					<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
     			</div>
     			<img className='image' src={LeftPanelPicture}/>
     		</div>

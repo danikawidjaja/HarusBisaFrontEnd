@@ -744,7 +744,6 @@ class AddQuestion extends Component{
 		return(
 			<div className='popup' style={{display:'flex', flexDirection:'column', padding:'1rem'}}>
 				{this.popupDisplay(this.state.question_type)}
-				
 			</div>
 		)
 	}

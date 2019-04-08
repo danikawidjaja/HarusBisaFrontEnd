@@ -140,12 +140,13 @@ html{
 	align-items: center;
 	justify-content: center;
 	align-content: center;
-	overflow: visible;
+	overflow: auto;
 	padding: 1rem;
 	padding-left: 3rem;
 	padding-right: 3rem;
 	color: black;
-
+	max-height: 90vh;
+	overflow-y: scroll;
 }
 
 .Dashboard .popup h2{
