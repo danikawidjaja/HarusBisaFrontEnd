@@ -361,7 +361,6 @@ class EditLecture extends Component{
   		this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description)
   		.then(res =>{
   			this.props.closefunction()
-  			console.log(res.data.lectures)
   			this.props.updateLecturesState(res.data.lectures)
   			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.lecture.id){
@@ -480,15 +479,22 @@ class DashboardRight extends Component{
 		this.state={
 			lecture : this.props.selectedLecture,
 			live: false,
+			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
 		this.toggleLive = this.toggleLive.bind(this)
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
+		console.log(newProps.selectedLecture)
 		if (oldProps.selectedLecture !== newProps.selectedLecture){
 			this.setState({
 				lecture: newProps.selectedLecture
+			})
+		}
+		if (oldProps.selectedLecture.quizzes !== newProps.selectedLecture.quizzes){
+			this.setState({
+				quizzes: newProps.selectedLecture.quizzes
 			})
 		}
 	}
@@ -562,8 +568,8 @@ class DashboardRight extends Component{
 	render(){
 		if (!this.state.lecture){
 			return(
-				<div>
-					<p> New class! You have no lectures </p>
+				<div className='content'>
+					<p> Kelas baru! Buatlah sesi pertama anda </p>
 				</div>)
 		}
 		else{
@@ -793,11 +799,15 @@ class QuizCard extends Component{
 			)
 		}
 	}
-	deleteQuiz(){
+	async deleteQuiz(){
 		this.props.Auth.deleteQuiz(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1)
 		.then( res =>{
 			this.props.updateLecturesState(res.data.lectures)
-			console.log(res.message)
+  			for (let i in res.data.lectures){
+  				if (res.data.lectures[i].id == this.props.selected_lecture_id){
+  					this.props.changeSelectedLecture(res.data.lectures[i])
+  				}
+  			}
 		})
 	}
 	render(){
