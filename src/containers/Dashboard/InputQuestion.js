@@ -55,9 +55,7 @@ class QuestionHeader extends Component{
 	}
 
 	backButton(){
-		console.log(this.props)
 		this.props.handleChangeQuestionType('')
-		console.log('i went back!')
 	}
 
 	render(){
@@ -228,25 +226,43 @@ class MultipleChoiceQuestionForm extends Component{
 			question:'',
 			correct_answer:'',
 			answers:[],
-			switched:false,
+			main_switched:false,
+			number_of_answers: 2,
 		}
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.changeMainSwitched = this.changeMainSwitched.bind(this);
+		this.addAnswers = this.addAnswers.bind(this);
 	}
-
-	handleSubmit(){
-		alert('new question added')
+	changeMainSwitched(){
+		this.setState({
+			main_switched: true,
+		})
+	}
+	handleSubmit(event){
+		event.preventDefault();
+		console.log(this.state)
+		alert(this.state.answers)
 	}
 	handleChange = event => {
 	    this.setState({
 	      [event.target.id]: event.target.value
 	    });
   	}
-  	toggleSwitch = () => {
-    this.setState(prevState => {
-      return {
-        switched: !prevState.switched
-      };
-    });
-  };
+  	makeAnswers(num){
+  		let result= []
+  		for (let i=0; i<num; i++){
+  			result.push(<MultipleChoiceAnswer option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
+  		}
+  		return result
+  	}
+  	addAnswers(){
+  		this.setState(prevState => {
+			return {
+				number_of_answers: prevState.number_of_answers + 1
+			};
+		});
+  	}
 	render(){
 		return(
 			<div className='form'>
@@ -260,36 +276,10 @@ class MultipleChoiceQuestionForm extends Component{
 			              placeholder= 'Tulis Pertanyaan disini'
 			            />
 			    </FormGroup>
-			    <FormGroup>
+			    <FormGroup controlId='answers'>
 			    	<ControlLabel> Jawaban </ControlLabel>
-			    	<div className='multiple-choice'>
-			    		<div style={{display:'flex', flexDirection:'row'}}> 
-				    		<p> A. </p>
-					    	<FormControl
-					    		type='text'
-					    		placeholder='Tulis jawaban disini'
-					    		style={{border:'none', boxShadow:'none'}}
-					    	/>
-					    </div>
-					    <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-					    	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
-					    	<label> Jawaban Benar </label>
-					    </div>
-				    </div>
-				    <div className='multiple-choice'>
-			    		<div style={{display:'flex', flexDirection:'row'}}> 
-				    		<p> B. </p>
-					    	<FormControl
-					    		type='text'
-					    		placeholder='Tulis jawaban disini'
-					    		style={{border:'none', boxShadow:'none'}}
-					    	/>
-					    </div>
-					    <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
-					    	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
-					    	<label> Jawaban Benar </label>
-					    </div>
-				    </div>
+			    	{this.makeAnswers(this.state.number_of_answers)}
+			    	<Button onClick={this.addAnswers}> Tambahkan Jawaban </Button>
 			    </FormGroup>
 
 			    <div>
@@ -325,4 +315,52 @@ class MultipleChoiceQuestionForm extends Component{
 		)
 	}
 }
+
+
+class MultipleChoiceAnswer extends Component{
+	constructor(props){
+		super(props)
+		this.state={
+			switched: false,
+			answer:'',
+		}
+	}
+	toggleSwitch = () => {
+		//if (!this.props.main_switched){
+		this.setState(prevState => {
+			return {
+				switched: !prevState.switched
+			};
+		}, this.props.changeMainSwitched());
+	//}
+	};
+	handleChange = event => {
+		console.log(event.target.value)
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+	render(){
+		return(
+			//<FormGroup controlId='answers'>
+			<div className='multiple-choice' id='answer'>
+			    <div style={{display:'flex', flexDirection:'row'}}> 
+					<p> {String.fromCharCode(this.props.option+65)}. </p>
+					<FormControl
+					 	type='text'
+					    placeholder='Tulis jawaban disini'
+					    style={{border:'none', boxShadow:'none'}}
+					    onChange={this.handleChange}
+					/>
+				</div>
+				<div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+				   	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
+				  	<label> Jawaban Benar </label>
+				</div>
+			</div>
+			//</FormGroup>
+		)
+	}
+}
+
 export default InputQuestion;
