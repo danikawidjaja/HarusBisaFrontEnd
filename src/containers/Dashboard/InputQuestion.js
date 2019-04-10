@@ -233,6 +233,7 @@ class MultipleChoiceQuestionForm extends Component{
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeMainSwitched = this.changeMainSwitched.bind(this);
 		this.addAnswers = this.addAnswers.bind(this);
+		this.addUserAnswer = this.addUserAnswer.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -242,7 +243,6 @@ class MultipleChoiceQuestionForm extends Component{
 	handleSubmit(event){
 		event.preventDefault();
 		console.log(this.state)
-		alert(this.state.answers)
 	}
 	handleChange = event => {
 	    this.setState({
@@ -252,7 +252,7 @@ class MultipleChoiceQuestionForm extends Component{
   	makeAnswers(num){
   		let result= []
   		for (let i=0; i<num; i++){
-  			result.push(<MultipleChoiceAnswer option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
+  			result.push(<MultipleChoiceAnswer addUserAnswer={this.addUserAnswer} option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
   		}
   		return result
   	}
@@ -262,6 +262,16 @@ class MultipleChoiceQuestionForm extends Component{
 				number_of_answers: prevState.number_of_answers + 1
 			};
 		});
+  	}
+  	addUserAnswer(answer, correct, index){
+  		if (this.state.answers.length == 0 || this.state.answers.length == index){
+  			this.state.answers.push({answer: answer, correct: correct})
+  		}
+  		else{
+  			this.state.answers[index].answer = answer
+  			this.state.answers[index].correct = correct
+  		}
+  		console.log(this.state.answers)
   	}
 	render(){
 		return(
@@ -324,25 +334,28 @@ class MultipleChoiceAnswer extends Component{
 			switched: false,
 			answer:'',
 		}
+		this.handleChange = this.handleChange.bind(this);
+		this.toggleSwitch = this.toggleSwitch.bind(this);
 	}
-	toggleSwitch = () => {
+	async toggleSwitch(){
 		//if (!this.props.main_switched){
-		this.setState(prevState => {
+		await this.setState(prevState => {
 			return {
 				switched: !prevState.switched
 			};
 		}, this.props.changeMainSwitched());
+		this.props.addUserAnswer(this.state.answer, this.state.switched, this.props.option)
 	//}
 	};
-	handleChange = event => {
-		console.log(event.target.value)
-	    this.setState({
-	      [event.target.id]: event.target.value
+	async handleChange(event) {
+	    await this.setState({
+	      answer: event.target.value
 	    });
+	    this.props.addUserAnswer(this.state.answer, this.state.switched, this.props.option)
+	    
   	}
 	render(){
 		return(
-			//<FormGroup controlId='answers'>
 			<div className='multiple-choice' id='answer'>
 			    <div style={{display:'flex', flexDirection:'row'}}> 
 					<p> {String.fromCharCode(this.props.option+65)}. </p>
@@ -358,7 +371,6 @@ class MultipleChoiceAnswer extends Component{
 				  	<label> Jawaban Benar </label>
 				</div>
 			</div>
-			//</FormGroup>
 		)
 	}
 }

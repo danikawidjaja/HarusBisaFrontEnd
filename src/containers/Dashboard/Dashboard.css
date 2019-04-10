@@ -145,8 +145,8 @@ html{
 	padding-left: 3rem;
 	padding-right: 3rem;
 	color: black;
+	overflow-y: auto;
 	max-height: 90vh;
-	overflow-y: scroll;
 }
 
 .Dashboard .popup h2{

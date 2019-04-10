@@ -486,15 +486,9 @@ class DashboardRight extends Component{
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
-		console.log(newProps.selectedLecture)
 		if (oldProps.selectedLecture !== newProps.selectedLecture){
 			this.setState({
 				lecture: newProps.selectedLecture
-			})
-		}
-		if (oldProps.selectedLecture.quizzes !== newProps.selectedLecture.quizzes){
-			this.setState({
-				quizzes: newProps.selectedLecture.quizzes
 			})
 		}
 	}
