@@ -9,6 +9,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
 import AppliedRoute from './components/AppliedRoute';
 import Logo from './containers/Logo/Logo';
+import gif from './containers/Logo/logo.gif';
 
 const auth = new AuthService();
  
@@ -116,6 +117,9 @@ class App extends Component {
           <Navbar.Header>
             <Navbar.Brand>
                 <Logo style={{width: '12rem',height: '2.5rem'}} size='full' color='black' background='trans' padding={false}/>
+                {/*<img class='static' src={'./containers/Logo/PNG/Harus_Bisa-15-Logo-Blk-Trans-NoPad.png'} style={{width: '10rem',height: '10rem'}}/>
+                <img class="active" src={gif} style={{width: '10rem',height: '10rem'}}/>
+                <div className='logo'/>*/}
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

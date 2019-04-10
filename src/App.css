@@ -5,6 +5,19 @@
   margin-top: 0px;
 }
 
+.logo {
+    background: url('./containers/Logo/PNG/Harus_Bisa-15-Logo-Blk-Trans-NoPad.png');
+    margin:auto; /*position the [div] on the center*/
+    width: 10px;
+    height: 10px;
+  }
+  /*this is the hover event trigger*/
+.logo:hover {
+	cursor:pointer; 
+    background:url('./containers/Logo/logo.gif');
+    width: 10px;
+    height: 10px;
+}
 
 .navbar-default .navbar-toggle{
 	border: 0px;

@@ -49,7 +49,6 @@ class LoginForm extends Component{
   //Auth = this.props.Auth
 
   displayErrorMessage(error){
-    console.log('hi im here')
     if (!error){
       
       return(<ErrorMessage />)

@@ -96,19 +96,19 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
-    signup(password,email,firstname,lastname,school,role){
+    signup(password,email,first_name,last_name,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',
             body: JSON.stringify({
                 password,
                 email,
-                firstname,
-                lastname,
+                first_name,
+                last_name,
                 school,
                 role
             })
         }).then(res => {
-            console.log('signed up')
+            console.log(res.message)
             return Promise.resolve(res);
         })
     }

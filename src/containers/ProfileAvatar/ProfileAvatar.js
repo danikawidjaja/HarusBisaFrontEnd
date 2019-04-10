@@ -6,7 +6,6 @@ import './ProfileAvatar.css'
 class ProfileAvatar extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 		this.state={
 			initial: this.props.profile.first_name.slice(0,1).toUpperCase(),
 			first_name: this.props.profile.first_name[0].toUpperCase() + this.props.profile.first_name.slice(1, this.props.profile.first_name.length),

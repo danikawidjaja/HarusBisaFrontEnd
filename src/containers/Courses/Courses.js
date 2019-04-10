@@ -57,7 +57,7 @@ class Courses extends Component{
 	}
 
   	async componentDidMount(){
-    	this.props.props.isNavVisible(true);
+    	this.props.props.isNavVisible(false);
     	window.scrollTo(0, 0);
   	}
 
@@ -67,7 +67,6 @@ class Courses extends Component{
   		})
   	}
   	toggleShowUpdateCourseModal(){
-  		console.log('here')
   		this.setState({
   			showUpdateCourseModal: !this.state.showUpdateCourseModal
   		})
@@ -88,7 +87,6 @@ class Courses extends Component{
   		this.toggleShowDeleteCourseModal()
   		this.Auth.deleteCourse(this.state.courseToDelete._id)
   		.then(res =>{
-  			console.log(res)
       		alert(this.state.courseToDelete.course_name+' course deleted')
       		this.setState({
       			courses: res.data.courses
@@ -205,7 +203,6 @@ class Courses extends Component{
 class CoursesLeft extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 	}
 
 	render(){
@@ -318,7 +315,6 @@ class UpdateCourse extends Component{
       	.then(res =>{
       		this.props.closefunction()
       		alert(this.state.course_name+' course updated')
-      		console.log(res.data.courses)
       		this.props.updateCoursesState(res.data.courses)
       	})
       	.catch(err =>{
@@ -413,14 +409,12 @@ class AddCourse extends Component{
   	}
 
   	changeStartTerm(start_term){
-  		console.log(start_term)
   		this.setState({
   			start_term: start_term
   		})
   	}
 
   	changeEndTerm(end_term){
-  		console.log(end_term)
   		this.setState({
   			end_term: end_term
   		})
@@ -430,7 +424,6 @@ class AddCourse extends Component{
   		event.preventDefault();
   		this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
       	.then(res =>{
-      		console.log(res.data)
       		this.props.closefunction()
       		alert(this.state.course_name+' course added')
       		this.props.updateCoursesState(res.data.courses)
