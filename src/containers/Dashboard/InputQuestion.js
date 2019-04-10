@@ -224,7 +224,7 @@ class MultipleChoiceQuestionForm extends Component{
 		super(props);
 		this.state={
 			question:'',
-			correct_answer:'',
+			correct_answer:null,
 			answers:[],
 			main_switched:false,
 			number_of_answers: 2,
@@ -265,13 +265,20 @@ class MultipleChoiceQuestionForm extends Component{
   	}
   	addUserAnswer(answer, correct, index){
   		if (this.state.answers.length == 0 || this.state.answers.length == index){
-  			this.state.answers.push({answer: answer, correct: correct})
+  			//this.state.answers.push({answer: answer, correct: correct})
+  			this.state.answers.push(answer);
   		}
   		else{
-  			this.state.answers[index].answer = answer
-  			this.state.answers[index].correct = correct
+  			this.state.answers[index] = answer
+  			//this.state.answers[index].answer = answer
+  			//this.state.answers[index].correct = correct
   		}
-  		console.log(this.state.answers)
+  		//console.log(this.state.answers)
+  		if (correct){
+  			this.setState({
+  				correct_answer: index
+  			})
+  		}
   	}
 	render(){
 		return(
