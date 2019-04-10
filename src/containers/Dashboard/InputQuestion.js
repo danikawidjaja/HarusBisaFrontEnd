@@ -228,12 +228,16 @@ class MultipleChoiceQuestionForm extends Component{
 			answers:[],
 			main_switched:false,
 			number_of_answers: 2,
+			time_duration: null,
+			total_point: 1,
+			participation_reward_percentage: 100,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeMainSwitched = this.changeMainSwitched.bind(this);
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
+		this.changeTotalPoint = this.changeTotalPoint.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -280,6 +284,13 @@ class MultipleChoiceQuestionForm extends Component{
   			})
   		}
   	}
+
+  	async changeTotalPoint(value){
+  		await this.setState({
+  			total_point: value
+  		})
+  		console.log(this.state.total_point)
+  	}
 	render(){
 		return(
 			<div className='form'>
@@ -304,7 +315,7 @@ class MultipleChoiceQuestionForm extends Component{
 			    	<div className='setting'>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Nilai </ControlLabel>
-			    			<NumericInput className='form-control' value={1} min={0} max={5}/>
+			    			<NumericInput className='form-control' value={this.state.total_point} min={0} max={5} onChange={this.changeTotalPoint}/>
 			    		</FormGroup>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>
