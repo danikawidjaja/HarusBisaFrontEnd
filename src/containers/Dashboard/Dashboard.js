@@ -590,7 +590,7 @@ class DashboardRight extends Component{
 								modal
 								closeOnDocumentClick={false}
 							>
-								{close => (<AddQuestion closefunction={close}/>)}			
+								{close => (<AddQuestion Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
 						  	</Popup>
 							<p> Tambah<br/>Pertanyaan </p>
 	    				</div>
@@ -723,7 +723,7 @@ class AddQuestion extends Component{
 			)	
 		}
 		else if (question_type === 'multiple_choice'){
-			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'string_input'){
 			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
@@ -802,6 +802,11 @@ class QuizCard extends Component{
   				}
   			}
 		})
+		.catch(err =>{
+			console.log(err.message)
+		})
+
+		//Will always delete the last question, but this is front-end problem help??
 	}
 	render(){
 		return(

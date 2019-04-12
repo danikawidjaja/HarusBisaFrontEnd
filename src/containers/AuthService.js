@@ -96,6 +96,23 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+
+    addQuiz(course_id, lecture_id, question, answers, correct_answer, time_duration, total_point, participation_reward_percentage){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes`,{
+            method:'POST',
+            body: JSON.stringify({
+                question,
+                answers,
+                correct_answer,
+                time_duration,
+                total_point,
+                participation_reward_percentage
+            })
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     signup(password,email,first_name,last_name,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',

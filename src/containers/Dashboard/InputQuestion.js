@@ -14,7 +14,7 @@ class InputQuestion extends Component{
 	displayQuestionForm(question_type){
 		let returnForm = []
 		if (question_type == 'multiple_choice'){
-			returnForm.push(<MultipleChoiceQuestionForm closefunction={this.props.closefunction}/>)
+			returnForm.push(<MultipleChoiceQuestionForm Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'string_input'){
 			returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
@@ -222,14 +222,16 @@ class NumericInputQuestionForm extends Component{
 class MultipleChoiceQuestionForm extends Component{
 	constructor(props){
 		super(props);
+		console.log(props)
 		this.state={
 			question:'',
 			correct_answer:null,
 			answers:[],
 			main_switched:false,
 			number_of_answers: 2,
-			time_duration: null,
+			time_duration: 10,
 			total_point: 1,
+			participation_point:1,
 			participation_reward_percentage: 100,
 		}
 		this.handleChange = this.handleChange.bind(this);
@@ -238,6 +240,7 @@ class MultipleChoiceQuestionForm extends Component{
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
 		this.changeTotalPoint = this.changeTotalPoint.bind(this);
+		this.changeParticipationPoint = this.changeParticipationPoint.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -247,6 +250,15 @@ class MultipleChoiceQuestionForm extends Component{
 	handleSubmit(event){
 		event.preventDefault();
 		console.log(this.state)
+		this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
+		.then( res =>{
+			this.props.closefunction()
+			console.log(res)
+			// WHAT TO DO WITH THE RES? MUST UPDATE PARENT??
+		})
+		.catch(err =>{
+        	console.log(err.message)
+      	})
 	}
 	handleChange = event => {
 	    this.setState({
@@ -289,7 +301,11 @@ class MultipleChoiceQuestionForm extends Component{
   		await this.setState({
   			total_point: value
   		})
-  		console.log(this.state.total_point)
+  	}
+  	async changeParticipationPoint(value){
+  		await this.setState({
+  			participation_point: value
+  		})
   	}
 	render(){
 		return(
@@ -314,8 +330,12 @@ class MultipleChoiceQuestionForm extends Component{
 			    	<label> Setting </label>
 			    	<div className='setting'>
 			    		<FormGroup className='form-group'>
-			    			<ControlLabel> Tambahkan Nilai </ControlLabel>
-			    			<NumericInput className='form-control' value={this.state.total_point} min={0} max={5} onChange={this.changeTotalPoint}/>
+			    			<ControlLabel> Tambahkan Nilai Jawaban </ControlLabel>
+			    			<NumericInput className='form-control' value={this.state.total_point} step={0.5} min={0} max={5} onChange={this.changeTotalPoint}/>
+			    		</FormGroup>
+			    		<FormGroup className='form-group'>
+			    			<ControlLabel> Tambahkan Nilai Partisipasi </ControlLabel>
+			    			<NumericInput className='form-control' value={this.state.participation_point} step={0.5} min={0} max={5} onChange={this.changeParticipationPoint}/>
 			    		</FormGroup>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>

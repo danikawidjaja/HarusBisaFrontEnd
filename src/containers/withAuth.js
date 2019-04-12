@@ -33,7 +33,9 @@ export default function withAuth(AuthComponent){
 
 		render(){ 
 			if(this.state.data){
-				return <AuthComponent history={this.props.history} data={this.state.data} Auth={this.props.Auth} props={this.props}/>	
+				if (this.state.data.role == 'professor'){
+					return <AuthComponent history={this.props.history} data={this.state.data} Auth={this.props.Auth} props={this.props}/>	
+				}
 			}
 			else{
 				return null
