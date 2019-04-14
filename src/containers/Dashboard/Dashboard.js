@@ -750,11 +750,30 @@ class QuizCard extends Component{
 			possible_answers: this.props.quiz.answers,
 			correct_answer: this.props.quiz.answers[this.props.quiz.correct_answer],
 			question_number:this.props.question_number,
+			type:'multiple_choice',
 			live: false,
 			expanded: false,
-			showCorrectAns: false
+			showCorrectAns: false,
+			showDeleteQuestionModal: false,
+			showUpdateQuestionModal: false,
 		}
 		this.deleteQuiz = this.deleteQuiz.bind(this);
+		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
+		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
+	}
+	toggleDeleteModal(){
+		this.setState(prevState =>{
+			return{
+				showDeleteQuestionModal: !prevState.showDeleteQuestionModal
+			}
+		})
+	}
+	toggleUpdateModal(){
+		this.setState(prevState =>{
+			return{
+				showUpdateQuestionModal: !prevState.showUpdateQuestionModal
+			}
+		})
 	}
 
 	handleExpandClick = () =>{
@@ -793,6 +812,7 @@ class QuizCard extends Component{
 		}
 	}
 	async deleteQuiz(){
+		this.toggleDeleteModal()
 		this.props.Auth.deleteQuiz(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1)
 		.then( res =>{
 			this.props.updateLecturesState(res.data.lectures)
@@ -808,9 +828,45 @@ class QuizCard extends Component{
 
 		//Will always delete the last question, but this is front-end problem help??
 	}
+	updateQuiz(){
+		console.log('update quiz')
+	}
 	render(){
 		return(
 			<div>
+				<Popup
+			        open={this.state.showDeleteQuestionModal}
+			        modal
+			        closeOnDocumentClick={false}
+			    >
+			       	{close => (
+			       	<div className='course-popup'>
+		  				<div className= "course-popup-header">
+		        			<h2> Apakah anda yakin? </h2>
+			    		</div>
+			    		<Button onClick={this.deleteQuiz}> Yes </Button>
+			    		<Button onClick={close}> No </Button>
+	  				</div>)
+	  				}
+			    </Popup>
+			    <Popup
+			        open={this.state.showUpdateQuestionModal}
+			        modal
+			        closeOnDocumentClick={false}
+			    >
+			       	{close => (
+			       	<div className='course-popup'>
+		  				<div className= "course-popup-header">
+		        			<h2> Edit Question </h2>
+			    		</div>
+			    		<Button onClick={this.updateQuiz}> Yes </Button>
+			    		<Button onClick={close}> No </Button>
+	  				</div>
+	  				)
+	  				}
+			    </Popup>
+
+
 				<OverrideMaterialUICss>
 				<Card className='question-card'>
 					<OverrideMaterialUICss><CardContent className='card-content'>
@@ -830,8 +886,8 @@ class QuizCard extends Component{
 							>
 								{close => (
 									<div onClick={close}>
-										<Button  style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
-										<Button onClick={this.deleteQuiz}style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
+										<Button onClick={this.toggleUpdateModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
+										<Button onClick={this.toggleDeleteModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
 									</div>
 								)}							
 							</Popup>    

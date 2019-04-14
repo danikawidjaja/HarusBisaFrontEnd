@@ -80,7 +80,8 @@ class StringInputQuestionForm extends Component{
 		}
 	}
 
-	handleSubmit(){
+	handleSubmit(event){
+		event.preventDefault();
 		alert('new question added')
 	}
 	handleChange = event => {
@@ -152,7 +153,8 @@ class NumericInputQuestionForm extends Component{
 		}
 	}
 
-	handleSubmit(){
+	handleSubmit(event){
+		event.preventDefault();
 		alert('new question added')
 	}
 	handleChange = event => {
