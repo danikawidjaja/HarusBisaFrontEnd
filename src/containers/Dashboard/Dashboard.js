@@ -142,18 +142,6 @@ class Dashboard extends Component{
 			if (!this.state.isLoading){
 				return(
 		    		<div className='Dashboard'>
-		    			
-
-		    			<Popup
-		    				open = {this.showDeleteLectureModal}
-		    				modal
-		    			>
-		    				<div>
-		    				<p> Are you sure ? </p>
-		    				<Button> yes </Button>
-		    				<Button> no </Button>
-		    				</div>
-		    			</Popup>
 		    			<DashboardNavigation selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 						<div style={{display:'flex', flexDirection:'row'}}>
 			    			<div className='left'>
@@ -723,13 +711,13 @@ class AddQuestion extends Component{
 			)	
 		}
 		else if (question_type === 'multiple_choice'){
-			returnComponents.push(<InputQuestion Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion input={'input'} Auth={this.props.Auth} course_id={this.props.course_id} lecture_id={this.props.lecture_id} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'string_input'){
-			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'numeric_input'){
-			returnComponents.push(<InputQuestion handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		return(returnComponents)
 	}
@@ -750,7 +738,7 @@ class QuizCard extends Component{
 			possible_answers: this.props.quiz.answers,
 			correct_answer: this.props.quiz.answers[this.props.quiz.correct_answer],
 			question_number:this.props.question_number,
-			type:'multiple_choice',
+			question_type:'multiple_choice',
 			live: false,
 			expanded: false,
 			showCorrectAns: false,
@@ -855,13 +843,9 @@ class QuizCard extends Component{
 			        closeOnDocumentClick={false}
 			    >
 			       	{close => (
-			       	<div className='course-popup'>
-		  				<div className= "course-popup-header">
-		        			<h2> Edit Question </h2>
-			    		</div>
-			    		<Button onClick={this.updateQuiz}> Yes </Button>
-			    		<Button onClick={close}> No </Button>
-	  				</div>
+				       	<div className='course-popup'>
+			  				<InputQuestion input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
+		  				</div>
 	  				)
 	  				}
 			    </Popup>

@@ -5,35 +5,105 @@ import NumericInput from 'react-numeric-input';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Switch from '@material-ui/core/Switch';
+import Close from '@material-ui/icons/Close';
 
 class InputQuestion extends Component{
 	constructor(props){
 		super(props);
 	}
 
-	displayQuestionForm(question_type){
+	displayQuestionForm(question_type, input){
 		let returnForm = []
-		if (question_type == 'multiple_choice'){
+		if (input=='input'){
+			if (question_type == 'multiple_choice'){
 			returnForm.push(<MultipleChoiceQuestionForm Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			}
+			else if (question_type === 'string_input'){
+				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
+			}
+			else if (question_type === 'numeric_input'){
+				returnForm.push(<NumericInputQuestionForm closefunction={this.props.closefunction}/>)
+			}
 		}
-		else if (question_type === 'string_input'){
-			returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
+		else if (input == 'update'){
+			if (question_type == 'multiple_choice'){
+			returnForm.push(<MultipleChoiceUpdate Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			}
+			else if (question_type === 'string_input'){
+				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
+			}
+			else if (question_type === 'numeric_input'){
+				returnForm.push(<NumericInputQuestionForm closefunction={this.props.closefunction}/>)
+			}
 		}
-		else if (question_type === 'numeric_input'){
-			returnForm.push(<NumericInputQuestionForm closefunction={this.props.closefunction}/>)
+		else{
+			return null
 		}
 		return returnForm
 	}
 	render(){
+		if (this.props.input == 'input'){
+			return(
+				<div className='InputQuestion'>
+					<QuestionHeader handleChangeQuestionType={this.props.handleChangeQuestionType} question_type={this.props.question_type}/>
+					{this.displayQuestionForm(this.props.question_type, this.props.input)}
+				</div>
+			)
+		}
+		else if (this.props.input == 'update'){
+			return(
+				<div className='InputQuestion'>
+					<QuestionUpdateHeader question_type={this.props.question_type} closefunction={this.props.closefunction}/>
+					{this.displayQuestionForm(this.props.question_type, this.props.input)}
+				</div>
+			)
+		}
+		
+	}
+}
+
+class QuestionUpdateHeader extends Component{
+	constructor(props){
+		console.log(props)
+		super(props);
+	}
+	createHeader(question_type){
+		let returnComponent = []
+		if (question_type == 'multiple_choice'){
+			returnComponent.push(<h1> Pilihan Ganda </h1>)
+		}
+		else if (question_type == 'string_input'){
+			returnComponent.push(<h1> Isilah </h1> )
+		}
+		else if (question_type == 'numeric_input'){
+			returnComponent.push(<h1> Jawaban Angka </h1> )
+		}
+		return(returnComponent)
+	}
+	render(){
 		return(
-			<div className='InputQuestion'>
-				<QuestionHeader handleChangeQuestionType={this.props.handleChangeQuestionType} question_type={this.props.question_type}/>
-				{this.displayQuestionForm(this.props.question_type)}
+			<div className='header'> 
+				<IconButton onClick={this.props.closefunction}>
+					<Close/>
+				</IconButton>
+				{this.createHeader(this.props.question_type)}
 			</div>
 		)
 	}
 }
+class MultipleChoiceUpdate extends Component{
+	constructor(props){
+		super(props);
+	}
 
+	render(){
+		return(
+			<div> 
+				<p> Hello </p>
+			</div>
+		)
+	}
+}
 class QuestionHeader extends Component{
 	constructor(props){
 		super(props);
