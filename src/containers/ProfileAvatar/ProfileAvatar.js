@@ -37,7 +37,7 @@ class ProfileAvatar extends Component{
 					position='bottom right'
 					on = 'click'
 				>
-					<div style={{display:'flex', flexDirection:'column'}}>
+					<div style={{display:'flex', flexDirection:'column', padding:'0.25rem'}}>
 						<div className='popup-profile'>
 							<div>
 								<div className='avatar' onClick={this.handleAvatarClick}>
@@ -49,8 +49,9 @@ class ProfileAvatar extends Component{
 								<p> {this.state.email} </p>
 							</div>
 						</div>
-						<div>
-							<Button onClick={this.handleLogout}> Logout </Button>
+						<div className='buttons'>
+							<Button className='button'> Edit Profile </Button>
+							<Button className='button' onClick={this.handleLogout}> Logout </Button>
 						</div>
 					</div>
 				</Popup>

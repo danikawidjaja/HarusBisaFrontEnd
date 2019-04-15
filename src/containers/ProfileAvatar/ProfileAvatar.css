@@ -20,6 +20,7 @@
 	padding: 3px 7px;
 	height: 1.5rem;
 	width: 1.5rem;
+	outline: 0px;
 }
 
 .ProfileAvatar .popup-profile{
@@ -58,4 +59,22 @@
 	font-size: 5vh;
 	color: white;
 
+}
+
+.ProfileAvatar .buttons{
+	justify-content: space-between;
+	margin-top: 0.75rem;
+	display: flex;
+}
+.ProfileAvatar .buttons .button, .ProfileAvatar .buttons .button:active, .ProfileAvatar .buttons .button:focus{
+	margin: auto;
+	border: 0px;
+	font-weight: 500;
+	width: 100%;
+	outline: 0px;
+	background: transparent;
+}
+
+.ProfileAvatar .buttons .button:hover{
+	background: #ccc;
 }
