@@ -57,8 +57,14 @@ class Courses extends Component{
 	}
 
   	async componentDidMount(){
-    	this.props.props.isNavVisible(false);
-    	window.scrollTo(0, 0);
+  		if (this.props.data.role == 'student'){
+  			this.props.props.isNavVisible(true);
+  		}
+  		else{
+  			this.props.props.isNavVisible(false);
+    		window.scrollTo(0, 0);
+  		}
+    	
   	}
 
   	toggleShowDeleteCourseModal(){
@@ -116,87 +122,91 @@ class Courses extends Component{
 		})
 	}
 	render(){
-		return(
-    		<div className="Courses">
-    			<CoursesLeft name={this.state.profile.first_name}/>
-    			<div className = 'right'>
-    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-						<OverrideMaterialUICss><IconButton>
-							<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-						</IconButton></OverrideMaterialUICss>
-						<OverrideMaterialUICss><IconButton>
-							<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-						</IconButton></OverrideMaterialUICss>
-						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
-					</div>
+		if (this.props.data.role == 'student'){
+			return(<div> <p> hello student </p> </div>)
+		}
+		else{
+			return(
+	    		<div className="Courses">
+	    			<CoursesLeft name={this.state.profile.first_name}/>
+	    			<div className = 'right'>
+	    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
+							<OverrideMaterialUICss><IconButton>
+								<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+							</IconButton></OverrideMaterialUICss>
+							<OverrideMaterialUICss><IconButton>
+								<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+							</IconButton></OverrideMaterialUICss>
+							<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
+						</div>
 
-			        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
-			            <h1>Kelas Anda</h1>
-			            <div>
-			            	<p> Search bar </p>
-			            </div> 
-			            <Popup
-							    trigger={
-							    	<Button className="button"> + Tambah Kelas </Button>
-						    	}
-							    modal
-							    closeOnDocumentClick={false}
-	  						>
-	  						{close => (
-	  							<div className='course-popup'>
-		  							<div className= "course-popup-header">
-		        						<h2> Tambah Kelas </h2>
-			    					</div>
-	  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
-	  							</div>
-	  						)}
-	  							
-	  					</Popup>
-			        </div>
-			        
-			        <Popup
-			        	open={this.state.showUpdateCourseModal}
-			        	modal
-			        	closeOnDocumentClick={false}
-			        	//onClose={this.toggleShowUpdateCourseModal}
-			        >
+				        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
+				            <h1>Kelas Anda</h1>
+				            <div>
+				            	<p> Search bar </p>
+				            </div> 
+				            <Popup
+								    trigger={
+								    	<Button className="button"> + Tambah Kelas </Button>
+							    	}
+								    modal
+								    closeOnDocumentClick={false}
+		  						>
+		  						{close => (
+		  							<div className='course-popup'>
+			  							<div className= "course-popup-header">
+			        						<h2> Tambah Kelas </h2>
+				    					</div>
+		  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
+		  							</div>
+		  						)}
+		  							
+		  					</Popup>
+				        </div>
+				        
+				        <Popup
+				        	open={this.state.showUpdateCourseModal}
+				        	modal
+				        	closeOnDocumentClick={false}
+				        	//onClose={this.toggleShowUpdateCourseModal}
+				        >
 
-			        	{close => (
-			        	<div className='course-popup'>
-		  					<div className= "course-popup-header">
-		        				<h2> Edit Kelas </h2>
-			    			</div>
-	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
-	  					</div>)
-	  					}
-			        </Popup>
+				        	{close => (
+				        	<div className='course-popup'>
+			  					<div className= "course-popup-header">
+			        				<h2> Edit Kelas </h2>
+				    			</div>
+		  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
+		  					</div>)
+		  					}
+				        </Popup>
 
 
-			        <Popup
-			        	open={this.state.showDeleteCourseModal}
-			        	modal
-			        	closeOnDocumentClick={false}
-			        >
-			        	{close => (
-			        		<div className='course-popup'>
-			        			<div className='course-popup-header'>
-			        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
-			        			</div>
-			        			<div className='buttons' style={{justifyContent:'center'}}>
-			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
-			        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
-			        			</div>
-			        		</div>
-			        	)}
-			        </Popup>
+				        <Popup
+				        	open={this.state.showDeleteCourseModal}
+				        	modal
+				        	closeOnDocumentClick={false}
+				        >
+				        	{close => (
+				        		<div className='course-popup'>
+				        			<div className='course-popup-header'>
+				        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
+				        			</div>
+				        			<div className='buttons' style={{justifyContent:'center'}}>
+				        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
+				        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
+				        			</div>
+				        		</div>
+				        	)}
+				        </Popup>
 
-			        <div className= 'content'>
-			        	{this.makingCourses(this.state.courses)}
-					</div>
-	        	</div>
-	        </div>
-		)
-
+				        <div className= 'content'>
+				        	{this.makingCourses(this.state.courses)}
+						</div>
+		        	</div>
+		        </div>
+			)
+		}
 	}
 }
 
