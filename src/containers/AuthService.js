@@ -96,9 +96,24 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
-
+    updateQuiz(index, course_id, lecture_id, question, answers, correct_answer, time_duration, total_point, participation_reward_percentage){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes/${index}`,{
+            method:'PUT',
+            body: JSON.stringify({
+                question,
+                answers,
+                correct_answer,
+                time_duration,
+                total_point,
+                participation_reward_percentage
+            })
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     addQuiz(course_id, lecture_id, question, answers, correct_answer, time_duration, total_point, participation_reward_percentage){
-        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes`,{
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes/`,{
             method:'POST',
             body: JSON.stringify({
                 question,
@@ -212,7 +227,7 @@ export default class AuthService {
             headers,
             ...options
         })
-            .then(this._checkStatus)
+            //.then(this._checkStatus)
             .then(response => response.json())
     }
 

@@ -578,7 +578,7 @@ class DashboardRight extends Component{
 								modal
 								closeOnDocumentClick={false}
 							>
-								{close => (<AddQuestion Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
+								{close => (<AddQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
 						  	</Popup>
 							<p> Tambah<br/>Pertanyaan </p>
 	    				</div>
@@ -711,13 +711,13 @@ class AddQuestion extends Component{
 			)	
 		}
 		else if (question_type === 'multiple_choice'){
-			returnComponents.push(<InputQuestion input={'input'} Auth={this.props.Auth} course_id={this.props.course_id} lecture_id={this.props.lecture_id} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} input={'input'} Auth={this.props.Auth} course_id={this.props.course_id} lecture_id={this.props.lecture_id} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'string_input'){
-			returnComponents.push(<InputQuestion input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		else if (question_type === 'numeric_input'){
-			returnComponents.push(<InputQuestion input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
+			returnComponents.push(<InputQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} input={'input'} handleChangeQuestionType={this.handleChangeQuestionType} question_type={this.state.question_type} closefunction={this.props.closefunction}/>)
 		}
 		return(returnComponents)
 	}
@@ -826,9 +826,6 @@ class QuizCard extends Component{
 			console.log(err.message)
 		})
 	}
-	updateQuiz(){
-		console.log('update quiz')
-	}
 	render(){
 		return(
 			<div>
@@ -856,7 +853,7 @@ class QuizCard extends Component{
 			    >
 			       	{close => (
 				       	<div className='popup'>
-			  				<InputQuestion quiz={this.props.quiz} input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
+			  				<InputQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.state.question_number - 1}quiz={this.props.quiz} input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
 		  				</div>
 	  				)
 	  				}

@@ -10,13 +10,14 @@ import Close from '@material-ui/icons/Close';
 class InputQuestion extends Component{
 	constructor(props){
 		super(props);
+		console.log(props)
 	}
 
 	displayQuestionForm(question_type, input){
 		let returnForm = []
 		if (input=='input'){
 			if (question_type == 'multiple_choice'){
-			returnForm.push(<MultipleChoiceQuestionForm Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			returnForm.push(<MultipleChoiceQuestionForm changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
 			}
 			else if (question_type === 'string_input'){
 				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
@@ -27,7 +28,7 @@ class InputQuestion extends Component{
 		}
 		else if (input == 'update'){
 			if (question_type == 'multiple_choice'){
-			returnForm.push(<MultipleChoiceUpdate quiz={this.props.quiz} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			returnForm.push(<MultipleChoiceUpdate changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.props.index} quiz={this.props.quiz} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
 			}
 			else if (question_type === 'string_input'){
 				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
@@ -121,15 +122,20 @@ class MultipleChoiceUpdate extends Component{
 	handleSubmit(event){
 		event.preventDefault();
 		console.log(this.state)
-		{/*this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
+		this.props.Auth.updateQuiz(this.props.index, this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
 		.then( res =>{
 			this.props.closefunction()
 			console.log(res)
-			// WHAT TO DO WITH THE RES? MUST UPDATE PARENT??
+			this.props.updateLecturesState(res.data.lectures)
+			for (let i in res.data.lectures){
+  				if (res.data.lectures[i].id == this.props.lecture_id){
+  					this.props.changeSelectedLecture(res.data.lectures[i])
+  				}
+  			}
 		})
 		.catch(err =>{
         	console.log(err.message)
-      	})*/}
+      	})
 	}
 	handleChange = event => {
 	    this.setState({
@@ -230,7 +236,7 @@ class MultipleChoiceUpdate extends Component{
 				        type="submit"
 				        className="i_button"
 				    >
-				    Tambah
+				    Edit
 			        </Button>
 			    </div>
 	       	</form>
@@ -460,8 +466,12 @@ class MultipleChoiceQuestionForm extends Component{
 		this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
 		.then( res =>{
 			this.props.closefunction()
-			console.log(res)
-			// WHAT TO DO WITH THE RES? MUST UPDATE PARENT??
+			this.props.updateLecturesState(res.data.lectures)
+			for (let i in res.data.lectures){
+  				if (res.data.lectures[i].id == this.props.lecture_id){
+  					this.props.changeSelectedLecture(res.data.lectures[i])
+  				}
+  			}
 		})
 		.catch(err =>{
         	console.log(err.message)
@@ -575,7 +585,6 @@ class MultipleChoiceQuestionForm extends Component{
 class MultipleChoiceAnswer extends Component{
 	constructor(props){
 		super(props)
-		console.log(props)
 		this.state={
 			switched: this.props.switched,
 			answer:this.props.answer,
