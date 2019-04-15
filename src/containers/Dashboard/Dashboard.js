@@ -749,6 +749,19 @@ class QuizCard extends Component{
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
 	}
+	async componentDidUpdate(oldProps){
+		console.log('at quizcard componentDidUpdate')
+		const newProps = this.props
+		if (oldProps.quiz !== newProps.quiz){
+			this.setState({
+				question: this.props.quiz.question,
+				possible_answers: this.props.quiz.answers,
+				correct_answer: this.props.quiz.answers[this.props.quiz.correct_answer],
+				question_number:this.props.question_number,
+			})
+		}
+	}
+
 	toggleDeleteModal(){
 		this.setState(prevState =>{
 			return{
