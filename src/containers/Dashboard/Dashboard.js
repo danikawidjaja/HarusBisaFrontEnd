@@ -724,7 +724,7 @@ class AddQuestion extends Component{
 
 	render(){
 		return(
-			<div className='popup' style={{display:'flex', flexDirection:'column', padding:'1rem'}}>
+			<div className='popup'>
 				{this.popupDisplay(this.state.question_type)}
 			</div>
 		)
@@ -750,7 +750,6 @@ class QuizCard extends Component{
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
 	}
 	async componentDidUpdate(oldProps){
-		console.log('at quizcard componentDidUpdate')
 		const newProps = this.props
 		if (oldProps.quiz !== newProps.quiz){
 			this.setState({
@@ -826,8 +825,6 @@ class QuizCard extends Component{
 		.catch(err =>{
 			console.log(err.message)
 		})
-
-		//Will always delete the last question, but this is front-end problem help??
 	}
 	updateQuiz(){
 		console.log('update quiz')
@@ -841,12 +838,14 @@ class QuizCard extends Component{
 			        closeOnDocumentClick={false}
 			    >
 			       	{close => (
-			       	<div className='course-popup'>
-		  				<div className= "course-popup-header">
+			       	<div className='popup'>
+		  				<div className= "popup-header">
 		        			<h2> Apakah anda yakin? </h2>
 			    		</div>
-			    		<Button onClick={this.deleteQuiz}> Yes </Button>
-			    		<Button onClick={close}> No </Button>
+			    		<div className='buttons' style={{justifyContent:'center'}}>
+			    			<Button className='button' onClick={this.deleteQuiz}> Yes </Button>
+			    			<Button className='button' onClick={close}> No </Button>
+			    		</div>
 	  				</div>)
 	  				}
 			    </Popup>
@@ -856,8 +855,8 @@ class QuizCard extends Component{
 			        closeOnDocumentClick={false}
 			    >
 			       	{close => (
-				       	<div className='course-popup'>
-			  				<InputQuestion input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
+				       	<div className='popup'>
+			  				<InputQuestion quiz={this.props.quiz} input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
 		  				</div>
 	  				)
 	  				}

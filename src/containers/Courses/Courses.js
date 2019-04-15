@@ -180,11 +180,11 @@ class Courses extends Component{
 			        	{close => (
 			        		<div className='course-popup'>
 			        			<div className='course-popup-header'>
-			        				<h2> Are you sure you want to delete {this.state.courseToDelete.course_name}? </h2>
+			        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
 			        			</div>
 			        			<div className='buttons' style={{justifyContent:'center'}}>
-			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Yes </Button>
-			        				<Button className='button' style={{margin:'auto'}} onClick={close}> No </Button>
+			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
+			        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
 			        			</div>
 			        		</div>
 			        	)}

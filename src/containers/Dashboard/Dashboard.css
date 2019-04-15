@@ -142,11 +142,12 @@ html{
 	align-content: center;
 	overflow: auto;
 	padding: 1rem;
-	padding-left: 3rem;
-	padding-right: 3rem;
+	/*padding-left: 3rem;*/
+	/*padding-right: 3rem;*/
 	color: black;
 	overflow-y: auto;
 	max-height: 90vh;
+	
 }
 
 .Dashboard .popup h2{
@@ -167,6 +168,29 @@ html{
   color: black;
   margin-bottom: 1.5vw;
   margin-top: 1.5vw;
+}
+
+.Dashboard .popup .button, .Dashboard .popup .button:focus{
+	background-color: #ffe01c;
+	border:0px;
+	color: black;
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 400;
+	border-radius: 8px;
+	width: 145px;
+	margin: auto;
+
+}
+.Dashboard .popup .button:hover{
+	background-color: #F7F3DC;
+
+}
+
+.Dashboard .popup .buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
 }
 
 

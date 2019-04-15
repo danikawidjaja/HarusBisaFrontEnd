@@ -27,7 +27,7 @@ class InputQuestion extends Component{
 		}
 		else if (input == 'update'){
 			if (question_type == 'multiple_choice'){
-			returnForm.push(<MultipleChoiceUpdate Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			returnForm.push(<MultipleChoiceUpdate quiz={this.props.quiz} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
 			}
 			else if (question_type === 'string_input'){
 				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
@@ -94,13 +94,148 @@ class QuestionUpdateHeader extends Component{
 class MultipleChoiceUpdate extends Component{
 	constructor(props){
 		super(props);
+		this.state={
+			question:this.props.quiz.question,
+			correct_answer:this.props.quiz.correct_answer,
+			answers:this.props.quiz.answers,
+			main_switched:true,
+			number_of_answers: this.props.quiz.answers.length,
+			time_duration: this.props.quiz.time_duration,
+			total_point: this.props.quiz.total_point,
+			participation_point:1,
+			participation_reward_percentage: 100,
+		}
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.changeMainSwitched = this.changeMainSwitched.bind(this);
+		this.addAnswers = this.addAnswers.bind(this);
+		this.addUserAnswer = this.addUserAnswer.bind(this);
+		this.changeTotalPoint = this.changeTotalPoint.bind(this);
+		this.changeParticipationPoint = this.changeParticipationPoint.bind(this);
 	}
+	changeMainSwitched(){
+		this.setState({
+			main_switched: true,
+		})
+	}
+	handleSubmit(event){
+		event.preventDefault();
+		console.log(this.state)
+		{/*this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
+		.then( res =>{
+			this.props.closefunction()
+			console.log(res)
+			// WHAT TO DO WITH THE RES? MUST UPDATE PARENT??
+		})
+		.catch(err =>{
+        	console.log(err.message)
+      	})*/}
+	}
+	handleChange = event => {
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+  	makeAnswers(num){
+  		let result= []
+  		for (let i=0; i<num; i++){
+  			if (i == this.state.correct_answer){
+  				result.push(<MultipleChoiceAnswer switched={true} answer={this.state.answers[i]} addUserAnswer={this.addUserAnswer} option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)	
+  			}
+  			else{
+  				result.push(<MultipleChoiceAnswer switched={false} answer={this.state.answers[i]} addUserAnswer={this.addUserAnswer} option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
+  			}
+  		}
+  		return result
+  	}
+  	addAnswers(){
+  		this.setState(prevState => {
+			return {
+				number_of_answers: prevState.number_of_answers + 1
+			};
+		});
+  	}
+  	addUserAnswer(answer, correct, index){
+  		if (this.state.answers.length == 0 || this.state.answers.length == index){
+  			//this.state.answers.push({answer: answer, correct: correct})
+  			this.state.answers.push(answer);
+  		}
+  		else{
+  			this.state.answers[index] = answer
+  			//this.state.answers[index].answer = answer
+  			//this.state.answers[index].correct = correct
+  		}
+  		//console.log(this.state.answers)
+  		if (correct){
+  			this.setState({
+  				correct_answer: index
+  			})
+  		}
+  	}
 
+  	async changeTotalPoint(value){
+  		await this.setState({
+  			total_point: value
+  		})
+  	}
+  	async changeParticipationPoint(value){
+  		await this.setState({
+  			participation_point: value
+  		})
+  	}
 	render(){
 		return(
-			<div> 
-				<p> Hello </p>
-			</div>
+			<div className='form'>
+			<form onSubmit={this.handleSubmit}>
+				<FormGroup controlId='question' className='question'>
+					<ControlLabel>Pertanyaan</ControlLabel>
+			            <FormControl
+			              type="text"
+			              value={this.state.question}
+			              onChange={this.handleChange}
+			              placeholder= 'Tulis Pertanyaan disini'
+			            />
+			    </FormGroup>
+			    <FormGroup controlId='answers'>
+			    	<ControlLabel> Jawaban </ControlLabel>
+			    	{this.makeAnswers(this.state.number_of_answers)}
+			    	<Button onClick={this.addAnswers}> Tambahkan Jawaban </Button>
+			    </FormGroup>
+
+			    <div>
+			    	<label> Setting </label>
+			    	<div className='setting'>
+			    		<FormGroup className='form-group'>
+			    			<ControlLabel> Tambahkan Nilai Jawaban </ControlLabel>
+			    			<NumericInput className='form-control' value={this.state.total_point} step={0.5} min={0} max={5} onChange={this.changeTotalPoint}/>
+			    		</FormGroup>
+			    		<FormGroup className='form-group'>
+			    			<ControlLabel> Tambahkan Nilai Partisipasi </ControlLabel>
+			    			<NumericInput className='form-control' value={this.state.participation_point} step={0.5} min={0} max={5} onChange={this.changeParticipationPoint}/>
+			    		</FormGroup>
+			    		<FormGroup className='form-group'>
+			    			<ControlLabel> Tambahkan Timer </ControlLabel>
+			    			<NumericInput className='form-control'/>
+			    		</FormGroup>
+			    	</div>
+			    </div>
+			    <div className='i_buttons'>
+	          		<Button
+	          			className='i_button'
+	          			style={{backgroundColor:'transparent'}}
+	          			onClick={this.props.closefunction}>
+			        	Batal
+			        </Button>
+			        <Button
+				        type="submit"
+				        className="i_button"
+				    >
+				    Tambah
+			        </Button>
+			    </div>
+	       	</form>
+	       	</div>
+
 		)
 	}
 }
@@ -340,7 +475,7 @@ class MultipleChoiceQuestionForm extends Component{
   	makeAnswers(num){
   		let result= []
   		for (let i=0; i<num; i++){
-  			result.push(<MultipleChoiceAnswer addUserAnswer={this.addUserAnswer} option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
+  			result.push(<MultipleChoiceAnswer switched={false} answer={''} addUserAnswer={this.addUserAnswer} option={i} changeMainSwitched={this.changeMainSwitched} main_switched={this.state.main_switched}/>)
   		}
   		return result
   	}
@@ -387,7 +522,7 @@ class MultipleChoiceQuestionForm extends Component{
 					<ControlLabel>Pertanyaan</ControlLabel>
 			            <FormControl
 			              type="text"
-			              value={this.state.description}
+			              value={this.state.question}
 			              onChange={this.handleChange}
 			              placeholder= 'Tulis Pertanyaan disini'
 			            />
@@ -440,9 +575,10 @@ class MultipleChoiceQuestionForm extends Component{
 class MultipleChoiceAnswer extends Component{
 	constructor(props){
 		super(props)
+		console.log(props)
 		this.state={
-			switched: false,
-			answer:'',
+			switched: this.props.switched,
+			answer:this.props.answer,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.toggleSwitch = this.toggleSwitch.bind(this);
@@ -474,6 +610,7 @@ class MultipleChoiceAnswer extends Component{
 					    placeholder='Tulis jawaban disini'
 					    style={{border:'none', boxShadow:'none'}}
 					    onChange={this.handleChange}
+					    value={this.state.answer}
 					/>
 				</div>
 				<div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
