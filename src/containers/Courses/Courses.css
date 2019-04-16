@@ -11,7 +11,7 @@ html, body{
 	min-height: 100%;
 }
 
-.CoursesProf{
+.CourseProf{
 	background-color: white;
 	height: 100%;
 	justify-content: space-around;
@@ -23,13 +23,13 @@ html, body{
 	flex-direction: row;
 }
 
-.left h2{
+.CourseProf .left h2{
 	font-weight: 500;
 	margin: auto;
 	font-size: 36px;
 }
 
-.left .image{
+.CourseProf.left .image{
 	width: 100%;
 	
 	margin-top: 2rem;
@@ -37,19 +37,19 @@ html, body{
 	margin-bottom: 0.5rem;
 }
 
-.left{
+.CourseProf.left{
 	border-right: 2px solid #EBEBEB;
 	width: 33%;
 	position: -webkit-sticky;
 	position: sticky;
 }
 
-.right{
+.CourseProf .right{
 	width: 67%;
 	padding-left: 89px;
 	padding-right: 89px;
 }
-.right h1{
+.CourseProf .right h1{
 	font-weight: 400;
 	font-size: 36px;
 	justify-content: flex-start;
@@ -58,18 +58,18 @@ html, body{
 	color: black;
 }
 
-.right .content p{
+.CourseProf .right .content p{
 
 }
 
-.right .content{
+.CourseProf .right .content{
 	text-align: center;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
 }
 
-.right .button-student, .right .button-student:focus{
+.CourseProf .right .button-student, .CourseProf .right .button-student:focus{
 	background-color: #6311AB;
 	color: white;
 	border-radius: 8px;
@@ -80,7 +80,7 @@ html, body{
 	margin: auto;
 }
 
-.right .button, .right .button:focus{
+.CourseProf .right .button, .CourseProf .right .button:focus{
 	background-color: #ffe01c;
 	color: black;
 	border-radius: 8px;
@@ -93,7 +93,7 @@ html, body{
 }
 
 
-.right  .button:hover, .right .button:active{
+.CourseProf .right  .button:hover, .CourseProf .right .button:active{
 	color: black;
 	background-color: #F7F3DC;
 	box-shadow: none;
@@ -103,7 +103,7 @@ html, body{
 
 
 
-.right .course-card{
+.CourseProf .right .course-card{
   padding: 0px;
   margin: 2vw;
   justify-content: space-between;
@@ -117,12 +117,12 @@ html, body{
 
 
 
-.right .course-card .MuiCardContent-root-29 .text{
+.CourseProf .right .course-card .MuiCardContent-root-29 .text{
 	display: flex;
 	background-color: pink;
 }
 
-.right .course-card .MuiCardContent-root-29{
+.CourseProf .right .course-card .MuiCardContent-root-29{
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -130,7 +130,7 @@ html, body{
   margin: 0;
 }
 
-.right .course-card .MuiCardContent-root-29 a{
+.CourseProf .right .course-card .MuiCardContent-root-29 a{
 	font-weight: 500;
 	font-size: 1.5vw;
 	color: black;
@@ -138,17 +138,17 @@ html, body{
 	padding: 0;
 }
 
-.right .course-card .MuiCardContent-root-29 a:hover{
+.CourseProf .right .course-card .MuiCardContent-root-29 a:hover{
 	color: lightgrey;
 	text-decoration: none;
 }
 
-.right .course-card .MuiCardContent-root-29 p{
+.CourseProf .right .course-card .MuiCardContent-root-29 p{
 	font-size: 1vw;
 	color: black;
 }
 
-.right .course-popup{
+.CourseProf .right .course-popup{
 	text-align: center;
 	align-items: center;
 	justify-content: center;
@@ -156,13 +156,13 @@ html, body{
 
 }
 
-.right .course-popup h2{
+.CourseProf .right .course-popup h2{
 	color: black;
 	font-weight: 400;
 	text-align: center;
 }
 
-.right .course-popup .course-popup-header{
+.CourseProf .right .course-popup .course-popup-header{
   display: flex;
   flex: row;
   justify-content: center;
@@ -175,7 +175,7 @@ html, body{
 }
 
 
-.right .course-popup .form{
+.CourseProf .right .course-popup .form{
 	align-items: center;
 	margin-right: 5vw;
     margin-left: 5vw;
@@ -185,11 +185,11 @@ html, body{
 }
 
 
-.right .course-popup label{
+.CourseProf .right .course-popup label{
 	text-align: right;
 }
 
-.right .course-popup .button, .right .course-popup .button:focus{
+.CourseProf .right .course-popup .button, .CourseProf .right .course-popup .button:focus{
 	background-color: #ffe01c;
 	border:0px;
 	color: black;
@@ -200,12 +200,12 @@ html, body{
 	width: 145px;
 	margin: 0;
 }
-.right .course-popup .button:hover{
+.CourseProf .right .course-popup .button:hover{
 	background-color: #F7F3DC;
 
 }
 
-.right .course-popup .buttons{
+.CourseProf .right .course-popup .buttons{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;

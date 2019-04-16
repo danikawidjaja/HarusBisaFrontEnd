@@ -202,7 +202,7 @@ class Courses extends Component{
 		}
 		else{
 			return(
-	    		<div className="CoursesProf">
+	    		<div className="CourseProf">
 	    			<CoursesLeft name={this.state.profile.first_name}/>
 	    			<div className = 'right'>
 	    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
