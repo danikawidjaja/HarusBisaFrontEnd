@@ -521,3 +521,58 @@ html{
 .Dashboard .right .content .question-card .switch.disabled {
     cursor: not-allowed;
 }
+
+
+        .slider {
+            width: 100%;
+            max-width: 500px;
+            height: 2rem;
+            border: 1px solid grey;
+        }
+        .handle {
+            font-size: 0.9em;
+            text-align: center;
+            background-color: #ffe01c;
+            color: white;
+            cursor: pointer;
+        }
+        .handle.active {
+            background-color: #ffe01c;
+        }
+        .bar {
+            position: relative;
+            background: blue;
+        }
+        .bar.bar-1 {
+            background: yellow;
+        }
+        .bar.bar-2 {
+            background: blue;
+        }
+        .slider .bar {
+            /*top: 20px;*/
+            height: 1.9rem;
+        }
+        .slider .handle {
+            top: 1px;
+            width: 1.8rem;
+            height: 1.8rem;
+            line-height: 48px;
+        }
+        .vertical-slider .handle {
+            left: 1px;
+            width: 48px;
+            line-height: 50px;
+        }
+        .vertical-slider .bar {
+            left: 20px;
+            width: 10px;
+        }
+        #horizontal-0,
+        #horizontal-1, #horizontal-2, #horizontal-3,
+        #vertical {
+            margin: 20px 10px;
+        }
+        #horizontal-2 .bar.bar-2 {
+            background: #ddd;
+        }

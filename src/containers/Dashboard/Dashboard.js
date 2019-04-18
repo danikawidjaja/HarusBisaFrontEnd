@@ -34,6 +34,7 @@ import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import Close from '@material-ui/icons/Close';
 import Logo from '../Logo/Logo';
+import ReactSlider from 'react-slider';
 
 
 
@@ -239,9 +240,11 @@ class AddLecture extends Component{
 		this.state = {
 			date: new Date(),
 			description:'',
+			participation_percentage:'0'
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSliderChange = this.handleSliderChange.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -271,6 +274,10 @@ class AddLecture extends Component{
   	handleDateChange(date){
   		this.setState({date: date});
   	}
+
+  	handleSliderChange(value){
+  		this.setState({participation_percentage: value})
+  	}
 	render(){
 	    return(
 	      	<div className="form" style={{paddingLeft:'2rem', paddingRight:'2rem'}}>
@@ -285,6 +292,14 @@ class AddLecture extends Component{
 			            	className='calendar'
 			            />
 
+	          		</FormGroup>
+	          		<FormGroup>
+	          			<ControlLabel> Persentase </ControlLabel>
+	          			<ReactSlider withBars={true} onChange={this.handleSliderChange}/>
+	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+	          				<p> Partisipasi (%): {this.state.participation_percentage} </p>
+	          				<p> Benar (%): {100 - this.state.participation_percentage} </p>
+	          			</div>
 	          		</FormGroup>
 
 	          		<FormGroup controlId="description" >
