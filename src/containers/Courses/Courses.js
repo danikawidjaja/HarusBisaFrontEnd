@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Courses.css'; 
-import { Button, FormGroup, FormControl, ControlLabel,Dropdown } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel,Dropdown} from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import withAuth from '../withAuth';
 import Fab from '@material-ui/core/Fab';
@@ -14,7 +14,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
-import Grid from '@material-ui/core/Grid';
+import GridLayout from 'react-grid-layout';
+
 import FormControlUI from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -25,7 +26,7 @@ import LeftPanelPicture from './left_panel_picture.png';
 import Edit from '@material-ui/icons/Edit';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
-import Logo from '../Logo/Logo'
+import Logo from '../Logo/Logo';
 
 
 class Courses extends Component{ 
@@ -100,9 +101,16 @@ class Courses extends Component{
 		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []
 		if (numberOfCourses > 0){
-			for (let i=0; i<numberOfCourses; i++){
-				coursesComponent.push(<CourseCard course={listOfCourse[i]} history={this.state.history} Auth={this.Auth} changeShowUpdateCourseModal={this.changeShowUpdateCourseModal} changeshowDeleteCourseModal={this.changeshowDeleteCourseModal}/>)
-			} 
+			if (this.state.profile.role == 'professor'){
+				for (let i=0; i<numberOfCourses; i++){
+				coursesComponent.push(<ProfCourseCard course={listOfCourse[i]} history={this.state.history} Auth={this.Auth} changeShowUpdateCourseModal={this.changeShowUpdateCourseModal} changeshowDeleteCourseModal={this.changeshowDeleteCourseModal}/>)
+				} 
+			}
+			else{
+				for (let i=0; i<numberOfCourses; i++){
+					coursesComponent.push(<StudCourseCard course={listOfCourse[i]}/>)
+				}
+			}
 		} else {
 			coursesComponent.push(<p> You are not enrolled in any course </p>)
 		}
@@ -116,174 +124,87 @@ class Courses extends Component{
 		})
 	}
 	render(){
-		if (this.props.data.role == 'student'){
-			return(
-				<div className='CoursesStud'>
-					<CoursesLeft name={this.state.profile.first_name}/>
-					<div className = 'right'>
-	    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-							<OverrideMaterialUICss><IconButton>
-								<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-							</IconButton></OverrideMaterialUICss>
-							<OverrideMaterialUICss><IconButton>
-								<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-							</IconButton></OverrideMaterialUICss>
-							<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
-						</div>
-
+		return(
+	    	<div className="Courses">
+	    		<CoursesLeft name={this.state.profile.first_name}/>
+	    		<div className = 'right'>
+	    			<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<OverrideMaterialUICss><IconButton>
+							<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
+						</IconButton></OverrideMaterialUICss>
+						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
+					</div>
 				        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
-				            <h1>Kelas Anda</h1>
-				            <div>
-				            	<p> Search bar </p>
-				            </div> 
-				            <Popup
-								    trigger={
-								    	<Button className="button-student"> + Tambah Kelas </Button>
-							    	}
-								    modal
-								    closeOnDocumentClick={false}
-		  						>
-		  						{close => (
-		  							<div className='course-popup'>
-			  							<div className= "course-popup-header">
-			        						<h2> Tambah Kelas </h2>
-				    					</div>
-		  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
-		  							</div>
-		  						)}
-		  							
-		  					</Popup>
-				        </div>
-				        
-				        <Popup
-				        	open={this.state.showUpdateCourseModal}
-				        	modal
-				        	closeOnDocumentClick={false}
-				        	//onClose={this.toggleShowUpdateCourseModal}
-				        >
-
+			            <h1>Kelas Anda</h1>
+			            <div>
+			            	<p> Search bar </p>
+			            </div> 
+			            <Popup
+							    trigger={
+							    	<Button className="button"> + Tambah Kelas </Button>
+						    	}
+							    modal
+							    closeOnDocumentClick={false}
+	  						>
+	  						{close => (
+	  							<div className='course-popup'>
+		  							<div className= "course-popup-header">
+		        						<h2> Tambah Kelas </h2>
+			    					</div>
+	  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
+	  							</div>
+	  						)}
+	  							
+	  					</Popup>
+			        </div>
+			        
+			        <Popup
+			        	open={this.state.showUpdateCourseModal}
+			        	modal
+			        	closeOnDocumentClick={false}
+			        	//onClose={this.toggleShowUpdateCourseModal}
+			        >
 				        	{close => (
-				        	<div className='course-popup'>
-			  					<div className= "course-popup-header">
-			        				<h2> Edit Kelas </h2>
-				    			</div>
-		  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
-		  					</div>)
-		  					}
-				        </Popup>
+			        	<div className='course-popup'>
+		  					<div className= "course-popup-header">
+		        				<h2> Edit Kelas </h2>
+			    			</div>
+	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
+	  					</div>)
+	  					}
+			        </Popup>
 
-
-				        <Popup
-				        	open={this.state.showDeleteCourseModal}
-				        	modal
-				        	closeOnDocumentClick={false}
-				        >
-				        	{close => (
-				        		<div className='course-popup'>
-				        			<div className='course-popup-header'>
-				        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
-				        			</div>
-				        			<div className='buttons' style={{justifyContent:'center'}}>
-				        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
-				        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
-				        			</div>
-				        		</div>
-				        	)}
-				        </Popup>
-
-				        <div className= 'content'>
-				        	<p> student </p>
+			        <Popup
+			        	open={this.state.showDeleteCourseModal}
+			        	modal
+			        	closeOnDocumentClick={false}
+			        >
+			        	{close => (
+			        		<div className='course-popup'>
+			        			<div className='course-popup-header'>
+			        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
+			        			</div>
+			        			<div className='buttons' style={{justifyContent:'center'}}>
+			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
+			        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
+			        			</div>
+			        		</div>
+			        	)}
+			        </Popup>
+				        <div className= {this.state.profile.role == "professor" ? 'content-prof' : 'content-stud'}>
+				        	
+			        		{this.makingCourses(this.state.courses)}
+			        		
 						</div>
-		        	</div>
-
-					
-				</div>
-			)
-		}
-		else{
-			return(
-	    		<div className="CourseProf">
-	    			<CoursesLeft name={this.state.profile.first_name}/>
-	    			<div className = 'right'>
-	    				<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-							<OverrideMaterialUICss><IconButton>
-								<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-							</IconButton></OverrideMaterialUICss>
-							<OverrideMaterialUICss><IconButton>
-								<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
-							</IconButton></OverrideMaterialUICss>
-							<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
-						</div>
-
-				        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
-				            <h1>Kelas Anda</h1>
-				            <div>
-				            	<p> Search bar </p>
-				            </div> 
-				            <Popup
-								    trigger={
-								    	<Button className="button"> + Tambah Kelas </Button>
-							    	}
-								    modal
-								    closeOnDocumentClick={false}
-		  						>
-		  						{close => (
-		  							<div className='course-popup'>
-			  							<div className= "course-popup-header">
-			        						<h2> Tambah Kelas </h2>
-				    					</div>
-		  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
-		  							</div>
-		  						)}
-		  							
-		  					</Popup>
-				        </div>
-				        
-				        <Popup
-				        	open={this.state.showUpdateCourseModal}
-				        	modal
-				        	closeOnDocumentClick={false}
-				        	//onClose={this.toggleShowUpdateCourseModal}
-				        >
-
-				        	{close => (
-				        	<div className='course-popup'>
-			  					<div className= "course-popup-header">
-			        				<h2> Edit Kelas </h2>
-				    			</div>
-		  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
-		  					</div>)
-		  					}
-				        </Popup>
-
-
-				        <Popup
-				        	open={this.state.showDeleteCourseModal}
-				        	modal
-				        	closeOnDocumentClick={false}
-				        >
-				        	{close => (
-				        		<div className='course-popup'>
-				        			<div className='course-popup-header'>
-				        				<h2> Apakah anda yakin ingin menghapus kelas {this.state.courseToDelete.course_name}? </h2>
-				        			</div>
-				        			<div className='buttons' style={{justifyContent:'center'}}>
-				        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
-				        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
-				        			</div>
-				        		</div>
-				        	)}
-				        </Popup>
-
-				        <div className= 'content'>
-				        	{this.makingCourses(this.state.courses)}
-						</div>
-		        	</div>
-		        </div>
-			)
-		}
+	        	</div>
+	        </div>
+		)
 	}
 }
+
 
 class CoursesLeft extends Component{
 	constructor(props){
@@ -570,7 +491,7 @@ class AddCourse extends Component{
 	    );
   	}
 }
-class CourseCard extends Component{
+class ProfCourseCard extends Component{
 
 	constructor(props){
 	    super(props);
@@ -688,6 +609,26 @@ class CourseCard extends Component{
 				</CardContent>
 			 </Card>
 			 </OverrideMaterialUICss>
+		)
+	}
+}
+class StudCourseCard extends Component{
+	constructor(props){
+		super(props)
+	}
+
+	render(){
+		return(
+			//<Grid items xs>
+				<Card raised='true' className='student-course-card'>
+					<CardContent className='student-course-card-content'>
+						<p> {this.props.course.course_name} </p>
+					</CardContent>
+					<OverrideMaterialUICss><CardActions className='student-course-card-action'>
+					<p> {this.props.course.number_of_lectures} Sesi</p>
+					</CardActions></OverrideMaterialUICss>
+				</Card>
+			//</Grid>
 		)
 	}
 }

@@ -36,6 +36,7 @@ import Delete from '@material-ui/icons/Delete';
 import Close from '@material-ui/icons/Close';
 import Logo from '../Logo/Logo';
 import ReactSlider from 'react-slider';
+import LoadingPage from './LoadingPage';
 
 
 
@@ -159,7 +160,7 @@ class Dashboard extends Component{
 			else{
 				return(
 				<div>
-					<p> data is loading. pls wait </p>
+					<LoadingPage/>
 				</div>
 				)
 			}
