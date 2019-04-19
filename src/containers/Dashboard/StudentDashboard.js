@@ -22,6 +22,32 @@ class StudentDashboard extends Component{
 			isLoading: true,
 			changingSelectedCourse: false,
 		};
+		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
+	}
+	changeSelectedCourse(new_selected_course){
+		this.setState({
+			selected_course: new_selected_course,
+			isLoading: true,
+			changingSelectedCourse: true
+		})
+	}
+	async componentDidUpdate(prevState){
+		if (prevState.selected_course !== this.state.selected_course){
+			if (this.state.changingSelectedCourse){
+				this.props.Auth.getLectures(this.state.selected_course._id)
+	      		.then(res =>{
+	      			this.setState({
+	      				lectures: res.data.lectures,
+	      				selected_lecture: res.data.lectures[0],
+	      				isLoading: false,
+	      				changingSelectedCourse: false,
+	      			})
+	      		})
+	      		.catch(err => {
+	      			console.log(err.message)
+	      		})
+			}	
+		}
 	}
 	async componentDidMount(){
   		this.props.isNavVisible(false);
