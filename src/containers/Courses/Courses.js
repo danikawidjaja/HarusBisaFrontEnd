@@ -622,7 +622,7 @@ class StudCourseCard extends Component{
 			//<Grid items xs>
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
-						<p> {this.props.course.course_name} </p>
+						<Link to='/student-dashboard'> {this.props.course.course_name} </Link>
 					</CardContent>
 					<OverrideMaterialUICss><CardActions className='student-course-card-action'>
 					<p> {this.props.course.number_of_lectures} Sesi</p>

@@ -136,9 +136,7 @@ class Dashboard extends Component{
       	})
       	.catch(err =>{
         	console.log(err.message)
-      	})
-
-      	
+      	}) 	
   	}
 	render(){
 		if (this.props.Auth.loggedIn()){
@@ -463,7 +461,8 @@ class CoursesOption extends Component{
 		)
 	}
 }
-class DashboardNavigation extends Component{
+
+export class DashboardNavigation extends Component{
 	constructor(props){
 		super(props);
 	}

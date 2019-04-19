@@ -11,6 +11,7 @@ import FAQ from './containers/FAQ/FAQ';
 import ContactUs from './containers/ContactUs/ContactUs';
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import Dashboard from './containers/Dashboard/Dashboard';
+import StudentDashboard from './containers/Dashboard/StudentDashboard';
  
 export default ({ childProps }) =>
   <Switch>
@@ -20,6 +21,7 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
+        <AppliedRoute path='/student-dashboard' component={StudentDashboard} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
