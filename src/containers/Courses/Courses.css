@@ -218,11 +218,15 @@ html, body{
 }
 
 .Courses .student-course-card{
+	overflow: visible;
+	margin: 1rem;
 
 }
 
 .Courses .student-course-card .student-course-card-content{
 	padding-bottom: 2rem;
+	display: flex;
+	flex-direction: row;
 }
 
 .Courses .student-course-card .student-course-card-action{

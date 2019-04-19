@@ -108,7 +108,7 @@ class Courses extends Component{
 			}
 			else{
 				for (let i=0; i<numberOfCourses; i++){
-					coursesComponent.push(<StudCourseCard course={listOfCourse[i]}/>)
+					coursesComponent.push(<StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
 				}
 			}
 		} else {
@@ -181,7 +181,7 @@ class Courses extends Component{
 		  					<div className= "course-popup-header">
 		        				<h2> Edit Kelas </h2>
 			    			</div>
-	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>
+	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
 	  					</div>)
 	  					}
 			        </Popup>
@@ -198,7 +198,7 @@ class Courses extends Component{
 			        			</div>
 			        			<div className='buttons' style={{justifyContent:'center'}}>
 			        				<Button className='button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
-			        				<Button className='button' style={{margin:'auto'}} onClick={close}> Tidak </Button>
+			        				<Button className='button' style={{margin:'auto'}} onClick={this.toggleShowDeleteCourseModal}> Tidak </Button>
 			        			</div>
 			        		</div>
 			        	)}
@@ -389,6 +389,7 @@ class UpdateCourse extends Component{
   		this.props.Auth.updateCourse(this.state.id, this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
       	.then(res =>{
       		this.props.closefunction()
+      		this.props.toggleShowUpdateCourseModal()
       		alert(this.state.course_name+' course updated')
       		this.props.updateCoursesState(res.data.courses)
       	})
@@ -449,7 +450,7 @@ class UpdateCourse extends Component{
 	          			<Button
 	          				className='button'
 	          				style={{backgroundColor:'transparent'}}
-	          				onClick={this.props.closefunction}>
+	          				onClick={this.props.toggleShowUpdateCourseModal}>
 			          		Batal
 			          	</Button>
 			          	<Button
@@ -684,20 +685,75 @@ class ProfCourseCard extends Component{
 class StudCourseCard extends Component{
 	constructor(props){
 		super(props)
+		this.state={
+			showDeleteCourseModal: false,
+		}
+		this.toggleShowDeleteCourseModal = this.toggleShowDeleteCourseModal.bind(this);
+		this.deleteCourse = this.deleteCourse.bind(this);
 	}
 
+	toggleShowDeleteCourseModal(){
+		this.setState({
+			showDeleteCourseModal: !this.state.showDeleteCourseModal,
+		})
+	}
+
+	deleteCourse(){
+		this.props.Auth.studentDeleteCourse(this.props.course._id)
+		.then(res =>{
+			this.toggleShowDeleteCourseModal();
+			this.props.updateCoursesState(res.data.courses)
+		})
+		.catch(err =>{
+        	console.log(err.message)
+      	})
+	}
 	render(){
 		return(
-			//<Grid items xs>
+			<div>
+				<Popup
+			       	open={this.state.showDeleteCourseModal}
+			       	modal
+			       	closeOnDocumentClick={false}
+			    >
+			       	{close => (
+			       		<div className='course-popup'>
+			       			<div className='course-popup-header'>
+			       				<h2> Apakah anda yakin ingin menghapus kelas? </h2>
+			       			</div>
+			       			<div className='buttons' style={{justifyContent:'center'}}>
+			       				<Button className='student-button' style={{margin:'auto'}} onClick={this.deleteCourse}> Iya </Button>
+			       				<Button className='student-button' style={{margin:'auto'}} onClick={this.toggleShowDeleteCourseModal}> Tidak </Button>
+			       			</div>
+			       		</div>
+			       	)}
+			    </Popup>
+				
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
 						<Link to='/student-dashboard'> {this.props.course.course_name} </Link>
+						<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
+								<IconButton>
+									<Popup
+										trigger={<MoreVertIcon />}
+										position="bottom right"
+										on = "click"
+										closeOnDocumentClick
+									>
+										{close => (
+											<div onClick={close}>
+												<Button onClick={this.toggleShowDeleteCourseModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+											</div>
+										)}							
+									</Popup>    
+					        	</IconButton>
+							</div>
 					</CardContent>
 					<OverrideMaterialUICss><CardActions className='student-course-card-action'>
 					<p> {this.props.course.number_of_lectures} Sesi</p>
 					</CardActions></OverrideMaterialUICss>
 				</Card>
-			//</Grid>
+			</div>
 		)
 	}
 }

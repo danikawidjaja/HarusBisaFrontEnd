@@ -42,6 +42,14 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+    studentDeleteCourse(course_id){
+        return this.fetch(`${this.domain}/courses/${course_id}`,{
+            method:'DELETE'
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     updateCourse(course_id, course_name, start_term, end_term, description){
         return this.fetch(`${this.domain}/courses/${course_id}` , {
             method: 'PUT',
