@@ -294,11 +294,11 @@ class AddLecture extends Component{
 
 	          		</FormGroup>
 	          		<FormGroup>
-	          			<ControlLabel> Persentase </ControlLabel>
+	          			<ControlLabel> Persentase Nilai </ControlLabel>
 	          			<ReactSlider withBars={true} onChange={this.handleSliderChange}/>
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p> Partisipasi (%): {this.state.participation_percentage} </p>
-	          				<p> Benar (%): {100 - this.state.participation_percentage} </p>
+	          				<p> Partisipasi: {this.state.participation_percentage}% </p>
+	          				<p> Benar: {100 - this.state.participation_percentage}% </p>
 	          			</div>
 	          		</FormGroup>
 
@@ -339,9 +339,11 @@ class EditLecture extends Component{
 		this.state = {
 			date: this.convertToDateObject(this.props.lecture.date),
 			description:this.props.lecture.description,
+			participation_percentage: 0, 
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSliderChange = this.handleSliderChange.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -358,6 +360,9 @@ class EditLecture extends Component{
   		var month = date.getMonth() + 1
   		var year = date.getFullYear()
   		return day + '/' + month + '/' + year
+  	}
+  	handleSliderChange(value){
+  		this.setState({participation_percentage: value})
   	}
   	async handleSubmit(event){
   		event.preventDefault();
@@ -390,6 +395,14 @@ class EditLecture extends Component{
 			            	className='calendar'
 			            />
 
+	          		</FormGroup>
+	          		<FormGroup>
+	          			<ControlLabel> Persentase Nilai </ControlLabel>
+	          			<ReactSlider withBars={true} onChange={this.handleSliderChange} defaultValue={this.state.participation_percentage}/> 
+	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+	          				<p> Partisipasi: {this.state.participation_percentage}% </p>
+	          				<p> Benar: {100 - this.state.participation_percentage}% </p>
+	          			</div>
 	          		</FormGroup>
 
 	          		<FormGroup controlId="description" >
@@ -659,9 +672,9 @@ class LectureSetting extends Component{
   		else if (setting =="delete"){
   			return(
   				<div style={{textAlign:'center'}}>
-	  				<p> Hapus Sesi {this.props.date}? </p>
-	  				<Button onClick={this.deleteLecture}> Yes </Button>
-	  				<Button> No </Button>
+	  				<p> Apakah anda ingin menghapus Sesi {this.props.date}? </p>
+	  				<Button onClick={this.deleteLecture}> Iya </Button>
+	  				<Button onClick={this.props.closefunction}> Tidak </Button>
   				</div>
   			)
   		}
@@ -685,7 +698,7 @@ class LectureSetting extends Component{
 							<ToggleButton value={'delete'}> Hapus Sesi </ToggleButton>
 						</ToggleButtonGroup>
 					</div>
-					<div>
+					<div style={{width:'60%'}}>
 						{this.content(this.state.setting)}
 					</div>
 				</div>
