@@ -416,6 +416,18 @@ html{
 	text-decoration: none;
 }
 
+.Dashboard .right .content .arrows{
+	display:flex;
+	flex-direction:column;
+	margin: auto;
+	margin-right: 0.5rem;
+	height: 100%;
+	justify-content: space-between;
+}
+
+.arrows .MuiIconButton-root-1, .card-content .MuiIconButton-root-1 {
+	padding: 0.2rem;
+}
 .Dashboard .right .content .question-card{
 	display: flex;
 	flex-direction: column;
@@ -424,7 +436,9 @@ html{
 	align-content: center;
 	justify-content: center;
 	overflow: visible;
+	width: 100%;
 }
+
 
 .Dashboard .right .content .question-card .card-content{
 	justify-content: space-between;
@@ -453,6 +467,13 @@ html{
 .Dashboard .right .content .question-card .card-action .expand-button-expanded{
 	transform: rotate(180deg);
 	color: orange;
+}
+
+.Dashboard .right .content .question-card .card-action .button{
+	background-color: transparent;
+	border-radius: 0px;
+	margin-top: 0.2rem;
+	margin-bottom: 0.2rem;
 }
 
 .Dashboard .right .content .question-card .answers{

@@ -18,6 +18,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Fab from '@material-ui/core/Fab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import StatisticIcon from '@material-ui/icons/Equalizer';
 import Collapse from '@material-ui/core/Collapse';
@@ -468,7 +469,7 @@ class DashboardNavigation extends Component{
 	render(){
 		return(
 			<div className='navigation'>
-				<Logo color='black' size='full' background='trans' padding={false} style={{width:'10rem', margin:'auto'}}/>
+				<Logo color='black' size='full' background='trans' padding={false} style={{width:'9.2rem', margin:'auto'}}/>
 				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
 					<div>
 						<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>
@@ -887,63 +888,69 @@ class QuizCard extends Component{
 	  				}
 			    </Popup>
 
+			    <div style={{display:'flex', width:'100%'}}>
+				    <div className='arrows'>
+				    	<IconButton> <ExpandLessIcon/> </IconButton>
+				    	<IconButton> <ExpandMoreIcon/> </IconButton>
+				    </div>
 
-				<OverrideMaterialUICss>
-				<Card className='question-card'>
-					<OverrideMaterialUICss><CardContent className='card-content'>
-						<div>
-							<p> {this.state.question_number}. </p>
-						</div>
-						<div style={{width:'85%'}}>
-							<p> {this.state.question} </p>
-						</div>
+					<OverrideMaterialUICss>
+					<Card className='question-card'>
+						<OverrideMaterialUICss><CardContent className='card-content'>
+							<div>
+								<p> {this.state.question_number}. </p>
+							</div>
+							<div style={{width:'85%'}}>
+								<p> {this.state.question} </p>
+							</div>
 
-						<IconButton>
-							<Popup
-								trigger={<MoreVertIcon />}
-								position="bottom right"
-								on = "click"
-								closeOnDocumentClick
-							>
-								{close => (
-									<div onClick={close}>
-										<Button onClick={this.toggleUpdateModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
-										<Button onClick={this.toggleDeleteModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
-									</div>
-								)}							
-							</Popup>    
-					   	</IconButton>
-						
-					</CardContent> </OverrideMaterialUICss>
-					
-					<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit style={{marginBottom:'2vh'}}>
-						<ToggleButtonGroup className='answers' name='lectureDates'type='radio'>
-							{this.createAnswerButtons(this.state.possible_answers)}
-						</ToggleButtonGroup>
-					</Collapse></OverrideMaterialUICss>
-
-					<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
-						<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between'}}> 
-							<OverrideMaterialUICss>
-								<IconButton 
-									onClick={this.handleExpandClick}
-									aria-expanded={this.state.expanded}
-									aria-label='Show more'
-									className={this.state.expanded ? 'expand-button-expanded' : 'expand-button-normal'}
+							<IconButton>
+								<Popup
+									trigger={<MoreVertIcon style={{padding:'0px'}}/>}
+									position="bottom right"
+									on = "click"
+									closeOnDocumentClick
 								>
-									<ExpandMoreIcon/>
-								</IconButton>
-							</OverrideMaterialUICss>
-							{this.showSwitch()}
-						</div>
+									{close => (
+										<div onClick={close}>
+											<Button onClick={this.toggleUpdateModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
+											<Button onClick={this.toggleDeleteModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
+										</div>
+									)}							
+								</Popup>    
+						   	</IconButton>
+							
+						</CardContent> </OverrideMaterialUICss>
+						
+						<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit style={{marginBottom:'2vh'}}>
+							<ToggleButtonGroup className='answers' name='lectureDates'type='radio'>
+								{this.createAnswerButtons(this.state.possible_answers)}
+							</ToggleButtonGroup>
+						</Collapse></OverrideMaterialUICss>
 
-						<Button> Live </Button>
+						<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>
+							<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between'}}> 
+								<OverrideMaterialUICss>
+									<IconButton 
+										onClick={this.handleExpandClick}
+										aria-expanded={this.state.expanded}
+										aria-label='Show more'
+										className={this.state.expanded ? 'expand-button-expanded' : 'expand-button-normal'}
+									>
+										<ExpandMoreIcon/>
+									</IconButton>
+								</OverrideMaterialUICss>
+								{this.showSwitch()}
+							</div>
 
-					</CardActions></OverrideMaterialUICss>
+							<Button className='button'> Live </Button>
 
-					
-				</Card>
-				</OverrideMaterialUICss>
+						</CardActions></OverrideMaterialUICss>
+
+						
+					</Card>
+					</OverrideMaterialUICss>
+				</div>
 			</div>
 		)
 	}
