@@ -32,6 +32,16 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+
+    studentAddCourse(join_code){
+        return this.fetch(`${this.domain}/courses`, {
+            method: 'POST',
+            body: JSON.stringify({join_code})
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     updateCourse(course_id, course_name, start_term, end_term, description){
         return this.fetch(`${this.domain}/courses/${course_id}` , {
             method: 'PUT',

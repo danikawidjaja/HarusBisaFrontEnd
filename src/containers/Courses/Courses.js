@@ -123,6 +123,15 @@ class Courses extends Component{
 			courses: courses,
 		})
 	}
+
+	addCourseComponent(close){
+		if (this.state.profile.role == 'professor'){
+			return(<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
+		}
+		else{
+			return(<StudentAddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
+		}
+	}
 	render(){
 		return(
 	    	<div className="Courses">
@@ -144,7 +153,7 @@ class Courses extends Component{
 			            </div> 
 			            <Popup
 							    trigger={
-							    	<Button className="button"> + Tambah Kelas </Button>
+							    	<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
 						    	}
 							    modal
 							    closeOnDocumentClick={false}
@@ -154,7 +163,7 @@ class Courses extends Component{
 		  							<div className= "course-popup-header">
 		        						<h2> Tambah Kelas </h2>
 			    					</div>
-	  								<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />
+			    					{this.addCourseComponent(close)}
 	  							</div>
 	  						)}
 	  							
@@ -296,6 +305,66 @@ class TermDropdown extends Component{
 		    </div>
 		)
 	}
+}
+
+class StudentAddCourse extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			join_code:''
+		}
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(event){
+		event.preventDefault();
+		this.props.Auth.studentAddCourse(this.state.join_code)
+		.then(res => {
+			this.props.closefunction()
+			this.props.updateCoursesState(res.data.courses)
+		})
+		.catch(err =>{
+        	console.log(err.message)
+      	})
+	}
+	handleChange = event => {
+	    this.setState({
+	      [event.target.id]: event.target.value
+	    });
+  	}
+	render(){
+	    return(
+	      	<div className="form">
+	        	<form onSubmit={this.handleSubmit}>
+	          		<FormGroup controlId="join_code">
+	            		<ControlLabel>Kode Bergabung</ControlLabel>
+			            <FormControl
+			              autoFocus
+			              type="text"
+			              value={this.state.join_code}
+			              onChange={this.handleChange}
+			              
+			            />
+	          		</FormGroup>
+	          		<div className='buttons'>
+	          			<Button
+	          				className='button'
+	          				style={{backgroundColor:'transparent'}}
+	          				onClick={this.props.closefunction}>
+			          		Batal
+			          	</Button>
+			          	<Button
+				           type="submit"
+				           className="button-student"
+				        >
+			            Tambah
+			          	</Button>
+			         </div>
+	        	</form>
+	      	</div>
+	    );
+  	}
 }
 class UpdateCourse extends Component{
 	constructor(props){
