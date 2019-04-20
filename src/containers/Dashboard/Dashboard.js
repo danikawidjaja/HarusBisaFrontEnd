@@ -773,10 +773,12 @@ class QuizCard extends Component{
 			showCorrectAns: false,
 			showDeleteQuestionModal: false,
 			showUpdateQuestionModal: false,
+			isHovering: false,
 		}
 		this.deleteQuiz = this.deleteQuiz.bind(this);
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
+		this.handleMouseHover = this.handleMouseHover.bind(this);
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -789,7 +791,14 @@ class QuizCard extends Component{
 			})
 		}
 	}
-
+	handleMouseHover(){
+		console.log('at mouse hover')
+		this.setState(prevState =>{
+			return{
+				isHovering: !prevState.isHovering
+			}
+		})
+	}
 	toggleDeleteModal(){
 		this.setState(prevState =>{
 			return{
@@ -888,14 +897,16 @@ class QuizCard extends Component{
 	  				}
 			    </Popup>
 
-			    <div style={{display:'flex', width:'100%'}}>
-				    <div className='arrows'>
-				    	<IconButton> <ExpandLessIcon/> </IconButton>
-				    	<IconButton> <ExpandMoreIcon/> </IconButton>
-				    </div>
+			    <div style={{display:'flex', width:'100%'}}>			    
+				    {this.state.isHovering &&
+				    	<div className='arrows'>
+				    		<IconButton onClick={this.handleMouseHover}> <ExpandLessIcon/> </IconButton>
+				    		<IconButton onClick={this.handleMouseHover}> <ExpandMoreIcon/> </IconButton>
+				    	</div>
+				    }
 
 					<OverrideMaterialUICss>
-					<Card className='question-card'>
+					<Card className='question-card' onMouseEnter={this.handleMouseHover}>
 						<OverrideMaterialUICss><CardContent className='card-content'>
 							<div>
 								<p> {this.state.question_number}. </p>
