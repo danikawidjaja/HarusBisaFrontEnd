@@ -15,7 +15,6 @@ import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import GridLayout from 'react-grid-layout';
-
 import FormControlUI from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -108,7 +107,7 @@ class Courses extends Component{
 			}
 			else{
 				for (let i=0; i<numberOfCourses; i++){
-					coursesComponent.push(<StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
+					coursesComponent.push(<StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState} data-grid={{x: i, y: i, w: 1, h: 1, static: true}}/>)
 				}
 			}
 		} else {
@@ -132,6 +131,7 @@ class Courses extends Component{
 			return(<StudentAddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
 		}
 	}
+						
 	render(){
 		return(
 	    	<div className="Courses">
@@ -204,10 +204,12 @@ class Courses extends Component{
 			        	)}
 			        </Popup>
 				        <div className= {this.state.profile.role == "professor" ? 'content-prof' : 'content-stud'}>
-				        	
+				        	{/*<GridLayout className="layout" width={1200} autoSize={true} cols={2}>*/}
 			        		{this.makingCourses(this.state.courses)}
+			        		{/*</GridLayout>*/}
 			        		
 						</div>
+						
 	        	</div>
 	        </div>
 		)
@@ -710,7 +712,7 @@ class StudCourseCard extends Component{
 	}
 	render(){
 		return(
-			<div>
+			<div >
 				<Popup
 			       	open={this.state.showDeleteCourseModal}
 			       	modal

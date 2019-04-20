@@ -29,7 +29,7 @@ html, body{
 	font-size: 36px;
 }
 
-.Courses.left .image{
+.Courses .left .image{
 	width: 100%;
 	
 	margin-top: 2rem;
@@ -37,7 +37,7 @@ html, body{
 	margin-bottom: 0.5rem;
 }
 
-.Courses.left{
+.Courses .left{
 	border-right: 2px solid #EBEBEB;
 	width: 33%;
 	position: -webkit-sticky;
@@ -220,6 +220,7 @@ html, body{
 .Courses .student-course-card{
 	overflow: visible;
 	margin: 1rem;
+	border-radius: 8px;
 
 }
 
@@ -227,11 +228,83 @@ html, body{
 	padding-bottom: 2rem;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+}
+
+.Courses .student-course-card .student-course-card-content a{
+	font-size: 1.1rem;
+	line-height: 22px;
+	color: black;
+	text-decoration: none;
+}
+
+.Courses .student-course-card .student-course-card-content a:hover{
+	color: grey;
+}
+
+.Courses .student-course-card .student-course-card-content .MuiIconButton-root-1{
+	padding: 0px;
 }
 
 .Courses .student-course-card .student-course-card-action{
 	background-color: #6311AB;
 	color: white;
+	border-radius: 0px 0px 8px 8px;
+}
+
+
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
+}
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+.react-grid-item.resizing {
+  z-index: 1;
+  will-change: width, height;
+}
+
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: red;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 }
 
 
