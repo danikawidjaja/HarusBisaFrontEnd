@@ -852,7 +852,7 @@ class QuizCard extends Component{
 			return(
 				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
 					<Switch onChange={this.toggleSwitch} checked={this.state.showCorrectAns}/>
-					<p style={{color: (this.state.showCorrectAns) ? '#82DAA4' : 'grey', margin:'auto', marginLeft:'1vw'}}> Buka Jawaban </p>
+					<p style={{color: '#B2B2B2', margin:'auto', marginLeft:'1vw'}}> Jawaban </p>
 				</div>
 			)
 		}

@@ -462,11 +462,12 @@ html{
 .Dashboard .right .content .question-card .card-action .expand-button-normal{
 	transform: rotate(0deg);
 	font-size: 5vw;
+	transition: 1s transform;
 }
 
 .Dashboard .right .content .question-card .card-action .expand-button-expanded{
 	transform: rotate(180deg);
-	color: orange;
+	transition: 1s transform;
 }
 
 .Dashboard .right .content .question-card .card-action .button{
@@ -609,4 +610,12 @@ html{
 	font-size: 13px;
 	line-height: 22px;
 	letter-spacing: 1.8px;
+}
+
+.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5 + .MuiSwitch-bar-9{
+	background-color: #82DAA4;
+}
+
+.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5{
+	color: #82DAA4;
 }
