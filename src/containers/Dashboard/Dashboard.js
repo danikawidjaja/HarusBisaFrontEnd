@@ -295,10 +295,10 @@ class AddLecture extends Component{
 	          		</FormGroup>
 	          		<FormGroup>
 	          			<ControlLabel> Persentase Nilai </ControlLabel>
-	          			<ReactSlider withBars={true} onChange={this.handleSliderChange}/>
+	          			<ReactSlider onChange={this.handleSliderChange}/>
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p> Partisipasi: {this.state.participation_percentage}% </p>
-	          				<p> Benar: {100 - this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Partisipasi: {this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Benar: {100 - this.state.participation_percentage}% </p>
 	          			</div>
 	          		</FormGroup>
 
@@ -398,10 +398,10 @@ class EditLecture extends Component{
 	          		</FormGroup>
 	          		<FormGroup>
 	          			<ControlLabel> Persentase Nilai </ControlLabel>
-	          			<ReactSlider withBars={true} onChange={this.handleSliderChange} defaultValue={this.state.participation_percentage}/> 
+	          			<ReactSlider onChange={this.handleSliderChange} defaultValue={this.state.participation_percentage}/> 
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p> Partisipasi: {this.state.participation_percentage}% </p>
-	          				<p> Benar: {100 - this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Partisipasi: {this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Benar: {100 - this.state.participation_percentage}% </p>
 	          			</div>
 	          		</FormGroup>
 

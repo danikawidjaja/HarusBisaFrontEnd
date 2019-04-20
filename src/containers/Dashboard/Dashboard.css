@@ -544,60 +544,69 @@ html{
 }
 
 
-        .slider {
-            width: 100%;
-            max-width: 500px;
-            height: 2rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .handle {
-            font-size: 0.9em;
-            text-align: center;
-            background-color: #ffe01c;
-            color: white;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        .handle.active {
-            background-color: #ffe01c;
-        }
-        .bar {
-            position: relative;
-            background: #F2E5F2; 
-        }
-        .bar.bar-1 {
-            background: #ffffe0;
-            border-radius: 20px 5px 5px 20px;
-        }
-        .bar.bar-2 {
-            background: #F2E5F2;
-            border-radius:5px 0px 0px 5px;
-        }
-        .slider .bar {
-            /*top: 20px;*/
-            height: 1.9rem;
-        }
-        .slider .handle {
-            top: 1px;
-            width: 1.8rem;
-            height: 1.8rem;
-            line-height: 48px;
-        }
-        .vertical-slider .handle {
-            left: 1px;
-            width: 48px;
-            line-height: 50px;
-        }
-        .vertical-slider .bar {
-            left: 20px;
-            width: 10px;
-        }
-        #horizontal-0,
-        #horizontal-1, #horizontal-2, #horizontal-3,
-        #vertical {
-            margin: 20px 10px;
-        }
-        #horizontal-2 .bar.bar-2 {
-            background: #ddd;
-        }
+.slider {
+	width: 100%;
+    max-width: 500px;
+    height: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #82DAA4;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+.handle {
+    font-size: 0.9em;
+    text-align: center;
+    background-color: white;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid #DADADA;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+}
+.handle.active {
+	background-color: white;
+}
+.bar {
+	position: relative;
+	background: #F2E5F2; 
+}
+.bar.bar-1 {
+	background: #ffffe0;
+	border-radius: 20px 5px 5px 20px;
+}
+.bar.bar-2 {
+	background: #F2E5F2;
+	border-radius:5px 0px 0px 5px;
+}
+.slider .bar {
+	/*top: 20px;*/
+	height: 1.9rem;
+}
+.slider .handle {
+	transform: translate(0%, -50%);
+	width: 1.3rem;
+	height: 1.3rem;
+   	line-height: 48px;
+}
+.vertical-slider .handle {
+	left: 1px;
+	width: 48px;
+	line-height: 50px;
+}
+.vertical-slider .bar {
+	left: 20px;
+	width: 10px;
+}
+#horizontal-0, #horizontal-1, #horizontal-2, #horizontal-3,#vertical {
+	margin: 20px 10px;
+}
+#horizontal-2 .bar.bar-2 {
+	background: #ddd;
+}
+.slider-text{
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 22px;
+	letter-spacing: 1.8px;
+}
