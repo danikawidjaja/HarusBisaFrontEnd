@@ -643,7 +643,7 @@ class ProfCourseCard extends Component{
 				<CardContent>
 						<div style={{display:'flex', flexDirection:'row', margin: '28px', marginTop:'20px', marginBottom:'20px', flexDirection:'space-between'}}>
 							<div>
-								<Link to='/dashboard' > {this.state.course_name} </Link>
+								<Link to={'/dashboard/'+ this.state.course_id} > {this.state.course_name} </Link>
 								<p> {this.state.start_term} - {this.state.end_term} </p>
 								<p> Kode Bergabung: {this.state.join_code} </p>
 							</div>

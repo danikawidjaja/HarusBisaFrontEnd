@@ -85,6 +85,7 @@ class Dashboard extends Component{
 			isLoading: true,
 			changingSelectedCourse: true
 		})
+		this.props.history.push('/dashboard/'+ new_selected_course._id)
 	}
 	async componentDidUpdate(prevState){
 		if (prevState.selected_course !== this.state.selected_course){
@@ -104,18 +105,25 @@ class Dashboard extends Component{
 			}	
 		}
 	}
-
+	findSelectedCourse(id, courses){
+		for (let i=0; i<courses.length; i++){
+			if (courses[i]._id == id){
+				return courses[i];
+			}
+		}
+		return null;
+	}
 
   	async componentDidMount(){
   		this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
-
+    	var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
   			console.log(res)
       		await this.setState({
       			courses: res.data.courses,
-      			selected_course: res.data.courses[0],
+      			selected_course: this.findSelectedCourse(id, res.data.courses),
       			profile:{
       				first_name : res.data.first_name,
       				last_name : res.data.last_name,

@@ -20,7 +20,7 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
-        <AppliedRoute path='/dashboard' component={Dashboard} props={childProps}/>
+        <AppliedRoute path='/dashboard/:id' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/student-dashboard/:id' component={StudentDashboard} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
