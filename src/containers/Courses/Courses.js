@@ -21,7 +21,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
-import LeftPanelPicture from './left_panel_picture.png';
+import LeftPanelPictureProf from './left_panel_picture_prof.png';
+import LeftPanelPictureStud from './left_panel_picture_stud.png';
 import Edit from '@material-ui/icons/Edit';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
@@ -135,7 +136,7 @@ class Courses extends Component{
 	render(){
 		return(
 	    	<div className="Courses">
-	    		<CoursesLeft name={this.state.profile.first_name}/>
+	    		<CoursesLeft role={this.state.profile.role} name={this.state.profile.first_name}/>
 	    		<div className = 'right'>
 	    			<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
 						<OverrideMaterialUICss><IconButton>
@@ -228,7 +229,7 @@ class CoursesLeft extends Component{
 				<div style={{padding:'2rem'}}>
 					<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
     			</div>
-    			<img className='image' src={LeftPanelPicture}/>
+    			{this.props.role == 'professor' ? <img className='image' src={LeftPanelPictureProf}/> : <img className='image' src={LeftPanelPictureStud}/>}
     		</div>
 		)
 	}
@@ -733,7 +734,7 @@ class StudCourseCard extends Component{
 				
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
-						<Link to='/student-dashboard'> {this.props.course.course_name} </Link>
+						<Link to={{pathname: '/student-dashboard/' + this.props.course._id}}> {this.props.course.course_name} </Link>
 						<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
 								<IconButton>
 									<Popup
