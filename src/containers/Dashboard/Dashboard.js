@@ -787,6 +787,8 @@ class QuizCard extends Component{
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
 		this.handleMouseHover = this.handleMouseHover.bind(this);
+		this.changeQuizOrderUp = this.changeQuizOrderUp.bind(this);
+		this.changeQuizOrderDown = this.changeQuizOrderDown.bind(this);
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -871,6 +873,38 @@ class QuizCard extends Component{
 			console.log(err.message)
 		})
 	}
+
+	async changeQuizOrderUp(){
+		this.handleMouseHover();
+		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'up')
+		.then(res =>{
+			this.props.updateLecturesState(res.data.lectures)
+			for (let i in res.data.lectures){
+  				if (res.data.lectures[i].id == this.props.selected_lecture_id){
+  					this.props.changeSelectedLecture(res.data.lectures[i])
+  				}
+  			}
+		})
+		.catch(err =>{
+			console.log(err.message)
+		})
+	}
+
+	async changeQuizOrderDown(){
+		this.handleMouseHover();
+		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'down')
+		.then(res =>{
+			this.props.updateLecturesState(res.data.lectures)
+			for (let i in res.data.lectures){
+  				if (res.data.lectures[i].id == this.props.selected_lecture_id){
+  					this.props.changeSelectedLecture(res.data.lectures[i])
+  				}
+  			}
+		})
+		.catch(err =>{
+			console.log(err.message)
+		})
+	}
 	render(){
 		return(
 			<div>
@@ -907,13 +941,13 @@ class QuizCard extends Component{
 			    <div style={{display:'flex', width:'100%'}}>			    
 				    {this.state.isHovering &&
 				    	<div className='arrows'>
-				    		<IconButton onClick={this.handleMouseHover}> <ExpandLessIcon/> </IconButton>
-				    		<IconButton onClick={this.handleMouseHover}> <ExpandMoreIcon/> </IconButton>
+				    		<IconButton onClick={this.changeQuizOrderUp}> <ExpandLessIcon/> </IconButton>
+				    		<IconButton onClick={this.changeQuizOrderDown}> <ExpandMoreIcon/> </IconButton>
 				    	</div>
 				    }
 
 					<OverrideMaterialUICss>
-					<Card className='question-card' onMouseEnter={this.handleMouseHover}>
+					<Card className='question-card' onMouseEnter={this.handleMouseHover} onMouseExit={this.handleMouseHover}>
 						<OverrideMaterialUICss><CardContent className='card-content'>
 							<div>
 								<p> {this.state.question_number}. </p>

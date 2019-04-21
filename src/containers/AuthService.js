@@ -146,6 +146,14 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+    changeQuizOrder(course_id, lecture_id, index, direction){
+        return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}/quizzes/${index}/order/${direction}`,{
+            method:'PUT',
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
     signup(password,email,first_name,last_name,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',

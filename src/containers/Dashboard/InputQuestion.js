@@ -64,7 +64,6 @@ class InputQuestion extends Component{
 
 class QuestionUpdateHeader extends Component{
 	constructor(props){
-		console.log(props)
 		super(props);
 	}
 	createHeader(question_type){
@@ -102,6 +101,7 @@ class MultipleChoiceUpdate extends Component{
 			number_of_answers: this.props.quiz.answers.length,
 			time_duration: this.props.quiz.time_duration,
 			point: this.props.quiz.point,
+			error:false,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
