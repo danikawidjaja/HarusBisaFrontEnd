@@ -120,7 +120,6 @@ class Dashboard extends Component{
     	var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
-  			console.log(res)
       		await this.setState({
       			courses: res.data.courses,
       			selected_course: this.findSelectedCourse(id, res.data.courses),
@@ -248,7 +247,7 @@ class AddLecture extends Component{
 		this.state = {
 			date: new Date(),
 			description:'',
-			participation_percentage:'0'
+			participation_reward_percentage:'0'
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -266,7 +265,7 @@ class AddLecture extends Component{
   		var month = this.state.date.getMonth() + 1
   		var year = this.state.date.getFullYear()
   		var date  = day + '/' + month + '/' + year
-  		this.props.Auth.addLecture(this.props.selectedCourseId, date, this.state.description)
+  		this.props.Auth.addLecture(this.props.selectedCourseId, date, this.state.description, this.state.participation_reward_percentage)
       	.then(res =>{
       		this.props.closefunction()
       		this.props.updateLecturesState(res.data.lectures)
@@ -284,7 +283,7 @@ class AddLecture extends Component{
   	}
 
   	handleSliderChange(value){
-  		this.setState({participation_percentage: value})
+  		this.setState({participation_reward_percentage: value})
   	}
 	render(){
 	    return(
@@ -305,8 +304,8 @@ class AddLecture extends Component{
 	          			<ControlLabel> Persentase Nilai </ControlLabel>
 	          			<ReactSlider onChange={this.handleSliderChange}/>
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p className='slider-text'> Partisipasi: {this.state.participation_percentage}% </p>
-	          				<p className='slider-text'> Benar: {100 - this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
+	          				<p className='slider-text'> Benar: {100 - this.state.participation_reward_percentage}% </p>
 	          			</div>
 	          		</FormGroup>
 
@@ -347,7 +346,7 @@ class EditLecture extends Component{
 		this.state = {
 			date: this.convertToDateObject(this.props.lecture.date),
 			description:this.props.lecture.description,
-			participation_percentage: 0, 
+			participation_reward_percentage: this.props.lecture.participation_reward_percentage, 
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -370,11 +369,11 @@ class EditLecture extends Component{
   		return day + '/' + month + '/' + year
   	}
   	handleSliderChange(value){
-  		this.setState({participation_percentage: value})
+  		this.setState({participation_reward_percentage: value})
   	}
   	async handleSubmit(event){
   		event.preventDefault();
-  		this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description)
+  		this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description, this.state.participation_reward_percentage)
   		.then(res =>{
   			this.props.closefunction()
   			this.props.updateLecturesState(res.data.lectures)
@@ -406,10 +405,10 @@ class EditLecture extends Component{
 	          		</FormGroup>
 	          		<FormGroup>
 	          			<ControlLabel> Persentase Nilai </ControlLabel>
-	          			<ReactSlider onChange={this.handleSliderChange} defaultValue={this.state.participation_percentage}/> 
+	          			<ReactSlider onChange={this.handleSliderChange} defaultValue={this.state.participation_reward_percentage}/> 
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p className='slider-text'> Partisipasi: {this.state.participation_percentage}% </p>
-	          				<p className='slider-text'> Benar: {100 - this.state.participation_percentage}% </p>
+	          				<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
+	          				<p className='slider-text'> Benar: {100 - this.state.participation_reward_percentage}% </p>
 	          			</div>
 	          		</FormGroup>
 
@@ -801,7 +800,6 @@ class QuizCard extends Component{
 		}
 	}
 	handleMouseHover(){
-		console.log('at mouse hover')
 		this.setState(prevState =>{
 			return{
 				isHovering: !prevState.isHovering

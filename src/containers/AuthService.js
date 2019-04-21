@@ -74,12 +74,13 @@ export default class AuthService {
         })
     }
 
-    addLecture(course_id, date, description){
+    addLecture(course_id, date, description, participation_reward_percentage){
         return this.fetch(`${this.domain}/courses/${course_id}/lectures`, {
             method: 'POST',
             body: JSON.stringify({
                 date,
-                description
+                description,
+                participation_reward_percentage
             })
         }).then(res => {
             console.log(res.message)
@@ -94,12 +95,13 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
-    updateLecture(course_id, lecture_id, date, description ){
+    updateLecture(course_id, lecture_id, date, description, participation_reward_percentage ){
         return this.fetch(`${this.domain}/courses/${course_id}/lectures/${lecture_id}` , {
             method: 'PUT',
             body: JSON.stringify({
                 date,
-                description
+                description,
+                participation_reward_percentage
             })
         }).then(res => {
             console.log(res.message)

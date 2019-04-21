@@ -121,7 +121,6 @@ class MultipleChoiceUpdate extends Component{
 		this.props.Auth.updateQuiz(this.props.index, this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.point)
 		.then( res =>{
 			this.props.closefunction()
-			console.log(res)
 			this.props.updateLecturesState(res.data.lectures)
 			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.lecture_id){
