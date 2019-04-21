@@ -474,6 +474,7 @@ export class DashboardNavigation extends Component{
 	constructor(props){
 		super(props);
 	}
+	// make CoursesOption optional through props. 
 	render(){
 		return(
 			<div className='navigation'>
@@ -887,7 +888,7 @@ class QuizCard extends Component{
 			    		</div>
 			    		<div className='buttons' style={{justifyContent:'center'}}>
 			    			<Button className='button' onClick={this.deleteQuiz}> Yes </Button>
-			    			<Button className='button' onClick={close}> No </Button>
+			    			<Button className='button' onClick={this.toggleDeleteModal}> No </Button>
 			    		</div>
 	  				</div>)
 	  				}
@@ -899,7 +900,7 @@ class QuizCard extends Component{
 			    >
 			       	{close => (
 				       	<div className='popup'>
-			  				<InputQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.state.question_number - 1}quiz={this.props.quiz} input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
+			  				<InputQuestion toggleUpdateModal={this.toggleUpdateModal} changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.state.question_number - 1}quiz={this.props.quiz} input={'update'} Auth={this.props.Auth} course_id={this.props.selected_course_id} lecture_id={this.props.selected_lecture_id} question_type={this.state.question_type} closefunction={close}/>
 		  				</div>
 	  				)
 	  				}

@@ -10,7 +10,6 @@ import Close from '@material-ui/icons/Close';
 class InputQuestion extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 	}
 
 	displayQuestionForm(question_type, input){
@@ -28,7 +27,7 @@ class InputQuestion extends Component{
 		}
 		else if (input == 'update'){
 			if (question_type == 'multiple_choice'){
-			returnForm.push(<MultipleChoiceUpdate changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.props.index} quiz={this.props.quiz} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
+			returnForm.push(<MultipleChoiceUpdate toggleUpdateModal={this.props.toggleUpdateModal} changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} index={this.props.index} quiz={this.props.quiz} Auth={this.props.Auth} course_id={this.props.course_id}  lecture_id={this.props.lecture_id} closefunction={this.props.closefunction}/>)
 			}
 			else if (question_type === 'string_input'){
 				returnForm.push(<StringInputQuestionForm closefunction={this.props.closefunction}/>)
@@ -102,17 +101,14 @@ class MultipleChoiceUpdate extends Component{
 			main_switched:true,
 			number_of_answers: this.props.quiz.answers.length,
 			time_duration: this.props.quiz.time_duration,
-			total_point: this.props.quiz.total_point,
-			participation_point:1,
-			participation_reward_percentage: 100,
+			point: this.props.quiz.point,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeMainSwitched = this.changeMainSwitched.bind(this);
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
-		this.changeTotalPoint = this.changeTotalPoint.bind(this);
-		this.changeParticipationPoint = this.changeParticipationPoint.bind(this);
+		this.changePoint = this.changePoint.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -121,8 +117,8 @@ class MultipleChoiceUpdate extends Component{
 	}
 	handleSubmit(event){
 		event.preventDefault();
-		console.log(this.state)
-		this.props.Auth.updateQuiz(this.props.index, this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
+		this.props.toggleUpdateModal();
+		this.props.Auth.updateQuiz(this.props.index, this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.point)
 		.then( res =>{
 			this.props.closefunction()
 			console.log(res)
@@ -179,14 +175,9 @@ class MultipleChoiceUpdate extends Component{
   		}
   	}
 
-  	async changeTotalPoint(value){
+  	async changePoint(value){
   		await this.setState({
-  			total_point: value
-  		})
-  	}
-  	async changeParticipationPoint(value){
-  		await this.setState({
-  			participation_point: value
+  			point: value
   		})
   	}
 	render(){
@@ -213,11 +204,7 @@ class MultipleChoiceUpdate extends Component{
 			    	<div className='setting'>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Nilai Jawaban </ControlLabel>
-			    			<NumericInput className='form-control' value={this.state.total_point} step={0.5} min={0} max={5} onChange={this.changeTotalPoint}/>
-			    		</FormGroup>
-			    		<FormGroup className='form-group'>
-			    			<ControlLabel> Tambahkan Nilai Partisipasi </ControlLabel>
-			    			<NumericInput className='form-control' value={this.state.participation_point} step={0.5} min={0} max={5} onChange={this.changeParticipationPoint}/>
+			    			<NumericInput className='form-control' value={this.state.point} step={0.5} min={0} max={100} onChange={this.changePoint}/>
 			    		</FormGroup>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>
@@ -443,17 +430,14 @@ class MultipleChoiceQuestionForm extends Component{
 			main_switched:false,
 			number_of_answers: 2,
 			time_duration: 10,
-			total_point: 1,
-			participation_point:1,
-			participation_reward_percentage: 100,
+			point: 1,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeMainSwitched = this.changeMainSwitched.bind(this);
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
-		this.changeTotalPoint = this.changeTotalPoint.bind(this);
-		this.changeParticipationPoint = this.changeParticipationPoint.bind(this);
+		this.changePoint = this.changePoint.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -462,8 +446,7 @@ class MultipleChoiceQuestionForm extends Component{
 	}
 	handleSubmit(event){
 		event.preventDefault();
-		console.log(this.state)
-		this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.total_point, this.state.participation_reward_percentage)
+		this.props.Auth.addQuiz(this.props.course_id, this.props.lecture_id, this.state.question, this.state.answers, this.state.correct_answer, this.state.time_duration, this.state.point)
 		.then( res =>{
 			this.props.closefunction()
 			this.props.updateLecturesState(res.data.lectures)
@@ -514,16 +497,12 @@ class MultipleChoiceQuestionForm extends Component{
   		}
   	}
 
-  	async changeTotalPoint(value){
+  	async changePoint(value){
   		await this.setState({
-  			total_point: value
+  			point: value
   		})
   	}
-  	async changeParticipationPoint(value){
-  		await this.setState({
-  			participation_point: value
-  		})
-  	}
+  	
 	render(){
 		return(
 			<div className='form'>
@@ -548,12 +527,9 @@ class MultipleChoiceQuestionForm extends Component{
 			    	<div className='setting'>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Nilai Jawaban </ControlLabel>
-			    			<NumericInput className='form-control' value={this.state.total_point} step={0.5} min={0} max={5} onChange={this.changeTotalPoint}/>
+			    			<NumericInput className='form-control' value={this.state.point} step={0.5} min={0} max={100} onChange={this.changePoint}/>
 			    		</FormGroup>
-			    		<FormGroup className='form-group'>
-			    			<ControlLabel> Tambahkan Nilai Partisipasi </ControlLabel>
-			    			<NumericInput className='form-control' value={this.state.participation_point} step={0.5} min={0} max={5} onChange={this.changeParticipationPoint}/>
-			    		</FormGroup>
+			    	
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>
 			    			<NumericInput className='form-control'/>
