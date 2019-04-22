@@ -1,0 +1,99 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0; 
+    border: 0;
+    font-size: 100%;
+    font: inherit; 
+    vertical-align: baseline;
+}
+
+html, body{
+	min-height: 100%;
+}
+
+.ProfileSetting{
+	padding-left: 5rem;
+	padding-right: 5rem;
+	padding-top: 2rem;
+	font-family: 'Rubik', sans-serif;
+}
+
+.ProfileSetting h1{
+	font-weight: 500;
+	font-size: 36px;
+	line-height: 30px;
+}
+
+.ProfileSetting .content{
+	display: flex;
+	flex-direction: row;
+	margin-top: 2rem;
+	padding-left: 5rem;
+	padding-right: 5rem;
+}
+
+.ProfileSetting .content .left{
+	width: 20%;
+	background-color: white;
+	align-items: center;
+	margin-right: 5rem;
+}
+
+.ProfileSetting .content .left .avatar{
+	border: 3px solid #979797;
+	text-align: center;
+	color: black;
+	border-radius: 50%;
+	width: 149px;
+	height: 149px;
+	padding: 0.5rem 0.5rem;
+	align-items: center;
+}
+
+.ProfileSetting .content .left .avatar p{
+	margin: auto;
+}
+
+.ProfileSetting .content .right{
+	width: 80%;
+}
+
+.ProfileSetting .content .form-group{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.ProfileSetting .content .form-group .form-group-label{
+	font-weight: normal;
+	font-size: 20px;
+	line-height: 30px;
+}
+
+.ProfileSetting .content .form-group .form-group-entry{
+	width: 50%;
+	border: 0px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	box-shadow: none;
+	border-radius: 0px;
+	color: black;
+}
+
+.ProfileSetting .content .buttons{
+	display: flex;
+	flex-direction: column;
+}
+
+.ProfileSetting .content .buttons .button{
+	align-self: flex-end;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1.8px;
+	background: #FFE01C;
+	border-radius: 8px;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	border: none;
+}

@@ -150,7 +150,7 @@ class Dashboard extends Component{
 			if (!this.state.isLoading){
 				return(
 		    		<div className='Dashboard'>
-		    			<DashboardNavigation selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
+		    			<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 						<div style={{display:'flex', flexDirection:'row'}}>
 			    			<div className='left'>
 			    				<DashboardLeft selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
@@ -480,7 +480,8 @@ export class DashboardNavigation extends Component{
 				<Logo color='black' size='full' background='trans' padding={false} style={{width:'9.2rem', margin:'auto'}}/>
 				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
 					<div>
-						<CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/>
+						{this.props.course_option == true ? <CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/> : null
+						}
 					</div>
 					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
 						<OverrideMaterialUICss><IconButton>

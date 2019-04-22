@@ -21,8 +21,8 @@ class ProfileAvatar extends Component{
 	    this.props.history.push('/');
   	}
 
-  	handleAvatarClick = async event =>{
-  		this.props.history.push('/courses');
+  	handleSetting = async event =>{
+  		this.props.history.push('/profilesetting');
   	}
 	render(){
 		return(
@@ -40,7 +40,7 @@ class ProfileAvatar extends Component{
 					<div style={{display:'flex', flexDirection:'column', padding:'0.25rem'}}>
 						<div className='popup-profile'>
 							<div>
-								<div className='avatar' onClick={this.handleAvatarClick}>
+								<div className='avatar'>
 									<p>{this.state.initial}</p>
 								</div>
 							</div>
@@ -50,7 +50,7 @@ class ProfileAvatar extends Component{
 							</div>
 						</div>
 						<div className='buttons'>
-							<Button className='button'> Edit Profile </Button>
+							<Button className='button' onClick={this.handleSetting}> Edit Profile </Button>
 							<Button className='button' onClick={this.handleLogout}> Logout </Button>
 						</div>
 					</div>

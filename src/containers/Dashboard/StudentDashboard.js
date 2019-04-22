@@ -101,7 +101,7 @@ class StudentDashboard extends Component{
 			if (!this.state.isLoading){
 				return(
 		    		<div className='Dashboard'>
-		    			<DashboardNavigation selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
+		    			<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 		    			<div className='StudentDashboard'>
 		    				<h1> {this.state.selected_course.course_name} </h1>
 		    				<p> Sesi yang telah berlangsung </p>
