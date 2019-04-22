@@ -162,22 +162,27 @@ class LectureTable extends Component{
             <TableCell className='header' >% Nilai Total</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map(row => (
-          	//<div className='row'>
-            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}}>
-              <TableCell className='cell' component="th" scope="row">
-                {row.date}
-              </TableCell>
-              <TableCell className='cell' >{row.attendance}</TableCell>
-              <TableCell className='cell' >{row.raw_score}</TableCell>
-              <TableCell className='cell' >{row.accuracy_score}</TableCell>
-              <TableCell className='cell' >{row.participation_score}</TableCell>
-              <TableCell className='cell' >{row.total_score}</TableCell>
-            </TableRow>
-            //</div>
-          ))}
-        </TableBody>
+        {rows.length == 0 ? 
+	        <p>You don't have any lectures yet</p>
+	        :
+	        <TableBody>
+	          {rows.map(row => (
+	          	//<div className='row'>
+	            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}}>
+	              <TableCell className='cell' component="th" scope="row">
+	                {row.date}
+	              </TableCell>
+	              <TableCell className='cell' >{row.attendance}</TableCell>
+	              <TableCell className='cell' >{row.raw_score}</TableCell>
+	              <TableCell className='cell' >{row.accuracy_score}</TableCell>
+	              <TableCell className='cell' >{row.participation_score}</TableCell>
+	              <TableCell className='cell' >{row.total_score}</TableCell>
+	            </TableRow>
+	            //</div>
+	          ))}
+	        </TableBody>
+
+    	}
       </Table>
 		)
 	}
