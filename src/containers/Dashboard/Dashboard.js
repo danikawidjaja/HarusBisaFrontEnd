@@ -101,6 +101,7 @@ class Dashboard extends Component{
 	      		})
 	      		.catch(err => {
 	      			console.log(err.message)
+	      			alert(err.message)
 	      		})
 			}	
 		}
@@ -143,6 +144,7 @@ class Dashboard extends Component{
       	})
       	.catch(err =>{
         	console.log(err.message)
+        	alert(err.message)
       	}) 	
   	}
 	render(){
@@ -151,7 +153,7 @@ class Dashboard extends Component{
 				return(
 		    		<div className='Dashboard'>
 		    			<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
-						<div style={{display:'flex', flexDirection:'row'}}>
+						<div style={{display:'flex', flexDirection:'column'}}>
 			    			<div className='left'>
 			    				<DashboardLeft selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
@@ -275,6 +277,7 @@ class AddLecture extends Component{
       	})
       	.catch(err =>{
         	console.log(err.message)
+        	alert(err.message)
       	})
   	}
 
@@ -872,6 +875,7 @@ class QuizCard extends Component{
 		})
 		.catch(err =>{
 			console.log(err.message)
+			alert(err.message)
 		})
 	}
 
@@ -879,6 +883,7 @@ class QuizCard extends Component{
 		this.handleMouseHover();
 		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'up')
 		.then(res =>{
+			alert(res.message)
 			this.props.updateLecturesState(res.data.lectures)
 			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.selected_lecture_id){
@@ -888,6 +893,7 @@ class QuizCard extends Component{
 		})
 		.catch(err =>{
 			console.log(err.message)
+			
 		})
 	}
 
@@ -895,6 +901,7 @@ class QuizCard extends Component{
 		this.handleMouseHover();
 		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'down')
 		.then(res =>{
+			alert(res.message)
 			this.props.updateLecturesState(res.data.lectures)
 			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.selected_lecture_id){

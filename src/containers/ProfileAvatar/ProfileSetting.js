@@ -59,14 +59,14 @@ class ProfileSetting extends Component{
 			    	<div className='ProfileSetting'>
 			    		<h1> Pengaturan Akun </h1>
 			    		<div className='content'>
-			    			<div className='left'>
+			    			<div className='content-left'>
 			    				<div className='avatar'>
 			    					<Logo color='black' size='logo' background='trans' padding={false} style={{width:'6rem', margin:'auto'}}/>
 			    				</div>
 			    			</div>
 
 
-			    			<div className='right'>
+			    			<div className='content-right'>
 			    				<form onSubmit={this.handleSubmit}>
 									<FormGroup controlId='first_name' className='form-group'>
 										<ControlLabel className='form-group-label'>Nama Depan</ControlLabel>

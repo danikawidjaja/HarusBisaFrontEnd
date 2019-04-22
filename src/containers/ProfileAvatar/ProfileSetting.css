@@ -14,7 +14,7 @@ html, body{
 .ProfileSetting{
 	padding-left: 5rem;
 	padding-right: 5rem;
-	padding-top: 2rem;
+	padding-top: 5rem;
 	font-family: 'Rubik', sans-serif;
 }
 
@@ -32,14 +32,13 @@ html, body{
 	padding-right: 5rem;
 }
 
-.ProfileSetting .content .left{
-	width: 20%;
+.ProfileSetting .content .content-left{
 	background-color: white;
-	align-items: center;
 	margin-right: 5rem;
+	position: none;
 }
 
-.ProfileSetting .content .left .avatar{
+.ProfileSetting .content .content-left .avatar{
 	border: 3px solid #979797;
 	text-align: center;
 	color: black;
@@ -50,11 +49,11 @@ html, body{
 	align-items: center;
 }
 
-.ProfileSetting .content .left .avatar p{
+.ProfileSetting .content .content-left .avatar p{
 	margin: auto;
 }
 
-.ProfileSetting .content .right{
+.ProfileSetting .content .content-right{
 	width: 80%;
 }
 

@@ -26,6 +26,10 @@ html{
 	align-content: center;
 	text-align: center;
 	justify-content: space-between;
+	position: fixed;
+	height: 100vh;
+	overflow: auto;
+	margin-top: 2.97rem;
 	
 }
 
@@ -241,8 +245,10 @@ html{
 
 
 .Dashboard .right{
-	width: 90%;
+	width: 83%;
 	background-color: white;
+	align-self: flex-end;
+	margin-top: 3rem;
 }
 
 .Dashboard .navigation{
@@ -254,6 +260,9 @@ html{
 	flex-direction: row;
 	vertical-align: baseline; 
 	justify-content: space-between;
+	position: fixed;
+	width: 100vw;
+	z-index: 10;
 	
 }
 
