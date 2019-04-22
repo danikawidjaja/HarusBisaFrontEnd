@@ -21,6 +21,7 @@ html, body{
 	text-align: left;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 .Courses .left h2{
@@ -40,14 +41,14 @@ html, body{
 .Courses .left{
 	border-right: 2px solid #EBEBEB;
 	width: 33%;
-	position: -webkit-sticky;
-	position: sticky;
+	position: fixed;
 }
 
 .Courses .right{
 	width: 67%;
 	padding-left: 89px;
 	padding-right: 89px;
+	margin-left: 33%;
 }
 .Courses .right h1{
 	font-weight: 400;
