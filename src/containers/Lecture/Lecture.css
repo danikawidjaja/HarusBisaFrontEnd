@@ -112,4 +112,24 @@ html{
 	border: 1px solid transparent;
 }
 
+.banner{
+	position: fixed;
+	z-index: 2;
+	background-color:  #6311AB;
+	font-family: 'Rubik', sans-serif;
+	width: 100%;
+	color: white;
+	text-align: center;
+	padding: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.banner p{
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: 1.5rem;
+}
+
 

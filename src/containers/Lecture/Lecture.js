@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Popup from 'reactjs-popup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FaFilePdf, FaFileWord } from "react-icons/fa";
+import Logo from '../Logo/Logo';
 
 class Lecture extends Component{
 	constructor(props){
@@ -25,8 +26,11 @@ class Lecture extends Component{
       		show_my_answer: false,
       		show_correct_answer: false,
       		live:true,
+      		new_quiz:false,
 		}
 		this.toggleLive = this.toggleLive.bind(this);
+		this.toggleNew = this.toggleNew.bind(this);
+		this.newQuiz = this.newQuiz.bind(this);
 	}
 
 	findSelected(id, list, type){
@@ -98,10 +102,25 @@ class Lecture extends Component{
   			return{live: !prevState.live};
   		})
   	}
+  	toggleNew(){
+  		this.setState(prevState => {
+  			return{new_quiz: !prevState.new_quiz};
+  		})
+  	}
+  	newQuiz(){
+  		window.scrollTo(0, 0);
+  		this.toggleNew();
+  	}
 	render(){
 		if (!this.state.isLoading){
 			return(
 				<div>
+					{this.state.new_quiz ? 
+					<div className='banner' onClick={this.newQuiz}>
+						<p> Soal baru telah terbuka, tekan tombol ini </p>
+						<Logo color='white' size='logo' background='trans' padding={false} style={{width:'2rem', margin:'auto'}}/>
+					</div>
+					: null}
 					<div className='Dashboard'> 
 						<DashboardNavigation gradebook={false} course_option={false} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
@@ -111,6 +130,7 @@ class Lecture extends Component{
 								<h1>{this.state.selected_course.course_name}</h1>
 								<p>Sesi {this.state.selected_lecture.date.split('/')[0] + '/' + this.state.selected_lecture.date.split('/')[1]}</p>
 								<button onClick={this.toggleLive}>Toggle Live </button> 
+								<button onClick={this.toggleNew}>Toggle New Quiz </button> 
 							</div>
 							{this.state.live ? null :
 							<Popup
@@ -134,6 +154,8 @@ class Lecture extends Component{
 							{this.makeQuizzes()}
 						</div>
 				    </div>
+				    <button onClick={this.toggleLive}>Toggle Live </button> 
+					<button onClick={this.toggleNew}>Toggle New Quiz </button> 
 				</div>
 			)
 		}
