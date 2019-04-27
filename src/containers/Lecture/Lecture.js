@@ -4,6 +4,9 @@ import  '../Dashboard/Dashboard.css';
 import './Lecture.css';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
+import Popup from 'reactjs-popup';
+import Checkbox from '@material-ui/core/Checkbox';
+import { FaFilePdf, FaFileWord } from "react-icons/fa";
 
 class Lecture extends Component{
 	constructor(props){
@@ -19,7 +22,11 @@ class Lecture extends Component{
       		},
       		selected_lecture:null,
       		selected_course: null,
+      		show_my_answer: false,
+      		show_correct_answer: false,
+      		live:true,
 		}
+		this.toggleLive = this.toggleLive.bind(this);
 	}
 
 	findSelected(id, list, type){
@@ -76,13 +83,21 @@ class Lecture extends Component{
     	var quizzes = this.state.selected_lecture.quizzes;
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
-    		components.push(<Quiz quiz={quizzes[i]} quiz_number={i+1}/>)
+    		components.push(<Quiz quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer}/>)
     	}
     	if (components.length == 0){
 			components.push(<div style={{textAlign:'center'}}>Belum ada pertanyaan yang terbuka, mohon menunggu...</div>)
 		}
     	return components;
     }
+    handleChange = name => event => {
+    	this.setState({ [name]: event.target.checked });
+  	};
+  	toggleLive(){
+  		this.setState(prevState => {
+  			return{live: !prevState.live};
+  		})
+  	}
 	render(){
 		if (!this.state.isLoading){
 			return(
@@ -95,8 +110,25 @@ class Lecture extends Component{
 							<div>
 								<h1>{this.state.selected_course.course_name}</h1>
 								<p>Sesi {this.state.selected_lecture.date.split('/')[0] + '/' + this.state.selected_lecture.date.split('/')[1]}</p>
+								<button onClick={this.toggleLive}>Toggle Live </button> 
 							</div>
-							<IconButton><MoreVertIcon style={{color:'black'}}/></IconButton>
+							{this.state.live ? null :
+							<Popup
+									trigger={<IconButton><MoreVertIcon style={{color:'black', padding:'0'}}/></IconButton>}
+									position="bottom right"
+									on = "click"
+									arrow = {false}
+								>
+									{close => (
+										<div className='popup'>
+											<div className='popup-options'><p>Jawaban Anda</p><Checkbox checked={this.state.show_my_answer} onChange={this.handleChange('show_my_answer')} style={{padding:'0px', color:'black'}}/></div>
+											<div className='popup-options'><p>Jawaban Benar</p><Checkbox checked={this.state.show_correct_answer} onChange={this.handleChange('show_correct_answer')} style={{padding:'0px', color:'black'}}/></div>
+											<div className='popup-options'><p>Unduh</p><div><IconButton style={{color:'	#E22819', padding:'0.25rem'}}><FaFilePdf style={{margin:'auto'}}/></IconButton> <IconButton style={{color:'#4889FA', padding:'0.25rem'}}><FaFileWord style={{margin:'auto'}}/></IconButton></div></div>
+										</div>
+									)}							
+							</Popup>
+							}    
+							
 						</div>
 						<div className='quizzes'>
 							{this.makeQuizzes()}
@@ -114,13 +146,34 @@ class Lecture extends Component{
 class Quiz extends Component{
 	constructor(props){
 		super(props);
-		console.log(props);
+	}
+	style(){
+		if (this.props.live){
+			return 'live-answer'
+		}
+		else{
+			return 'non-live-answer'
+		}
 	}
 	makeAns(){
 		var answers = this.props.quiz.answers;
 		let components = [];
+		// pretend the correct answer is my answer since we have no my answer data
 		for (let i=0; i<answers.length; i++){
-			components.push(<div className='answer'>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+			if (i == this.props.quiz.correct_answer && this.props.show_correct_answer){
+				if (this.props.show_my_answer){
+					components.push(<div className={this.style()} style={{backgroundColor:'#82DAA4', fontWeight:'bold'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				}
+				else{
+					components.push(<div className={this.style()} style={{backgroundColor:'#82DAA4'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				}
+			}
+			else if (i == this.props.quiz.correct_answer && this.props.show_my_answer){
+				components.push(<div className={this.style()} style={{fontWeight:'bold', border: '1px solid #6311AB'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+			}
+			else{
+				components.push(<div className={this.style()}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+			}
 		}
 		return components;
 	}

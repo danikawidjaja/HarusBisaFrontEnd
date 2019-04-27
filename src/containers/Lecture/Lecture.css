@@ -38,6 +38,33 @@ html{
 	justify-content: space-between;
 }
 
+.Lecture .header .popup{
+	border-radius: 1px;
+	padding: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+
+}
+
+.Lecture .header .popup .popup-options{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.Lecture .header .popup .popup-options .checkbox{
+	color: black;
+	padding: 0px;
+}
+.Lecture .header .popup .popup-options p{
+	font-weight: 300;
+	font-size: 1rem;
+	line-height: 1rem;
+	margin-top: auto;
+	margin-bottom: auto;
+
+}
+
 .Lecture .quizzes{
 	padding: 1rem;
 }
@@ -69,10 +96,20 @@ html{
 .quiz .content .answers{
 	
 }
-.quiz .content .answers .answer{
+.quiz .content .answers .live-answer{
 	background: #E3DDED;
 	border-radius: 8px;
 	margin-top: 0.5rem;
 	padding: 1rem;
-
+	border: 1px solid transparent;
 }
+
+.quiz .content .answers .non-live-answer{
+	background: transparent;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	border: 1px solid transparent;
+}
+
+
