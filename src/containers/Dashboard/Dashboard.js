@@ -599,6 +599,7 @@ class DashboardRight extends Component{
 		return(
 			<div>
 				<div className='content'>
+					
     				<div className='header'>
     					{this.makingHeader()}
     					{this.liveIndicator()} 
@@ -640,10 +641,14 @@ class DashboardRight extends Component{
 		    				{close => (<LectureSetting changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} selected_course={this.props.selected_course} Auth={this.props.Auth} closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
-    						
-    				{this.makingQuizzes(this.state.lecture.quizzes)}
+	    		</div>
     				
-    			</div>
+
+    				<div className='quizzes'>		
+    				{this.makingQuizzes(this.state.lecture.quizzes)}
+    				</div>
+    				
+    			
 			</div>
 		)
 	}

@@ -152,38 +152,38 @@ class LectureTable extends Component{
 		const rows = this.createRows();
 		return(
 			<Table className='table'>
-        <TableHead style={{border:'0px'}}>
-          <TableRow style={{boxShadow:'none', border:'0px'}}>
-            <TableCell className='header'>Sesi</TableCell>
-            <TableCell className='header' >Kehadiran</TableCell>
-            <TableCell className='header' >Nilai Mentah</TableCell>
-            <TableCell className='header' >% Nilai Benar</TableCell>
-            <TableCell className='header' >% Nilai Partisipasi</TableCell>
-            <TableCell className='header' >% Nilai Total</TableCell>
-          </TableRow>
-        </TableHead>
-        {rows.length == 0 ? 
-	        <p>You don't have any lectures yet</p>
-	        :
-	        <TableBody>
-	          {rows.map(row => (
-	          	//<div className='row'>
-	            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}}>
-	              <TableCell className='cell' component="th" scope="row">
-	                {row.date}
-	              </TableCell>
-	              <TableCell className='cell' >{row.attendance}</TableCell>
-	              <TableCell className='cell' >{row.raw_score}</TableCell>
-	              <TableCell className='cell' >{row.accuracy_score}</TableCell>
-	              <TableCell className='cell' >{row.participation_score}</TableCell>
-	              <TableCell className='cell' >{row.total_score}</TableCell>
-	            </TableRow>
-	            //</div>
-	          ))}
-	        </TableBody>
+		        <TableHead style={{border:'0px'}}>
+		          <TableRow style={{boxShadow:'none', border:'0px'}}>
+		            <TableCell className='header'>Sesi</TableCell>
+		            <TableCell className='header' >Kehadiran</TableCell>
+		            <TableCell className='header' >Nilai Mentah</TableCell>
+		            <TableCell className='header' >% Nilai Benar</TableCell>
+		            <TableCell className='header' >% Nilai Partisipasi</TableCell>
+		            <TableCell className='header' >% Nilai Total</TableCell>
+		          </TableRow>
+		        </TableHead>
+		        {rows.length == 0 ? 
+			        <p>You don't have any lectures yet</p>
+			        :
+			        <TableBody>
+			          {rows.map(row => (
+			          	//<div className='row'>
+			            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}}>
+			              <TableCell className='cell' component="th" scope="row">
+			                {row.date}
+			              </TableCell>
+			              <TableCell className='cell' >{row.attendance}</TableCell>
+			              <TableCell className='cell' >{row.raw_score}</TableCell>
+			              <TableCell className='cell' >{row.accuracy_score}</TableCell>
+			              <TableCell className='cell' >{row.participation_score}</TableCell>
+			              <TableCell className='cell' >{row.total_score}</TableCell>
+			            </TableRow>
+			            //</div>
+			          ))}
+			        </TableBody>
 
-    	}
-      </Table>
+		    	}
+		      </Table>
 		)
 	}
 }

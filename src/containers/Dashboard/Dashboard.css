@@ -248,7 +248,7 @@ html{
 	width: 85%;
 	background-color: white;
 	align-self: flex-end;
-	margin-top: 3rem;
+	margin-top: 1.5rem;
 }
 
 .Dashboard .navigation{
@@ -294,14 +294,25 @@ html{
 
 .Dashboard .right .content{
 	overflow: visible;
-	margin: 2vw;
+	padding: 2vw;
+	position: fixed;
+	background-color: white;
+	z-index: 2;
+	width: 85%;
 }
 
+
+.Dashboard .right .quizzes{
+	padding-top: 15%;
+	margin: 2vw;
+
+}
 .Dashboard .right .content .header{
 	display:flex;
 	flex-direction:row;
 	vertical-align: middle;
 	margin-bottom: 2vh;
+	background-color: white;
 }
 
 .Dashboard .right .content .header .live-indicator{
@@ -438,7 +449,7 @@ html{
 .arrows .MuiIconButton-root-1, .card-content .MuiIconButton-root-1 {
 	padding: 0.2rem;
 }
-.Dashboard .right .content .question-card{
+.Dashboard .right .quizzes .question-card{
 	display: flex;
 	flex-direction: column;
 	margin-top: 2vh;
@@ -450,7 +461,7 @@ html{
 }
 
 
-.Dashboard .right .content .question-card .card-content{
+.Dashboard .right .quizzes .question-card .card-content{
 	justify-content: space-between;
 	margin: auto;
 	display: flex;
@@ -459,7 +470,7 @@ html{
 	width: 100%;
 }
 
-.Dashboard .right .content .question-card .card-action{
+.Dashboard .right .quizzes .question-card .card-action{
 	background-color: #f4f4f4;
 	padding:0;
 	margin: 0;
@@ -469,32 +480,32 @@ html{
 	justify-content: space-between;
 }
 
-.Dashboard .right .content .question-card .card-action .expand-button-normal{
+.Dashboard .right .quizzes .question-card .card-action .expand-button-normal{
 	transform: rotate(0deg);
 	font-size: 5vw;
 	transition: 1s transform;
 }
 
-.Dashboard .right .content .question-card .card-action .expand-button-expanded{
+.Dashboard .right .quizzes .question-card .card-action .expand-button-expanded{
 	transform: rotate(180deg);
 	transition: 1s transform;
 }
 
-.Dashboard .right .content .question-card .card-action .button{
+.Dashboard .right .quizzes .question-card .card-action .button{
 	background-color: transparent;
 	border-radius: 0px;
 	margin-top: 0.2rem;
 	margin-bottom: 0.2rem;
 }
 
-.Dashboard .right .content .question-card .answers{
+.Dashboard .right .quizzes .question-card .answers{
 	display:flex;
 	flex-direction:column;
 	margin:auto;
 	width: 85%;
 }
 
-.Dashboard .right .content .question-card .answers .answer{
+.Dashboard .right .quizzes .question-card .answers .answer{
 	background-color: #f7f3dc;
 	border-radius: 0;
 	margin: auto;
@@ -506,7 +517,7 @@ html{
 	font-weight: 500;
 }
 
-.Dashboard .right .content .question-card .answers .answer-correct{
+.Dashboard .right .quizzes .question-card .answers .answer-correct{
 	background-color: #82DAA4;
 	border-radius: 0;
 	margin: auto;
@@ -518,7 +529,7 @@ html{
 	font-weight: 500;
 }
 
-.Dashboard .right .content .question-card .switch {
+.Dashboard .right .quizzes .question-card .switch {
     border: 1px solid #ccc;
     width: 70px;
     height: 25px;
@@ -529,7 +540,7 @@ html{
     
 }
 
-.Dashboard .right .content .question-card .switch-toggle {
+.Dashboard .right .quizzes .question-card .switch-toggle {
     border: 1px solid #999;
     box-shadow: 1px 1px 1px #ccc;
     width: 30px;
@@ -542,15 +553,15 @@ html{
     margin-bottom: auto;
 }
 
-.Dashboard .right .content .question-card .switch.on {
+.Dashboard .right .quizzes .question-card .switch.on {
     background: #82DAA4;
 }
 
-.Dashboard .right .content .question-card .switch.on .switch-toggle {
+.Dashboard .right .quizzes .question-card .switch.on .switch-toggle {
     left: 37px;
 }
 
-.Dashboard .right .content .question-card .switch.disabled {
+.Dashboard .right .quizzes .question-card .switch.disabled {
     cursor: not-allowed;
 }
 
