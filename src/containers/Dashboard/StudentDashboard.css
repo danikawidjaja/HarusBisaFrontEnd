@@ -23,20 +23,50 @@ html{
 .StudentDashboard h1{
 	font-weight: 500;
 	font-size: 1.7rem;
-	margin-bottom: 56px; 
+	 
 }
 
 .StudentDashboard p{
+	margin-top: 3rem;
 	font-weight: 300;
 	font-size: 14px;
 }
 
+.StudentDashboard .line{
+	border: 2px solid #6311AB;
+	width: 62px;
+	height: 0px;
+	margin-top: 1rem;
+}
 .StudentDashboard .text{
 	align-self: center;
 	text-align: center;
 	margin-top: 3rem;	
 }
 
+.StudentDashboard .new_lecture{
+	align-self: center;
+	background: linear-gradient(5.54deg, #9C27D5 5.56%, #6311AB 112.78%);
+	border: 1px solid #B8B8B7;
+	box-sizing: border-box;
+	border-radius: 8px;
+	color: white;
+	justify-content: center;
+	width: 60%;
+	display: flex;
+	flex-direction: row;
+	padding: 0.75rem;
+}
+
+.StudentDashboard .new_lecture p{
+	font-weight: 500;
+	font-size: 1.25rem;
+	color: white;
+	margin-top:auto;
+	margin-bottom: auto;
+	margin-left: 3rem;
+	text-align: center;
+}
 .StudentDashboard .table{
 	margin-top: 1rem;
 }

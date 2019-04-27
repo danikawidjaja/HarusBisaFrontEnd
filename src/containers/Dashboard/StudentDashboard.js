@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import PlayArrow from '@material-ui/icons/PlayArrow';
 
 
 class StudentDashboard extends Component{
@@ -26,6 +27,7 @@ class StudentDashboard extends Component{
 			selected_lecture:null,
 			isLoading: true,
 			changingSelectedCourse: false,
+			new_active_lecture: true,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 	}
@@ -104,8 +106,16 @@ class StudentDashboard extends Component{
 		    			<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 		    			<div className='StudentDashboard'>
 		    				<h1> {this.state.selected_course.course_name} </h1>
+		    				<div className='line'></div>
+		    				{this.state.new_active_lecture ? 
+		    					<div className='new_lecture'>
+		    						<PlayArrow style={{color:'white'}}/>
+		    						<p>Bergabung dengan sesi baru</p>
+		    					</div> 
+		    					: null
+		    				}
 		    				<p> Sesi yang telah berlangsung </p>
-		    				<LectureTable lectures={this.state.lectures}/>
+		    				<LectureTable course_id={this.props.match.params.id} lectures={this.state.lectures} history={this.props.history}/>
 		    				<div className='text'>
 		    					<p>"Gantungkan cita-cita mu setinggi langit! Bermimpilah setinggi langit. Jika engkau jatuh, engkau akan jatuh di antara bintang-bintang."</p>
 		    					<br/><br/><p>Soekarno</p>
@@ -133,7 +143,7 @@ class StudentDashboard extends Component{
 class LectureTable extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
+		this.handleClickRow = this.handleClickRow.bind(this); 
 	}
 
 	createData(id, date, attendance, raw_score, accuracy_score, participation_score, total_score) {
@@ -144,9 +154,14 @@ class LectureTable extends Component{
 		for (let i=0; i<this.props.lectures.length; i++){
 			let lecture_date = this.props.lectures[i].date.split('/');
 			let date = 'Sesi ' + lecture_date[0] + '/' + lecture_date[1];
-			rows.push(this.createData(i,date,'Hadir',10,90,100,90))
+			rows.push(this.createData(this.props.lectures[i].id,date,'Hadir',10,90,100,90))
 		}
 		return rows;
+	}
+
+	handleClickRow(id){
+		this.props.history.push('/'+this.props.course_id+'/lecture/' + id);
+
 	}
 	render(){
 		const rows = this.createRows();
@@ -168,7 +183,7 @@ class LectureTable extends Component{
 			        <TableBody>
 			          {rows.map(row => (
 			          	//<div className='row'>
-			            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}}>
+			            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}} onClick={() => this.handleClickRow(row.id)}>
 			              <TableCell className='cell' component="th" scope="row">
 			                {row.date}
 			              </TableCell>

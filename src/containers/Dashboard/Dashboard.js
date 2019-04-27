@@ -488,9 +488,9 @@ export class DashboardNavigation extends Component{
 						}
 					</div>
 					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
-						<OverrideMaterialUICss><IconButton>
-							<OverrideMaterialUICss> <FileCopyOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
-						</IconButton> </OverrideMaterialUICss>
+						{this.props.gradebook == null ? <OverrideMaterialUICss><IconButton>
+								<OverrideMaterialUICss> <FileCopyOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
+							</IconButton> </OverrideMaterialUICss> : null}
 						<OverrideMaterialUICss><IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
