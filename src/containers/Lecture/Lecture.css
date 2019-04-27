@@ -1,0 +1,78 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit; 
+    vertical-align: baseline;
+}
+
+html{
+	height: 100%;
+}
+
+.Lecture{
+	font-family: 'Rubik', sans-serif;
+	display: flex;
+	flex-direction: column;
+	overflow: visible;
+	padding: 3rem;
+	padding-top: 5rem;
+	color: black;
+}
+
+.Lecture .header h1{
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+.Lecture .header p{
+	font-weight: 400;
+	font-size: 1.5rem;
+}
+
+.Lecture .header{
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.Lecture .quizzes{
+	padding: 1rem;
+}
+
+
+.quiz{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+	font-family: 'Arial', sans-serif;
+}
+
+.quiz .number{
+	width: 5%;
+}
+.quiz .time{
+	width: 5%;
+	display: flex;
+	justify-content: flex-end;
+}
+.quiz .content{
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+}
+
+.quiz .content .answers{
+	
+}
+.quiz .content .answers .answer{
+	background: #E3DDED;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+
+}

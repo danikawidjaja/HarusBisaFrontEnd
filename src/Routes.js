@@ -13,6 +13,7 @@ import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import Dashboard from './containers/Dashboard/Dashboard';
 import StudentDashboard from './containers/Dashboard/StudentDashboard';
 import ProfileSetting from './containers/ProfileAvatar/ProfileSetting';
+import Lecture from './containers/Lecture/Lecture';
  
 export default ({ childProps }) =>
   <Switch>
@@ -23,6 +24,7 @@ export default ({ childProps }) =>
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard/:id' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/student-dashboard/:id' component={StudentDashboard} props={childProps}/>
+        <AppliedRoute path='/:course_id/lecture/:lecture_id' component={Lecture} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
