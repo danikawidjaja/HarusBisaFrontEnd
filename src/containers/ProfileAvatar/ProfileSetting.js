@@ -32,7 +32,10 @@ class ProfileSetting extends Component{
       				role: res.data.role,
       				school: res.data.school
       			},
-      			isLoading: true
+      			isLoading: true,
+      			old_password:'',
+      			new_password:'',
+      			verify_new_password:''
 			})
 		})
 		.catch(err =>{
@@ -40,8 +43,15 @@ class ProfileSetting extends Component{
 		})
     }
 
-    handleSubmit(event){
+    handleSubmitInfo(event){
     	event.preventDefault()
+    }
+
+    handleSubmitPassword(event){
+    	event.preventDefault();
+    	if (this.state.new_password != this.state.verify_new_password){
+    		alert('Password anda berbeda. Ulangi')
+    	}
     }
 
     handleChange = event => {
@@ -67,7 +77,8 @@ class ProfileSetting extends Component{
 
 
 			    			<div className='content-right'>
-			    				<form onSubmit={this.handleSubmit}>
+			    				<label>Informasi Anda</label>
+			    				<form onSubmit={this.handleSubmitInfo}>
 									<FormGroup controlId='first_name' className='form-group'>
 										<ControlLabel className='form-group-label'>Nama Depan</ControlLabel>
 								            <FormControl
@@ -106,6 +117,45 @@ class ProfileSetting extends Component{
 									    </Button>
 								    </div>
 						       	</form>
+
+						       	<label>Ubah Password</label>
+						       	<form>
+						       		<FormGroup controlId='old_password' className='form-group'>
+										<ControlLabel className='form-group-label'>Password Lama</ControlLabel>
+								            <FormControl
+								              type="password"
+								              value={this.state.old_password}
+								              onChange={this.handleChange}
+								              className='form-group-entry'
+								            />
+								    </FormGroup>
+								    <FormGroup controlId='new_password' className='form-group'>
+										<ControlLabel className='form-group-label'>Password Baru</ControlLabel>
+								            <FormControl
+								              type="password"
+								              value={this.state.new_password}
+								              onChange={this.handleChange}
+								              className='form-group-entry'
+								            />
+								    </FormGroup>
+								    <FormGroup controlId='new_password' className='form-group'>
+										<ControlLabel className='form-group-label'>Ulangi Password Baru</ControlLabel>
+								            <FormControl
+								              type="password"
+								              value={this.state.verify_new_password}
+								              onChange={this.handleChange}
+								              className='form-group-entry'
+								            />
+								    </FormGroup>
+								    <div className='buttons'>
+									    <Button
+										    type="submit"
+										    className="button"
+										>
+										    Simpan
+									    </Button>
+								    </div>
+								</form>
 			    			</div>
 			    		</div>
 			    	</div>

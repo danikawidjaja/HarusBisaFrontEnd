@@ -20,7 +20,7 @@ html, body{
 
 .ProfileSetting h1{
 	font-weight: 500;
-	font-size: 36px;
+	font-size: 2.5rem;
 	line-height: 30px;
 }
 
@@ -30,6 +30,11 @@ html, body{
 	margin-top: 2rem;
 	padding-left: 5rem;
 	padding-right: 5rem;
+}
+.ProfileSetting .content label{
+	font-size: 1.25rem;
+	font-weight: 400;
+	margin-bottom: 0.5rem;
 }
 
 .ProfileSetting .content .content-left{
@@ -64,8 +69,8 @@ html, body{
 }
 
 .ProfileSetting .content .form-group .form-group-label{
-	font-weight: normal;
-	font-size: 20px;
+	font-weight: 300;
+	font-size: 1rem;
 	line-height: 30px;
 }
 

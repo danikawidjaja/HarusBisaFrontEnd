@@ -9,6 +9,7 @@ import PlayArrow from '@material-ui/icons/PlayArrow';
 import PeopleOutline from '@material-ui/icons/PeopleOutline';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
+import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
@@ -488,7 +489,7 @@ export class DashboardNavigation extends Component{
 					</div>
 					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
 						<OverrideMaterialUICss><IconButton>
-							<OverrideMaterialUICss> <PeopleOutline style={{color: 'black'}}/> </OverrideMaterialUICss>
+							<OverrideMaterialUICss> <FileCopyOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton> </OverrideMaterialUICss>
 						<OverrideMaterialUICss><IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
