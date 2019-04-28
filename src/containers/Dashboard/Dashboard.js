@@ -38,6 +38,8 @@ import Close from '@material-ui/icons/Close';
 import Logo from '../Logo/Logo';
 import ReactSlider from 'react-slider';
 import LoadingPage from './LoadingPage';
+import Fullscreen from "react-full-screen";
+import Live from '../Live/Live';
 
 
 
@@ -509,10 +511,11 @@ class DashboardRight extends Component{
 		this.state={
 			lecture : this.props.selectedLecture,
 			live: false,
+			isFull: false,
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
-		this.toggleLive = this.toggleLive.bind(this)
+		this.toggleLive = this.toggleLive.bind(this);
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -548,7 +551,7 @@ class DashboardRight extends Component{
 			if (quizzes.length > 0){
 				for (let i=0; i<quizzes.length; i++){
 					//console.log(quizzes[i])
-					quizzesComponent.push(<QuizCard updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
+					quizzesComponent.push(<QuizCard toggleLive={this.toggleLive} isFull={this.state.isFull} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
 				} 
 			} else {
 				quizzesComponent.push(<p> You don't have any questions yet! </p>)
@@ -569,10 +572,13 @@ class DashboardRight extends Component{
 	toggleLive(){
 		this.setState(prevState => {
 	      return {
-	        live: !prevState.live
+	        live: !prevState.live,
+	        isFull: true,
 	      };
 	    });
+	    
 	}
+
 
 	makingHeader(){
 		if (this.state.lecture.description){
@@ -642,6 +648,13 @@ class DashboardRight extends Component{
 		    				{close => (<LectureSetting changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} selected_course={this.props.selected_course} Auth={this.props.Auth} closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
+	    			<Fullscreen
+			          enabled={this.state.isFull}
+			          onChange={isFull => this.setState({isFull})}
+			     	>
+			          {this.state.isFull ? <Live quiz={this.state.lecture.quizzes[0]}/> : null}
+			        </Fullscreen>
+
 	    		</div>
     				
 
@@ -1009,7 +1022,7 @@ class QuizCard extends Component{
 								{this.showSwitch()}
 							</div>
 
-							<Button className='button'> Live </Button>
+							<Button className='button' onClick={this.props.toggleLive}> Live </Button>
 
 						</CardActions></OverrideMaterialUICss>
 

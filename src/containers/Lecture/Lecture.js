@@ -165,7 +165,7 @@ class Lecture extends Component{
 	}
 }
 
-class Quiz extends Component{
+export class Quiz extends Component{
 	constructor(props){
 		super(props);
 	}
