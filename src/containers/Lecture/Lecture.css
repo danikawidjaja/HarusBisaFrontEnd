@@ -114,7 +114,7 @@ html{
 
 .banner{
 	position: fixed;
-	z-index: 2;
+	z-index: 5;
 	background-color:  #6311AB;
 	font-family: 'Rubik', sans-serif;
 	width: 100%;

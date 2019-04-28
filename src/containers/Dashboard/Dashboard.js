@@ -224,7 +224,7 @@ class DashboardLeft extends Component{
   	}
 	render(){
 		return(
-			<div style={{marginLeft:'auto', marginRight:'auto', height:'100%'}}>
+			<div style={{marginLeft:'auto', marginRight:'auto', height:'100%', justifyContent:'space-between'}}>
 				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.props.selectedLecture} onChange={this.handleChangeLecture}>
             		{this.makeToggleButtons(/*[]*/this.state.lectures)}
           		</ToggleButtonGroup>
@@ -889,7 +889,7 @@ class QuizCard extends Component{
 		this.handleMouseHover();
 		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'up')
 		.then(res =>{
-			alert(res.message)
+			
 			this.props.updateLecturesState(res.data.lectures)
 			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.selected_lecture_id){
@@ -907,7 +907,7 @@ class QuizCard extends Component{
 		this.handleMouseHover();
 		this.props.Auth.changeQuizOrder(this.props.selected_course_id, this.props.selected_lecture_id, this.state.question_number - 1, 'down')
 		.then(res =>{
-			alert(res.message)
+			
 			this.props.updateLecturesState(res.data.lectures)
 			for (let i in res.data.lectures){
   				if (res.data.lectures[i].id == this.props.selected_lecture_id){
