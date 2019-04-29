@@ -76,7 +76,6 @@ class App extends Component {
     if (this.Auth.loggedIn()){
       this.userHasAuthenticated(true)
     }
-
     window.addEventListener('scroll', this.handleScroll);
     let currentRoutes = this.props.location;
     if (currentRoutes.pathname === '/notfound') {
@@ -106,7 +105,8 @@ class App extends Component {
       userHasAuthenticated: this.userHasAuthenticated,
       Auth: this.Auth,
       visibility: this.state.visibility,
-      isNavVisible: this.isNavVisible
+      isNavVisible: this.isNavVisible,
+      handleScroll : this.handleScroll,
 
     };
 

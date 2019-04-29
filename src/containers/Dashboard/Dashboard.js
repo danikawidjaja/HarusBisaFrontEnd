@@ -121,6 +121,7 @@ class Dashboard extends Component{
   	async componentDidMount(){
   		this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
+    	window.removeEventListener('scroll', this.props.handleScroll);
     	var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
@@ -932,6 +933,9 @@ class QuizCard extends Component{
 			this.setState({
 				live: true
 			})
+		}
+		else{
+			alert('Sesi ini belum live')
 		}
 	}
 	render(){
