@@ -20,4 +20,149 @@ html, body{
 	z-index: 0;
 	padding: 5rem;
 }
+
+.LiveQuiz{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-family: 'Arial', sans-serif;
+}
+
+.LiveQuiz .quiz-number{
+	width: 5%;
+	font-size: 30px;
+	margin-bottom: 1rem;
+}
+
+
+.LiveQuiz .quiz-duration{
+	width: 5%;
+	display: flex;
+	justify-content: flex-end;
+	font-size: 30px;
+	margin-bottom: 1rem;
+}
+
+.LiveQuiz .quiz-content{
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+}
+
+.LiveQuiz .quiz-content .question{
+	font-size: 30px;
+	margin-bottom: 1rem;
+}
+
+.LiveQuiz .quiz-content .answers p{
+	font-size: 24px;
+}
+
+.LiveQuiz .quiz-content .answers .live-answer{
+	background: #F7F3DC;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	border: 1px solid transparent;
+}
+
+.LiveQuiz .quiz-content .answers .correct-answer{
+	background: #82DAA4;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	border: 1px solid transparent;
+}
+
+.LiveQuiz .quiz-content .answers .incorrect-answer{
+	background-color: transparent;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	border: 1px solid transparent;
+}
+
+.LiveMenu{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: #323232;
+	color: white;
+	padding: 15px;
+	position: absolute;
+	left: 5.57%;
+	right: 7.13%;
+	top: 88.31%; /*88.31*/
+	bottom: 4.01%;
+}
+
+.LiveMenu p{
 	
+}
+
+.LiveMenu .navigator{
+	border-right: solid 1px white;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+
+.LiveMenu .navigator .button{
+	margin: auto;
+	font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.LiveMenu .quizzes-options{
+	border-right: solid 1px white;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+
+.LiveMenu .icons{
+	border-right: solid 1px white;
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.LiveMenu .icons .icon-btn{
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	color: white;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.LiveMenu .icons .icon-btn .MuiIconButton-label-6{
+	flex-direction: column;
+
+}
+
+.LiveMenu .icons .icon-btn .icon{
+	color: white;
+}
+
+.LiveMenu .timer{
+	border-right: solid 1px white;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+
+.LiveMenu .counter{
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+
+
+.MuiIconButton-root-1{
+	padding:0;
+}

@@ -551,7 +551,7 @@ class DashboardRight extends Component{
 			if (quizzes.length > 0){
 				for (let i=0; i<quizzes.length; i++){
 					//console.log(quizzes[i])
-					quizzesComponent.push(<QuizCard live={this.state.live} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
+					quizzesComponent.push(<QuizCard quizzes={this.state.lecture.quizzes} live={this.state.live} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
 				} 
 			} else {
 				quizzesComponent.push(<p> You don't have any questions yet! </p>)
@@ -945,7 +945,7 @@ class QuizCard extends Component{
 			          enabled={this.state.live}
 			          onChange={live => this.setState({live:live})}
 			     	>
-			          {this.state.live ? <Live quiz={this.props.quiz}/> : null}
+			          {this.state.live ? <Live quizzes={this.props.quizzes} quiz={this.props.quiz} question_number={this.state.question_number}/> : null}
 			    </Fullscreen>
 				<Popup
 			        open={this.state.showDeleteQuestionModal}

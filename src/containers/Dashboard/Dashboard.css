@@ -292,11 +292,10 @@ html{
 	font-weight: 500;
 }
 
-.Dashboard .right .content{
-	
+.Dashboard .right .content{	
 	padding: 2vw;
-	position: fixed;
 	background-color: white;
+	position: fixed;
 	z-index: 1;
 	width: 85%;
 }
