@@ -43,7 +43,8 @@ class Courses extends Component{
 				first_name: this.props.data.first_name,
 				last_name: this.props.data.last_name,
 				role: this.props.data.role,
-				email: this.props.data.email 
+				email: this.props.data.email,
+				id: this.props.data._id 
 			},
 		};
 

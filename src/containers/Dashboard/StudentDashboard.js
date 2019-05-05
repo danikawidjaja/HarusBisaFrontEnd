@@ -21,7 +21,8 @@ class StudentDashboard extends Component{
 				first_name: "",
 				last_name: "",
 				role: "",
-				email: "" 
+				email: "",
+				id: '', 
 			},
 			selected_course:null,
 			selected_lecture:null,
@@ -81,7 +82,8 @@ class StudentDashboard extends Component{
       				last_name : res.data.last_name,
       				email: res.data.email,
       				role: res.data.role,
-      				school: res.data.school
+      				school: res.data.school,
+      				id: res.data._id,
       			},
       		}, () =>
       		this.props.Auth.getLectures(this.state.selected_course._id)

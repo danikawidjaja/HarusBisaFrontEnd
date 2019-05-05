@@ -11,6 +11,7 @@ class ProfileAvatar extends Component{
 			first_name: this.props.profile.first_name[0].toUpperCase() + this.props.profile.first_name.slice(1, this.props.profile.first_name.length),
 			last_name: this.props.profile.last_name[0].toUpperCase() + this.props.profile.last_name.slice(1, this.props.profile.last_name.length),
 			email: this.props.profile.email,
+			id: this.props.profile.id,
 		}
 
 	}
@@ -22,7 +23,7 @@ class ProfileAvatar extends Component{
   	}
 
   	handleSetting = async event =>{
-  		this.props.history.push('/profilesetting');
+  		this.props.history.push('/profilesetting/'+this.state.id);
   	}
 	render(){
 		return(

@@ -19,7 +19,8 @@ class Lecture extends Component{
       			last_name : "",
       			email: "",
       			role: "",
-      			school: ""
+      			school: "",
+      			id:''
       		},
       		selected_lecture:null,
       		selected_course: null,
@@ -65,7 +66,8 @@ class Lecture extends Component{
       				last_name : res.data.last_name,
       				email: res.data.email,
       				role: res.data.role,
-      				school: res.data.school
+      				school: res.data.school,
+      				id: res.data._id,
       			},
       		}, () =>
       		this.props.Auth.getLectures(this.state.selected_course._id)

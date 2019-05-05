@@ -29,6 +29,6 @@ export default ({ childProps }) =>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
         <AppliedRoute path='/forgetpassword' component={ForgetPassword} props={childProps}/>
-        <AppliedRoute path='/profilesetting' component={ProfileSetting} props={childProps}/>
+        <AppliedRoute path='/profilesetting/:id' component={ProfileSetting} props={childProps}/>
         <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;

@@ -154,6 +154,42 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+    getUser(user_id){
+       return this.fetch(`${this.domain}/users/${user_id}`, {
+            method: 'GET',
+        }).then(res => {
+            console.log(res.message);
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
+        }) 
+    }
+    updateUser(user_id, first_name, last_name, email, old_password, new_password, school){
+        return this.fetch(`${this.domain}/users/${user_id}`,{
+            method:'PUT',
+            body: JSON.stringify({
+                first_name,
+                last_name, 
+                email,
+                old_password,
+                new_password,
+                school
+            })
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
+
+    deleteUser(user_id){
+       return this.fetch(`${this.domain}/users/${user_id}`,{
+            method:'DELETE'
+        }).then(res => {
+            console.log(res.message)
+            return Promise.resolve(res);
+        }) 
+    }
     signup(password,email,first_name,last_name,school,role){
         return this.fetch(`${this.domain}/signup`, {
             method: 'POST',
