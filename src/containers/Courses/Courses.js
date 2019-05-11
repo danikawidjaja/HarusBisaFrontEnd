@@ -47,7 +47,7 @@ class Courses extends Component{
 				email: this.props.data.email,
 				id: this.props.data._id 
 			},
-			courses_name: []
+			courses_to_show : this.props.data.courses
 		};
 
 		this.Auth= this.props.Auth;
@@ -57,20 +57,14 @@ class Courses extends Component{
 		this.changeshowDeleteCourseModal = this.changeshowDeleteCourseModal.bind(this)
 		this.deleteCourse = this.deleteCourse.bind(this)
 		this.updateCoursesState = this.updateCoursesState.bind(this)
+		this.findCourses = this.findCourses.bind(this)
 		
 	}
 
   	async componentDidMount(){
   		this.props.props.isNavVisible(false);
     	window.scrollTo(0, 0);
-    	var temp_class = []
-		for (let i=0; i<this.state.courses.length; i++){
-			var temp = {value: this.state.courses[i].course_name, key: this.state.courses[i].course_name}
-			temp_class.push(temp)
-		}
-		this.setState({
-			courses_name: temp_class
-		})
+    	
   	}
 
   	toggleShowDeleteCourseModal(){
@@ -145,39 +139,40 @@ class Courses extends Component{
 	}
 	
 	findCourses(value){
-		let found = false
+		var res = []
+		value = value.toLowerCase();
 		for (let i=0 ; i<this.state.courses.length; i++){
-			if (this.state.courses[i].course_name.includes(value)){
-				console.log(this.state.courses[i])
-				found = true
+			var courseName = this.state.courses[i].course_name.toLowerCase();
+			if (courseName.includes(value)){
+				res.push(this.state.courses[i])
 			}
 		}
-		if (!found){
-			console.log('not found')
+		if (res.length != 0){
+			this.setState({
+				courses_to_show: res
+			})
 		}
 	}					
 	render(){
-		console.log(this.state.courses_name)
 		return(
 	    	<div className="Courses">
 	    		<CoursesLeft role={this.state.profile.role} name={this.state.profile.first_name}/>
 	    		<div className = 'right'>
 	    			<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
-						<OverrideMaterialUICss><IconButton>
+						<OverrideMaterialUICss><IconButton style={{padding:'12px'}}>
 							<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
-						<OverrideMaterialUICss><IconButton>
+						<OverrideMaterialUICss><IconButton style={{padding:'12px'}}>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
+				        <div style={{display:'flex', flexDirection:'row', marginTop:'1.8rem', justifyContent:'space-between', width:'100%'}} >
 			            <h1>Kelas Anda</h1>
 			            <ReactSearchBox
-			            	placeholder='Search Bar'
-			            	style={{margin:'auto'}}
-			            	data={this.state.courses_name}
-          					onChange={value => this.findCourses(value)}
+			            	placeholder={'Search'}
+			            	data={this.state.courses}
+          					onChange={this.findCourses}
 			            />
 			            <Popup
 							    trigger={
@@ -233,7 +228,7 @@ class Courses extends Component{
 			        </Popup>
 				        <div className= {this.state.profile.role == "professor" ? 'content-prof' : 'content-stud'}>
 				        	{/*<GridLayout className="layout" width={1200} autoSize={true} cols={2}>*/}
-			        		{this.makingCourses(this.state.courses)}
+			        		{this.makingCourses(this.state.courses_to_show)}
 			        		{/*</GridLayout>*/}
 			        		
 						</div>
@@ -623,9 +618,8 @@ class ProfCourseCard extends Component{
   		this.props.changeShowUpdateCourseModal(this.props.course)
   	}
 
-  	componentDidUpdate(oldProps) {
+  	async componentDidUpdate(oldProps) {
   		const newProps = this.props
-  		
   		if (oldProps.course.course_name !== newProps.course.course_name){
   			this.setState({
   				course_name: newProps.course.course_name
@@ -654,16 +648,18 @@ class ProfCourseCard extends Component{
   		}
   		if (oldProps.course.number_of_lectures !== newProps.course.number_of_lectures){
   			this.setState({
-  				num_lecture: newProps.course.num_lecture
+  				num_lecture: newProps.course.number_of_lectures
   			})
   		}
   		if (oldProps.course.number_of_students !== newProps.course.number_of_students){
-  			this.setState({
-  				num_student: newProps.course.num_student
+  			await this.setState({
+  				num_student: newProps.course.number_of_students
   			})
   		}
+  		
 	}
   	render(){
+  		
 		return(
 			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
