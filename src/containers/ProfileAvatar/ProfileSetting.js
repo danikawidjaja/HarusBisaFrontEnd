@@ -4,6 +4,7 @@ import  '../Dashboard/Dashboard.css';
 import './ProfileSetting.css';
 import Logo from '../Logo/Logo';
 import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import Popup from 'reactjs-popup';
 
 
 class ProfileSetting extends Component{
@@ -23,6 +24,7 @@ class ProfileSetting extends Component{
 		this.handleSubmitInfo = this.handleSubmitInfo.bind(this);
 		this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleDeleteAccount = this.handleDeleteAccount.bind(this);
 	}
 	async componentDidMount(){
   		this.props.isNavVisible(false);
@@ -83,7 +85,6 @@ class ProfileSetting extends Component{
 
     handleSubmitPassword(event){
     	event.preventDefault();
-    	console.log(this.state);
     	
     	if (this.state.new_password != this.state.verify_new_password){
     		alert('Password anda berbeda. Ulangi')
@@ -117,6 +118,15 @@ class ProfileSetting extends Component{
     	
     }
 
+    handleDeleteAccount(){
+    	this.props.Auth.deleteUser(this.state.id)
+    	.then(res =>{
+    		this.props.Auth.logout();
+    		this.props.userHasAuthenticated(false);
+    		this.props.history.push('/');
+    	})
+
+    }
     handleChange(event){
 	    this.setState({
 	    	[event.target.id]: event.target.value
@@ -225,6 +235,24 @@ class ProfileSetting extends Component{
 									    </Button>
 								    </div>
 								</form>
+
+								<Popup
+									trigger={<a>Hapus akun anda?</a>}
+									modal
+								>
+									{close => (
+										<div className='popup'>
+											<h3>Apakah anda ingin menghapus akun anda?</h3>
+											<p>Kami akan menyimpan akun anda selama 1 minggu jika anda berubah pikiran</p>
+											<div className='buttons'>
+												<Button className='button' onClick={this.handleDeleteAccount}>Ya</Button>
+												<Button className='button' onClick={close}>Tidak</Button>
+											</div>
+										</div>
+										)
+									}
+								</Popup>
+								
 			    			</div>
 			    		</div>
 			    	</div>
