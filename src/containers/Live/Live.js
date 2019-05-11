@@ -6,7 +6,7 @@ import CheckCircleOutline from '@material-ui/icons/CheckCircleOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import PlayArrow from '@material-ui/icons/PlayArrow';
-import { Button, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import { Button, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown, ButtonToolbar} from "react-bootstrap";
 
 
 class Live extends Component{
@@ -16,10 +16,27 @@ class Live extends Component{
 		this.state = {
 			show_correct_answer: false,
 			started:false,
-			current_quiz_index: this.props.question_number-1,
+			current_quiz: this.props.quiz
 		}
 		this.toggleShowCorrectAnswer = this.toggleShowCorrectAnswer.bind(this);
 		this.toggleStarted = this.toggleStarted.bind(this);
+		this.changeCurrentQuiz = this.changeCurrentQuiz.bind(this);
+		this.findCurrentIndex = this.findCurrentIndex.bind(this);
+	}
+
+	findCurrentIndex(current_quiz){
+		let length =this.props.quizzes.length
+		for (let i=0; i<length; i++){
+			if (this.props.quizzes[i] === current_quiz){
+				return i
+			}
+		}
+	}
+
+	changeCurrentQuiz(current_quiz){
+		this.setState({
+			current_quiz: current_quiz
+		})
 	}
 
 	toggleShowCorrectAnswer(){
@@ -35,8 +52,8 @@ class Live extends Component{
 	render(){
 		return(
 			<div className='Live'>				
-				<LiveQuiz quiz={this.props.quiz} question_number={this.props.question_number} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
+				<LiveQuiz quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
+				<LiveMenu changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
 			</div>
 		)
 	}
@@ -72,7 +89,7 @@ class LiveQuiz extends Component{
 		return(
 			<div className='LiveQuiz'> 
 				<div className='quiz-number'>
-					<p> {this.props.question_number}. </p>
+					<p> {this.props.findCurrentIndex(this.props.quiz) + 1}. </p>
 				</div>
 				<div className='quiz-content'>
 					<p className='question'> {this.props.quiz.question} </p>
@@ -89,6 +106,8 @@ class LiveQuiz extends Component{
 class LiveMenu extends Component{
 	constructor(props){
 		super(props);
+		this.nextQuiz = this.nextQuiz.bind(this);
+		this.prevQuiz = this.prevQuiz.bind(this);
 	}
 
 	buttonContent(){
@@ -99,16 +118,37 @@ class LiveMenu extends Component{
 			return('Mulai')
 		}
 	}
+
+	nextQuiz(){
+		var current_index = this.props.findCurrentIndex(this.props.current_quiz);
+		if (current_index == this.props.quizzes.length-1){
+			alert('already at last quiz')
+		}
+		else{
+			this.props.changeCurrentQuiz(this.props.quizzes[current_index+1])
+		}
+	}
+	prevQuiz(){
+		var current_index = this.props.findCurrentIndex(this.props.current_quiz);
+		if (current_index == 0){
+			alert('already at the very beginning')
+		}
+		else{
+			this.props.changeCurrentQuiz(this.props.quizzes[current_index-1])
+		}
+	}
+
+
 	render(){
 		return(
 			<div className='LiveMenu'>
 				<div className='navigator'>
-					<IconButton className='icon-btn'><ExpandMoreIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
+					<IconButton className='icon-btn' onClick={this.prevQuiz} ><ExpandMoreIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
 					<Button className='button' onClick={this.props.toggleStarted}>{this.buttonContent()}</Button>
-					<IconButton className='icon-btn'><ExpandLessIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
+					<IconButton className='icon-btn' onClick={this.nextQuiz}><ExpandLessIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
 				</div>
 				<div className='quizzes-options'>
-					<p><QuizzesOption current_quiz_index={this.props.current_quiz_index} quizzes={this.props.quizzes}/></p>
+					<p><QuizzesOption changeCurrentQuiz={this.props.changeCurrentQuiz} current_quiz={this.props.current_quiz} quizzes={this.props.quizzes} findCurrentIndex={this.props.findCurrentIndex}/></p>
 				</div>
 				<div className='icons'>
 					<IconButton className='icon-btn' onClick={this.props.toggleShowCorrectAnswer}><CheckCircleOutline className='icon'/><p>Jawaban</p></IconButton>
@@ -128,36 +168,38 @@ class LiveMenu extends Component{
 class QuizzesOption extends Component{
 	constructor(props){
 		super(props);
+		console.log(props)
 		this.handleChange = this.handleChange.bind(this);
 	}
-	createMenuItem(quizzes, current_quiz_index){
+	createMenuItem(quizzes, current_quiz){
 		let length = quizzes.length
 		let result = []
 
 		for (let i=0; i<length; i++){
-			if (i != current_quiz_index){
-				result.push(<ToggleButton className='button' type='radio' value={i}> Pertanyaan {i+1} </ToggleButton>)
+			if (quizzes[i] !== current_quiz){
+				result.push(<ToggleButton type='radio' value={i}> Pertanyaan {i+1} </ToggleButton>)
 			}
 		}
 		return result;
 	}
 
 	handleChange(value, event){
-		//this.props.changeSelectedCourse(value);
+		this.props.changeCurrentQuiz(this.props.quizzes[value])
 	}
+	
 	render(){
 		return(
-			<Dropdown drop={'up'}>
-				<Dropdown.Toggle className='toggle-button'> Pertanyaan {this.props.current_quiz_index+1} </Dropdown.Toggle>			
-				<Dropdown.Menu>
-					<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' onChange={this.handleChange}>
-						{this.createMenuItem(this.props.quizzes, this.props.current_quiz_index)}
-					</ToggleButtonGroup>
-				</Dropdown.Menu>
-			</Dropdown>
-
-		
+			<Dropdown drop={'up'} id={'quizzes'}>						
+				<Dropdown.Toggle  drop={'up'} id={'quizzes'}> Pertanyaan {this.props.findCurrentIndex(this.props.current_quiz) +1} </Dropdown.Toggle>		
+				<Dropdown.Menu>		
+					<ToggleButtonGroup name='lectureDates'type='radio' onChange={this.handleChange}>	
+						{this.createMenuItem(this.props.quizzes, this.props.current_quiz)}
+					</ToggleButtonGroup>	
+				</Dropdown.Menu>		
+			</Dropdown>	
+	
 		)
 	}
 }
 export default Live;
+

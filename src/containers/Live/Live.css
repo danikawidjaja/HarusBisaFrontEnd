@@ -105,6 +105,7 @@ html, body{
 	text-align: center;
 	display: flex;
 	justify-content: center;
+	width: 100%;
 }
 
 .LiveMenu .navigator .button{
@@ -121,6 +122,11 @@ html, body{
 	text-align: center;
 	display: flex;
 	justify-content: center;
+	width: 100%;
+}
+
+.LiveMenu .quizzes-options .toggle-button{
+	margin: auto
 }
 
 .LiveMenu .icons{
@@ -129,6 +135,7 @@ html, body{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	width: 100%;
 }
 
 .LiveMenu .icons .icon-btn{
@@ -138,6 +145,8 @@ html, body{
 	color: white;
 	font-size: 12px;
 	line-height: 14px;
+	margin-right: 1rem;
+	margin-left: 1rem;
 }
 
 .LiveMenu .icons .icon-btn .MuiIconButton-label-6{
@@ -154,12 +163,14 @@ html, body{
 	text-align: center;
 	display: flex;
 	justify-content: center;
+	width: 100%;
 }
 
 .LiveMenu .counter{
 	text-align: center;
 	display: flex;
 	justify-content: center;
+	width: 100%;
 }
 
 
