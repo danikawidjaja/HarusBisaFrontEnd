@@ -27,6 +27,7 @@ import Edit from '@material-ui/icons/Edit';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
 import Logo from '../Logo/Logo';
+import ReactSearchBox from 'react-search-box';
 
 
 class Courses extends Component{ 
@@ -46,6 +47,7 @@ class Courses extends Component{
 				email: this.props.data.email,
 				id: this.props.data._id 
 			},
+			courses_name: []
 		};
 
 		this.Auth= this.props.Auth;
@@ -61,6 +63,14 @@ class Courses extends Component{
   	async componentDidMount(){
   		this.props.props.isNavVisible(false);
     	window.scrollTo(0, 0);
+    	var temp_class = []
+		for (let i=0; i<this.state.courses.length; i++){
+			var temp = {value: this.state.courses[i].course_name, key: this.state.courses[i].course_name}
+			temp_class.push(temp)
+		}
+		this.setState({
+			courses_name: temp_class
+		})
   	}
 
   	toggleShowDeleteCourseModal(){
@@ -133,8 +143,21 @@ class Courses extends Component{
 			return(<StudentAddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
 		}
 	}
-						
+	
+	findCourses(value){
+		let found = false
+		for (let i=0 ; i<this.state.courses.length; i++){
+			if (this.state.courses[i].course_name.includes(value)){
+				console.log(this.state.courses[i])
+				found = true
+			}
+		}
+		if (!found){
+			console.log('not found')
+		}
+	}					
 	render(){
+		console.log(this.state.courses_name)
 		return(
 	    	<div className="Courses">
 	    		<CoursesLeft role={this.state.profile.role} name={this.state.profile.first_name}/>
@@ -150,9 +173,12 @@ class Courses extends Component{
 					</div>
 				        <div style={{display:'flex', flexDirection:'row', marginTop:'52px', justifyContent:'space-between', width:'100%'}} >
 			            <h1>Kelas Anda</h1>
-			            <div>
-			            	<p> Search bar </p>
-			            </div> 
+			            <ReactSearchBox
+			            	placeholder='Search Bar'
+			            	style={{margin:'auto'}}
+			            	data={this.state.courses_name}
+          					onChange={value => this.findCourses(value)}
+			            />
 			            <Popup
 							    trigger={
 							    	<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
