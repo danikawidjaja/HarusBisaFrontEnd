@@ -30,6 +30,7 @@ html{
 	height: 100vh;
 	overflow: auto;
 	margin-top: 2.97rem;
+	z-index: 1;
 	
 }
 
@@ -262,7 +263,7 @@ html{
 	justify-content: space-between;
 	position: fixed;
 	width: 100vw;
-	z-index: 4;
+	z-index: 1;
 	
 }
 
@@ -458,6 +459,7 @@ html{
 	overflow: visible;
 	width: 100%;
 	font-family: 'Arial', sans-serif;
+	border-radius: 8px;
 }
 
 
@@ -471,13 +473,16 @@ html{
 }
 
 .Dashboard .right .quizzes .question-card .card-action{
-	background-color: #f4f4f4;
+	background-color: white;
+	border-top: 1px solid #f2f2f2;
 	padding:0;
 	margin: 0;
 	display: flex;
 	flex-direction: row;
 	align-content: flex-start;
 	justify-content: space-between;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
 }
 
 .Dashboard .right .quizzes .question-card .card-action .expand-button-normal{
@@ -491,11 +496,23 @@ html{
 	transition: 1s transform;
 }
 
-.Dashboard .right .quizzes .question-card .card-action .button{
+.Dashboard .right .quizzes .question-card .card-action .button, .Dashboard .right .quizzes .question-card .card-action .button:active {
 	background-color: transparent;
-	border-radius: 0px;
-	margin-top: 0.2rem;
-	margin-bottom: 0.2rem;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	margin-right: 0.5rem;
+	border: 1px solid #bdbdbd;	
+	padding: 0.25rem 2.75rem 0.25rem 2.75rem;
+	outline: 0px;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 0.75rem;
+}
+
+.Dashboard .right .quizzes .question-card .card-action .button:hover{
+	border: 1px solid #FFE01C;
+	background-color: #FFE01C;
 }
 
 .Dashboard .right .quizzes .question-card .answers{

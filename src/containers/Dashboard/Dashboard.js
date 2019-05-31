@@ -73,12 +73,12 @@ class Dashboard extends Component{
 	async changeSelectedLecture(new_selected_lecture){
 		if (new_selected_lecture == "default"){
 			this.setState({
-				selected_lecture: this.state.lectures[0]
+				selected_lecture: this.state.lectures[0],
 			})
 		}
 		else{
 			this.setState({
-				selected_lecture: new_selected_lecture
+				selected_lecture: new_selected_lecture,
 			})
 		}
 		
@@ -513,7 +513,7 @@ class DashboardRight extends Component{
 		super(props);
 		this.state={
 			lecture : this.props.selectedLecture,
-			live: false,
+			live: this.props.selectedLecture.live,
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
@@ -523,7 +523,8 @@ class DashboardRight extends Component{
 		const newProps = this.props
 		if (oldProps.selectedLecture !== newProps.selectedLecture){
 			this.setState({
-				lecture: newProps.selectedLecture
+				lecture: newProps.selectedLecture,
+				live: newProps.selectedLecture.live
 			})
 		}
 	}
@@ -1036,7 +1037,7 @@ class QuizCard extends Component{
 								{this.showSwitch()}
 							</div>
 
-							<Button className='button' onClick={this.goLive}> Live </Button>
+							<Button className='button' onClick={this.goLive}>Live</Button>
 
 						</CardActions></OverrideMaterialUICss>
 
