@@ -50,13 +50,19 @@ html, body{
 	padding-right: 89px;
 	margin-left: 33%;
 }
-.Courses .right h1{
+.Courses .right .header h1{
 	font-weight: 400;
 	font-size: 36px;
-	justify-content: flex-start;
-	text-align: left;
-	margin: auto;
+	margin-top: auto;
+	margin-bottom: auto;
 	color: black;
+}
+
+.Courses .right .header{
+	display:flex;
+	flex-direction:row;
+	margin-top:1.8rem;
+	justify-content: space-between; 
 }
 
 .Courses .right .dEHJYu{
@@ -93,7 +99,8 @@ html, body{
 	outline: 0px;
 	border: none;
 	height: 32px;
-	margin: auto;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 .Courses .right .button, .Courses .right .button:focus{
@@ -104,7 +111,8 @@ html, body{
 	outline: 0px;
 	border: none;
 	height: 32px;
-	margin: auto;
+	margin-top: auto;
+	margin-bottom: auto;
 
 }
 

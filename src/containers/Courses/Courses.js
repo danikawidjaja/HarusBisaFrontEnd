@@ -167,12 +167,13 @@ class Courses extends Component{
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				        <div style={{display:'flex', flexDirection:'row', marginTop:'1.8rem', justifyContent:'space-between', width:'100%'}} >
+				    <div className='header'>
 			            <h1>Kelas Anda</h1>
 			            <ReactSearchBox
 			            	placeholder={'Search'}
 			            	data={this.state.courses}
           					onChange={this.findCourses}
+          					style={{marginTop: 'auto', marginBottom:'auto'}}
 			            />
 			            <Popup
 							    trigger={

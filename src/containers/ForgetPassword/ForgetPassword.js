@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ForgetPassword.css";
 import { Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from '../Footer/Footer';
+import Logo from '../Logo/Logo';
 import {
   HelpBlock,
   FormGroup,
@@ -15,18 +15,18 @@ import {
 export default class ForgetPassword extends Component {
   async componentWillMount(){
     window.scrollTo(0, 0);
-    this.props.isNavVisible(true);
+    this.props.isNavVisible(false);
   }
   render() {
     return (
       <div className='forgetpassword'>
         <div className='text'> 
+          <Logo color='black' size='logo' background='trans' padding={false} style={{width:'6rem', margin:'auto', marginBottom:'2rem'}}/>
           <h1> Lupa password anda? </h1>
           <p style={{fontWeight: '300'}}> Jangan takut. Kami akan mengirimi Anda email instruksi untuk mereset password Anda. </p>
           <br/>
           <ForgetPasswordForm />
         </div>
-        <Footer/>
       </div>     
     );
   }
