@@ -36,7 +36,7 @@ html, body{
 
 
 .LiveQuiz .quiz-duration{
-	width: 5%;
+	width: 10%;
 	display: flex;
 	justify-content: flex-end;
 	font-size: 30px;

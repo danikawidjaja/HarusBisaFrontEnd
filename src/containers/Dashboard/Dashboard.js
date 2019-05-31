@@ -40,6 +40,7 @@ import ReactSlider from 'react-slider';
 import LoadingPage from './LoadingPage';
 import Fullscreen from "react-full-screen";
 import Live from '../Live/Live';
+import socketIOClient from "socket.io-client";
 
 
 
@@ -518,6 +519,7 @@ class DashboardRight extends Component{
 			//isLoading: true,
 		}
 		this.toggleLive = this.toggleLive.bind(this);
+		this.socket = null;
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -572,12 +574,16 @@ class DashboardRight extends Component{
 
 		
 	}
-	toggleLive(){
-		this.setState(prevState => {
+	async toggleLive(){
+		await this.setState(prevState => {
 	      return {
 	        live: !prevState.live,
 	      };
 	    });
+
+	    if (this.state.live){
+	    	this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080');
+	    }
 	    
 	}
 
