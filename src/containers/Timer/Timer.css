@@ -43,13 +43,18 @@ html{
 }
 
 
-.Timer-adjust .adjust .icon{
+.Timer-adjust .adjust .icon-top, .Timer-adjust .adjust .icon-bottom{
 	padding: 0px;
 	margin: 0px;
 	color: #B8B8B7;
 }
 
-.Timer-adjust .adjust .icon .MuiSvgIcon-root-1{
+.Timer-adjust .adjust .icon-top .MuiSvgIcon-root-1, .Timer-adjust .adjust .icon-bottom .MuiSvgIcon-root-1{
 	height: 0.75em;
 	width: 0.75em;
+}
+
+.Timer-adjust .adjust .icon-top .MuiIconButton-root-1, .Timer-adjust .adjust .icon-bottom .MuiIconButton-root-1{
+	transition: none;
+
 }

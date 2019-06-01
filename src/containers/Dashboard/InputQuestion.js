@@ -187,8 +187,9 @@ class MultipleChoiceUpdate extends Component{
 			<form onSubmit={this.handleSubmit}>
 				<FormGroup controlId='question' className='question'>
 					<ControlLabel>Pertanyaan</ControlLabel>
-			            <FormControl
-			              type="text"
+			            <textarea
+			              className='form-control'
+			              id='question'
 			              value={this.state.question}
 			              onChange={this.handleChange}
 			              placeholder= 'Tulis Pertanyaan disini'
@@ -517,8 +518,9 @@ class MultipleChoiceQuestionForm extends Component{
 			<form onSubmit={this.handleSubmit}>
 				<FormGroup controlId='question' className='question'>
 					<ControlLabel>Pertanyaan</ControlLabel>
-			            <FormControl
-			              type="text"
+			            <textarea
+			              className='form-control'
+			              id='question'
 			              value={this.state.question}
 			              onChange={this.handleChange}
 			              placeholder= 'Tulis Pertanyaan disini'
@@ -597,11 +599,12 @@ class MultipleChoiceAnswer extends Component{
 		return(
 			<div className='multiple-choice' id='answer'>
 			    <div style={{display:'flex', flexDirection:'row'}}> 
-					<p> {String.fromCharCode(this.props.option+65)}. </p>
-					<FormControl
-					 	type='text'
+					<p style={{margin:'auto'}}> {String.fromCharCode(this.props.option+65)}. </p>
+					<textarea
+					 	className='form-control'
+					 	id='answer'
 					    placeholder='Tulis jawaban disini'
-					    style={{border:'none', boxShadow:'none'}}
+					    style={{border:'none', boxShadow:'none', marginTop:'0.25rem'}}
 					    onChange={this.handleChange}
 					    value={this.state.answer}
 					/>

@@ -74,8 +74,8 @@ class Timer extends Component{
 		if (this.state.adjust){
 			return(
 				<div className='adjust'>
-					<IconButton className='icon' id='up' onClick={this.adjustDurationUp}><ExpandLessIcon/></IconButton>
-					<IconButton className='icon' id='down' onClick={this.adjustDurationDown}><ExpandMoreIcon/></IconButton>
+					<IconButton className='icon-top' id='up' onClick={this.adjustDurationUp}><ExpandLessIcon/></IconButton>
+					<IconButton className='icon-bottom' id='down' onClick={this.adjustDurationDown}><ExpandMoreIcon/></IconButton>
 				</div>
 			)
 		}
