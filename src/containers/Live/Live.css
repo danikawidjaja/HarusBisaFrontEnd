@@ -43,6 +43,10 @@ html, body{
 	margin-bottom: 1rem;
 }
 
+.LiveQuiz .quiz-duration .Timer p{
+	margin: 0;
+}
+
 .LiveQuiz .quiz-content{
 	display: flex;
 	flex-direction: column;

@@ -17,6 +17,10 @@ html{
 	flex-direction: row;
 	color: black;
 }
+
+.Timer p{
+	margin: auto;
+}
 .Timer-adjust{
 	display: flex;
 	flex-direction: row;

@@ -41,6 +41,7 @@ import LoadingPage from './LoadingPage';
 import Fullscreen from "react-full-screen";
 import Live from '../Live/Live';
 import socketIOClient from "socket.io-client";
+import Timer from '../Timer/Timer';
 
 
 
@@ -641,18 +642,18 @@ class DashboardRight extends Component{
 								</IconButton> </OverrideMaterialUICss>
 		    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>
-		    			} modal closeOnDocumentClick={false}>
+		    			} 
+		    			modal closeOnDocumentClick={false}
+		    			contentStyle={{height:'60vh'}}>
 		    				{close => (<LectureSetting changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} selected_course={this.props.selected_course} Auth={this.props.Auth} closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
-	    			
-
 	    		</div>
     				
 
-    				<div className='quizzes'>		
+    			<div className='quizzes'>		
     				{this.makingQuizzes(this.state.lecture.quizzes)}
-    				</div>
+    			</div>
     				
     			
 			</div>
@@ -695,10 +696,12 @@ class LectureSetting extends Component{
   		}
   		else if (setting =="delete"){
   			return(
-  				<div style={{textAlign:'center'}}>
+  				<div style={{textAlign:'center', margin:'auto', paddingBottom:'1rem'}}>
 	  				<p> Apakah anda ingin menghapus Sesi {this.props.date}? </p>
-	  				<Button onClick={this.deleteLecture}> Iya </Button>
-	  				<Button onClick={this.props.closefunction}> Tidak </Button>
+	  				<div className='buttons' style={{marginTop:'1rem'}}>
+	  					<Button className='button' onClick={this.deleteLecture}> Iya </Button>
+	  					<Button className='button' onClick={this.props.closefunction}> Tidak </Button>
+	  				</div>
   				</div>
   			)
   		}
@@ -708,21 +711,21 @@ class LectureSetting extends Component{
   	}
 	render(){
 		return(
-			<div className='popup'>					
+			<div className='popup' style={{paddingBottom:'2rem'}}>					
 				<div className='popup-header'>
 					<h2> Setting Sesi {this.props.date}</h2>
 					<div >
 						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
 					</div>
 				</div>
-				<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-					<div style={{width:'30%', textAlign:'center'}}>
-						<ToggleButtonGroup name='lecture_setting'type='radio' defaultValue={'edit'} style={{display:'flex', flexDirection:'column', textAlign:'center'}} onChange={this.handleChange}>
-							<ToggleButton value={'edit'} defaultChecked> Edit Sesi </ToggleButton>
-							<ToggleButton value={'delete'}> Hapus Sesi </ToggleButton>
+				<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', height:'40vh'}}>
+					<div style={{width:'30%', textAlign:'center', borderRight:'1px solid #bdbdbd'}}>
+						<ToggleButtonGroup name='lecture_setting'type='radio' defaultValue={'edit'} className='vert-buttons' onChange={this.handleChange}>
+							<ToggleButton className='vert-button' value={'edit'} defaultChecked> Edit Sesi </ToggleButton>
+							<ToggleButton className='vert-button' value={'delete'}> Hapus Sesi </ToggleButton>
 						</ToggleButtonGroup>
 					</div>
-					<div style={{width:'60%'}}>
+					<div style={{width:'70%', paddingLeft:'1rem', verticalAlign:'middle', margin:'auto'}}>
 						{this.content(this.state.setting)}
 					</div>
 				</div>
@@ -999,11 +1002,14 @@ class QuizCard extends Component{
 									position="bottom right"
 									on = "click"
 									closeOnDocumentClick
+									mouseLeaveDelay={10}
+									arrow={false}
+									contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
 								>
 									{close => (
-										<div onClick={close}>
-											<Button onClick={this.toggleUpdateModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
-											<Button onClick={this.toggleDeleteModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
+										<div onClick={close} >
+											<Button onClick={this.toggleUpdateModal} style={{border:'none', display:'flex', width:'100%'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem', color:'#FFE01C'}}/></OverrideMaterialUICss> Edit Pertanyaan </Button>
+											<Button onClick={this.toggleDeleteModal} style={{border:'none', display:'flex', width:'100%'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem', color:'#FFE01C'}}/></OverrideMaterialUICss> Hapus Pertanyaan </Button>
 										</div>
 									)}							
 								</Popup>    
@@ -1031,8 +1037,10 @@ class QuizCard extends Component{
 								</OverrideMaterialUICss>
 								{this.showSwitch()}
 							</div>
-
-							<Button className='button' onClick={this.goLive}>Live</Button>
+							<div style={{display:'flex'}}>
+								<Timer duration={this.props.quiz.time_duration}/>
+								<Button className='button' onClick={this.goLive}>Live</Button>
+							</div>
 
 						</CardActions></OverrideMaterialUICss>
 
