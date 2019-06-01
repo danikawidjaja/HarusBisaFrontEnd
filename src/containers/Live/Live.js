@@ -187,7 +187,7 @@ class LiveMenu extends Component{
 					<IconButton className='icon-btn'><StatisticIcon className='icon'/><p>Statistik</p></IconButton>
 				</div>
 				<div className='timer'>
-					<Timer duration={this.props.duration}/>
+					<Timer duration={this.props.duration} adjust={true}/>
 				</div>
 				<div className='counter'>
 					<p>100</p>

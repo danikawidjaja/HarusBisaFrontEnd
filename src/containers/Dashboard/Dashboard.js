@@ -582,7 +582,8 @@ class DashboardRight extends Component{
 	    });
 
 	    if (this.state.live){
-	    	this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080');
+	    	console.log('connect')
+	    	this.socket = socketIOClient('http://54.174.154.58:8080', {transports : ['websocket']});
 	    }
 	    
 	}

@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import IconButton from '@material-ui/core/IconButton';
+import './Timer.css';
 
 class Timer extends Component{
 	constructor(props){
 		super(props);
 		this.state={
 			duration : this.props.duration,
+			adjust: this.props.adjust,
 		}
 	}
 
@@ -36,17 +41,35 @@ class Timer extends Component{
 			sec = '0' + sec.toString()
 		}
 
-		return min + ":" + sec
-		
+		return min + ":" + sec	
+	}
+
+	timerInput(){
+		if (this.state.adjust){
+			return(
+				<div className='adjust'>
+					<IconButton className='icon'><ExpandLessIcon/></IconButton>
+					<IconButton className='icon'><ExpandMoreIcon/></IconButton>
+				</div>
+			)
+		}
+		else{
+			return null
+		}
 	}
 
 	render(){
 		return(
-			<div>
+			<div className='Timer'>
 				<p>{this.display()}</p>
+				{this.timerInput()}
 			</div>
 		)
 	}
+}
+
+Timer.defaultProps ={
+	adjust: false,
 }
 
 export default Timer;
