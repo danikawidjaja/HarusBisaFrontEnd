@@ -599,12 +599,11 @@ class MultipleChoiceAnswer extends Component{
 		return(
 			<div className='multiple-choice' id='answer'>
 			    <div style={{display:'flex', flexDirection:'row'}}> 
-					<p style={{margin:'auto'}}> {String.fromCharCode(this.props.option+65)}. </p>
+					<p style={{paddingTop:'0.55rem', margin:'0'}}> {String.fromCharCode(this.props.option+65)}. </p>
 					<textarea
 					 	className='form-control'
 					 	id='answer'
 					    placeholder='Tulis jawaban disini'
-					    style={{border:'none', boxShadow:'none', marginTop:'0.25rem'}}
 					    onChange={this.handleChange}
 					    value={this.state.answer}
 					/>

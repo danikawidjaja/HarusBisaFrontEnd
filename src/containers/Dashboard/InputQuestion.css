@@ -70,12 +70,10 @@
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-.InputQuestion .form .setting .form-group .Timer-adjust p{
-	margin-right: 9.2rem;
-}
+
 
 .InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-top .MuiSvgIcon-root-1{
-	width: 0.75rem;
+	width: 1.2rem;
 	border-color: rgba(0, 0, 0, 0.1);
     border-style: solid;
     text-align: center;
@@ -88,10 +86,11 @@
     border-radius: 2px 2px 0px 0px;
     border-width: 1px 1px 0px;
     margin-top: 0.15rem;
+    border-radius: 0px
 }
 
 .InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-bottom .MuiSvgIcon-root-1{
-	width: 0.75rem;
+	width: 1.2rem;
 	border-color: rgba(0, 0, 0, 0.1);
     border-style: solid;
     text-align: center;
@@ -104,9 +103,10 @@
     border-radius: 0px 0px 2px 2px;
     border-width: 0px 1px 1px;
     margin-bottom: 0.1rem;
+    border-radius: 0px
 }
 
-.InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-bottom .MuiIconButton-root-1, .InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-top .MuiIconButton-root-1{
+.InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-bottom, .InputQuestion .form .setting .form-group .Timer-adjust .adjust .icon-top{
 	border-radius: 0px;
 	transition: none;
 } 
@@ -171,9 +171,8 @@
 }
 
 .InputQuestion .form .multiple-choice .form-control{
-	padding: 0;
-	margin: 0;
-
+	border:none;
+	box-shadow:none;
 }
 
 .InputQuestion .question label{
