@@ -66,6 +66,8 @@ class Dashboard extends Component{
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.updateLecturesState = this.updateLecturesState.bind(this);
+		this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+		console.log('socket connected')
 	}
 	updateLecturesState(lectures){
 		this.setState({
@@ -139,21 +141,34 @@ class Dashboard extends Component{
       				school: res.data.school,
       				id: res.data._id
       			},
-      		}, () =>
-      		this.props.Auth.getLectures(this.state.selected_course._id)
-	      	.then(res =>{
-	      		this.setState({
+      		}, async () =>
+      		await this.props.Auth.getLectures(this.state.selected_course._id)
+	      	.then(async res =>{
+	      		await this.setState({
 	      			lectures: res.data.lectures,
 	      			selected_lecture: res.data.lectures[0],
 	      			isLoading: false,
 	      		})
+	      		var lecture_ids = []
+	      		for (let i = 0; i<res.data.lectures.length; i++){
+	      			lecture_ids.push(res.data.lectures[i].id)
+	      		}
+	      		this.socket.emit("set_socket_data", this.state.profile.id, "student",id, lecture_ids)
 	      	})	
 	      )
       	})
       	.catch(err =>{
         	console.log(err.message)
         	alert(err.message)
-      	}) 	
+      	})
+  	}
+
+  	
+  	componentWillUnmount(){
+  		if (this.socket){
+	    	this.socket.disconnect()
+	    	console.log('socket disconnected')
+	    }
   	}
 	render(){
 		if (this.props.Auth.loggedIn()){
@@ -520,7 +535,6 @@ class DashboardRight extends Component{
 			//isLoading: true,
 		}
 		this.toggleLive = this.toggleLive.bind(this);
-		this.socket = null;
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -569,12 +583,6 @@ class DashboardRight extends Component{
 	        live: !prevState.live,
 	      };
 	    });
-
-	    if (this.state.live){
-	    	console.log('connect')
-	    	this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080/api', {transports : ['websocket']});
-	    }
-	    
 	}
 
 
