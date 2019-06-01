@@ -153,7 +153,7 @@ class Dashboard extends Component{
 	      		for (let i = 0; i<res.data.lectures.length; i++){
 	      			lecture_ids.push(res.data.lectures[i].id)
 	      		}
-	      		this.socket.emit("set_socket_data", this.state.profile.id, "student",id, lecture_ids)
+	      		this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
 	      	})	
 	      )
       	})
@@ -164,7 +164,7 @@ class Dashboard extends Component{
   	}
 
   	
-  	componentWillUnmount(){
+  	async componentWillUnmount(){
   		if (this.socket){
 	    	this.socket.disconnect()
 	    	console.log('socket disconnected')

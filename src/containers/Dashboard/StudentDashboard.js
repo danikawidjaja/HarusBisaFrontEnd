@@ -9,6 +9,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PlayArrow from '@material-ui/icons/PlayArrow';
+import socketIOClient from "socket.io-client";
+import Timer from '../Timer/Timer';
 
 
 class StudentDashboard extends Component{
@@ -31,6 +33,8 @@ class StudentDashboard extends Component{
 			new_active_lecture: true,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
+		this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+		console.log('socket connected')
 	}
 	changeSelectedCourse(new_selected_course){
 		this.setState({
@@ -67,13 +71,17 @@ class StudentDashboard extends Component{
 		}
 		return null;
 	}
+	async componentWillUnmount(){
+  		this.socket.disconnect()
+	    console.log('socket disconnected')
+  	}
+
 	async componentDidMount(){
   		this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
     	var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
-  			console.log(res)
       		await this.setState({
       			courses: res.data.courses,
       			selected_course: this.findSelectedCourse(id, res.data.courses),
@@ -85,14 +93,19 @@ class StudentDashboard extends Component{
       				school: res.data.school,
       				id: res.data._id,
       			},
-      		}, () =>
-      		this.props.Auth.getLectures(this.state.selected_course._id)
-	      	.then(res =>{
-	      		this.setState({
+      		}, async () =>
+      		await this.props.Auth.getLectures(this.state.selected_course._id)
+	      	.then(async res =>{
+	      		await this.setState({
 	      			lectures: res.data.lectures,
 	      			selected_lecture: res.data.lectures[0],
 	      			isLoading: false,
 	      		})
+	      		var lecture_ids = []
+	      		for (let i = 0; i<res.data.lectures.length; i++){
+	      			lecture_ids.push(res.data.lectures[i].id)
+	      		}
+	      		this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
 	      	})	
 	      )
       	})
