@@ -26,6 +26,7 @@ class Live extends Component{
 		this.findCurrentIndex = this.findCurrentIndex.bind(this);
 		this.intervalHandle = null;
 		this.tick = this.tick.bind(this);
+		this.changeSecondsRemaining = this.changeSecondsRemaining.bind(this)
 	}
 
 	findCurrentIndex(current_quiz){
@@ -37,9 +38,15 @@ class Live extends Component{
 		}
 	}
 
+	changeSecondsRemaining(dur){
+		this.setState({
+			secondsRemaining : dur
+		})
+	}
 	changeCurrentQuiz(current_quiz){
 		this.setState({
-			current_quiz: current_quiz
+			current_quiz: current_quiz,
+			secondsRemaining: current_quiz.time_duration
 		})
 	}
 
@@ -69,7 +76,7 @@ class Live extends Component{
 	}
 
 	tick(){
-		if (this.state.secondsRemaining == 1){
+		if (this.state.secondsRemaining <= 1){
 			clearInterval(this.intervalHandle)
 			this.toggleStarted()
 		}
@@ -85,7 +92,7 @@ class Live extends Component{
 		return(
 			<div className='Live'>				
 				<LiveQuiz duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu duration={this.state.secondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
+				<LiveMenu duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
 			</div>
 		)
 	}
@@ -187,7 +194,7 @@ class LiveMenu extends Component{
 					<IconButton className='icon-btn'><StatisticIcon className='icon'/><p>Statistik</p></IconButton>
 				</div>
 				<div className='timer'>
-					<Timer duration={this.props.duration} adjust={true}/>
+					<Timer duration={this.props.duration} adjust={true} changeSecondsRemaining={this.props.changeSecondsRemaining}/>
 				</div>
 				<div className='counter'>
 					<p>100</p>

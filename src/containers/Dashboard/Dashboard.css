@@ -263,7 +263,7 @@ html{
 	justify-content: space-between;
 	position: fixed;
 	width: 100vw;
-	z-index: 1;
+	z-index: 2;
 	
 }
 
@@ -374,7 +374,6 @@ html{
 	width: 30px;
 	vertical-align: center;
 	font-size:15px;
-	color: #FFE01C;
 }
 
 .Dashboard .right .content .content-option .interactive .btn: active{

@@ -5,29 +5,47 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-size: 100%;
     font: inherit; 
     vertical-align: baseline;
+    font-family: 'Rubik', sans-serif;
 }
 
 html{
 	height: 100%;
 }
+
 .Timer{
+	display: flex;
+	flex-direction: row;
+	color: black;
+}
+.Timer-adjust{
 	display: flex;
 	flex-direction: row;
 	background-color: white;
 	color: black;
 	border-radius: 8px;
-	vertical-align: baseline;
+	vertical-align: middle;
+	padding: 0rem 1rem 0rem 1rem;
 }
 
+.Timer-adjust p{
+	margin: auto;
+	margin-right: 0.5rem;
+	font-size: 1rem;
+}
 
-.Timer .adjust{
+.Timer-adjust .adjust{
 	display: flex;
 	flex-direction: column;
-	
 }
 
-.Timer .adjust .icon{
+
+.Timer-adjust .adjust .icon{
 	padding: 0px;
 	margin: 0px;
-	color: black;
+	color: #B8B8B7;
+}
+
+.Timer-adjust .adjust .icon .MuiSvgIcon-root-1{
+	height: 0.75em;
+	width: 0.75em;
 }

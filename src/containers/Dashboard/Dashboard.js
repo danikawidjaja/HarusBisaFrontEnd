@@ -514,7 +514,7 @@ class DashboardRight extends Component{
 		super(props);
 		this.state={
 			lecture : this.props.selectedLecture,
-			live: this.props.selectedLecture.live,
+			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
@@ -551,29 +551,17 @@ class DashboardRight extends Component{
 	}
 
 	makingQuizzes(quizzes){
-		//if (!this.state.isLoading){
-			let quizzesComponent = []
-			if (quizzes.length > 0){
-				for (let i=0; i<quizzes.length; i++){
-					//console.log(quizzes[i])
-					quizzesComponent.push(<QuizCard quizzes={this.state.lecture.quizzes} live={this.state.live} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
-				} 
-			} else {
-				quizzesComponent.push(<p> You don't have any questions yet! </p>)
-			}
-			/*this.setState(prevState => {
-				return{
-					isLoading: !prevState.isLoading
-				};
-    		})*/
-			return quizzesComponent
-		/*}
-		else{
-			return null
-		}*/
-
-		
+		let quizzesComponent = []
+		if (quizzes.length > 0){
+			for (let i=0; i<quizzes.length; i++){
+				quizzesComponent.push(<QuizCard quizzes={this.state.lecture.quizzes} live={this.state.live} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
+			} 
+		} else {
+			quizzesComponent.push(<p>You don't have any questions yet!</p>)
+		}
+		return quizzesComponent
 	}
+
 	async toggleLive(){
 		await this.setState(prevState => {
 	      return {
@@ -583,7 +571,7 @@ class DashboardRight extends Component{
 
 	    if (this.state.live){
 	    	console.log('connect')
-	    	this.socket = socketIOClient('http://54.174.154.58:8080', {transports : ['websocket']});
+	    	this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080/api', {transports : ['websocket']});
 	    }
 	    
 	}
@@ -623,14 +611,14 @@ class DashboardRight extends Component{
     				<div className='content-option'>
 	    				<div className='interactive' onClick={this.toggleLive}>
 	    					<OverrideMaterialUICss>
-	    						<PlayArrow className='icon'/>
+	    						<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
 	    					</OverrideMaterialUICss>
 	    					<p> Mulai Sesi </p>
 	    				</div>
 	    				<div className='interactive'>
 	    					<Popup trigger={	    								
 		    					<IconButton style={{background:'transparent', border:'None'}}>
-						    	<OverrideMaterialUICss> <AddIcon className='icon'/> </OverrideMaterialUICss>
+						    	<OverrideMaterialUICss> <AddIcon className='icon' style={{color: "#FFE01C"}}/> </OverrideMaterialUICss>
 							    </IconButton>
 							}
 								modal
@@ -642,14 +630,14 @@ class DashboardRight extends Component{
 	    				</div>
 	    				<div className='interactive'>
 	    					<OverrideMaterialUICss> <IconButton style={{background:'transparent', border:'None'}}>
-	    						<StatisticIcon className='icon'/>
+	    						<StatisticIcon className='icon' style={{color: "#FFE01C"}}/>
 	    					</IconButton> </OverrideMaterialUICss>
 	    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 	    				</div>
 	    				<Popup trigger={
 		    				<div className='interactive'>
 		    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
-									<SettingsOutlined className='icon'/>
+									<SettingsOutlined className='icon' style={{color: "#FFE01C"}}/>
 								</IconButton> </OverrideMaterialUICss>
 		    					<p> Setting Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>

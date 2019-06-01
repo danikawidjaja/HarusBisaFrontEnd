@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Switch from '@material-ui/core/Switch';
 import Close from '@material-ui/icons/Close';
+import Timer from '../Timer/Timer.js';
 
 class InputQuestion extends Component{
 	constructor(props){
@@ -109,6 +110,7 @@ class MultipleChoiceUpdate extends Component{
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
 		this.changePoint = this.changePoint.bind(this);
+		this.changeDuration = this.changeDuration.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -158,22 +160,22 @@ class MultipleChoiceUpdate extends Component{
   	}
   	addUserAnswer(answer, correct, index){
   		if (this.state.answers.length == 0 || this.state.answers.length == index){
-  			//this.state.answers.push({answer: answer, correct: correct})
   			this.state.answers.push(answer);
   		}
   		else{
   			this.state.answers[index] = answer
-  			//this.state.answers[index].answer = answer
-  			//this.state.answers[index].correct = correct
   		}
-  		//console.log(this.state.answers)
   		if (correct){
   			this.setState({
   				correct_answer: index
   			})
   		}
   	}
-
+  	changeDuration(dur){
+  		this.setState({
+  			time_duration:dur
+  		})
+  	}
   	async changePoint(value){
   		await this.setState({
   			point: value
@@ -207,7 +209,7 @@ class MultipleChoiceUpdate extends Component{
 			    		</FormGroup>
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>
-			    			<NumericInput className='form-control'/>
+			    			<Timer adjust={true} duration={this.state.time_duration} changeSecondsRemaining={this.changeDuration}/>
 			    		</FormGroup>
 			    	</div>
 			    </div>
@@ -428,7 +430,7 @@ class MultipleChoiceQuestionForm extends Component{
 			answers:[],
 			main_switched:false,
 			number_of_answers: 2,
-			time_duration: 10,
+			time_duration: 60,
 			point: 1,
 		}
 		this.handleChange = this.handleChange.bind(this);
@@ -437,6 +439,7 @@ class MultipleChoiceQuestionForm extends Component{
 		this.addAnswers = this.addAnswers.bind(this);
 		this.addUserAnswer = this.addUserAnswer.bind(this);
 		this.changePoint = this.changePoint.bind(this);
+		this.changeDuration = this.changeDuration.bind(this);
 	}
 	changeMainSwitched(){
 		this.setState({
@@ -463,6 +466,12 @@ class MultipleChoiceQuestionForm extends Component{
 	    this.setState({
 	      [event.target.id]: event.target.value
 	    });
+  	}
+
+  	changeDuration(dur){
+  		this.setState({
+  			time_duration: dur
+  		})
   	}
   	makeAnswers(num){
   		let result= []
@@ -531,7 +540,7 @@ class MultipleChoiceQuestionForm extends Component{
 			    	
 			    		<FormGroup className='form-group'>
 			    			<ControlLabel> Tambahkan Timer </ControlLabel>
-			    			<NumericInput className='form-control'/>
+			    			<Timer adjust={true} duration={this.state.time_duration} changeSecondsRemaining={this.changeDuration}/>
 			    		</FormGroup>
 			    	</div>
 			    </div>

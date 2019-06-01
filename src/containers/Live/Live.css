@@ -88,7 +88,7 @@ html, body{
 	justify-content: space-between;
 	background-color: #323232;
 	color: white;
-	padding: 15px;
+	padding: 10px;
 	position: absolute;
 	left: 5.57%;
 	right: 7.13%;
@@ -96,9 +96,6 @@ html, body{
 	bottom: 4.01%;
 }
 
-.LiveMenu p{
-	
-}
 
 .LiveMenu .navigator{
 	border-right: solid 1px white;
@@ -165,6 +162,7 @@ html, body{
 	justify-content: center;
 	width: 100%;
 	flex-direction: row;
+	margin: auto;
 }
 
 .LiveMenu .counter{
@@ -172,6 +170,7 @@ html, body{
 	display: flex;
 	justify-content: center;
 	width: 100%;
+	margin: auto;
 }
 
 

@@ -11,6 +11,8 @@ class Timer extends Component{
 			duration : this.props.duration,
 			adjust: this.props.adjust,
 		}
+		this.adjustDurationUp = this.adjustDurationUp.bind(this)
+		this.adjustDurationDown = this.adjustDurationDown.bind(this)
 	}
 
 	async componentDidUpdate(oldProps){
@@ -44,12 +46,36 @@ class Timer extends Component{
 		return min + ":" + sec	
 	}
 
+	async adjustDurationUp(){
+		await this.setState(prevState =>{
+			return{
+				duration: prevState.duration + 10
+			}
+		})
+		this.props.changeSecondsRemaining(this.state.duration)	
+	}
+
+	async adjustDurationDown(){
+		if (this.state.duration>=10){
+			await this.setState(prevState =>{
+				return{
+					duration: prevState.duration-10
+				}
+			})
+		}
+		else{
+			await this.setState({
+				duration: 0
+			})
+		}
+		this.props.changeSecondsRemaining(this.state.duration)
+	}
 	timerInput(){
 		if (this.state.adjust){
 			return(
 				<div className='adjust'>
-					<IconButton className='icon'><ExpandLessIcon/></IconButton>
-					<IconButton className='icon'><ExpandMoreIcon/></IconButton>
+					<IconButton className='icon' id='up' onClick={this.adjustDurationUp}><ExpandLessIcon/></IconButton>
+					<IconButton className='icon' id='down' onClick={this.adjustDurationDown}><ExpandMoreIcon/></IconButton>
 				</div>
 			)
 		}
@@ -60,7 +86,7 @@ class Timer extends Component{
 
 	render(){
 		return(
-			<div className='Timer'>
+			<div className={this.state.adjust? 'Timer-adjust' : 'Timer'}>
 				<p>{this.display()}</p>
 				{this.timerInput()}
 			</div>
@@ -70,6 +96,7 @@ class Timer extends Component{
 
 Timer.defaultProps ={
 	adjust: false,
+	duration:60
 }
 
 export default Timer;
