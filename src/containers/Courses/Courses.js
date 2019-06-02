@@ -776,7 +776,7 @@ class StudCourseCard extends Component{
 									>
 										{close => (
 											<div onClick={close}>
-												<Button onClick={this.toggleShowDeleteCourseModal} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+												<Button onClick={this.toggleShowDeleteCourseModal} style={{border:'none', display:'flex', width:'100%'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
 											</div>
 										)}							
 									</Popup>    
