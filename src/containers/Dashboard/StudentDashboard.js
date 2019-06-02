@@ -33,8 +33,7 @@ class StudentDashboard extends Component{
 			new_active_lecture: true,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
-		this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
-		console.log('socket connected')
+		this.socket = null
 	}
 	changeSelectedCourse(new_selected_course){
 		this.setState({
@@ -72,8 +71,10 @@ class StudentDashboard extends Component{
 		return null;
 	}
 	async componentWillUnmount(){
-  		this.socket.disconnect()
-	    console.log('socket disconnected')
+		if (this.socket != null){
+			this.socket.disconnect()
+	    	console.log('socket disconnected')
+		}
   	}
 
 	async componentDidMount(){
@@ -105,7 +106,19 @@ class StudentDashboard extends Component{
 	      		for (let i = 0; i<res.data.lectures.length; i++){
 	      			lecture_ids.push(res.data.lectures[i].id)
 	      		}
-	      		this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
+
+	      		if (!this.socket){
+					this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+					this.socket.on('connect', () => {
+  						if (this.socket.connected){
+  							console.log('socket connected')
+  							this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
+  						}
+  						else{
+  							console.log('error with connection')
+  						}
+					});
+				}
 	      	})	
 	      )
       	})
