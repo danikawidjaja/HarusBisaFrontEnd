@@ -37,6 +37,8 @@ class ProfileAvatar extends Component{
 					contentStyle={{width:'auto'}}
 					position='bottom right'
 					on = 'click'
+					onOpen={this.props.changeFlag}
+					onClose={this.props.changeFlag}
 				>
 					<div style={{display:'flex', flexDirection:'column', padding:'0.25rem'}}>
 						<div className='popup-profile'>
@@ -62,4 +64,7 @@ class ProfileAvatar extends Component{
 	}
 }
 
+ProfileAvatar.defaultProps = {
+	changeFlag: () => {}
+}
 export default ProfileAvatar

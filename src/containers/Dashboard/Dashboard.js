@@ -62,12 +62,21 @@ class Dashboard extends Component{
 			selected_lecture:null,
 			isLoading: true,
 			changingSelectedCourse: false,
+			flag: false,
 		};
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.updateLecturesState = this.updateLecturesState.bind(this);
-		this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
-		console.log('socket connected')
+		this.changeFlag = this.changeFlag.bind(this);
+		this.socket = null;
+	}
+
+	changeFlag(){
+		this.setState(prevState =>{
+			return{
+				flag: !prevState.flag
+			}
+		})
 	}
 	updateLecturesState(lectures){
 		this.setState({
@@ -153,7 +162,25 @@ class Dashboard extends Component{
 	      		for (let i = 0; i<res.data.lectures.length; i++){
 	      			lecture_ids.push(res.data.lectures[i].id)
 	      		}
-	      		this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
+
+	      		if (!this.socket){
+					this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+					this.socket.on('connect', () => {
+  						if (this.socket.connected){
+  							console.log('socket connected')
+  							var data = {
+  								user_id: this.state.profile.id,
+  								user_role: this.state.profile.role,
+  								lecture_ids: lecture_ids,
+  								course_id: id
+  							}
+  							this.socket.emit("set_socket_data", data)
+  						}
+  						else{
+  							console.log('error with connection')
+  						}
+					});
+				}
 	      	})	
 	      )
       	})
@@ -175,13 +202,13 @@ class Dashboard extends Component{
 			if (!this.state.isLoading){
 				return(
 		    		<div className='Dashboard'>
-		    			<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
-						<div style={{display:'flex', flexDirection:'column'}}>
+		    			<DashboardNavigation changeFlag={this.changeFlag} course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
+						<div style={{display:'flex', flexDirection:'column', marginTop:'2.97rem'}}>
 			    			<div className='left'>
-			    				<DashboardLeft selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    			<div className='right'>
-			    				<DashboardRight selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardRight flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    		</div>
 		    		</div>
@@ -250,7 +277,12 @@ class DashboardLeft extends Component{
 				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.props.selectedLecture} onChange={this.handleChangeLecture}>
             		{this.makeToggleButtons(/*[]*/this.state.lectures)}
           		</ToggleButtonGroup>
-          		<Popup trigger={<Button className='addButton'> + Tambah Sesi </Button>} modal closeOnDocumentClick={false}>
+          		<Popup 
+          		trigger={<Button className='addButton'> + Tambah Sesi </Button>} 
+          		modal 
+          		closeOnDocumentClick={false}
+          		onOpen={this.props.changeFlag}
+          		onClose={this.props.changeFlag}>
   					{close => (
   						<div className='popup'>
 	  						<div className= "popup-header">
@@ -483,7 +515,7 @@ class CoursesOption extends Component{
 	render(){
 		return(
 			<Dropdown className='CoursesOption'>
-				<Dropdown.Toggle className='toggle-button'> {this.props.selected_course.course_name} </Dropdown.Toggle>
+				<Dropdown.Toggle className='toggle-button' onClick={this.props.changeFlag ? this.props.changeFlag : null}> {this.props.selected_course.course_name} </Dropdown.Toggle>
 				
 				<Dropdown.Menu>
 					<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' onChange={this.handleChange}>
@@ -506,7 +538,7 @@ export class DashboardNavigation extends Component{
 				<Logo color='black' size='full' background='trans' padding={false} style={{width:'9.2rem', margin:'auto'}}/>
 				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
 					<div>
-						{this.props.course_option == true ? <CoursesOption selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/> : null
+						{this.props.course_option == true ? <CoursesOption changeFlag={this.props.changeFlag} selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/> : null
 						}
 					</div>
 					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
@@ -516,13 +548,12 @@ export class DashboardNavigation extends Component{
 						<OverrideMaterialUICss><IconButton>
 							<OverrideMaterialUICss> <NotificationsOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 						</IconButton></OverrideMaterialUICss>
-						<ProfileAvatar profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
+						<ProfileAvatar changeFlag={this.props.changeFlag} profile={this.props.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
 				</div>
    			</div>
 		)
 	}
-
 }
 class DashboardRight extends Component{
 
@@ -611,7 +642,7 @@ class DashboardRight extends Component{
 		else{
 		return(
 			<div>
-				<div className='content'>
+				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
 					
     				<div className='header'>
     					{this.makingHeader()}

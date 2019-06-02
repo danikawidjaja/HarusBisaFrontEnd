@@ -112,7 +112,13 @@ class StudentDashboard extends Component{
 					this.socket.on('connect', () => {
   						if (this.socket.connected){
   							console.log('socket connected')
-  							this.socket.emit("set_socket_data", this.state.profile.id, this.state.profile.role ,id, lecture_ids)
+  							var data = {
+  								user_id: this.state.profile.id,
+  								user_role: this.state.profile.role,
+  								lecture_ids: lecture_ids,
+  								course_id: id
+  							}
+  							this.socket.emit("set_socket_data", data)
   						}
   						else{
   							console.log('error with connection')
