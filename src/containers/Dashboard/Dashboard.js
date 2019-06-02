@@ -63,14 +63,32 @@ class Dashboard extends Component{
 			isLoading: true,
 			changingSelectedCourse: false,
 			flag: false,
+			live: false,
 		};
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.updateLecturesState = this.updateLecturesState.bind(this);
 		this.changeFlag = this.changeFlag.bind(this);
 		this.socket = null;
+		this.changeLive = this.changeLive.bind(this);
 	}
 
+	async changeLive(l){
+		await this.setState({
+			live: l
+		})
+
+		if (this.socket != null){
+			console.log(this.state.live)
+			var data = {
+				course_id:this.state.selected_course._id,
+				lecture_id: this.state.selected_lecture.id,
+				role: this.state.profile.role,
+				user_id: this.state.profile.id
+			}
+			this.socket.emit("toggle_lecture_live", data)
+		}
+	}
 	changeFlag(){
 		this.setState(prevState =>{
 			return{
@@ -158,11 +176,18 @@ class Dashboard extends Component{
 	      			selected_lecture: res.data.lectures[0],
 	      			isLoading: false,
 	      		})
+
+	      		if (res.data.lectures[0] != null){
+	      			this.setState({
+	      				live: res.data.lectures[0].live
+	      			})
+	      		}
 	      		var lecture_ids = []
 	      		for (let i = 0; i<res.data.lectures.length; i++){
 	      			lecture_ids.push(res.data.lectures[i].id)
 	      		}
 
+	      		// SOCKET CONFIG
 	      		if (!this.socket){
 					this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
 					this.socket.on('connect', () => {
@@ -208,7 +233,7 @@ class Dashboard extends Component{
 			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    			<div className='right'>
-			    				<DashboardRight flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardRight changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    		</div>
 		    		</div>
@@ -614,6 +639,8 @@ class DashboardRight extends Component{
 	        live: !prevState.live,
 	      };
 	    });
+
+	    this.props.changeLive(this.state.live)
 	}
 
 

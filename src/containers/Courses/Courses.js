@@ -28,6 +28,7 @@ import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
 import Logo from '../Logo/Logo';
 import ReactSearchBox from 'react-search-box';
+import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 
 
 class Courses extends Component{ 
@@ -689,12 +690,15 @@ class ProfCourseCard extends Component{
 										position="bottom right"
 										on = "click"
 										closeOnDocumentClick
+										arrow={false}
+										contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
+										mouseLeaveDelay={1}
 									>
 										{close => (
 											<div onClick={close}>
-												<Button onClick={this.updateCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
-												<Button onClick={close} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><PlayArrow style={{marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
-												<Button onClick={this.deleteCourse} style={{border:'none', display:'flex'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+												<Button onClick={this.updateCourse} style={{border:'none', display:'flex', width:'100%', padding:'2px 12px'}}> <OverrideMaterialUICss><Edit style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Edit Kelas </Button>
+												<Button onClick={close} style={{border:'none', display:'flex', width:'100%', padding:'2px 12px'}}> <OverrideMaterialUICss><FileCopyOutlined style={{marginRight:'1rem'}}/></OverrideMaterialUICss>Lihat Daftar Nilai </Button>
+												<Button onClick={this.deleteCourse} style={{border:'none', display:'flex', width:'100%', padding:'2px 12px'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
 											</div>
 										)}							
 									</Popup>    
@@ -766,6 +770,9 @@ class StudCourseCard extends Component{
 										position="bottom right"
 										on = "click"
 										closeOnDocumentClick
+										arrow={false}
+										contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
+										mouseLeaveDelay={1}
 									>
 										{close => (
 											<div onClick={close}>
