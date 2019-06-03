@@ -14,7 +14,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
-import GridLayout from 'react-grid-layout';
 import FormControlUI from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -29,6 +28,8 @@ import Delete from '@material-ui/icons/Delete';
 import Logo from '../Logo/Logo';
 import ReactSearchBox from 'react-search-box';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 
 class Courses extends Component{ 
@@ -114,7 +115,7 @@ class Courses extends Component{
 			}
 			else{
 				for (let i=0; i<numberOfCourses; i++){
-					coursesComponent.push(<StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState} data-grid={{x: i, y: i, w: 1, h: 1, static: true}}/>)
+					coursesComponent.push(<Grid item xs={6}><StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/></Grid>)
 				}
 			}
 		} else {
@@ -229,10 +230,9 @@ class Courses extends Component{
 			        	)}
 			        </Popup>
 				        <div className= {this.state.profile.role == "professor" ? 'content-prof' : 'content-stud'}>
-				        	{/*<GridLayout className="layout" width={1200} autoSize={true} cols={2}>*/}
-			        		{this.makingCourses(this.state.courses_to_show)}
-			        		{/*</GridLayout>*/}
-			        		
+			        		<Grid container justify='space-between'>
+				  				{this.makingCourses(this.state.courses_to_show)}
+				  			</Grid>
 						</div>
 						
 	        	</div>

@@ -237,9 +237,9 @@ html, body{
 
 .Courses .student-course-card{
 	overflow: visible;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	margin: 1rem;
 	border-radius: 8px;
+
 
 }
 
