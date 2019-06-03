@@ -30,7 +30,7 @@ class StudentDashboard extends Component{
 			selected_lecture:null,
 			isLoading: true,
 			changingSelectedCourse: false,
-			new_active_lecture: true,
+			new_active_lecture: false,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.socket = null
@@ -124,6 +124,13 @@ class StudentDashboard extends Component{
   							console.log('error with connection')
   						}
 					});
+				}
+				else{
+					this.socket.on("lecture_is_live",(data) =>{
+						this.setState({
+							new_active_lecture: data
+						})
+					})
 				}
 	      	})	
 	      )
