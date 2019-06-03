@@ -229,11 +229,18 @@ class Courses extends Component{
 			        		</div>
 			        	)}
 			        </Popup>
-				        <div className= {this.state.profile.role == "professor" ? 'content-prof' : 'content-stud'}>
-			        		<Grid container justify='space-between'>
-				  				{this.makingCourses(this.state.courses_to_show)}
-				  			</Grid>
-						</div>
+			        {this.state.profile.role == "professor" ?
+			        <div className='content-prof'>
+			        	{this.makingCourses(this.state.courses_to_show)}
+			        </div>
+			        :
+			        <div className= 'content-stud'>
+			        	<Grid container justify='space-between'>
+				  			{this.makingCourses(this.state.courses_to_show)}
+				  		</Grid>
+					</div>
+			    	}
+				        
 						
 	        	</div>
 	        </div>

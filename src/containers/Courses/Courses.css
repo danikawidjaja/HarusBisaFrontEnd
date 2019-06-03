@@ -201,11 +201,7 @@ html, body{
 
 .Courses .right .course-popup .form{
 	align-items: center;
-	margin-right: 5vw;
-    margin-left: 5vw;
-    margin-bottom: 1vw;
-    justify-content: flex-end;
-    
+	padding: 1rem;
 }
 
 
