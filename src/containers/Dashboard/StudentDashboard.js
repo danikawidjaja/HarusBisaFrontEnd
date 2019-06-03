@@ -162,7 +162,7 @@ class StudentDashboard extends Component{
 			else{
 				return(
 				<div>
-					<LoadingPage/>
+					<LoadingPage role={'student'}/>
 				</div>
 				)
 			}

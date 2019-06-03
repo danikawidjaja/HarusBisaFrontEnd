@@ -3,6 +3,9 @@ import './LoadingPage.css';
 import { ClipLoader } from 'react-spinners';
 
 class LoadingPage extends Component{
+	constructor(props){
+		super(props);
+	}
 	render(){
 		return(
 			<div className='LoadingPage'>
@@ -11,11 +14,15 @@ class LoadingPage extends Component{
 					<br/>
 					<p> Soekarno </p>
 					<br/>
-					<ClipLoader color={'#ffe01c'} sizeUnit={'em'} size={5}/>
+					<ClipLoader color={this.props.role == "professor" ? '#ffe01c' : '#6311AB'} sizeUnit={'em'} size={5}/>
 				</div>
 			</div>
 		)
 	}
+}
+
+LoadingPage.defaultProps = {
+	role: 'professor'
 }
 
 export default LoadingPage;
