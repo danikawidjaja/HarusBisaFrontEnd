@@ -19,6 +19,7 @@ class Live extends Component{
 			started:false,
 			current_quiz: this.props.quiz,
 			secondsRemaining: this.props.quiz.time_duration,
+			show_stats: false,
 		}
 		this.toggleShowCorrectAnswer = this.toggleShowCorrectAnswer.bind(this);
 		this.toggleStarted = this.toggleStarted.bind(this);
@@ -27,6 +28,7 @@ class Live extends Component{
 		this.intervalHandle = null;
 		this.tick = this.tick.bind(this);
 		this.changeSecondsRemaining = this.changeSecondsRemaining.bind(this)
+		this.toggleShowStats = this.toggleShowStats.bind(this);
 	}
 
 	findCurrentIndex(current_quiz){
@@ -54,6 +56,14 @@ class Live extends Component{
 		this.setState(prevState =>{
 			return{
 				show_correct_answer:!prevState.show_correct_answer,
+			}
+		})
+	}
+
+	toggleShowStats(){
+		this.setState(prevState =>{
+			return{
+				show_stats: !prevState.show_stats
 			}
 		})
 	}
@@ -91,8 +101,8 @@ class Live extends Component{
 	render(){
 		return(
 			<div className='Live'>				
-				<LiveQuiz started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
+				<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
+				<LiveMenu show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
 			</div>
 		)
 	}
@@ -132,12 +142,27 @@ class LiveQuiz extends Component{
 				</div>
 				<div className='quiz-content'>
 					<p className='question'> {this.props.quiz.question} </p>
-					<div className='answers'>{this.makeAns()}</div>
+					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+						<div className='answers' style={{width: this.props.show_stats ? '50%':'100%' }}>{this.makeAns()}</div>
+						<div className='quiz-stat'>{this.props.show_stats ?	<QuizStat/> : null}</div>
+					</div>
 				</div>
 				<div className='quiz-duration' >
 					<Timer duration={this.props.duration}/>
 				</div>
 			</div>
+		)
+	}
+}
+
+class QuizStat extends Component{
+	constructor(props){
+		super(props);
+	}
+
+	render(){
+		return(
+			<div> Stats </div>
 		)
 	}
 }
@@ -182,16 +207,16 @@ class LiveMenu extends Component{
 		return(
 			<div className='LiveMenu'>
 				<div className='navigator'>
-					<IconButton className='icon-btn' onClick={this.prevQuiz} disabled={this.props.started ? true : false}><ExpandMoreIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
+					<IconButton className='icon-btn' onClick={this.prevQuiz}  disabled={this.props.started ? true : false}><ExpandMoreIcon className='icon'/></IconButton>
 					<Button className='button' onClick={this.props.toggleStarted} disabled={this.props.duration == 0 ? true : false}>{this.buttonContent()}</Button>
-					<IconButton className='icon-btn' onClick={this.nextQuiz} disabled={this.props.started ? true : false}><ExpandLessIcon style={{transform:'rotate(90deg)', margin:'auto', color:'white'}}/></IconButton>
+					<IconButton className='icon-btn' onClick={this.nextQuiz} disabled={this.props.started ? true : false}><ExpandLessIcon className='icon'/></IconButton>
 				</div>
 				<div className='quizzes-options'>
 					<p><QuizzesOption changeCurrentQuiz={this.props.changeCurrentQuiz} current_quiz={this.props.current_quiz} quizzes={this.props.quizzes} findCurrentIndex={this.props.findCurrentIndex}/></p>
 				</div>
 				<div className='icons'>
-					<IconButton className='icon-btn' disableRipple={true} onClick={this.props.toggleShowCorrectAnswer}><CheckCircleOutline className='icon'/><p>Jawaban</p></IconButton>
-					<IconButton className='icon-btn'disableRipple={true}><StatisticIcon className='icon'/><p>Statistik</p></IconButton>
+					<IconButton className={this.props.show_correct_answer? 'icon-btn-on' : 'icon-btn-off'} disabled={this.props.started ? true : false} disableRipple={true} onClick={this.props.toggleShowCorrectAnswer}><CheckCircleOutline className='icon'/><p>Jawaban</p></IconButton>
+					<IconButton className={this.props.show_stats? 'icon-btn-on':'icon-btn-off'} disableRipple={true} onClick={this.props.toggleShowStats}><StatisticIcon className='icon'/><p>Statistik</p></IconButton>
 				</div>
 				<div className='timer'>
 					<Timer duration={this.props.duration} adjust={true} changeSecondsRemaining={this.props.changeSecondsRemaining}/>
