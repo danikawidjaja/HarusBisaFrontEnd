@@ -110,7 +110,7 @@ class Lecture extends Component{
   		})
   	}
   	newQuiz(){
-  		window.scrollTo(0, 0);
+  		window.scrollTo(0,document.body.scrollHeight);
   		this.toggleNew();
   	}
 	render(){

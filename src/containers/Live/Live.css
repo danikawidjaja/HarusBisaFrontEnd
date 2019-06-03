@@ -62,6 +62,14 @@ html, body{
 	font-size: 24px;
 }
 
+.LiveQuiz .quiz-content .answers .answer{
+	background: transparent;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+	padding: 1rem;
+	border: 1px solid transparent;
+}
+
 .LiveQuiz .quiz-content .answers .live-answer{
 	background: #F7F3DC;
 	border-radius: 8px;
@@ -118,6 +126,10 @@ html, body{
     margin-right: 1rem;
 }
 
+.LiveMenu .navigator .icon-btn, .LiveMenu .navigator .icon-btn:hover, .LiveMenu .navigator .icon-btn:active{
+	
+}
+
 .LiveMenu .quizzes-options{
 	border-right: solid 1px white;
 	text-align: center;
@@ -155,8 +167,8 @@ html, body{
 
 }
 
-.LiveMenu .icons .icon-btn .icon{
-	color: white;
+.LiveMenu .icons .icon-btn, .LiveMenu .icons .icon-btn:hover, .LiveMenu .icons .icon-btn:active{
+	background-color: transparent;
 }
 
 .LiveMenu .timer{
