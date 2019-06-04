@@ -235,7 +235,7 @@ class Dashboard extends Component{
 			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    			<div className='right'>
-			    				<DashboardRight changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardRight socket={this.socket} changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    		</div>
 		    		</div>
@@ -593,6 +593,7 @@ class DashboardRight extends Component{
 		this.state={
 			lecture : this.props.selectedLecture,
 			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
+			number_of_students_connected: 0
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
@@ -608,6 +609,20 @@ class DashboardRight extends Component{
 		}
 	}
 
+	async componentDidMount(){
+		console.log('hereeee')
+		if (this.props.socket != null){
+			console.log('here')
+		this.props.socket.on("new_student_join", () =>{
+			console.log('new student join')
+			this.setState(prevState =>{
+				return{
+					number_of_students_connected: prevState.number_of_students_connected+1
+				}
+			})
+		})
+	}
+	}
 	liveIndicator(){
 		if (this.state.live){
 			return(
@@ -738,7 +753,7 @@ class DashboardRight extends Component{
 		    				</div>
 		    			}
 		    			modal closeOnDocumentClick={false}>
-		    				{close => (<LectureStat total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    				{close => (<LectureStat number_of_students_connected={this.state.number_of_students_connected} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
 
@@ -787,14 +802,14 @@ class LectureStat extends Component{
 				<div>
 					<div className='circular-bar'>
 					<CircularProgressbarWithChildren 
-					value={(1/this.props.total_enrolled_stud)*100}
+					value={(this.props.number_of_students_connected/this.props.total_enrolled_stud)*100}
 					styles={buildStyles({
 					    backgroundColor: "transparent",
 					    pathColor: "#FFE01C",
 					    trailColor: "#EBEBEB",
 					})}
 					>
-						<h1>{1}</h1>
+						<h1>{this.props.number_of_students_connected}</h1>
 						<p> dari {this.props.total_enrolled_stud}</p>
 					</CircularProgressbarWithChildren>
 					</div>

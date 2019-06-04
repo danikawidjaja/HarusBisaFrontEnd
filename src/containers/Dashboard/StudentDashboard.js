@@ -12,7 +12,7 @@ import PlayArrow from '@material-ui/icons/PlayArrow';
 import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
 
-
+var socket
 class StudentDashboard extends Component{
 	constructor(props){
 		super(props);
@@ -38,7 +38,7 @@ class StudentDashboard extends Component{
 			,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
-		this.socket = null;
+		socket = null;
 		this.toNewLecture = this.toNewLecture.bind(this);
 	}
 	changeSelectedCourse(new_selected_course){
@@ -76,12 +76,7 @@ class StudentDashboard extends Component{
 		}
 		return null;
 	}
-	async componentWillUnmount(){
-		if (this.socket != null){
-			this.socket.disconnect()
-	    	console.log('socket disconnected')
-		}
-  	}
+	
 
 	async componentDidMount(){
   		this.props.isNavVisible(false);
@@ -113,10 +108,10 @@ class StudentDashboard extends Component{
 	      			lecture_ids.push(res.data.lectures[i].id)
 	      		}
 
-	      		if (!this.socket){
-					this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
-					this.socket.on('connect', () => {
-  						if (this.socket.connected){
+	      		if (!socket){
+					socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+					socket.on('connect', () => {
+  						if (socket.connected){
   							console.log('socket connected')
   							var data = {
   								user_id: this.state.profile.id,
@@ -124,15 +119,15 @@ class StudentDashboard extends Component{
   								lecture_ids: lecture_ids,
   								course_id: id
   							}
-  							this.socket.emit("set_socket_data", data)
+  							socket.emit("set_socket_data", data)
   						}
   						else{
   							console.log('error with connection')
   						}
 					});
 				}
-				if (this.socket){
-					this.socket.on("lecture_is_live",(data) =>{
+				if (socket){
+					socket.on("lecture_is_live",(data) =>{
 						if (data.live){
 							console.log(data)
 							var temp_date = data.date.split('/')
@@ -263,3 +258,4 @@ class LectureTable extends Component{
 }
 
 export default StudentDashboard;
+export {socket};

@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { FaFilePdf, FaFileWord } from "react-icons/fa";
 import Logo from '../Logo/Logo';
 import Timer from '../Timer/Timer';
+import { socket } from '../Dashboard/StudentDashboard';
 
 class Lecture extends Component{
 	constructor(props){
@@ -72,11 +73,20 @@ class Lecture extends Component{
       		}, () =>
       		this.props.Auth.getLectures(this.state.selected_course._id)
 	      	.then(res =>{
+	      		var temp = this.findSelected(lecture_id, res.data.lectures,'lecture')
 	      		this.setState({
-	      			selected_lecture: this.findSelected(lecture_id, res.data.lectures, 'lecture'),
+	      			selected_lecture: temp,
 	      			isLoading: false,
-	      			live: this.findSelected(lecture_id, res.data.lectures,'lecture').live
+	      			live: temp.live
 	      		})
+	      		if (temp.live){
+	      			var data = {
+	      				course_id: this.state.selected_course._id,
+	      				lecture_id: temp.id
+	      			}
+	      			socket.emit("get_info")
+	      			socket.emit("participate_lecture", data)
+	      		}
 	      	})	
 	      )
       	})
