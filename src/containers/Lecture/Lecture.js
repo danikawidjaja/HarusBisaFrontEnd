@@ -8,6 +8,7 @@ import Popup from 'reactjs-popup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FaFilePdf, FaFileWord } from "react-icons/fa";
 import Logo from '../Logo/Logo';
+import Timer from '../Timer/Timer';
 
 class Lecture extends Component{
 	constructor(props){
@@ -29,7 +30,6 @@ class Lecture extends Component{
       		live:true,
       		new_quiz:false,
 		}
-		this.toggleLive = this.toggleLive.bind(this);
 		this.toggleNew = this.toggleNew.bind(this);
 		this.newQuiz = this.newQuiz.bind(this);
 	}
@@ -75,6 +75,7 @@ class Lecture extends Component{
 	      		this.setState({
 	      			selected_lecture: this.findSelected(lecture_id, res.data.lectures, 'lecture'),
 	      			isLoading: false,
+	      			live: this.findSelected(lecture_id, res.data.lectures,'lecture').live
 	      		})
 	      	})	
 	      )
@@ -99,11 +100,6 @@ class Lecture extends Component{
     handleChange = name => event => {
     	this.setState({ [name]: event.target.checked });
   	};
-  	toggleLive(){
-  		this.setState(prevState => {
-  			return{live: !prevState.live};
-  		})
-  	}
   	toggleNew(){
   		this.setState(prevState => {
   			return{new_quiz: !prevState.new_quiz};
@@ -131,7 +127,6 @@ class Lecture extends Component{
 							<div>
 								<h1>{this.state.selected_course.course_name}</h1>
 								<p>Sesi {this.state.selected_lecture.date.split('/')[0] + '/' + this.state.selected_lecture.date.split('/')[1]}</p>
-								<button onClick={this.toggleLive}>Toggle Live </button> 
 								<button onClick={this.toggleNew}>Toggle New Quiz </button> 
 							</div>
 							{this.state.live ? null :
@@ -156,8 +151,6 @@ class Lecture extends Component{
 							{this.makeQuizzes()}
 						</div>
 				    </div>
-				    <button onClick={this.toggleLive}>Toggle Live </button> 
-					<button onClick={this.toggleNew}>Toggle New Quiz </button> 
 				</div>
 			)
 		}
@@ -212,7 +205,7 @@ export class Quiz extends Component{
 					<div className='answers'>{this.makeAns()}</div>
 				</div>
 				<div className='time'>
-					<p> {this.props.quiz.time_duration} </p>
+					<Timer duration={this.props.quiz.time_duration}/>
 				</div>
 			</div>
 		)

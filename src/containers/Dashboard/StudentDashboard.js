@@ -30,10 +30,16 @@ class StudentDashboard extends Component{
 			selected_lecture:null,
 			isLoading: true,
 			changingSelectedCourse: false,
-			new_active_lecture: false,
+			new_active_lecture: {
+				live: false,
+				lecture_id: "",
+				date:''
+			}
+			,
 		};
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
-		this.socket = null
+		this.socket = null;
+		this.toNewLecture = this.toNewLecture.bind(this);
 	}
 	changeSelectedCourse(new_selected_course){
 		this.setState({
@@ -127,10 +133,17 @@ class StudentDashboard extends Component{
 				}
 				if (this.socket){
 					this.socket.on("lecture_is_live",(data) =>{
-						console.log(data)
-						this.setState({
-							new_active_lecture: data
-						})
+						if (data.live){
+							console.log(data)
+							var temp_date = data.date.split('/')
+							this.setState({
+								new_active_lecture:{
+									live: data.live,
+									lecture_id: data.lecture_id,
+									date: temp_date[0] + '/' + temp_date[1]
+								}
+							})
+						}
 					})
 				}
 	      	})	
@@ -139,6 +152,10 @@ class StudentDashboard extends Component{
       	.catch(err =>{
         	console.log(err.message)
       	}) 	
+  	}
+
+  	toNewLecture(){
+  		this.props.history.push('/'+this.state.selected_course._id+'/lecture/' + this.state.new_active_lecture.lecture_id);
   	}
 	render(){
 		if (this.props.Auth.loggedIn()){
@@ -149,10 +166,10 @@ class StudentDashboard extends Component{
 		    			<div className='StudentDashboard'>
 		    				<h1> {this.state.selected_course.course_name} </h1>
 		    				<div className='line'></div>
-		    				{this.state.new_active_lecture ? 
-		    					<div className='new_lecture'>
+		    				{this.state.new_active_lecture.live ? 
+		    					<div className='new_lecture' onClick={this.toNewLecture}>
 		    						<PlayArrow style={{color:'white'}}/>
-		    						<p>Bergabung dengan sesi baru</p>
+		    						<p>Bergabung dengan sesi {this.state.new_active_lecture.date}</p>
 		    					</div> 
 		    					: null
 		    				}

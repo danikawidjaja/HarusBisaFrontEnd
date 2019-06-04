@@ -6,6 +6,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PlayArrow from '@material-ui/icons/PlayArrow';
+import Stop from '@material-ui/icons/Stop';
 import PeopleOutline from '@material-ui/icons/PeopleOutline';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
@@ -676,12 +677,39 @@ class DashboardRight extends Component{
     					{this.liveIndicator()} 
     				</div>
     				<div className='content-option'>
-	    				<div className='interactive' onClick={this.toggleLive}>
-	    					<OverrideMaterialUICss>
-	    						<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
-	    					</OverrideMaterialUICss>
-	    					<p> Mulai Sesi </p>
-	    				</div>
+    					{ this.state.live ? 
+    						<div className='interactive' onClick={this.toggleLive}>
+    							<Stop className='icon' style={{color:'#FFE01C'}}/>
+    							<p> Stop Sesi </p>
+    						</div>
+    						:
+    						<Popup
+    						trigger={
+			    				<div className='interactive'>
+			    					<OverrideMaterialUICss>
+			    						<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
+			    					</OverrideMaterialUICss>
+			    					<p> Mulai Sesi </p>
+			    				</div>
+			    			}
+			    			modal
+			    			closeOnDocumentClick={false}
+			    			contentStyle={{minHeight:'40vh'}}>
+			    			{close => (
+			    				<div className='popup'>
+			    					<div className='popup-header'>
+			    						<p>Apakah anda yakin?</p>
+			    					</div>
+			    					<p style={{marginBottom:'1rem'}}>Dengan memulai sesi, anda akan menghapus semua data dari sesi ini jika sudah pernah dimulai sebelumnya.</p>
+			    					<div className='buttons'>
+				    					<Button className='button' onClick={this.toggleLive}>Iya</Button>
+				    					<Button className='button' onClick={close}>Tidak</Button>
+				    				</div>
+			    				</div>
+			    				)
+			    			}
+			    			</Popup>
+		    			}
 	    				<div className='interactive'>
 	    					<Popup trigger={	    								
 		    					<IconButton style={{background:'transparent', border:'None'}}>
