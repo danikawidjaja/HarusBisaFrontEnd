@@ -8,6 +8,9 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import { Button, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown, ButtonToolbar} from "react-bootstrap";
 import Timer from '../Timer/Timer';
+import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
+import "react-circular-progressbar/dist/styles.css";
+import Grid from '@material-ui/core/Grid';
 
 
 class Live extends Component{
@@ -144,7 +147,7 @@ class LiveQuiz extends Component{
 					<p className='question'> {this.props.quiz.question} </p>
 					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
 						<div className='answers' style={{width: this.props.show_stats ? '50%':'100%' }}>{this.makeAns()}</div>
-						<div className='quiz-stat'>{this.props.show_stats ?	<QuizStat/> : null}</div>
+						<div className='quiz-stat'>{this.props.show_stats ?	<QuizStat show_correct_answer={this.props.show_correct_answer} answers={this.props.quiz.answers} correct_answer={this.props.quiz.correct_answer}/> : null}</div>
 					</div>
 				</div>
 				<div className='quiz-duration' >
@@ -160,9 +163,74 @@ class QuizStat extends Component{
 		super(props);
 	}
 
+	makeCircularBars(){
+		var data = [10,20,30,40,50]
+		var ans = this.props.answers
+		var components = []
+
+		for (let i=0; i<ans.length; i++){
+			if (this.props.show_correct_answer){
+				if (i==this.props.correct_answer){
+					components.push(
+						<Grid item xs={5}>
+							<CircularProgressbarWithChildren 
+							value={data[i]}
+							styles={buildStyles({
+					          backgroundColor: "transparent",
+					          pathColor: "#82DAA4",
+					          trailColor: "#EBEBEB",
+					        })}
+					     	>
+								<h1>{data[i]}%</h1>
+								<p>{String.fromCharCode(i+65)}.</p>
+							</CircularProgressbarWithChildren>
+						</Grid>
+					)
+				}
+				else{
+					components.push(
+						<Grid item xs={5}>
+							<CircularProgressbarWithChildren 
+							value={data[i]}
+							styles={buildStyles({
+					          backgroundColor: "transparent",
+					          pathColor: "#9B9B9B",
+					          trailColor: "#EBEBEB",
+					        })}
+					     	>
+								<h1>{data[i]}%</h1>
+								<p>{String.fromCharCode(i+65)}.</p>
+							</CircularProgressbarWithChildren>
+						</Grid>
+					)
+				}
+			}
+			else{
+				components.push(
+					<Grid item xs={5}>
+						<CircularProgressbarWithChildren 
+						value={data[i]}
+						styles={buildStyles({
+				          backgroundColor: "transparent",
+				          pathColor: "#9B9B9B",
+				          trailColor: "#EBEBEB",
+				        })}
+				     	>
+							<h1>{data[i]}%</h1>
+							<p>{String.fromCharCode(i+65)}.</p>
+						</CircularProgressbarWithChildren>
+					</Grid>
+				)
+			}
+		}
+
+		return components
+	}
 	render(){
 		return(
-			<div> Stats </div>
+			<Grid container justify='space-between' alignItems='center' alignContent='center'>
+				{this.makeCircularBars()}
+			</Grid>
 		)
 	}
 }

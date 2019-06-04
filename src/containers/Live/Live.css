@@ -58,6 +58,10 @@ html, body{
 	margin-bottom: 1rem;
 }
 
+.LiveQuiz .quiz-content .answers{
+	margin-right: 1rem;
+}
+
 .LiveQuiz .quiz-content .answers p{
 	font-size: 24px;
 }
@@ -98,9 +102,28 @@ html, body{
 	font-size: 24px;
 }
 
-.LiveQuiz .quiz-duration{
-	height: 100%;
+.LiveQuiz .quiz-content .quiz-stat{
+	max-width: 50%;
 }
+
+
+
+.LiveQuiz .quiz-content .quiz-stat h1{
+	font-family: Rubik;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 2.5rem;
+	letter-spacing: -2.03px;
+}
+
+.LiveQuiz .quiz-content .quiz-stat p{
+	font-family: Rubik;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1rem;
+	letter-spacing: -0.966667px;
+}
+
 
 .LiveMenu{
 	display: flex;
