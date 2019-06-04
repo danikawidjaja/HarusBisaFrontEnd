@@ -125,8 +125,9 @@ class StudentDashboard extends Component{
   						}
 					});
 				}
-				else{
+				if (this.socket){
 					this.socket.on("lecture_is_live",(data) =>{
+						console.log(data)
 						this.setState({
 							new_active_lecture: data
 						})
