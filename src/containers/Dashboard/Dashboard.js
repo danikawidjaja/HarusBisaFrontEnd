@@ -43,6 +43,7 @@ import Fullscreen from "react-full-screen";
 import Live from '../Live/Live';
 import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
+import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 
 
 
@@ -727,12 +728,20 @@ class DashboardRight extends Component{
 						  	</Popup>
 							<p> Tambah<br/>Pertanyaan </p>
 	    				</div>
-	    				<div className='interactive'>
-	    					<OverrideMaterialUICss> <IconButton style={{background:'transparent', border:'None'}}>
-	    						<StatisticIcon className='icon' style={{color: "#FFE01C"}}/>
-	    					</IconButton> </OverrideMaterialUICss>
-	    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
-	    				</div>
+
+	    				<Popup trigger={
+		    				<div className='interactive'>
+		    					<OverrideMaterialUICss> <IconButton style={{background:'transparent', border:'None'}}>
+		    						<StatisticIcon className='icon' style={{color: "#FFE01C"}}/>
+		    					</IconButton> </OverrideMaterialUICss>
+		    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
+		    				</div>
+		    			}
+		    			modal closeOnDocumentClick={false}>
+		    				{close => (<LectureStat total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    			</Popup>
+
+
 	    				<Popup trigger={
 		    				<div className='interactive'>
 		    					<OverrideMaterialUICss><IconButton style={{background:'transparent', border:'None'}}>
@@ -760,6 +769,41 @@ class DashboardRight extends Component{
 	}
 }
 
+class LectureStat extends Component{
+	constructor(props){
+		super(props);
+
+	}
+
+	render(){
+		return(
+			<div className='popup'>
+				<div className='popup-header'>
+					<p>Statistik Sesi {this.props.date}</p>
+					<div >
+						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
+					</div>
+				</div>
+				<div>
+					<div className='circular-bar'>
+					<CircularProgressbarWithChildren 
+					value={(1/this.props.total_enrolled_stud)*100}
+					styles={buildStyles({
+					    backgroundColor: "transparent",
+					    pathColor: "#FFE01C",
+					    trailColor: "#EBEBEB",
+					})}
+					>
+						<h1>{1}</h1>
+						<p> dari {this.props.total_enrolled_stud}</p>
+					</CircularProgressbarWithChildren>
+					</div>
+					<p>siswa yang sudah masuk kedalam sesi</p>
+				</div>
+			</div>
+		)
+	}
+}
 class LectureSetting extends Component{
 	constructor(props){
 		super(props)

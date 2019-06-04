@@ -233,6 +233,26 @@ html{
 	color: black;
 }
 
+.Dashboard .popup .circular-bar{
+	max-width:8rem;
+	max-height:8rem;
+	margin:auto;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
+
+.Dashboard .popup .circular-bar h1{
+	font-size: 2.5rem;
+	letter-spacing: -2.03px;
+	line-height: 1.8rem;
+}
+
+.Dashboard .popup .circular-bar p{
+	font-weight: 300;
+	line-height: 24px;
+	letter-spacing: -0.966667px;
+	font-size: 1rem;
+}
 
 .Dashboard .left .popup .buttons{
 	display: flex;
