@@ -51,7 +51,6 @@ class Lecture extends Component{
 		return null;
 	}
 
-
 	async componentDidMount(){
 		var course_id = this.props.match.params.course_id;
 		var lecture_id = this.props.match.params.lecture_id;
@@ -79,12 +78,13 @@ class Lecture extends Component{
 	      			isLoading: false,
 	      			live: temp.live
 	      		})
+	      		
 	      		if (temp.live){
+	      			console.log('hey')
 	      			var data = {
 	      				course_id: this.state.selected_course._id,
 	      				lecture_id: temp.id
 	      			}
-	      			socket.emit("get_info")
 	      			socket.emit("participate_lecture", data)
 	      		}
 	      	})	

@@ -593,7 +593,7 @@ class DashboardRight extends Component{
 		this.state={
 			lecture : this.props.selectedLecture,
 			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
-			number_of_students_connected: 0
+			number_of_students_connected: 0,
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
@@ -609,20 +609,7 @@ class DashboardRight extends Component{
 		}
 	}
 
-	async componentDidMount(){
-		console.log('hereeee')
-		if (this.props.socket != null){
-			console.log('here')
-		this.props.socket.on("new_student_join", () =>{
-			console.log('new student join')
-			this.setState(prevState =>{
-				return{
-					number_of_students_connected: prevState.number_of_students_connected+1
-				}
-			})
-		})
-	}
-	}
+	
 	liveIndicator(){
 		if (this.state.live){
 			return(
@@ -688,6 +675,15 @@ class DashboardRight extends Component{
 				</div>)
 		}
 		else{
+			if (this.props.socket != null){
+			this.props.socket.on("new_student_join", (data) =>{
+				console.log('new student join ' , data)
+				var temp = this.state.number_of_students_connected + 1
+				this.setState({
+					number_of_students_connected: temp
+				})
+			})
+		}
 		return(
 			<div>
 				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
