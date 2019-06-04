@@ -556,8 +556,12 @@ class CoursesOption extends Component{
 export class DashboardNavigation extends Component{
 	constructor(props){
 		super(props);
+		this.toGradebook = this.toGradebook.bind(this);
 	}
-	// make CoursesOption optional through props. 
+	
+	toGradebook(){
+		this.props.history.push('/'+this.props.selected_course._id + '/gradebook')
+	}
 	render(){
 		return(
 			<div className='navigation'>
@@ -568,7 +572,7 @@ export class DashboardNavigation extends Component{
 						}
 					</div>
 					<div style={{display:'flex', marginTop:'auto', marginBottom:'auto'}}>
-						{this.props.gradebook == null ? <OverrideMaterialUICss><IconButton>
+						{this.props.gradebook == null ? <OverrideMaterialUICss><IconButton onClick={this.toGradebook}>
 								<OverrideMaterialUICss> <FileCopyOutlined style={{color: 'black'}}/> </OverrideMaterialUICss>
 							</IconButton> </OverrideMaterialUICss> : null}
 						<OverrideMaterialUICss><IconButton>

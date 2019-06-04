@@ -14,6 +14,7 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import StudentDashboard from './containers/Dashboard/StudentDashboard';
 import ProfileSetting from './containers/ProfileAvatar/ProfileSetting';
 import Lecture from './containers/Lecture/Lecture';
+import Gradebook from './containers/Gradebook/Gradebook';
  
 export default ({ childProps }) =>
   <Switch>
@@ -25,6 +26,7 @@ export default ({ childProps }) =>
         <AppliedRoute path='/dashboard/:id' component={Dashboard} props={childProps}/>
         <AppliedRoute path='/student-dashboard/:id' component={StudentDashboard} props={childProps}/>
         <AppliedRoute path='/:course_id/lecture/:lecture_id' component={Lecture} props={childProps}/>
+        <AppliedRoute path='/:course_id/gradebook' component={Gradebook} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
