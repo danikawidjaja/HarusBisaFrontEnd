@@ -19,7 +19,7 @@ class Live extends Component{
 		console.log(props)
 		this.state = {
 			show_correct_answer: false,
-			started:false,
+			started:true,
 			current_quiz: this.props.quiz,
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
@@ -71,6 +71,11 @@ class Live extends Component{
 		})
 	}
 	
+	componentDidMount(){
+		if (this.state.started){
+			this.intervalHandle = setInterval(this.tick, 1000);
+		}
+	}
 	async toggleStarted(){
 		await this.setState(prevState =>{
 			return{
