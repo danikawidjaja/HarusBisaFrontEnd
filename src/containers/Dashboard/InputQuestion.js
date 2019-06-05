@@ -424,7 +424,6 @@ class NumericInputQuestionForm extends Component{
 class MultipleChoiceQuestionForm extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 		this.state={
 			question:'',
 			correct_answer:null,
@@ -584,7 +583,8 @@ class MultipleChoiceAnswer extends Component{
 			return {
 				switched: !prevState.switched
 			};
-		}, this.props.changeMainSwitched());
+		});
+		this.props.changeMainSwitched()
 		this.props.addUserAnswer(this.state.answer, this.state.switched, this.props.option)
 	//}
 	};
@@ -608,7 +608,7 @@ class MultipleChoiceAnswer extends Component{
 					    value={this.state.answer}
 					/>
 				</div>
-				<div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+				<div className='action'>
 				   	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
 				  	<label> Jawaban Benar </label>
 				</div>

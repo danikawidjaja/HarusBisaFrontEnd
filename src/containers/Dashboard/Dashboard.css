@@ -342,7 +342,7 @@ html{
 
 
 .Dashboard .right .quizzes{
-	padding-top: 11.5%;
+	padding-top: 13%;
 	margin: 2vw;
 
 }
@@ -490,8 +490,7 @@ html{
 .Dashboard .right .quizzes .question-card{
 	display: flex;
 	flex-direction: column;
-	margin-top: 2vh;
-	margin-bottom: 2vh;
+	margin-bottom: 4vh;
 	align-content: center;
 	justify-content: center;
 	overflow: visible;

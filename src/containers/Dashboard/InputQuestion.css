@@ -134,7 +134,14 @@
 	font-weight: 500;
 }
 
-.InputQuestion .form .multiple-choice .switch {
+.InputQuestion .form .multiple-choice .action{
+	display: flex;
+	flex-direction:row;
+	justify-content:flex-end;
+}
+
+
+.InputQuestion .form .multiple-choice .action .switch {
     border: 1px solid #ccc;
     width: 25px;
     height: 15px;
@@ -144,9 +151,10 @@
     margin-top: auto;
     margin-bottom: auto;
     margin-right: -0.5vw;
+    background-color: yellow;
 }
 
-.InputQuestion .form .multiple-choice .switch-toggle {
+.InputQuestion .form .multiple-choice .action .switch-toggle {
     border: 1px solid #999;
     box-shadow: 1px 1px 1px #ccc;
     width: 14px;
@@ -158,15 +166,15 @@
     transition: left .2s ease-in-out;
 }
 
-.InputQuestion .form .multiple-choice .switch.on {
-    background: green;
+.InputQuestion .form .multiple-choice .action .switch.on {
+    background: #82DAA4;
 }
 
-.InputQuestion .form .multiple-choice .switch.on .switch-toggle {
+.InputQuestion .form .multiple-choice .action .switch.on .switch-toggle {
     left: 10px;
 }
 
-.InputQuestion .form .multiple-choice .switch.disabled {
+.InputQuestion .form .multiple-choice .action .switch.disabled {
     cursor: not-allowed;
 }
 
