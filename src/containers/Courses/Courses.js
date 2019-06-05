@@ -769,7 +769,7 @@ class StudCourseCard extends Component{
 				
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
-						<Link to={{pathname: '/student-dashboard/' + this.props.course._id}}> {this.props.course.course_name} </Link>
+						<Link to={{pathname:'/student-dashboard/' + this.props.course._id}}> {this.props.course.course_name} </Link>
 						<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
 								<IconButton>
 									<Popup

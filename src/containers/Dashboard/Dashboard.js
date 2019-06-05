@@ -594,6 +594,7 @@ class DashboardRight extends Component{
 			lecture : this.props.selectedLecture,
 			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
 			number_of_students_connected: 0,
+			students_connected: [],
 			//quizzes: this.props.selectedLecture.quizzes,
 			//isLoading: true,
 		}
@@ -605,6 +606,24 @@ class DashboardRight extends Component{
 			this.setState({
 				lecture: newProps.selectedLecture,
 				live: newProps.selectedLecture.live
+			})
+		}
+
+		if (this.props.socket != null){
+			this.props.socket.on("new_student_join", (data) =>{
+				console.log(data.user_id)
+				console.log(this.state.students_connected)
+				console.log(this.state.students_connected.includes(data.user_id))
+				if (!this.state.students_connected.includes(data.user_id)){
+					console.log('new student join')
+					var temp = this.state.number_of_students_connected + 1
+					var arr = this.state.students_connected
+					arr.push(data.user_id)
+					this.setState({
+						number_of_students_connected: temp,
+						students_connected: arr
+					})
+				}
 			})
 		}
 	}
@@ -667,6 +686,7 @@ class DashboardRight extends Component{
 			return(<h1> Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </h1>)
 		}
 	}
+
 	render(){
 		if (!this.state.lecture){
 			return(
@@ -675,6 +695,8 @@ class DashboardRight extends Component{
 				</div>)
 		}
 		else{
+			/*
+			console.log('dashboard increment')
 			if (this.props.socket != null){
 			this.props.socket.on("new_student_join", (data) =>{
 				console.log('new student join ' , data)
@@ -683,7 +705,7 @@ class DashboardRight extends Component{
 					number_of_students_connected: temp
 				})
 			})
-		}
+		}*/
 		return(
 			<div>
 				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
