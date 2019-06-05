@@ -30,6 +30,7 @@ class Lecture extends Component{
       		show_correct_answer: false,
       		live:true,
       		new_quiz:false,
+      		live_quizzes: []
 		}
 		this.toggleNew = this.toggleNew.bind(this);
 		this.newQuiz = this.newQuiz.bind(this);
@@ -127,7 +128,7 @@ class Lecture extends Component{
     }
 
     makeQuizzes(){
-    	var quizzes = this.state.live ? [] : this.state.selected_lecture.quizzes
+    	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
     		components.push(<Quiz quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer}/>)

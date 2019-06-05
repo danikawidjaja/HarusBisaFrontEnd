@@ -687,7 +687,7 @@ class DashboardRight extends Component{
 	render(){
 		if (!this.state.lecture){
 			return(
-				<div className='content'>
+				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
 					<p> Kelas baru! Buatlah sesi pertama anda </p>
 				</div>)
 		}
@@ -756,8 +756,8 @@ class DashboardRight extends Component{
 		    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>
 		    			}
-		    			modal closeOnDocumentClick={false}>
-		    				{close => (<LectureStat number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    			modal closeOnDocumentClick={false} contentStyle={{minHeight:'40vh'}}>
+		    				{close => (<LectureStat live={this.state.live} number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
 
@@ -803,22 +803,26 @@ class LectureStat extends Component{
 						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
 					</div>
 				</div>
-				<div>
-					<div className='circular-bar'>
-					<CircularProgressbarWithChildren 
-					value={(this.props.number_of_students_connected/this.props.total_enrolled_stud)*100}
-					styles={buildStyles({
-					    backgroundColor: "transparent",
-					    pathColor: "#FFE01C",
-					    trailColor: "#EBEBEB",
-					})}
-					>
-						<h1>{this.props.number_of_students_connected}</h1>
-						<p> dari {this.props.total_enrolled_stud}</p>
-					</CircularProgressbarWithChildren>
+				{ this.props.live ?
+					<div>
+						<div className='circular-bar'>
+						<CircularProgressbarWithChildren 
+						value={(this.props.number_of_students_connected/this.props.total_enrolled_stud)*100}
+						styles={buildStyles({
+						    backgroundColor: "transparent",
+						    pathColor: "#FFE01C",
+						    trailColor: "#EBEBEB",
+						})}
+						>
+							<h1>{this.props.number_of_students_connected}</h1>
+							<p> dari {this.props.total_enrolled_stud}</p>
+						</CircularProgressbarWithChildren>
+						</div>
+						<p>siswa yang sudah masuk kedalam sesi</p>
 					</div>
-					<p>siswa yang sudah masuk kedalam sesi</p>
-				</div>
+					:
+					<div>Sesi sedang tidak live</div>
+				}
 			</div>
 		)
 	}
