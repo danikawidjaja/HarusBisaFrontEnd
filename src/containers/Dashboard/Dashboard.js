@@ -593,10 +593,7 @@ class DashboardRight extends Component{
 		this.state={
 			lecture : this.props.selectedLecture,
 			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
-			number_of_students_connected: 0,
 			students_connected: [],
-			//quizzes: this.props.selectedLecture.quizzes,
-			//isLoading: true,
 		}
 		this.toggleLive = this.toggleLive.bind(this);
 	}
@@ -611,17 +608,12 @@ class DashboardRight extends Component{
 
 		if (this.props.socket != null){
 			this.props.socket.on("new_student_join", (data) =>{
-				console.log(data.user_id)
-				console.log(this.state.students_connected)
-				console.log(this.state.students_connected.includes(data.user_id))
 				if (!this.state.students_connected.includes(data.user_id)){
 					console.log('new student join')
-					var temp = this.state.number_of_students_connected + 1
 					var arr = this.state.students_connected
 					arr.push(data.user_id)
 					this.setState({
-						number_of_students_connected: temp,
-						students_connected: arr
+						students_connected: arr,
 					})
 				}
 			})
@@ -668,6 +660,11 @@ class DashboardRight extends Component{
 	    });
 
 	    this.props.changeLive(this.state.live)
+	    if (this.state.live == false){
+	    	this.setState({
+	    		students_connected:[],
+	    	})
+	    }
 	}
 
 
@@ -695,17 +692,6 @@ class DashboardRight extends Component{
 				</div>)
 		}
 		else{
-			/*
-			console.log('dashboard increment')
-			if (this.props.socket != null){
-			this.props.socket.on("new_student_join", (data) =>{
-				console.log('new student join ' , data)
-				var temp = this.state.number_of_students_connected + 1
-				this.setState({
-					number_of_students_connected: temp
-				})
-			})
-		}*/
 		return(
 			<div>
 				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
@@ -771,7 +757,7 @@ class DashboardRight extends Component{
 		    				</div>
 		    			}
 		    			modal closeOnDocumentClick={false}>
-		    				{close => (<LectureStat number_of_students_connected={this.state.number_of_students_connected} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    				{close => (<LectureStat number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
 
@@ -807,8 +793,8 @@ class LectureStat extends Component{
 		super(props);
 
 	}
-
 	render(){
+		console.log(this.props.number_of_students_connected)
 		return(
 			<div className='popup'>
 				<div className='popup-header'>

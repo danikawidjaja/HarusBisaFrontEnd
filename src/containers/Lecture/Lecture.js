@@ -69,23 +69,24 @@ class Lecture extends Component{
       				school: res.data.school,
       				id: res.data._id,
       			},
-      		}, () =>
-      		this.props.Auth.getLectures(this.state.selected_course._id)
-	      	.then(res =>{
+      		}, async () =>
+      		await this.props.Auth.getLectures(this.state.selected_course._id)
+	      	.then(async res =>{
 	      		var temp = this.findSelected(lecture_id, res.data.lectures,'lecture')
-	      		this.setState({
+	      		await this.setState({
 	      			selected_lecture: temp,
 	      			isLoading: false,
 	      			live: temp.live
 	      		})
 	      		
 	      		if (temp.live){
-	      			console.log('hey')
 	      			var data = {
 	      				course_id: this.state.selected_course._id,
 	      				lecture_id: temp.id
 	      			}
-	      			socket.emit("participate_lecture", data)
+	      			if (socket){
+	      				socket.emit("participate_lecture", data)
+	      			}
 	      		}
 	      	})	
 	      )
@@ -93,7 +94,23 @@ class Lecture extends Component{
       	.catch(err =>{
         	console.log(err.message)
         	alert(err.message)
-      	}) 	
+      	})
+
+
+      	if (socket){
+	      	socket.on("lecture_is_live",(data) =>{
+	      		this.setState({
+					live: data.live
+				})
+				if (!data.live){
+					if (socket){
+						socket.disconnect()
+						console.log('socket disconnected')
+						this.props.history.push('/student-dashboard/'+ course_id)
+					}
+				}
+			})
+	    }
     }
 
     makeQuizzes(){
@@ -145,6 +162,8 @@ class Lecture extends Component{
 									position="bottom right"
 									on = "click"
 									arrow = {false}
+									contentStyle={{background: '#FFFFFF',boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
+									offsetY={-40}
 								>
 									{close => (
 										<div className='popup'>

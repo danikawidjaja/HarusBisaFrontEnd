@@ -128,17 +128,14 @@ class StudentDashboard extends Component{
 				}
 				if (socket){
 					socket.on("lecture_is_live",(data) =>{
-						if (data.live){
-							console.log(data)
-							var temp_date = data.date.split('/')
-							this.setState({
-								new_active_lecture:{
-									live: data.live,
-									lecture_id: data.lecture_id,
-									date: temp_date[0] + '/' + temp_date[1]
-								}
-							})
-						}
+						var temp_date = data.date.split('/')
+						this.setState({
+							new_active_lecture:{
+								live: data.live,
+								lecture_id: data.lecture_id,
+								date: temp_date[0] + '/' + temp_date[1]
+							}
+						})
 					})
 				}
 	      	})	
