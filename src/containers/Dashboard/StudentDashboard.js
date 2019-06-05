@@ -234,7 +234,7 @@ class LectureTable extends Component{
 			        <TableBody>
 			          {rows.map(row => (
 			          	//<div className='row'>
-			            <TableRow key={row.id} style={{boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)'}} onClick={() => this.handleClickRow(row.id)}>
+			            <TableRow className='t-row' key={row.id} onClick={() => this.handleClickRow(row.id)}>
 			              <TableCell className='cell' component="th" scope="row">
 			                {row.date}
 			              </TableCell>

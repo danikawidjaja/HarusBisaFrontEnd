@@ -183,6 +183,7 @@ class Courses extends Component{
 						    	}
 							    modal
 							    closeOnDocumentClick={false}
+							    contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 	  						>
 	  						{close => (
 	  							<div className='course-popup'>
@@ -200,7 +201,7 @@ class Courses extends Component{
 			        	open={this.state.showUpdateCourseModal}
 			        	modal
 			        	closeOnDocumentClick={false}
-			        	//onClose={this.toggleShowUpdateCourseModal}
+			        	contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			        >
 				        	{close => (
 			        	<div className='course-popup'>
@@ -216,6 +217,7 @@ class Courses extends Component{
 			        	open={this.state.showDeleteCourseModal}
 			        	modal
 			        	closeOnDocumentClick={false}
+			        	contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			        >
 			        	{close => (
 			        		<div className='course-popup'>
@@ -753,6 +755,7 @@ class StudCourseCard extends Component{
 			       	open={this.state.showDeleteCourseModal}
 			       	modal
 			       	closeOnDocumentClick={false}
+			       	contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			    >
 			       	{close => (
 			       		<div className='course-popup'>

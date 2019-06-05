@@ -309,7 +309,8 @@ class DashboardLeft extends Component{
           		modal 
           		closeOnDocumentClick={false}
           		onOpen={this.props.changeFlag}
-          		onClose={this.props.changeFlag}>
+          		onClose={this.props.changeFlag}
+          		contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}>
   					{close => (
   						<div className='popup'>
 	  						<div className= "popup-header">
@@ -718,7 +719,8 @@ class DashboardRight extends Component{
 			    			}
 			    			modal
 			    			closeOnDocumentClick={false}
-			    			contentStyle={{minHeight:'40vh'}}>
+			    			contentStyle={{minHeight:'40vh', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
+			    			>
 			    			{close => (
 			    				<div className='popup'>
 			    					<div className='popup-header'>
@@ -742,6 +744,7 @@ class DashboardRight extends Component{
 							}
 								modal
 								closeOnDocumentClick={false}
+								contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 							>
 								{close => (<AddQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
 						  	</Popup>
@@ -756,7 +759,7 @@ class DashboardRight extends Component{
 		    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>
 		    			}
-		    			modal closeOnDocumentClick={false} contentStyle={{minHeight:'40vh'}}>
+		    			modal closeOnDocumentClick={false} contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', minHeight:'40vh'}}>
 		    				{close => (<LectureStat live={this.state.live} number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
@@ -770,7 +773,7 @@ class DashboardRight extends Component{
 		    				</div>
 		    			} 
 		    			modal closeOnDocumentClick={false}
-		    			contentStyle={{height:'60vh'}}>
+		    			contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', height:'60vh'}}>
 		    				{close => (<LectureSetting changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} selected_course={this.props.selected_course} Auth={this.props.Auth} closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
@@ -1117,6 +1120,7 @@ class QuizCard extends Component{
 			        open={this.state.showDeleteQuestionModal}
 			        modal
 			        closeOnDocumentClick={false}
+			        contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			    >
 			       	{close => (
 			       	<div className='popup'>
@@ -1134,6 +1138,7 @@ class QuizCard extends Component{
 			        open={this.state.showUpdateQuestionModal}
 			        modal
 			        closeOnDocumentClick={false}
+			        contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			    >
 			       	{close => (
 				       	<div className='popup'>

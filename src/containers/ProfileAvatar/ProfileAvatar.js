@@ -34,7 +34,7 @@ class ProfileAvatar extends Component{
 						{this.state.initial} 
 						</Button>
 					}
-					contentStyle={{width:'auto'}}
+					contentStyle={{width:'auto', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 					position='bottom right'
 					on = 'click'
 					onOpen={this.props.changeFlag}
