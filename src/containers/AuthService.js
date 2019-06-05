@@ -266,6 +266,7 @@ export default class AuthService {
         }).then(res => {
             return (res); 
         }).catch(err =>{
+            console.log("error")
             console.log(err.message)
 
         })
@@ -289,7 +290,7 @@ export default class AuthService {
             headers,
             ...options
         })
-            //.then(this._checkStatus)
+            .then(this._checkStatus)
             .then(response => response.json())
     }
 

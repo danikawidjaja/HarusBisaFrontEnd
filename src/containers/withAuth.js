@@ -11,7 +11,7 @@ export default function withAuth(AuthComponent){
 			}
 			this.Auth = this.props.Auth;
 		}
-		async componentDidMount(){
+		async componentDidMount(){ 
 			if (!this.Auth.loggedIn()){
 				alert('You are not logged in!')
 				this.props.history.replace('/login')

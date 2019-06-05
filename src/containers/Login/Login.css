@@ -81,7 +81,7 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
 
 
 .errormessage{
-  background-image: url('./errormessage.png');
+  background-color: #E2A0A0;
   color: black;
   display: flex;
   flex-direction: row;
@@ -91,5 +91,12 @@ html, body, div, span, ul,applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blo
 }
 
 .errormessage p{
-  margin-left: '1.5vw';
+  margin: auto;
+}
+
+.errormessage .icon{
+  height: 2rem;
+  width: 2rem;
+  margin: auto;
+  margin-right: 0.5rem;
 }

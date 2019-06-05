@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './Login.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link, Redirect, withRouter} from "react-router-dom";
-import login1 from './login1.png';
-import login2 from './login2.png';
-import login from './login.png';
-import errormessage_icon from './errormessage_icon.png';
+import ErrorOutline from '@material-ui/icons/ErrorOutline';
 import Logo from '../Logo/Logo';
 
 class Login extends Component {
@@ -37,7 +34,7 @@ class LoginForm extends Component{
     this.state = {
       email: '',
       password: '',
-      error: true,
+      error: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,10 +45,12 @@ class LoginForm extends Component{
 
   //Auth = this.props.Auth
 
-  displayErrorMessage(error){
-    if (!error){
-      
+  displayErrorMessage(){
+    if (this.state.error == true){     
       return(<ErrorMessage />)
+    }
+    else{
+      return null
     }
   }
   validateForm(){
@@ -76,9 +75,7 @@ class LoginForm extends Component{
         }
       })
       .catch(err =>{
-        alert(err.message); 
         this.setState({ error: true});
-        this.displayErrorMessage(true)
       })
   }
 
@@ -92,7 +89,7 @@ class LoginForm extends Component{
   render(){
     return(
       <div >
-        {this.displayErrorMessage}
+        {this.displayErrorMessage()}
         <form className='login-form' onSubmit={this.handleSubmit}>
           <FormGroup className="form-element" controlId="email" bsSize="small" style={{marginBottom:'1vw'}}>
             <ControlLabel className='form-control-label' style={{fontSize:'1.5vw'}}> Email </ControlLabel>
@@ -140,7 +137,7 @@ class ErrorMessage extends Component{
   render(){
     return(
       <div className='errormessage'>
-        <img src={errormessage_icon} style={{maxWidth:'100%', marginRight:'1vw'}}/>
+        <ErrorOutline className='icon'/>
         <p> {this.state.error} </p>
       </div>
     )
