@@ -54,8 +54,17 @@ class Lecture extends Component{
 	async componentDidMount(){
 		var course_id = this.props.match.params.course_id;
 		var lecture_id = this.props.match.params.lecture_id;
+		var live = this.props.match.params.live;
+		if (live == 0){
+			live = false //past session
+		}
+		else{
+			live = true //current session
+		}
+
   		this.props.isNavVisible(false);
     	window.scrollTo(0, 0);
+
       	await this.props.Auth.getData()
   		.then(async res =>{
       		await this.setState({
@@ -76,10 +85,9 @@ class Lecture extends Component{
 	      		await this.setState({
 	      			selected_lecture: temp,
 	      			isLoading: false,
-	      			live: temp.live
+	      			live: live
 	      		})
-	      		
-	      		if (temp.live){
+	      		if (live){
 	      			var data = {
 	      				course_id: this.state.selected_course._id,
 	      				lecture_id: temp.id
@@ -96,8 +104,13 @@ class Lecture extends Component{
         	alert(err.message)
       	})
 
-
-      	if (socket){
+      	if (!live){
+      		if (socket){
+      			socket.disconnect();
+      			console.log('socket disconnected')
+      		}
+      	}
+      	if (socket && live){
 	      	socket.on("lecture_is_live",(data) =>{
 	      		this.setState({
 					live: data.live
@@ -114,7 +127,7 @@ class Lecture extends Component{
     }
 
     makeQuizzes(){
-    	var quizzes = this.state.selected_lecture.quizzes;
+    	var quizzes = this.state.live ? [] : this.state.selected_lecture.quizzes
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
     		components.push(<Quiz quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer}/>)

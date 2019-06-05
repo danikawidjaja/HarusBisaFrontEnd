@@ -147,7 +147,7 @@ class StudentDashboard extends Component{
   	}
 
   	toNewLecture(){
-  		this.props.history.push('/'+this.state.selected_course._id+'/lecture/' + this.state.new_active_lecture.lecture_id);
+  		this.props.history.push('/'+this.state.selected_course._id+'/lecture/' + this.state.new_active_lecture.lecture_id +'/'+ 1);
   	}
 	render(){
 		if (this.props.Auth.loggedIn()){
@@ -211,7 +211,7 @@ class LectureTable extends Component{
 	}
 
 	handleClickRow(id){
-		this.props.history.push('/'+this.props.course_id+'/lecture/' + id);
+		this.props.history.push('/'+this.props.course_id+'/lecture/' + id + '/' + 0);
 
 	}
 	render(){
