@@ -590,41 +590,6 @@ html{
 	font-weight: 500;
 }
 
-.Dashboard .right .quizzes .question-card .switch {
-    border: 1px solid #ccc;
-    width: 70px;
-    height: 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: inline-block;
-    margin: auto;
-    
-}
-
-.Dashboard .right .quizzes .question-card .switch-toggle {
-    border: 1px solid #999;
-    box-shadow: 1px 1px 1px #ccc;
-    width: 30px;
-    height: 29px;
-    left: 0;
-    border-radius: 50%;
-    background: white;
-    position: relative;
-    transition: left .2s ease-in-out;
-    margin-bottom: auto;
-}
-
-.Dashboard .right .quizzes .question-card .switch.on {
-    background: #82DAA4;
-}
-
-.Dashboard .right .quizzes .question-card .switch.on .switch-toggle {
-    left: 37px;
-}
-
-.Dashboard .right .quizzes .question-card .switch.disabled {
-    cursor: not-allowed;
-}
 
 
 .slider {
@@ -694,10 +659,3 @@ html{
 	letter-spacing: 1.8px;
 }
 
-.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5 + .MuiSwitch-bar-9{
-	background-color: #82DAA4;
-}
-
-.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5{
-	color: #82DAA4;
-}

@@ -103,10 +103,6 @@ class StudentDashboard extends Component{
 	      			selected_lecture: res.data.lectures[0],
 	      			isLoading: false,
 	      		})
-	      		var lecture_ids = []
-	      		for (let i = 0; i<res.data.lectures.length; i++){
-	      			lecture_ids.push(res.data.lectures[i].id)
-	      		}
 
 	      		if (!socket){
 					socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
@@ -116,7 +112,6 @@ class StudentDashboard extends Component{
   							var data = {
   								user_id: this.state.profile.id,
   								user_role: this.state.profile.role,
-  								lecture_ids: lecture_ids,
   								course_id: id
   							}
   							socket.emit("set_socket_data", data)

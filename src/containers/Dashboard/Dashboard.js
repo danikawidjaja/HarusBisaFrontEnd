@@ -44,8 +44,21 @@ import Live from '../Live/Live';
 import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
+import { withStyles } from '@material-ui/core/styles';
 
-
+const GreenSwitch = withStyles({
+  switchBase: {
+    color: "#ffffff",
+    "&$checked": {
+      color: "#82DAA4"
+    },
+    "&$checked + $track": {
+      backgroundColor: "#82DAA4"
+    }
+  },
+  checked: {},
+  track: {}
+})(Switch);
 
 class Dashboard extends Component{
 	constructor(props){
@@ -184,10 +197,6 @@ class Dashboard extends Component{
 	      				live: res.data.lectures[0].live
 	      			})
 	      		}
-	      		var lecture_ids = []
-	      		for (let i = 0; i<res.data.lectures.length; i++){
-	      			lecture_ids.push(res.data.lectures[i].id)
-	      		}
 
 	      		// SOCKET CONFIG
 	      		if (!this.socket){
@@ -198,7 +207,6 @@ class Dashboard extends Component{
   							var data = {
   								user_id: this.state.profile.id,
   								user_role: this.state.profile.role,
-  								lecture_ids: lecture_ids,
   								course_id: id
   							}
   							this.socket.emit("set_socket_data", data)
@@ -1039,7 +1047,7 @@ class QuizCard extends Component{
 		if (this.state.expanded){
 			return(
 				<div style={{verticalAlign:'middle', display:'flex', justifyContent:'space-between', marginLeft:'1vw'}}> 
-					<Switch onChange={this.toggleSwitch} checked={this.state.showCorrectAns}/>
+					<GreenSwitch onChange={this.toggleSwitch} checked={this.state.showCorrectAns}/>
 					<p style={{color: '#B2B2B2', margin:'auto', marginLeft:'1vw'}}> Jawaban </p>
 				</div>
 			)

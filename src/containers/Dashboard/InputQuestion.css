@@ -141,42 +141,14 @@
 }
 
 
-.InputQuestion .form .multiple-choice .action .switch {
-    border: 1px solid #ccc;
-    width: 25px;
-    height: 15px;
-    border-radius: 13px;
-    cursor: pointer;
-    display: inline-block;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: -0.5vw;
-    background-color: yellow;
+.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5 + .MuiSwitch-bar-9,  .MuiSwitch-colorSecondary-33.MuiSwitch-checked-31 + .MuiSwitch-bar-35 {
+	background-color: #82DAA4;
 }
 
-.InputQuestion .form .multiple-choice .action .switch-toggle {
-    border: 1px solid #999;
-    box-shadow: 1px 1px 1px #ccc;
-    width: 14px;
-    height: 13px;
-    left: 0;
-    border-radius: 12px;
-    background: white;
-    position: relative;
-    transition: left .2s ease-in-out;
+.MuiSwitch-colorSecondary-7.MuiSwitch-checked-5, .MuiSwitch-colorSecondary-33.MuiSwitch-checked-31 {
+	color: #82DAA4;
 }
 
-.InputQuestion .form .multiple-choice .action .switch.on {
-    background: #82DAA4;
-}
-
-.InputQuestion .form .multiple-choice .action .switch.on .switch-toggle {
-    left: 10px;
-}
-
-.InputQuestion .form .multiple-choice .action .switch.disabled {
-    cursor: not-allowed;
-}
 
 .InputQuestion .form .multiple-choice .form-control{
 	border:none;
