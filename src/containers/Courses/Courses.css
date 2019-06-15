@@ -108,6 +108,10 @@ html, body{
 	margin-bottom: auto;
 }
 
+.Courses .right .button-student:hover{
+	background-color: rgb(161, 130, 214);
+}
+
 .Courses .right .button, .Courses .right .button:focus{
 	background-color: #ffe01c;
 	color: black;
@@ -231,6 +235,23 @@ html, body{
 	background-color: #F7F3DC;
 
 }
+
+.Courses .right .course-popup .student-button, .Courses .right .course-popup .student-button:focus{
+	background-color: #6311AB;
+	border:0px;
+	color: white;
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 400;
+	border-radius: 8px;
+	width: 145px;
+	margin: 0;
+}
+.Courses .right .course-popup .student-button:hover{
+	background-color:rgb(161, 130, 214);
+
+}
+
 
 .Courses .right .course-popup .buttons{
 	display: flex;
