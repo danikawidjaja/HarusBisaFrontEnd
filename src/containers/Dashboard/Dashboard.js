@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
 import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Stop from '@material-ui/icons/Stop';
-import PeopleOutline from '@material-ui/icons/PeopleOutline';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
@@ -16,9 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import { OverrideMaterialUICss } from "override-material-ui-css";
-import Fab from '@material-ui/core/Fab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -31,8 +25,6 @@ import calIcon from './cal.png';
 import InputQuestion from './InputQuestion';
 import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import Switch from '@material-ui/core/Switch';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import Close from '@material-ui/icons/Close';
@@ -45,6 +37,7 @@ import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import { withStyles } from '@material-ui/core/styles';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
 
 const GreenSwitch = withStyles({
   switchBase: {
@@ -418,7 +411,8 @@ class AddEditLecture extends Component{
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-			            <img src={calIcon} style={{height:'5vh', margin:'auto'}}/>
+			            <img src={calIcon} style={{height:'5vh', marginTop:'auto', marginBottom:'auto'}}/>
+						{this.state.form_type == 'add' ? <p style={{marginTop:'auto', marginBottom:'auto', fontWeight:'500', letterSpacing:'1.8px'}}>Tanggal Kelas</p> : null}
 			            <DatePicker 
 			            	selected={this.state.date}
 			            	onChange={this.handleDateChange}
