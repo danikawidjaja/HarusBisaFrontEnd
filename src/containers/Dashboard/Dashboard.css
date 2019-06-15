@@ -661,4 +661,6 @@ html{
 	line-height: 22px;
 	letter-spacing: 1.8px;
 }
-
+/* .MuiSwitch-colorSecondary-10.MuiSwitch-checked-8 + .MuiSwitch-bar-12{
+	background-color: #82DAA4;
+} */

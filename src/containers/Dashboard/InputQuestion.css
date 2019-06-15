@@ -54,9 +54,6 @@
 	margin-right: 2vw;
 }
 
-.InputQuestion .form .setting .form-group .form-control{
-
-}
 
 .InputQuestion .form .setting .form-group .Timer-adjust{
 	justify-content: flex-start;	
@@ -180,3 +177,7 @@
 	justify-content: flex-end;
 	margin-top: 2vh;
 }
+
+/* .MuiSwitch-colorSecondary-10.MuiSwitch-checked-8 + .MuiSwitch-bar-12{
+	background-color: #82DAA4;
+} */

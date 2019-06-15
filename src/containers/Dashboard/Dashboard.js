@@ -37,7 +37,6 @@ import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import { withStyles } from '@material-ui/core/styles';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
 
 const GreenSwitch = withStyles({
   switchBase: {
@@ -46,7 +45,8 @@ const GreenSwitch = withStyles({
       color: "#82DAA4"
     },
     "&$checked + $track": {
-      backgroundColor: "#82DAA4"
+	  backgroundColor: "#82DAA4",
+	  color: '#82DAA4'
     }
   },
   checked: {},

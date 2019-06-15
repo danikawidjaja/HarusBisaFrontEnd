@@ -7,6 +7,21 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Switch from '@material-ui/core/Switch';
 import Close from '@material-ui/icons/Close';
 import Timer from '../Timer/Timer.js';
+import { withStyles } from '@material-ui/core/styles';
+
+const GreenSwitch = withStyles({
+	switchBase: {
+	  color: "#ffffff",
+	  "&$checked": {
+		color: "#82DAA4"
+	  },
+	  "&$checked + $track": {
+		backgroundColor: "#82DAA4"
+	  }
+	},
+	checked: {},
+	track: {}
+  })(Switch);
 
 class InputQuestion extends Component{
 	constructor(props){
@@ -609,7 +624,7 @@ class MultipleChoiceAnswer extends Component{
 					/>
 				</div>
 				<div className='action'>
-				   	<Switch onChange={this.toggleSwitch} checked={this.state.switched}/>
+				   	<GreenSwitch onChange={this.toggleSwitch} checked={this.state.switched}/>
 				  	<label> Jawaban Benar </label>
 				</div>
 			</div>
