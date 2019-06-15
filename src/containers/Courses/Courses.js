@@ -22,6 +22,7 @@ import Delete from '@material-ui/icons/Delete';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 
 class Courses extends Component{ 
@@ -305,7 +306,7 @@ class TermDropdown extends Component{
 		return(
 			<div style={{display:'flex', flexDirection:'column', alignText:'left'}}>
 			<label style={{textAlign:'left'}}> {this.props.label} </label>
-			<div>
+			<div style={{display:'flex', flexDirection:'row'}}>
 			<FormControlUI>
 				<OverrideMaterialUICss>  			
 		        <Select 
@@ -315,7 +316,11 @@ class TermDropdown extends Component{
 		        	inputProps={{
 		        		name:'month',
 		        		id:'month'
-		        	}}
+					}}
+					className='dropdown'
+					input={
+						<OutlinedInput id="outlined-age-native-simple" />
+					}
 		        >
 		        	<option value=""/>
 		        	<option value={'January'}> Januari </option>
@@ -333,7 +338,9 @@ class TermDropdown extends Component{
 		         </Select>
 		         </OverrideMaterialUICss>
 		    </FormControlUI>
-		    <FormControlUI>
+			
+			<p style={{fontWeight:'500', letterSpacing:'1.8px', margin:'auto', marginLeft:'1rem'}}>{this.state.year}</p>
+		    {/* <FormControlUI>
 		    	<Select
 		    		native
 		    		value={this.state.year}
@@ -346,7 +353,7 @@ class TermDropdown extends Component{
 		    		<option value=""/>
 					{this.makeYearOptions()}
 		    	</Select>
-		    </FormControlUI>
+		    </FormControlUI> */}
 		    </div>
 		    </div>
 		)
@@ -355,7 +362,7 @@ class TermDropdown extends Component{
 
 TermDropdown.defaultProps={
 	month:'',
-	year: ''
+	year: new Date().getFullYear()
 }
 
 class StudentAddCourse extends Component{
@@ -497,7 +504,7 @@ class UpdateCourse extends Component{
 					
 					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'1rem'}}> 
 						<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm} month={this.state.start_term.split(" ")[0]} year={this.state.start_term.split(" ")[1]}/>
-						<p style={{margin:'auto'}}> - </p>
+						<p style={{margin:'auto', marginTop:'1.5rem'}}>-</p>
 						<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm} month={this.state.end_term.split(" ")[0]} year={this.state.end_term.split(" ")[1]}/>
 					</div>
 	          		

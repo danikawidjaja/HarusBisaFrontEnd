@@ -215,9 +215,25 @@ html, body{
 	padding-right: 6rem;
 }
 
+/* .Courses .right .course-popup .form .MuiInputBase-input-31{
+	border: 1px solid #979797;
+	border-radius: 8px;
+} */
 
-.Courses .right .course-popup label{
+
+.Courses .right .course-popup .form .dropdown .MuiSelect-select-2{	
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	border-radius: 8px;
+}
+
+.Courses .right .course-popup .form .dropdown .MuiSelect-select-2:focus{	
+	border-color: pink;
+}
+
+.Courses .right .course-popup label, .Courses .right .form label{
 	text-align: right;
+	font-weight:500;
+	letter-spacing: 1.8px;
 }
 
 .Courses .right .course-popup .button, .Courses .right .course-popup .button:focus{
