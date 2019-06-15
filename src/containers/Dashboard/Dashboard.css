@@ -147,7 +147,7 @@ html{
 	vertical-align: center;
 	margin: auto;
 	overflow: auto;
-	padding: 1rem;
+	padding: 2rem 4rem 2rem 4rem;
 	color: black;
 	overflow-y: auto;
 	max-height: 90vh;

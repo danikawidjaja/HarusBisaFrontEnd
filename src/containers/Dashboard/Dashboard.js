@@ -324,7 +324,7 @@ class DashboardLeft extends Component{
 	  						<div className= "popup-header">
 	        					<h2> Tambah Sesi </h2>
 		    				</div>
-  							<AddLecture changeSelectedLecture={this.props.changeSelectedLecture} closefunction={close} Auth={this.props.Auth} selectedCourseId={this.props.selectedCourseId} updateLecturesState={this.props.updateLecturesState}/>
+  							<AddEditLecture form_type={'add'} changeSelectedLecture={this.props.changeSelectedLecture} closefunction={close} Auth={this.props.Auth} selectedCourseId={this.props.selectedCourseId} updateLecturesState={this.props.updateLecturesState}/>
   						</div>
   					)}			
   				</Popup>
@@ -334,113 +334,15 @@ class DashboardLeft extends Component{
 	}
 }
 
-class AddLecture extends Component{
+
+class AddEditLecture extends Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			date: new Date(),
-			description:'',
-			participation_reward_percentage:'0'
-		}
-		this.handleDateChange = this.handleDateChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleSliderChange = this.handleSliderChange.bind(this);
-	}
-	handleChange = event => {
-	    this.setState({
-	      [event.target.id]: event.target.value
-	    });
-  	}
-
-  	handleSubmit(event){
-  		event.preventDefault();
-  		var day = this.state.date.getDate()
-  		var month = this.state.date.getMonth() + 1
-  		var year = this.state.date.getFullYear()
-  		var date  = day + '/' + month + '/' + year
-  		this.props.Auth.addLecture(this.props.selectedCourseId, date, this.state.description, this.state.participation_reward_percentage)
-      	.then(res =>{
-      		this.props.closefunction()
-      		this.props.updateLecturesState(res.data.lectures)
-      		this.props.changeSelectedLecture(res.data.lectures[0])
-      		alert(date + ' course added')
-      		
-      	})
-      	.catch(err =>{
-        	console.log(err.message)
-        	alert(err.message)
-      	})
-  	}
-
-  	handleDateChange(date){
-  		this.setState({date: date});
-  	}
-
-  	handleSliderChange(value){
-  		this.setState({participation_reward_percentage: value})
-  	}
-	render(){
-	    return(
-	      	<div className="form" style={{paddingLeft:'2rem', paddingRight:'2rem'}}>
-	        	<form onSubmit={this.handleSubmit}>
-	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-			            <img src={calIcon} style={{height:'5vh', marginRight:'-5vw'}}/> <ControlLabel style={{marginTop:'1vh', verticalAlign:'middle'}}> Tanggal Kelas </ControlLabel>
-			            <DatePicker 
-			            	selected={this.state.date}
-			            	onChange={this.handleDateChange}
-			            	todayButton={'Today'}
-			            	dateFormat='d MMMM yyyy'
-			            	className='calendar'
-			            />
-
-	          		</FormGroup>
-	          		<FormGroup>
-	          			<ControlLabel> Persentase Nilai </ControlLabel>
-	          			<ReactSlider onChange={this.handleSliderChange}/>
-	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-	          				<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
-	          				<p className='slider-text'> Benar: {100 - this.state.participation_reward_percentage}% </p>
-	          			</div>
-	          		</FormGroup>
-
-	          		<FormGroup controlId="description" >
-	            		<ControlLabel>Deskripsi</ControlLabel>
-			            <FormControl
-			              type="text"
-			              value={this.state.description}
-			              onChange={this.handleChange}
-			              placeholder= 'Eg. Anatomi (optional)'
-			            />
-	          		</FormGroup>
-
-	          		<div className='buttons'>
-	          			<Button
-	          				className='button'
-	          				style={{backgroundColor:'transparent'}}
-	          				onClick={this.props.closefunction}>
-			          		Batal
-			          	</Button>
-			          	<Button
-				           type="submit"
-				           className="button"
-				        >
-			            Tambah
-			          	</Button>
-			         </div>
-	        	</form>
-	      	</div>
-	    );
-  	}
-}
-
-class EditLecture extends Component{
-	constructor(props){
-		super(props);
-		console.log(props)
 		this.state = {
 			date: this.convertToDateObject(this.props.lecture.date),
 			description:this.props.lecture.description,
-			participation_reward_percentage: this.props.lecture.participation_reward_percentage, 
+			participation_reward_percentage: this.props.lecture.participation_reward_percentage,
+			form_type: this.props.form_type 
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -452,8 +354,11 @@ class EditLecture extends Component{
 	    });
   	}
   	convertToDateObject(str){
-  		var split = str.split('/')
-  		var date = new Date(split[2], split[1]-1, split[0])
+		var date = new Date();
+		if (str != ''){
+			var split = str.split('/')
+			date = new Date(split[2], split[1]-1, split[0])
+		}
   		return date
   	}
   	convertToString(date){
@@ -466,23 +371,49 @@ class EditLecture extends Component{
   		this.setState({participation_reward_percentage: value})
   	}
   	async handleSubmit(event){
-  		event.preventDefault();
-  		this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description, this.state.participation_reward_percentage)
-  		.then(res =>{
-  			this.props.closefunction()
-  			this.props.updateLecturesState(res.data.lectures)
-  			for (let i in res.data.lectures){
-  				if (res.data.lectures[i].id == this.props.lecture.id){
-  					this.props.changeSelectedLecture(res.data.lectures[i])
-  				}
-  			}
-  		})
+		event.preventDefault();
+		if (this.state.form_type == 'edit'){  
+			this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description, this.state.participation_reward_percentage)
+			.then(res =>{
+				this.props.closefunction()
+				this.props.updateLecturesState(res.data.lectures)
+				for (let i in res.data.lectures){
+					if (res.data.lectures[i].id == this.props.lecture.id){
+						this.props.changeSelectedLecture(res.data.lectures[i])
+					}
+				}
+			})
+		}
+		else if (this.state.form_type == 'add'){
+			var day = this.state.date.getDate()
+			var month = this.state.date.getMonth() + 1
+			var year = this.state.date.getFullYear()
+			var date  = day + '/' + month + '/' + year
+			this.props.Auth.addLecture(this.props.selectedCourseId, date, this.state.description, this.state.participation_reward_percentage)
+			.then(res =>{
+				this.props.closefunction()
+				this.props.updateLecturesState(res.data.lectures)
+				this.props.changeSelectedLecture(res.data.lectures[0])
+				alert(date + ' course added')
+				
+			})
+			.catch(err =>{
+				console.log(err.message)
+				alert(err.message)
+			})
+		}
+		else{
+			console.log('error')
+		}
   	}
 
   	handleDateChange(date){
   		this.setState({date: date});
   	}
 	render(){
+		if (this.props.form_type == 'add'){
+			console.log(this.props)
+		}
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
@@ -515,17 +446,26 @@ class EditLecture extends Component{
 			              placeholder= 'Eg. Anatomi (optional)'
 			            />
 	          		</FormGroup>
-	          		<Button
-				           type="submit"
-				           className="button"
-				    >
-			          Edit
-			        </Button>
+					<div className='buttons'>
+						<Button type="submit" className="button">
+						{this.state.form_type == 'add' ? 'Tambah' : 'Ganti'}
+						</Button>
+						{ this.state.form_type == 'add' ? <Button className='button' style={{backgroundColor:'transparent'}} onClick={this.props.closefunction}>Batalkan</Button> : null}
+					</div>
 			         
 	        	</form>
 	      	</div>
 	    );
   	}
+}
+
+AddEditLecture.defaultProps={
+	lecture:
+	{
+		date: "",
+		description:'',
+		participation_reward_percentage:'0'
+	}
 }
 
 class CoursesOption extends Component{
@@ -781,7 +721,7 @@ class DashboardRight extends Component{
 		    				</div>
 		    			} 
 		    			modal closeOnDocumentClick={false}
-		    			contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', height:'60vh'}}>
+		    			contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', minheight:'40vh'}}>
 		    				{close => (<LectureSetting changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} selected_course={this.props.selected_course} Auth={this.props.Auth} closefunction={close} lecture={this.state.lecture} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 	    			</div>
@@ -868,7 +808,7 @@ class LectureSetting extends Component{
   	
   	content(setting){
   		if (setting == 'edit'){
-  			return(<EditLecture changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} closefunction={this.props.closefunction} lecture={this.props.lecture} Auth={this.props.Auth} selected_course_id={this.props.selected_course._id}/>)
+  			return(<AddEditLecture form_type={'edit'} changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} closefunction={this.props.closefunction} lecture={this.props.lecture} Auth={this.props.Auth} selected_course_id={this.props.selected_course._id}/>)
   		}
   		else if (setting =="delete"){
   			return(
