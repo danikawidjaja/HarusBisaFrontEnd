@@ -267,12 +267,13 @@ class CoursesLeft extends Component{
 		)
 	}
 }
+
 class TermDropdown extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			month:'',
-			year:'',
+			month:this.props.month,
+			year:this.props.year,
 		}
 		this.handleChange = this.handleChange.bind(this)
 	}
@@ -286,6 +287,20 @@ class TermDropdown extends Component{
 		let term = this.stringify();
 		this.props.handleChange(term);
 	};
+
+	makeYearOptions(){
+		var currentYear = new Date()
+		currentYear = currentYear.getFullYear()
+		var components = []
+		var endYear = 1990
+
+		while (currentYear > endYear){
+			var string = currentYear.toString()
+			components.push(<option value={string}>{string}</option>)
+			currentYear = currentYear -1
+		}
+		return components
+	}
 	render(){
 		return(
 			<div style={{display:'flex', flexDirection:'column', alignText:'left'}}>
@@ -329,18 +344,18 @@ class TermDropdown extends Component{
 		    		}}
 		    	>
 		    		<option value=""/>
-		    		<option value={'2019'}> 2019 </option>
-		    		<option value={'2018'}> 2018 </option>
-		    		<option value={'2017'}> 2017 </option>
-		    		<option value={'2016'}> 2016 </option>
-		    		<option value={'2015'}> 2015 </option>
-		    		<option value={'2014'}> 2014 </option>
+					{this.makeYearOptions()}
 		    	</Select>
 		    </FormControlUI>
 		    </div>
 		    </div>
 		)
 	}
+}
+
+TermDropdown.defaultProps={
+	month:'',
+	year: ''
 }
 
 class StudentAddCourse extends Component{
@@ -418,8 +433,19 @@ class UpdateCourse extends Component{
 	    this.setState({
 	      [event.target.id]: event.target.value
 	    });
-  	}
+	  }
+	
+	changeStartTerm(start_term){
+		this.setState({
+			start_term: start_term
+		})
+	}
 
+	changeEndTerm(end_term){
+		this.setState({
+			end_term: end_term
+		})
+	}
   	handleSubmit(event){
   		event.preventDefault();
   		this.props.Auth.updateCourse(this.state.id, this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
@@ -449,29 +475,13 @@ class UpdateCourse extends Component{
 			              placeholder = 'Biologi kelas A'
 			            />
 	          		</FormGroup>
-	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-		          		<FormGroup controlId="start_term">
-		            		<ControlLabel>Mulai Kelas</ControlLabel>
-				            <FormControl
-				              type="text"
-				              value={this.state.start_term}
-				              onChange={this.handleChange}
-				              placeholder= 'Januari 2019'
-				            />
-		          		</FormGroup>
-		          		
-		          		<p style={{margin:'auto'}}> - </p>
-		          		<FormGroup controlId='end_term'>
-		          			<ControlLabel> Akhir Kelas </ControlLabel>
-		          			<FormControl
-		          				type='text'
-		          				value={this.state.end_term}
-		          				onChange={this.handleChange}
-		          				placeholder='Maret 2019'
-		          			/>
-		          		</FormGroup>
-		          	
-	          		</div>
+					
+					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'1rem'}}> 
+						<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm} month={this.state.start_term.split(" ")[0]} year={this.state.start_term.split(" ")[1]}/>
+						<p style={{margin:'auto'}}> - </p>
+						<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm} month={this.state.end_term.split(" ")[0]} year={this.state.end_term.split(" ")[1]}/>
+					</div>
+	          		
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
 			            <FormControl
@@ -563,9 +573,9 @@ class AddCourse extends Component{
 	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'2.5vh'}}> 
 		          		
 		          		
-		          		<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm}/>
-		          		<p style={{margin:'auto'}}> - </p>
-		          		<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm}/>
+		          	<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm}/>
+		          	<p style={{margin:'auto'}}> - </p>
+		          	<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm}/>
 		          		
 	          		</div>
 	          		<FormGroup controlId="description">
@@ -597,6 +607,7 @@ class AddCourse extends Component{
 	    );
   	}
 }
+
 class ProfCourseCard extends Component{
 
 	constructor(props){
