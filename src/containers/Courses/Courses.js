@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
 import './Courses.css'; 
 import { Button, FormGroup, FormControl, ControlLabel,Dropdown} from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link} from "react-router-dom";
 import withAuth from '../withAuth';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
-import CloseIcon from '@material-ui/icons/Close';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import FormControlUI from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import LeftPanelPictureProf from './left_panel_picture_prof.png';
 import LeftPanelPictureStud from './left_panel_picture_stud.png';
 import Edit from '@material-ui/icons/Edit';
-import PlayArrow from '@material-ui/icons/PlayArrow';
 import Delete from '@material-ui/icons/Delete';
-import Logo from '../Logo/Logo';
-import ReactSearchBox from 'react-search-box';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
 
 class Courses extends Component{ 
@@ -49,7 +41,8 @@ class Courses extends Component{
 				email: this.props.data.email,
 				id: this.props.data._id 
 			},
-			courses_to_show : this.props.data.courses
+			courses_to_show : this.props.data.courses,
+			search_bar : ''
 		};
 
 		this.Auth= this.props.Auth;
@@ -95,15 +88,14 @@ class Courses extends Component{
   		this.toggleShowDeleteCourseModal()
   		this.Auth.deleteCourse(this.state.courseToDelete._id)
   		.then(res =>{
-      		alert(this.state.courseToDelete.course_name+' course deleted')
-      		this.setState({
-      			courses: res.data.courses
-      		})
+			alert(this.state.courseToDelete.course_name+' course deleted')
+			this.updateCoursesState(res.data.courses)
       	})
       	.catch(err =>{
         	console.log(err.message)
       	})
-  	}
+	  }
+	  
 	makingCourses(listOfCourse){
 		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []
@@ -119,28 +111,40 @@ class Courses extends Component{
 				}
 			}
 		} else {
-			coursesComponent.push(<p> You are not enrolled in any course </p>)
+			if (this.state.search_bar == ''){
+				coursesComponent.push(<p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p>)
+			}
+			else{
+				coursesComponent.push(<p>Kelas yang anda cari tidak ada.</p>)
+			}
 		}
 		
 		return coursesComponent
 	}
 
-	updateCoursesState(courses){
-		this.setState({
+	async updateCoursesState(courses){
+		await this.setState({
 			courses: courses,
+			courses_to_show: courses,
+			search_bar: ''
 		})
 	}
 
 	addCourseComponent(close){
 		if (this.state.profile.role == 'professor'){
-			return(<AddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
+			return(<UpdateCourse form_type={'add'} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
 		}
 		else{
 			return(<StudentAddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
 		}
 	}
 	
-	findCourses(value){
+	findCourses(event){
+		var value = event.target.value
+		this.setState({
+			search_bar: value
+		})
+		
 		var res = []
 		value = value.toLowerCase();
 		for (let i=0 ; i<this.state.courses.length; i++){
@@ -149,11 +153,9 @@ class Courses extends Component{
 				res.push(this.state.courses[i])
 			}
 		}
-		if (res.length != 0){
-			this.setState({
-				courses_to_show: res
-			})
-		}
+		this.setState({
+			courses_to_show: res
+		})
 	}					
 	render(){
 		return(
@@ -171,12 +173,15 @@ class Courses extends Component{
 					</div>
 				    <div className='header'>
 			            <h1>Kelas Anda</h1>
-			            <ReactSearchBox
-			            	placeholder={'Search'}
-			            	data={this.state.courses}
-          					onChange={this.findCourses}
-          					style={{marginTop: 'auto', marginBottom:'auto'}}
-			            />
+						<div className='search-bar'>
+							<SearchIcon className='icon'/>
+							<input
+								type = 'text'
+								placeholder='Search'
+								value = {this.state.search_bar}
+								onChange={this.findCourses}
+							/>
+						</div>
 			            <Popup
 							    trigger={
 							    	<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
@@ -208,7 +213,7 @@ class Courses extends Component{
 		  					<div className= "course-popup-header">
 		        				<h2> Edit Kelas </h2>
 			    			</div>
-	  						<UpdateCourse course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
+	  						<UpdateCourse form_type={'update'} course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
 	  					</div>)
 	  					}
 			        </Popup>
@@ -231,19 +236,14 @@ class Courses extends Component{
 			        		</div>
 			        	)}
 			        </Popup>
-			        {this.state.profile.role == "professor" ?
-			        <div className='content-prof'>
-			        	{this.makingCourses(this.state.courses_to_show)}
-			        </div>
-			        :
-			        <div className= 'content-stud'>
-			        	<Grid container justify='space-between'>
+					<div className='content'>
+						{this.state.profile.role == 'professor' ? 
+						this.makingCourses(this.state.courses_to_show)
+						:
+						<Grid container spacing={2}>
 				  			{this.makingCourses(this.state.courses_to_show)}
-				  		</Grid>
+				  		</Grid>}
 					</div>
-			    	}
-				        
-						
 	        	</div>
 	        </div>
 		)
@@ -425,9 +425,12 @@ class UpdateCourse extends Component{
 			start_term:this.props.course.start_term,
 			end_term: this.props.course.end_term,
 			description:this.props.course.description,
-			id: this.props.course._id
+			id: this.props.course._id,
+			form_type: this.props.form_type
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.changeStartTerm = this.changeStartTerm.bind(this);
+		this.changeEndTerm = this.changeEndTerm.bind(this);
 	}
 	handleChange = event => {
 	    this.setState({
@@ -447,17 +450,33 @@ class UpdateCourse extends Component{
 		})
 	}
   	handleSubmit(event){
-  		event.preventDefault();
-  		this.props.Auth.updateCourse(this.state.id, this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
-      	.then(res =>{
-      		this.props.closefunction()
-      		this.props.toggleShowUpdateCourseModal()
-      		alert(this.state.course_name+' course updated')
-      		this.props.updateCoursesState(res.data.courses)
-      	})
-      	.catch(err =>{
-        	console.log(err.message)
-      	})
+		event.preventDefault();
+		if (this.state.form_type == 'update'){ 
+			this.props.Auth.updateCourse(this.state.id, this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
+			.then(res =>{
+				this.props.closefunction()
+				this.props.toggleShowUpdateCourseModal()
+				alert(this.state.course_name+' course updated')
+				this.props.updateCoursesState(res.data.courses)
+			})
+			.catch(err =>{
+				console.log(err.message)
+			})
+		}
+		else if (this.state.form_type == 'add'){
+			this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
+			.then(res =>{
+				this.props.closefunction()
+				alert(this.state.course_name+' course added')
+				this.props.updateCoursesState(res.data.courses)
+			})
+			.catch(err =>{
+				console.log(err.message)
+			})
+		}
+		else{
+			console.log('error.')
+		}
   	}
 
 
@@ -496,14 +515,14 @@ class UpdateCourse extends Component{
 	          			<Button
 	          				className='button'
 	          				style={{backgroundColor:'transparent'}}
-	          				onClick={this.props.toggleShowUpdateCourseModal}>
+	          				onClick={this.state.form_type == "update" ? this.props.toggleShowUpdateCourseModal : this.props.closefunction}>
 			          		Batal
 			          	</Button>
 			          	<Button
 				           type="submit"
 				           className="button"
 				        >
-			            Ganti
+			            {this.state.form_type == 'update' ? "Ganti" : "Tambah"}
 			          	</Button>
 			         </div>
 	        	</form>
@@ -511,103 +530,37 @@ class UpdateCourse extends Component{
 	    );
   	}
 }
-class AddCourse extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			course_name:'',
-			start_term:'',
-			end_term: '',
-			description:'',
-		}
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.changeEndTerm = this.changeEndTerm.bind(this);
-		this.changeStartTerm = this.changeStartTerm.bind(this);
+
+UpdateCourse.defaultProps={
+	course:{
+		course_name:'',
+		start_term:"",
+		end_term:"",
+		description:"",
+		id:""
 	}
-	handleChange = event => {
-	    this.setState({
-	      [event.target.id]: event.target.value
-	    });
-  	}
-
-  	changeStartTerm(start_term){
-  		this.setState({
-  			start_term: start_term
-  		})
-  	}
-
-  	changeEndTerm(end_term){
-  		this.setState({
-  			end_term: end_term
-  		})
-  	}
-
-  	handleSubmit(event){
-  		event.preventDefault();
-  		this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
-      	.then(res =>{
-      		this.props.closefunction()
-      		alert(this.state.course_name+' course added')
-      		this.props.updateCoursesState(res.data.courses)
-
-      	})
-      	.catch(err =>{
-        	console.log(err.message)
-      	})
-  	}
-
-	render(){
-	    return(
-	      	<div className="form">
-	        	<form onSubmit={this.handleSubmit}>
-	          		<FormGroup controlId="course_name">
-	            		<ControlLabel>Nama Kelas</ControlLabel>
-			            <FormControl
-			              autoFocus
-			              type="text"
-			              value={this.state.course_name}
-			              onChange={this.handleChange}
-			              placeholder = 'Biologi kelas A'
-			            />
-	          		</FormGroup>
-	          		<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'2.5vh'}}> 
-		          		
-		          		
-		          	<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm}/>
-		          	<p style={{margin:'auto'}}> - </p>
-		          	<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm}/>
-		          		
-	          		</div>
-	          		<FormGroup controlId="description">
-	            		<ControlLabel>Deskripsi</ControlLabel>
-			            <FormControl
-			              type="text"
-			              value={this.state.description}
-			              onChange={this.handleChange}
-			              placeholder= '(optional)'
-			            />
-	          		</FormGroup>
-
-	          		<div className='buttons'>
-	          			<Button
-	          				className='button'
-	          				style={{backgroundColor:'transparent'}}
-	          				onClick={this.props.closefunction}>
-			          		Batal
-			          	</Button>
-			          	<Button
-				           type="submit"
-				           className="button"
-				        >
-			            Tambah
-			          	</Button>
-			         </div>
-	        	</form>
-	      	</div>
-	    );
-  	}
 }
 
+function translateToIndo(string){
+	var month = string.split(" ")[0]
+	var year = string.split(" ")[1]
+	var dict = {
+		'January' : 'Januari',
+		'February' : 'Februari',
+		'March' : 'Maret',
+		'May' : 'Mei',
+		'June' : 'Juni',
+		'July' : 'Juli',
+		'August' : 'Agustus',
+		'October' : 'Oktober',
+		'December' : 'Desember'
+	}
+	if (month in dict){
+		month = dict[month]
+	}
+
+	return month + " " + year
+}
 class ProfCourseCard extends Component{
 
 	constructor(props){
@@ -626,8 +579,8 @@ class ProfCourseCard extends Component{
 	    this.handleClick = this.handleClick.bind(this);
 	    this.deleteCourse = this.deleteCourse.bind(this);
 	    this.updateCourse = this.updateCourse.bind(this);
-  	}
-
+	}
+	  
   	handleClick(){
   		this.props.history.push('/lectures');
   	}
@@ -641,7 +594,7 @@ class ProfCourseCard extends Component{
   	}
 
   	async componentDidUpdate(oldProps) {
-  		const newProps = this.props
+		const newProps = this.props
   		if (oldProps.course.course_name !== newProps.course.course_name){
   			this.setState({
   				course_name: newProps.course.course_name
@@ -680,6 +633,7 @@ class ProfCourseCard extends Component{
   		}
   		
 	}
+
   	render(){
   		
 		return(
@@ -689,7 +643,7 @@ class ProfCourseCard extends Component{
 						<div style={{display:'flex', flexDirection:'row', margin: '28px', marginTop:'20px', marginBottom:'20px', flexDirection:'space-between'}}>
 							<div>
 								<Link to={'/dashboard/'+ this.state.course_id} > {this.state.course_name} </Link>
-								<p> {this.state.start_term} - {this.state.end_term} </p>
+								<p> {translateToIndo(this.state.start_term)} - {translateToIndo(this.state.end_term)} </p>
 								<p> Kode Bergabung: {this.state.join_code} </p>
 							</div>
 
@@ -783,7 +737,11 @@ class StudCourseCard extends Component{
 				
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
-						<Link to={{pathname:'/student-dashboard/' + this.props.course._id}}> {this.props.course.course_name} </Link>
+						<div className='info'>
+							<Link to={{pathname:'/student-dashboard/' + this.props.course._id}}> {this.props.course.course_name} </Link>
+							<p> {translateToIndo(this.props.course.start_term)} - {translateToIndo(this.props.course.end_term)} </p>
+							<p> Kode Bergabung: {this.props.course.join_code} </p>
+						</div>
 						<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
 								<IconButton>
 									<Popup

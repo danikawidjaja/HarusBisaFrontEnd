@@ -65,7 +65,9 @@ html, body{
 	justify-content: space-between; 
 }
 
-.Courses .right .dEHJYu{
+.Courses .right .search-bar{
+	display: flex;
+	flex-direction: row;
 	margin: auto;
 	background-color: #F1F2F6;
 	border-radius: 8px;
@@ -73,22 +75,25 @@ html, body{
 	width: 9rem;
 	height: 2rem;
 	text-align: center;
-}
-.Courses .right .content p{
-
+	padding: 0 0.5rem 0 0.5rem;
 }
 
-.Courses .right .content-prof{
-	text-align: center;
+.Courses .right .search-bar .icon{
+	margin: auto;
+}
+
+.Courses .right .search-bar input, .Courses .right .search-bar input:focus{
+	background-color: transparent;
+	border-style: none;
+	outline: none;
+	margin-left: 1rem;
+}
+
+.Courses .right .content{
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-}
-
-.Courses .right .content-stud{
-	display: flex;
-	flex-direction: column;
-	
+	margin-top: 1rem;
 }
 
 .Courses .right .button-student, .Courses .right .button-student:focus{
@@ -129,7 +134,7 @@ html, body{
 
 .Courses .right .course-card{
   padding: 0px;
-  margin: 2vw;
+  margin-bottom: 1rem;
   justify-content: space-between;
   background-color: #F3F6F7;
   text-align: left;
@@ -248,15 +253,26 @@ html, body{
 	justify-content: space-between;
 }
 
-.Courses .student-course-card .student-course-card-content a{
+.Courses .student-course-card .student-course-card-content  .info{
+	display: flex;
+	flex-direction: column;
+}
+
+.Courses .student-course-card .student-course-card-content .info p{
+	font-weight: 300;
+	font-size: 0.75rem;
+}
+
+.Courses .student-course-card .student-course-card-content .info a{
 	font-size: 1.1rem;
 	line-height: 22px;
 	color: black;
 	text-decoration: none;
+	font-weight: 500;
 }
 
-.Courses .student-course-card .student-course-card-content a:hover{
-	color: grey;
+.Courses .student-course-card .student-course-card-content .info a:hover{
+	color: lightgrey;
 }
 
 .Courses .student-course-card .student-course-card-content .MuiIconButton-root-1{
