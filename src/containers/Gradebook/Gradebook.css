@@ -1,3 +1,53 @@
 .Gradebook{
-	
+	margin-top:3rem;
+}
+
+.Gradebook .content{
+   padding: 3rem;
+   align-items: center;
+}
+
+.Gradebook .content h1{
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 125%;
+    text-align: center;
+}
+
+.Gradebook .content .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Gradebook .content .information{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.Gradebook .content .information .statistics{
+    display: flex;
+    flex-direction: column;
+}
+
+.Gradebook .content .information .statistics .statistics-box{
+    display: flex;
+    flex-direction: column;
+    background: #FFE01C;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+}
+
+.Gradebook .content .selector{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.Gradebook .content .table{
+    color:black;
 }
