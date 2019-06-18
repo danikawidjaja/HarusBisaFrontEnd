@@ -551,9 +551,44 @@ html{
 	font-size: 0.75rem;
 }
 
+@-webkit-keyframes hvr-pulse {
+	25% {
+	  -webkit-transform: scale(1.1);
+	  transform: scale(1.1);
+	}
+	75% {
+	  -webkit-transform: scale(0.9);
+	  transform: scale(0.9);
+	}
+  }
+  @keyframes hvr-pulse {
+	25% {
+	  -webkit-transform: scale(1.1);
+	  transform: scale(1.1);
+	}
+	75% {
+	  -webkit-transform: scale(0.9);
+	  transform: scale(0.9);
+	}
+  }
+
+.Dashboard .right .quizzes .question-card .card-action .hvr-pulse {
+	-webkit-animation-name: hvr-pulse;
+	animation-name: hvr-pulse;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	border: 1px solid #FFE01C;
+	background-color: #FFE01C;
+}
+
 .Dashboard .right .quizzes .question-card .card-action .button:hover{
 	border: 1px solid #FFE01C;
 	background-color: #FFE01C;
+	animation: none;
 }
 
 .Dashboard .right .quizzes .question-card .card-action .Timer p{

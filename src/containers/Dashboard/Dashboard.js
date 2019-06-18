@@ -701,7 +701,10 @@ class DashboardRight extends Component{
 		    					<p> Statistik Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </p>
 		    				</div>
 		    			}
-		    			modal closeOnDocumentClick={false} contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', minHeight:'40vh'}}>
+						modal 
+						closeOnDocumentClick={false} 
+						contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', minHeight:'40vh'}}
+						open={this.state.live}>
 		    				{close => (<LectureStat live={this.state.live} number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
@@ -1151,7 +1154,7 @@ class QuizCard extends Component{
 							</div>
 							<div style={{display:'flex'}}>
 								<Timer duration={this.props.quiz.time_duration}/>
-								<Button className='button' onClick={this.goLive}>Live</Button>
+								<Button className={!this.props.live ? 'button': 'button hvr-pulse'} onClick={this.goLive}>Live</Button>
 							</div>
 
 						</CardActions></OverrideMaterialUICss>
