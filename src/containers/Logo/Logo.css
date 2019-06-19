@@ -45,7 +45,7 @@
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   } */
-  .hvr-bob:hover, .hvr-bob:focus, .hvr-bob:active {
+  .hvr-bob:hover, .hvr-bob:focus, .hvr-bob:active, .on-hover {
     -webkit-animation-name: hvr-bob-float, hvr-bob;
     animation-name: hvr-bob-float, hvr-bob;
     -webkit-animation-duration: .3s, 1.5s;
@@ -62,3 +62,11 @@
     animation-direction: normal, alternate;
   }
   
+  .full img{
+    max-width: 100%;
+    max-height:100%;
+  }
+  .full{
+    display: flex;
+    flex-direction:row;
+  }
