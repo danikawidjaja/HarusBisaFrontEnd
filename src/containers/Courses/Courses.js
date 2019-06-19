@@ -293,12 +293,12 @@ class TermDropdown extends Component{
 		var currentYear = new Date()
 		currentYear = currentYear.getFullYear()
 		var components = []
-		var endYear = 1990
+		var endYear = currentYear + 6
 
-		while (currentYear > endYear){
+		while (currentYear < endYear){
 			var string = currentYear.toString()
 			components.push(<option value={string}>{string}</option>)
-			currentYear = currentYear -1
+			currentYear = currentYear + 1
 		}
 		return components
 	}
@@ -339,8 +339,8 @@ class TermDropdown extends Component{
 		         </OverrideMaterialUICss>
 		    </FormControlUI>
 			
-			<p style={{fontWeight:'500', letterSpacing:'1.8px', margin:'auto', marginLeft:'1rem'}}>{this.state.year}</p>
-		    {/* <FormControlUI>
+			{/* <p style={{fontWeight:'500', letterSpacing:'1.8px', margin:'auto', marginLeft:'1rem'}}>{this.state.year}</p> */}
+		    <FormControlUI>
 		    	<Select
 		    		native
 		    		value={this.state.year}
@@ -348,12 +348,16 @@ class TermDropdown extends Component{
 		    		inputProps={{
 		    			name:'year',
 		    			id:'year'
-		    		}}
+					}}
+					className='dropdown'
+					input={
+						<OutlinedInput id="outlined-age-native-simple" />
+					}
 		    	>
 		    		<option value=""/>
 					{this.makeYearOptions()}
 		    	</Select>
-		    </FormControlUI> */}
+		    </FormControlUI>
 		    </div>
 		    </div>
 		)
@@ -361,7 +365,7 @@ class TermDropdown extends Component{
 }
 
 TermDropdown.defaultProps={
-	month:'',
+	month: "",
 	year: new Date().getFullYear()
 }
 
