@@ -233,7 +233,7 @@ class Dashboard extends Component{
 		    			<DashboardNavigation changeFlag={this.changeFlag} course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 						<div style={{display:'flex', flexDirection:'column', marginTop:'2.97rem'}}>
 			    			<div className='left'>
-			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState} selectedCourse={this.state.selected_course}/>
 			    			</div>
 			    			<div className='right'>
 			    				<DashboardRight socket={this.socket} changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
@@ -317,7 +317,7 @@ class DashboardLeft extends Component{
 	  						<div className= "popup-header">
 	        					<h2> Tambah Sesi </h2>
 		    				</div>
-  							<AddEditLecture form_type={'add'} changeSelectedLecture={this.props.changeSelectedLecture} closefunction={close} Auth={this.props.Auth} selectedCourseId={this.props.selectedCourseId} updateLecturesState={this.props.updateLecturesState}/>
+  							<AddEditLecture minDate={this.props.selectedCourse.start_term} maxDate={this.props.selectedCourse.end_term} form_type={'add'} changeSelectedLecture={this.props.changeSelectedLecture} closefunction={close} Auth={this.props.Auth} selectedCourseId={this.props.selectedCourseId} updateLecturesState={this.props.updateLecturesState}/>
   						</div>
   					)}			
   				</Popup>
@@ -332,14 +332,25 @@ class AddEditLecture extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			date: this.convertToDateObject(this.props.lecture.date),
+			date: this.props.lecture.date == "" ? this.convertToDateObject(this.props.minDate) : this.convertToDateObject(this.props.lecture.date),
 			description:this.props.lecture.description,
 			participation_reward_percentage: this.props.lecture.participation_reward_percentage,
-			form_type: this.props.form_type 
+			form_type: this.props.form_type,
+			minDate:this.convertToDateObject(this.props.minDate),
+			maxDate:this.convertToDateObject(this.props.maxDate) 
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleSliderChange = this.handleSliderChange.bind(this);
+	}
+
+	componentDidMount(){
+		var max = this.state.maxDate;
+		max.setMonth(max.getMonth() + 1)
+		max.setDate(max.getDate() - 1)
+		this.setState({
+			maxDate:max
+		})
 	}
 	handleChange = event => {
 	    this.setState({
@@ -347,10 +358,15 @@ class AddEditLecture extends Component{
 	    });
   	}
   	convertToDateObject(str){
-		var date = new Date();
+		var date;
 		if (str != ''){
 			var split = str.split('/')
-			date = new Date(split[2], split[1]-1, split[0])
+			if (split.length == 3){
+				date = new Date(split[2], split[1]-1, split[0]);
+			}
+			else{
+				date = new Date(str)
+			}
 		}
   		return date
   	}
@@ -404,9 +420,6 @@ class AddEditLecture extends Component{
   		this.setState({date: date});
   	}
 	render(){
-		if (this.props.form_type == 'add'){
-			console.log(this.props)
-		}
 	    return(
 	      	<div className="form">
 	        	<form onSubmit={this.handleSubmit}>
@@ -418,7 +431,9 @@ class AddEditLecture extends Component{
 			            	onChange={this.handleDateChange}
 			            	todayButton={'Today'}
 			            	dateFormat='d MMMM yyyy'
-			            	className='calendar'
+							className='calendar'
+							minDate={this.state.minDate}
+							maxDate={this.state.maxDate}
 			            />
 
 	          		</FormGroup>
@@ -805,7 +820,7 @@ class LectureSetting extends Component{
   	
   	content(setting){
   		if (setting == 'edit'){
-  			return(<AddEditLecture form_type={'edit'} changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} closefunction={this.props.closefunction} lecture={this.props.lecture} Auth={this.props.Auth} selected_course_id={this.props.selected_course._id}/>)
+  			return(<AddEditLecture minDate={this.props.selected_course.start_term} maxDate={this.props.selected_course.end_term} form_type={'edit'} changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} closefunction={this.props.closefunction} lecture={this.props.lecture} Auth={this.props.Auth} selected_course_id={this.props.selected_course._id}/>)
   		}
   		else if (setting =="delete"){
   			return(
