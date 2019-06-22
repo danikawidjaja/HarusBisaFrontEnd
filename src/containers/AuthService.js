@@ -33,6 +33,15 @@ export default class AuthService {
         })
     }
 
+    getCourse(join_code){
+        return this.fetch(`${this.domain}/courses/${join_code}`,{
+            method: 'GET'
+        }).then(res =>{
+            console.log(res.message)
+            return Promise.resolve(res);
+        })
+    }
+
     studentAddCourse(join_code){
         return this.fetch(`${this.domain}/courses`, {
             method: 'POST',
