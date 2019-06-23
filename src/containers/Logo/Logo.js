@@ -40,7 +40,6 @@ class Logo extends Component{
 	}
 
 	handleHover(){
-		console.log('im at handle hover')
 		this.setState(prevState => {
 			return{
 				hover: !prevState.hover,
