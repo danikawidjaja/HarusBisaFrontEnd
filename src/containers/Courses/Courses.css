@@ -191,8 +191,9 @@ html, body{
 
 .Courses .right .course-popup h2{
 	color: black;
-	font-weight: 400;
+	font-weight: 500;
 	text-align: center;
+	line-height: 24px;
 }
 
 .Courses .right .course-popup .course-popup-header{
@@ -246,6 +247,7 @@ html, body{
 	border-radius: 8px;
 	width: 145px;
 	margin: 0;
+	align-self: center;
 }
 .Courses .right .course-popup .button:hover{
 	background-color: #F7F3DC;
@@ -257,17 +259,31 @@ html, body{
 	border:0px;
 	color: white;
 	text-transform: none;
-	letter-spacing: 0;
-	font-weight: 400;
+	font-weight: normal;
 	border-radius: 8px;
-	width: 145px;
 	margin: 0;
+	align-self: center;
 }
 .Courses .right .course-popup .student-button:hover{
 	background-color:rgb(161, 130, 214);
 
 }
 
+.Courses .right .course-popup .transparent-button{
+	background-color: transparent;
+	color: black;
+	text-transform: none;
+	font-weight: normal;
+	border-radius: 8px;
+	margin: 0;
+	border: 0;
+	align-self: center;
+}
+
+.Courses .right .course-popup .transparent-button:hover, .Courses.right .course-popup .transparent-button:active{
+	background-color: #e1e1e1;
+	border: 0;
+}
 
 .Courses .right .course-popup .buttons{
 	display: flex;

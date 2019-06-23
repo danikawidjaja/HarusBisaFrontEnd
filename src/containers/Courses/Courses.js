@@ -23,6 +23,7 @@ import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 
 class Courses extends Component{ 
@@ -189,7 +190,7 @@ class Courses extends Component{
 						    	}
 							    modal
 							    closeOnDocumentClick={false}
-							    contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
+							    contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', padding:'4rem'}}
 	  						>
 	  						{close => (
 	  							<div className='course-popup'>
@@ -373,13 +374,42 @@ class StudentAddCourse extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			join_code:''
+			join_code:'',
+			haveSubmited:false,
+			course: null,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleAddClass = this.handleAddClass.bind(this);
+		this.handleAddOtherClass = this.handleAddOtherClass.bind(this);
+		this.toggleHaveSubmited = this.toggleHaveSubmited.bind(this);
 	}
 
 	handleSubmit(event){
+		event.preventDefault();		
+		this.props.Auth.getCourse(this.state.join_code)
+		.then(async res => {
+			await this.setState({
+				course: res.data,
+				haveSubmited: true
+			})
+		})
+	}
+	
+	handleAddOtherClass(){
+		this.toggleHaveSubmited();
+		this.setState({
+			join_code:'',
+		})
+	}
+	toggleHaveSubmited(){
+		this.setState(prevState =>{
+			return{
+				haveSubmited: !prevState.haveSubmited,
+			}
+		})
+	}
+	handleAddClass(event){
 		event.preventDefault();
 		this.props.Auth.studentAddCourse(this.state.join_code)
 		.then(res => {
@@ -388,44 +418,84 @@ class StudentAddCourse extends Component{
 		})
 		.catch(err =>{
         	console.log(err.message)
-      	})
+		})
 	}
 	handleChange = event => {
 	    this.setState({
 	      [event.target.id]: event.target.value
 	    });
-  	}
+	}
+	
+	nameFormatting(name){
+		var names = name.split(" ")
+		var first_name = names[0][0].toUpperCase() + names[0].slice(1,names[0].length)
+		var last_name = names[1][0].toUpperCase() + names[1].slice(1,names[1].length)
+		return first_name + " " + last_name
+	}
 	render(){
-	    return(
-	      	<div className="form">
-	        	<form onSubmit={this.handleSubmit}>
-	          		<FormGroup controlId="join_code">
-	            		<ControlLabel>Kode Bergabung</ControlLabel>
-			            <FormControl
-			              autoFocus
-			              type="text"
-			              value={this.state.join_code}
-			              onChange={this.handleChange}
-			              
-			            />
-	          		</FormGroup>
-	          		<div className='buttons'>
-	          			<Button
-	          				className='button'
-	          				style={{backgroundColor:'transparent'}}
-	          				onClick={this.props.closefunction}>
-			          		Batal
-			          	</Button>
-			          	<Button
-				           type="submit"
-				           className="button-student"
-				        >
-			            Tambah
-			          	</Button>
-			         </div>
-	        	</form>
-	      	</div>
-	    );
+		if (this.state.haveSubmited && this.state.course != null){
+			return(
+				<div style={{textAlign:'left'}}>
+					<div class='row'>
+						<div class='col' style={{textAlign:'left'}}>
+							<p style={{fontWeight:'500', fontSize:'1.25rem'}}>{this.state.course.course_name}</p>
+						</div>
+						<div class='col'style={{textAlign:'right'}}>
+							<p>{this.nameFormatting(this.state.course.instructor)}</p>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col'><p>{this.state.course.start_term} - {this.state.course.end_term}</p></div>
+					</div>
+					<div class='row'>
+						<div class='col'><p>Kode Bergabung: {this.state.course.join_code}</p></div>
+					</div>
+					<div class='row' style={{marginTop:'5rem'}}>
+						<div class='col'>
+							<Button className='student-button' onClick={this.handleAddOtherClass}>+ Tambah Kelas lain</Button>
+						</div>
+						<div class='col'>
+							<Button className='transparent-button' onClick={this.props.closefunction}>Batalkan</Button>
+						</div>
+						<div class='col' style={{alignItems:'right'}}>
+							<Button className='student-button' onClick={this.handleAddClass}>Tambahkan</Button>
+						</div>
+
+					</div>
+				</div>
+			)
+		}
+		else{
+			return(
+				<div className="form">
+					<form onSubmit={this.handleSubmit}>
+						<FormGroup controlId="join_code">
+							<ControlLabel>Kode Bergabung</ControlLabel>
+							<FormControl
+							autoFocus
+							type="text"
+							value={this.state.join_code}
+							onChange={this.handleChange}
+							
+							/>
+						</FormGroup>
+						<div className='buttons'>
+							<Button
+								className='transparent-button'
+								onClick={this.props.closefunction}>
+								Batal
+							</Button>
+							<Button
+							type="submit"
+							className="student-button"
+							>
+							Tambah
+							</Button>
+						</div>
+					</form>
+				</div>
+			);
+		}
   	}
 }
 class UpdateCourse extends Component{
