@@ -11,7 +11,7 @@ import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Grid from '@material-ui/core/Grid';
-
+ 
 
 class Live extends Component{
 	constructor(props){
@@ -73,6 +73,12 @@ class Live extends Component{
 	
 	componentDidMount(){
 		if (this.state.started){
+			var data = {
+				course_id:this.props.course_id,
+				lecture_id:this.props.lecture_id,
+				quiz_index:this.findCurrentIndex(this.state.current_quiz)
+			}
+			this.props.socket.emit("start_question", data)
 			this.intervalHandle = setInterval(this.tick, 1000);
 		}
 	}
@@ -82,11 +88,18 @@ class Live extends Component{
 				started:!prevState.started,
 			}
 		})
+		var data = {
+			course_id:this.props.course_id,
+			lecture_id:this.props.lecture_id,
+			quiz_index:this.findCurrentIndex(this.state.current_quiz)
+		}
 		if (this.state.started){
+			this.props.socket.emit("start_question", data)
 			this.intervalHandle = setInterval(this.tick, 1000);
 		}
 		else{
-			clearInterval(this.intervalHandle)
+			clearInterval(this.intervalHandle);
+			this.props.socket.emit("close_question", data)
 			this.setState({
 				secondsRemaining:0
 			}) 
@@ -95,7 +108,13 @@ class Live extends Component{
 
 	tick(){
 		if (this.state.secondsRemaining <= 1){
-			clearInterval(this.intervalHandle)
+			var data = {
+				course_id:this.props.course_id,
+				lecture_id:this.props.lecture_id,
+				quiz_index:this.findCurrentIndex(this.state.current_quiz)
+			}
+			clearInterval(this.intervalHandle);
+			this.props.socket.emit("close_question", data)
 			this.toggleStarted()
 		}
 		this.setState(prevState => {

@@ -94,7 +94,27 @@ class Lecture extends Component{
 	      				lecture_id: temp.id
 	      			}
 	      			if (socket){
-	      				socket.emit("participate_lecture", data)
+						socket.emit("participate_lecture", data)
+						console.log('waiting for new question')
+						socket.on("new_question", quiz =>{
+							var live_quizzes = this.state.live_quizzes
+							live_quizzes.push(quiz);
+							this.setState({
+								live_quizzes: live_quizzes,
+								new_quiz: true,
+							})
+						})
+						socket.on("question_closed", data =>{
+							console.log(data)
+							var quiz_index = data.quiz_index;
+							// var live_quizzes = this.state.live_quizzes;
+							// var target_quiz = live_quizzes[quiz_index];
+							// target_quiz.live = false;
+							// live_quizzes[quiz_index] = target_quiz;
+							// this.setState({
+							// 	live_quizzes: live_quizzes
+							// })
+						})
 	      			}
 	      		}
 	      	})	
