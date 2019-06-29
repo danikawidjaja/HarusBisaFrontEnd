@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./FAQ.css";
-import { Button, ToggleButtonGroup, ToggleButton} from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import Footer from '../Footer/Footer';
 
 export default class FAQ extends Component {
@@ -32,20 +31,23 @@ export default class FAQ extends Component {
   }
   render() {
     return (
-      <div className='faq'>
-        <div className='text'> 
-          <h1> F.A.Q </h1>
-          <p> Informasi mengenai HarusBisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna </p>
-          <ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'faculty'} onChange={this.handleChangeRole}>
-            <ToggleButton className='button' value='faculty' defaultChecked> Dosen </ToggleButton>
-            <ToggleButton className='button' value='student'> Mahasiswa </ToggleButton>
-          </ToggleButtonGroup>
+      <React.Fragment>
+        <div className='faq container'>
+          <div className='content'> 
+            <h1>Bantuan</h1>
+            <p>Informasi mengenai harusbisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna</p>
+            <form><input type='text' placeholder='Cari bantuan'/></form>
+            <ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'faculty'} onChange={this.handleChangeRole}>
+              <ToggleButton className='button' value='faculty' defaultChecked> Dosen </ToggleButton>
+              <ToggleButton className='button' value='student'> Mahasiswa </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+
+          {this.informationDisplay()}
+
         </div>
-
-        {this.informationDisplay()}
-
         <Footer/>
-      </div>     
+      </React.Fragment>     
     );
   }
 }
