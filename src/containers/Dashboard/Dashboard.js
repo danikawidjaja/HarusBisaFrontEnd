@@ -928,6 +928,7 @@ class QuizCard extends Component{
 			showDeleteQuestionModal: false,
 			showUpdateQuestionModal: false,
 			isHovering: false,
+			time_duration: this.props.quiz.time_duration,
 		}
 		this.deleteQuiz = this.deleteQuiz.bind(this);
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
@@ -936,6 +937,7 @@ class QuizCard extends Component{
 		this.changeQuizOrderUp = this.changeQuizOrderUp.bind(this);
 		this.changeQuizOrderDown = this.changeQuizOrderDown.bind(this);
 		this.goLive = this.goLive.bind(this);
+		this.changeDuration = this.changeDuration.bind(this);
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -945,8 +947,14 @@ class QuizCard extends Component{
 				possible_answers: this.props.quiz.answers,
 				correct_answer: this.props.quiz.answers[this.props.quiz.correct_answer],
 				question_number:this.props.question_number,
+				time_duration:this.props.quiz.time_duration,
 			})
 		}
+	}
+	changeDuration(dur){
+		this.setState({
+			time_duration: dur,
+		})
 	}
 	handleMouseHover(){
 		this.setState(prevState =>{
@@ -1074,7 +1082,7 @@ class QuizCard extends Component{
 			          enabled={this.state.live}
 			          onChange={live => this.setState({live:live})}
 			     	>
-			          {this.state.live ? <Live lecture_id={this.props.lecture_id} course_id={this.props.course_id} socket={this.props.socket} quizzes={this.props.quizzes} quiz={this.props.quiz} question_number={this.state.question_number}/> : null}
+			          {this.state.live ? <Live changeDuration={this.changeDuration} lecture_id={this.props.lecture_id} course_id={this.props.course_id} socket={this.props.socket} quizzes={this.props.quizzes} quiz={this.props.quiz} question_number={this.state.question_number}/> : null}
 			    </Fullscreen>
 				<Popup
 			        open={this.state.showDeleteQuestionModal}
@@ -1168,7 +1176,7 @@ class QuizCard extends Component{
 								{this.showSwitch()}
 							</div>
 							<div style={{display:'flex'}}>
-								<Timer duration={this.props.quiz.time_duration}/>
+								<Timer duration={this.state.time_duration}/>
 								<Button className={!this.props.live ? 'button': 'button hvr-pulse'} onClick={this.goLive}>Live</Button>
 							</div>
 

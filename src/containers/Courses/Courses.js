@@ -23,7 +23,7 @@ import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+//import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 
 class Courses extends Component{ 

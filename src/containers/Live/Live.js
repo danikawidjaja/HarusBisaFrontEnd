@@ -23,6 +23,7 @@ class Live extends Component{
 			current_quiz: this.props.quiz,
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
+			socket_data: null,
 		}
 		this.toggleShowCorrectAnswer = this.toggleShowCorrectAnswer.bind(this);
 		this.toggleStarted = this.toggleStarted.bind(this);
@@ -43,13 +44,21 @@ class Live extends Component{
 		}
 	}
 
-	changeSecondsRemaining(dur){
-		this.setState({
+	async changeSecondsRemaining(dur){
+		await this.setState({
 			secondsRemaining : dur
 		})
+		this.props.changeDuration(dur);
+		var data = {
+			course_id:this.props.course_id,
+			lecture_id:this.props.lecture_id,
+			quiz_id:this.state.current_quiz.id,
+			new_duration : dur
+		}
+		this.props.socket.emit("change_quiz_time", data);
 	}
-	changeCurrentQuiz(current_quiz){
-		this.setState({
+	async changeCurrentQuiz(current_quiz){
+		await this.setState({
 			current_quiz: current_quiz,
 			secondsRemaining: current_quiz.time_duration
 		})
@@ -71,13 +80,13 @@ class Live extends Component{
 		})
 	}
 	
-	componentDidMount(){
+	async componentDidMount(){
+		var data = {
+			course_id:this.props.course_id,
+			lecture_id:this.props.lecture_id,
+			quiz_id:this.state.current_quiz.id
+		}
 		if (this.state.started){
-			var data = {
-				course_id:this.props.course_id,
-				lecture_id:this.props.lecture_id,
-				quiz_index:this.findCurrentIndex(this.state.current_quiz)
-			}
 			this.props.socket.emit("start_question", data)
 			this.intervalHandle = setInterval(this.tick, 1000);
 		}
@@ -91,7 +100,7 @@ class Live extends Component{
 		var data = {
 			course_id:this.props.course_id,
 			lecture_id:this.props.lecture_id,
-			quiz_index:this.findCurrentIndex(this.state.current_quiz)
+			quiz_id:this.state.current_quiz.id
 		}
 		if (this.state.started){
 			this.props.socket.emit("start_question", data)
@@ -103,16 +112,17 @@ class Live extends Component{
 			this.setState({
 				secondsRemaining:0
 			}) 
+			this.props.changeDuration(0);
 		}
 	}
 
 	tick(){
+		var data = {
+			course_id:this.props.course_id,
+			lecture_id:this.props.lecture_id,
+			quiz_id:this.state.current_quiz.id
+		}
 		if (this.state.secondsRemaining <= 1){
-			var data = {
-				course_id:this.props.course_id,
-				lecture_id:this.props.lecture_id,
-				quiz_index:this.findCurrentIndex(this.state.current_quiz)
-			}
 			clearInterval(this.intervalHandle);
 			this.props.socket.emit("close_question", data)
 			this.toggleStarted()

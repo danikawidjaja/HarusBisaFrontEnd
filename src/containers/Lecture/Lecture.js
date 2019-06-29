@@ -97,23 +97,54 @@ class Lecture extends Component{
 						socket.emit("participate_lecture", data)
 						console.log('waiting for new question')
 						socket.on("new_question", quiz =>{
-							var live_quizzes = this.state.live_quizzes
-							live_quizzes.push(quiz);
+							var live_quizzes = this.state.live_quizzes;
+							var quiz_id = quiz.id;
+							var index = null;
+							if (live_quizzes.length != 0){
+								for(let i=0; i<live_quizzes.length; i++){
+									if (live_quizzes[i].id === quiz_id){
+										index = i;
+									}
+								}
+							}
+							if (index == null){
+								live_quizzes.push(quiz);
+							}
+							else{
+								live_quizzes[index] = quiz;
+							}
 							this.setState({
 								live_quizzes: live_quizzes,
 								new_quiz: true,
 							})
 						})
-						socket.on("question_closed", data =>{
-							console.log(data)
-							var quiz_index = data.quiz_index;
-							// var live_quizzes = this.state.live_quizzes;
-							// var target_quiz = live_quizzes[quiz_index];
-							// target_quiz.live = false;
-							// live_quizzes[quiz_index] = target_quiz;
-							// this.setState({
-							// 	live_quizzes: live_quizzes
-							// })
+						socket.on("time_change", async data =>{
+							var quiz_id = data.quiz_id;
+							var live_quizzes = this.state.live_quizzes;
+							var target_quiz_index = null;
+							for(let i=0; i<live_quizzes.length; i++){
+								if (live_quizzes[i].quiz_id === quiz_id){
+									target_quiz_index = i
+								}
+							}
+							live_quizzes[target_quiz_index] = data;
+							await this.setState({
+								live_quizzes: live_quizzes
+							})
+						})
+						socket.on("question_closed", async data =>{
+							var quiz_id = data.quiz_id;
+							var live_quizzes = this.state.live_quizzes;
+							var target_quiz_index = null;
+							for(let i=0; i<live_quizzes.length; i++){
+								if (live_quizzes[i].quiz_id === quiz_id){
+									target_quiz_index = i
+								}
+							}
+							live_quizzes[target_quiz_index] = data;
+							await this.setState({
+								live_quizzes: live_quizzes
+							})
 						})
 	      			}
 	      		}
@@ -188,7 +219,6 @@ class Lecture extends Component{
 							<div>
 								<h1>{this.state.selected_course.course_name}</h1>
 								<p>Sesi {this.state.selected_lecture.date.split('/')[0] + '/' + this.state.selected_lecture.date.split('/')[1]}</p>
-								<button onClick={this.toggleNew}>Toggle New Quiz </button> 
 							</div>
 							{this.state.live ? null :
 							<Popup
@@ -226,9 +256,44 @@ class Lecture extends Component{
 export class Quiz extends Component{
 	constructor(props){
 		super(props);
+		this.state={
+			time_duration:this.props.quiz.time_duration,
+		}
+		this.intervalHandle = null;
+		this.tick = this.tick.bind(this);
+	}
+
+	componentDidMount(){
+		if (this.props.quiz.live){
+			this.intervalHandle = setInterval(this.tick, 1000);
+		}
+	}
+	componentDidUpdate(oldProps){
+		if (oldProps.quiz.time_duration !== this.props.quiz.time_duration){
+			this.setState({
+				time_duration: this.props.quiz.time_duration,
+			})
+			if (this.props.quiz.time_duration == 0 && this.intervalHandle != null){
+				clearInterval(this.intervalHandle);
+				this.intervalHandle = null;
+			}
+			if (this.props.quiz.time_duration != 0 && this.intervalHandle == null){
+				this.intervalHandle = setInterval(this.tick, 1000);
+			}
+		}
+	}
+	tick(){
+		if (this.state.time_duration <= 1){
+			clearInterval(this.intervalHandle);
+		}
+		this.setState(prevState =>{ 
+			return{
+			time_duration: prevState.time_duration-1,
+			}
+		})
 	}
 	style(){
-		if (this.props.live){
+		if (this.props.quiz.live){
 			return 'live-answer'
 		}
 		else{
@@ -268,7 +333,7 @@ export class Quiz extends Component{
 					<div className='answers'>{this.makeAns()}</div>
 				</div>
 				<div className='time'>
-					<Timer duration={this.props.quiz.time_duration}/>
+					<Timer duration={this.state.time_duration}/>
 				</div>
 			</div>
 		)
