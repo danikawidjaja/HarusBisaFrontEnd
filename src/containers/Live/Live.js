@@ -63,12 +63,21 @@ class Live extends Component{
 		})
 	}
 
-	toggleShowCorrectAnswer(){
-		this.setState(prevState =>{
+	async toggleShowCorrectAnswer(){
+		await this.setState(prevState =>{
 			return{
 				show_correct_answer:!prevState.show_correct_answer,
 			}
 		})
+
+		if (this.state.show_correct_answer == true){
+			var data = {
+				course_id:this.props.course_id,
+				lecture_id:this.props.lecture_id,
+				quiz_id:this.state.current_quiz.id
+			}
+			this.props.socket.emit("show_answer", data)
+		}
 	}
 
 	toggleShowStats(){

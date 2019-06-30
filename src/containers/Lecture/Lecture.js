@@ -98,6 +98,7 @@ class Lecture extends Component{
 						console.log('waiting for new question')
 						socket.on("new_question", quiz =>{
 							var live_quizzes = this.state.live_quizzes;
+							console.log(quiz)
 							var quiz_id = quiz.id;
 							var index = null;
 							if (live_quizzes.length != 0){
@@ -118,32 +119,53 @@ class Lecture extends Component{
 								new_quiz: true,
 							})
 						})
-						socket.on("time_change", async data =>{
-							var quiz_id = data.quiz_id;
+						socket.on("time_change", async quiz =>{
+							var quiz_id = quiz.id;
 							var live_quizzes = this.state.live_quizzes;
 							var target_quiz_index = null;
+							console.log(live_quizzes)
 							for(let i=0; i<live_quizzes.length; i++){
-								if (live_quizzes[i].quiz_id === quiz_id){
+								if (live_quizzes[i].id === quiz_id){
 									target_quiz_index = i
+									break;
 								}
 							}
-							live_quizzes[target_quiz_index] = data;
+							live_quizzes[target_quiz_index] = quiz;
 							await this.setState({
 								live_quizzes: live_quizzes
 							})
 						})
-						socket.on("question_closed", async data =>{
-							var quiz_id = data.quiz_id;
+						socket.on("question_closed", async quiz =>{
+							var quiz_id = quiz.id;
+							var live_quizzes = this.state.live_quizzes;
+							var target_quiz_index = null;
+							console.log(live_quizzes)
+							for(let i=0; i<live_quizzes.length; i++){
+								if (live_quizzes[i].id === quiz_id){
+									target_quiz_index = i
+									break;
+								}
+							}
+							live_quizzes[target_quiz_index] = quiz;
+							await this.setState({
+								live_quizzes: live_quizzes
+							})
+						})
+						socket.on("answer_opened", data =>{
+							var quiz_answer = data.correct_answer
+							var quiz_id = data.quiz_id
 							var live_quizzes = this.state.live_quizzes;
 							var target_quiz_index = null;
 							for(let i=0; i<live_quizzes.length; i++){
-								if (live_quizzes[i].quiz_id === quiz_id){
+								if (live_quizzes[i].id === quiz_id){
 									target_quiz_index = i
+									break;
 								}
 							}
-							live_quizzes[target_quiz_index] = data;
-							await this.setState({
-								live_quizzes: live_quizzes
+							live_quizzes[target_quiz_index].show_correct_answer = true
+							live_quizzes[target_quiz_index].correct_answer = quiz_answer
+							this.setState({
+								live_quizzes: live_quizzes,
 							})
 						})
 	      			}
@@ -316,8 +338,6 @@ export class Quiz extends Component{
 				quiz_answer: ans 
 			}
 			socket.emit("answer_question", data);
-			console.log("emit answer question")
-			console.log(data)
 		}
 	}
 	makeAns(){
@@ -325,7 +345,7 @@ export class Quiz extends Component{
 		let components = [];
 		// pretend the correct answer is my answer since we have no my answer data
 		for (let i=0; i<answers.length; i++){
-			if (i == this.props.quiz.correct_answer && this.props.show_correct_answer){
+			if (i == this.props.quiz.correct_answer && this.props.quiz.show_correct_answer){
 				if (this.props.show_my_answer){
 					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4', fontWeight:'bold'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
