@@ -7,75 +7,70 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
 }
 
+html, body{
+  width: 100% important!;
+  height: 100% important!;
+}
+
 .Home {
-  padding-top:50px;
+  padding-top:10vh ;
   justify-content: space-around;
   display: flex;
   flex-direction: column;
   font-family: 'Rubik', sans-serif;
-  
   background: url('./landerbackground.png');
   background-repeat: no-repeat;
   background-size: 100%;
+  width: 100%;
 }
- 
+
+.Home .area{
+  margin-top: 4rem;
+}
 .Home .lander {
   text-align: left;
-  display: flex;
-  flex-direction: row;
   width: 100% !important;
   justify-content: space-around;
-  padding: 5vw;
   background-color: transparent;
   align-items: center;
 }
 
-.Home .lander img{
+.Home .lander .row .image img{
   max-width: 100%;
   max-height: 100%;
 }
 
-.Home .lander .text{
-  width: 60%;
+.Home .lander .row .text{
+  margin: auto;
 }
 
-.Home .lander .image{
-  width: 40%;
-}
-.Home  .lander h1 {
-  
-  color: black;
-  padding-bottom: 0px;
-  font-size: 4.7vw;
-  margin: 20px;
-  font-weight: 500;
-}
-
-.Home  .lander p {
-  color: black;
-  font-size: calc(10px + 2vmin);
-  font-weight: normal;
-}
-
-.Home-button {
-  background-color: black;
+.Home .lander .row .text .btn {
+  background-color: #5960A3;
   border: none;
   border-radius: 22px;
   transition: 0.3s opacity ease;
   cursor: pointer;
   color: white;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  font-size: 1.3vw;
-  margin: 20px;
-  margin-top: -15px;
-  width: 40%;
-
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-size: 1.5vw;
+}
+.Home .lander .row .text .btn:hover{
+  background-color: black;
+  color: white;
 }
 
-.Home-button:hover{
-  background-color: #5960A3;
-  color: white;
+
+.Home  .lander .row .text h1 {
+  color: black;
+  padding-bottom: 0px;
+  font-size: 5vw;
+  font-weight: 500;
+}
+
+.Home .lander .row .text p{
+  font-size: 2vw;
+  font-weight: 300;
 }
 
 .Home .about {
@@ -84,13 +79,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   flex-direction: column;
   width: 100% !important;
   justify-content: space-around;
-  padding: 5vw;
   background-color: transparent;
+  margin-top: 1rem;
 }
 
 .Home .about h1{
-  margin:20px;
-  font-weight: 500;
+  color: black;
+  padding-bottom: 0px;
+  font-size: 3vw;
+  font-weight: 400;
 }
 
 .Home .about img{
@@ -99,44 +96,19 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: auto;
 }
 
-.Home .about .div1{
-  text-align: left;
-  display: inline-flex;
-  flex-direction: row;
-  margin: 30px;
-  border: 1px black solid;
+.Home .about .benefit{
+  display: flex;
+  flex-direction: column;
 }
 
-.Home .about .div1 .text{
-  text-align: left;
-  width: 60%;
-  justify-content: flex-start;
-  margin: auto;
+.Home .about .benefit h5{
+  font-weight: 400;
+  font-size: 1.5rem;
 }
-
-.Home .about .div1 h5{
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.Home .about .div2{
-  text-align: left;
-  display: inline-flex;
-  flex-direction: row;
-  margin: 30px;
-  border: 1px black solid;
-  justify-content: flex-end;
-}
-
-.Home .about .div2 .text{
-  text-align: left;
-  width: 60%;
-  margin: auto;
-}
-
-.Home .about .div2 h5{
-  font-weight: bold;
-  font-size: 20px;
+.Home .about .benefit p{
+  font-weight: 300;
+  line-height: 111%;
+  font-size: 1rem;
 }
 
 .Home .pricing{

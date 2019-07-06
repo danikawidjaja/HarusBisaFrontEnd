@@ -2,12 +2,11 @@
   background-color: black;
   color: white;
   min-width: 100%;
-  padding: 2rem;
-  padding-left:5vw;
-  padding-right: 5vw;
   text-align: center;
   vertical-align: center;
   align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .footer .content{
@@ -16,36 +15,18 @@
   margin: auto;
 }
 
-.footer .f-about p {   
+.footer p {   
   color: white;
-  font-size: 1vw;
+  font-size: 1.25vw;
   line-height: 1.5em;
   text-align: left; 
 }
 
-.footer .f-about{
-  display: flex;
-  flex-direction: column;
-  border: 0px white solid;
-  justify-content: flex-start;
-  padding-bottom: 0px;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  margin-right: 13vw;
-  font-weight: 100;
-  width: 40%;
-  margin-bottom: 2vw;
-  height: 100%;
-}
 
 .footer .links{
   display: flex;
   flex-direction: column;
-  font-size: 1vw;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  margin-right: 1vw;
-  margin-left: 1vw;
+  font-size: 1.25vw;
   height: 100%;
   border: 0px white solid;
 }
@@ -53,19 +34,22 @@
 .footer .links .f-link{
   color: white;
   text-align: left;
-  padding-top: 0.2vw;
-  padding-bottom: 0.2vw;
+  padding-bottom:0.5rem;
 }
 
-.footer .socialmedia{
-  display: flex;
-  flex-direction: row;
-  border: 0px solid white;
-  height: 100%;
-  margin-top: 13vw;
+.footer .icon{
+  height: 5vh;
 }
 
-.footer .socialmedia .socmed-i{
-  margin-left: 1vw;
-  margin-right: 1vw;
+@media screen and (max-width: 768px){
+  .footer p {   
+    color: white;
+    font-size: 2.25vw;
+    line-height: 1.5em;
+    text-align: left; 
+  }
+
+  .footer .links{
+    font-size: 2vw;
+  }
 }

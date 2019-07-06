@@ -27,7 +27,7 @@ class ProfileAvatar extends Component{
   	}
 	render(){
 		return(
-			<div className='ProfileAvatar'>
+			<React.Fragment>
 				<Popup
 					trigger={
 						<Button className='avatar-button'>
@@ -40,7 +40,7 @@ class ProfileAvatar extends Component{
 					onOpen={this.props.changeFlag}
 					onClose={this.props.changeFlag}
 				>
-					<div style={{display:'flex', flexDirection:'column', padding:'0.25rem'}}>
+					<div className='ProfileAvatar' style={{display:'flex', flexDirection:'column', padding:'0.25rem'}}>
 						<div className='popup-profile'>
 							<div>
 								<div className='avatar'>
@@ -58,7 +58,7 @@ class ProfileAvatar extends Component{
 						</div>
 					</div>
 				</Popup>
-			</div>
+			</React.Fragment>
 
 		)
 	}

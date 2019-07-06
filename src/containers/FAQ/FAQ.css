@@ -8,14 +8,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .faq{
-	background-color: #ffe01c;
 	height: 100%;
 	justify-content: space-around;
 	display: flex;
 	flex-direction: column;
 	font-family: 'Rubik', sans-serif;
 	align-items: center;
-	padding-top: 6vw;
+	padding-top:10vh ;
 	text-align: left;
 }
 
@@ -28,37 +27,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	color: black;
 }
 
-.faq .text p{
 
-}
-
-.faq .text{
+.faq .content{
 	text-align: justify;
 	display: flex;
 	flex-direction: column;
-	width: 55%;
 	justify-content: space-around;
 	background-color: transparent;
 	align-items: left;
-	padding: 5vw;
-	margin-bottom: 1.4vw;
 	height: 100%;
+	margin-top: 4rem;
+}
+
+.faq .content p{
+	font-weight: 300;
+	line-height: 122%;
+	font-size: 1rem;
 }
 
 .faq .buttons{
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	margin-top: 7vw;
 	justify-content: space-between;
+	margin-top:2rem;
 }
 
-.faq .buttons .button, .faq .buttons .button:focus{
-	background-color: black;
-	color: #ffe01c;
+.faq .buttons .btn, .faq .buttons .btn:focus{
+	background-color: white;
+	color: black;
 	width: 15vw;
-	border: 1px solid black;
-	border-radius: 0px;
+	border: 1px solid #ffe01c;
+	border-radius: 22px;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	font-weight: 400;

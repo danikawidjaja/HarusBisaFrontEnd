@@ -1,26 +1,14 @@
-.ProfileAvatar{
-	display: flex;
-	overflow: visible;
-	text-align: center;
-	border-radius: 50%;
-	padding: 0;
-	padding-left: 6px;
-	padding-right: 6px;
-
-}
-
-
-.ProfileAvatar .avatar-button, .ProfileAvatar .avatar-button:active, .ProfileAvatar .avatar-button:focus{
+.avatar-button, .avatar-button:active, .avatar-button:focus{
 	display: inline-block;
-	border-radius: 50%;
-	background-color: red;
+	border-radius: 50%!important;
+	background-color:red!important;
 	border: none;
-	margin: auto;
+	margin: auto 12px auto 12px;
 	color: black;
-	padding: 3px 7px;
+	padding: 0 4px 0 4px!important;
 	height: 1.5rem;
 	width: 1.5rem;
-	outline: 0px;
+	outline: 0;
 }
 
 .ProfileAvatar .popup-profile{

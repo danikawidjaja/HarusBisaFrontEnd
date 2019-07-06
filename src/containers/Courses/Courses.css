@@ -24,6 +24,16 @@ html, body{
 	justify-content: space-between;
 }
 
+@media (max-width: 768px){
+	.Courses .left{
+		position: relative !important;
+		border-right: 0px solid!important;
+	}
+
+	.Courses .right{
+		margin-left: 0 !important;
+	}
+}
 .Courses .left h2{
 	font-weight: 500;
 	margin: auto;
@@ -40,12 +50,10 @@ html, body{
 
 .Courses .left{
 	border-right: 2px solid #EBEBEB;
-	width: 33%;
 	position: fixed;
 }
 
 .Courses .right{
-	width: 67%;
 	padding-left: 89px;
 	padding-right: 89px;
 	margin-left: 33%;
@@ -68,7 +76,6 @@ html, body{
 .Courses .right .search-bar{
 	display: flex;
 	flex-direction: row;
-	margin: auto;
 	background-color: #F1F2F6;
 	border-radius: 8px;
 	border: 0px;
@@ -79,7 +86,7 @@ html, body{
 }
 
 .Courses .right .search-bar .icon{
-	margin: auto;
+	margin: auto 0 auto 0;
 }
 
 .Courses .right .search-bar input, .Courses .right .search-bar input:focus{
@@ -87,6 +94,7 @@ html, body{
 	border-style: none;
 	outline: none;
 	margin-left: 1rem;
+	width: 100%;
 }
 
 .Courses .right .content{
@@ -314,6 +322,7 @@ html, body{
 .Courses .student-course-card .student-course-card-content .info p{
 	font-weight: 300;
 	font-size: 0.75rem;
+	margin-bottom: 0;
 }
 
 .Courses .student-course-card .student-course-card-content .info a{

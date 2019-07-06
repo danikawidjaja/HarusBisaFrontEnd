@@ -12,8 +12,8 @@ class Login extends Component {
     }
   render() {
     return (
-      <div className='login'>
-          <div style={{width:'30%', textAlign:'center', margin:'auto', padding:'2rem'}}>
+      <div className='login container'>
+          <div class='content'>
             <Logo size='logo' color='black' background='trans' padding={false} style={{width:'6rem'}}/>
             <h1> Log In </h1>
             <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
@@ -92,7 +92,7 @@ class LoginForm extends Component{
         {this.displayErrorMessage()}
         <form className='login-form' onSubmit={this.handleSubmit}>
           <FormGroup className="form-element" controlId="email" bsSize="small" style={{marginBottom:'1vw'}}>
-            <ControlLabel className='form-control-label' style={{fontSize:'1.5vw'}}> Email </ControlLabel>
+            <ControlLabel className='form-control-label'> Email </ControlLabel>
             <FormControl
               autoFocus
               type="email"
@@ -103,7 +103,7 @@ class LoginForm extends Component{
           </FormGroup>
 
           <FormGroup className="form-element" controlId="password" bsSize="small">
-            <ControlLabel className='form-control-label' style={{fontSize:'1.5vw'}}> Password </ControlLabel>
+            <ControlLabel className='form-control-label'> Password </ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}

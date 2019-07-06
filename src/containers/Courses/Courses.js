@@ -108,7 +108,7 @@ class Courses extends Component{
 			}
 			else{
 				for (let i=0; i<numberOfCourses; i++){
-					coursesComponent.push(<Grid item xs={6}><StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/></Grid>)
+					coursesComponent.push(<div className='col-md-6'><StudCourseCard course={listOfCourse[i]} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/></div>)
 				}
 			}
 		} else {
@@ -119,7 +119,7 @@ class Courses extends Component{
 				coursesComponent.push(<p>Kelas yang anda cari tidak ada.</p>)
 			}
 		}
-		
+		 
 		return coursesComponent
 	}
 
@@ -160,9 +160,9 @@ class Courses extends Component{
 	}					
 	render(){
 		return(
-	    	<div className="Courses">
+	    	<div className="Courses row">
 	    		<CoursesLeft role={this.state.profile.role} name={this.state.profile.first_name}/>
-	    		<div className = 'right'>
+	    		<div className = 'right col-md-8 order-1'>
 	    			<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
 						<OverrideMaterialUICss><IconButton style={{padding:'12px'}}>
 							<OverrideMaterialUICss> <SettingsOutlined style={{color: '#9B9B9B'}}/> </OverrideMaterialUICss>
@@ -172,35 +172,38 @@ class Courses extends Component{
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				    <div className='header'>
-			            <h1>Kelas Anda</h1>
-						<div className='search-bar'>
-							<SearchIcon className='icon'/>
-							<input
-								type = 'text'
-								placeholder='Search'
-								value = {this.state.search_bar}
-								onChange={this.findCourses}
-							/>
+				    <div className='header row container'>
+			            <div class="col-md-4"><h1>Kelas Anda</h1></div>
+						<div className="d-none d-md-block col-md-4" style={{margin:"auto 0 auto 0"}}>
+							<div className='search-bar'>
+								<SearchIcon className='icon'/>
+								<input
+									type = 'text'
+									placeholder='Search'
+									value = {this.state.search_bar}
+									onChange={this.findCourses}
+								/>
+							</div>
 						</div>
-			            <Popup
-							    trigger={
-							    	<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
-						    	}
-							    modal
-							    closeOnDocumentClick={false}
-							    contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', padding:'4rem'}}
-	  						>
-	  						{close => (
-	  							<div className='course-popup'>
-		  							<div className= "course-popup-header">
-		        						<h2> Tambah Kelas </h2>
-			    					</div>
-			    					{this.addCourseComponent(close)}
-	  							</div>
-	  						)}
-	  							
-	  					</Popup>
+						<div class="col-md-4" style={{margin:'auto', justifyContent:'flex-end', justifyItems:"flex-end"}}>
+							<Popup
+								trigger={
+									<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
+								}
+								modal
+								closeOnDocumentClick={false}
+								contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', padding:'4rem'}}
+							>
+								{close => (
+									<div className='course-popup'>
+										<div className= "course-popup-header">
+											<h2> Tambah Kelas </h2>
+										</div>
+										{this.addCourseComponent(close)}
+									</div>
+								)}		
+							</Popup>
+						</div>
 			        </div>
 			        
 			        <Popup
@@ -209,13 +212,14 @@ class Courses extends Component{
 			        	closeOnDocumentClick={false}
 			        	contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
 			        >
-				        	{close => (
-			        	<div className='course-popup'>
-		  					<div className= "course-popup-header">
-		        				<h2> Edit Kelas </h2>
-			    			</div>
-	  						<UpdateCourse form_type={'update'} course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
-	  					</div>)
+				        {close => (
+							<div className='course-popup'>
+								<div className= "course-popup-header">
+									<h2> Edit Kelas </h2>
+								</div>
+								<UpdateCourse form_type={'update'} course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
+							</div>
+							)
 	  					}
 			        </Popup>
 
@@ -241,9 +245,9 @@ class Courses extends Component{
 						{this.state.profile.role == 'professor' ? 
 						this.makingCourses(this.state.courses_to_show)
 						:
-						<Grid container spacing={2}>
+						<div className='row'>
 				  			{this.makingCourses(this.state.courses_to_show)}
-				  		</Grid>}
+				  		</div>}
 					</div>
 	        	</div>
 	        </div>
@@ -259,7 +263,7 @@ class CoursesLeft extends Component{
 
 	render(){
 		return(
-			<div className='left'>
+			<div className='left col-md-4 order-2'>
 				<div style={{padding:'2rem'}}>
 					<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
     			</div>
@@ -789,31 +793,31 @@ class StudCourseCard extends Component{
 				
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
-						<div className='info'>
+						<div className='info col-10'>
 							<Link to={{pathname:'/student-dashboard/' + this.props.course._id}}>{this.props.course.course_name}</Link>
 							<p>Dosen/Pembimbing: {nameFormatting(this.props.course.instructor)}</p>
 							<p>{translateToIndo(this.props.course.start_term)} - {translateToIndo(this.props.course.end_term)}</p>
 							<p>Kode Bergabung: {this.props.course.join_code}</p>
 						</div>
-						<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
-								<IconButton>
-									<Popup
-										trigger={<MoreVertIcon />}
-										position="bottom right"
-										on = "click"
-										closeOnDocumentClick
-										arrow={false}
-										contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
-										mouseLeaveDelay={1}
-									>
-										{close => (
-											<div onClick={close}>
-												<Button onClick={this.toggleShowDeleteCourseModal} style={{border:'none', display:'flex', width:'100%'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
-											</div>
-										)}							
-									</Popup>    
-					        	</IconButton>
-							</div>
+						<div className='col-2' style={{justifyContent:'flex-end', margin:'0'}}>
+							<IconButton>
+								<Popup
+									trigger={<MoreVertIcon />}
+									position="bottom right"
+									on = "click"
+									closeOnDocumentClick
+									arrow={false}
+									contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
+									mouseLeaveDelay={1}
+								>
+									{close => (
+										<div onClick={close}>
+											<Button onClick={this.toggleShowDeleteCourseModal} style={{border:'none', display:'flex', width:'100%'}}> <OverrideMaterialUICss><Delete style={{marginRight:'1rem'}}/></OverrideMaterialUICss> Hapus Kelas </Button>
+										</div>
+									)}							
+								</Popup>    
+					        </IconButton>
+						</div>
 					</CardContent>
 					<OverrideMaterialUICss><CardActions className='student-course-card-action'>
 					<p> {this.props.course.number_of_lectures} Sesi</p>

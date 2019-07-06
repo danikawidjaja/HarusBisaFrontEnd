@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import "./Home.css";
 import logo from './logokrul.png';
 import landerpic from './landerpic.png';
-import landerbackground from './landerbackground.png';
-import { Button} from "react-bootstrap";
+import { Button } from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -36,53 +35,51 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <div className="lander">
-          <img src="assets/images/header-bg.svg" class="img-fluid" alt=""/>
-          <div className='text'>
-            <h1>Jadikan kelas anda <br/> interaktif dan efektif</h1>
-            <Button className="Home-button" onClick={this.handleClick}> DAFTAR SEKARANG! </Button>
-          </div>
-          <div className='image'>
-            <img src={landerpic}/>
+        <div className="lander container area" id='#top'>
+          <div class='row'>
+            <div class='col-7 text'>
+              <h1>Teknologi Kelas Terkini</h1>
+              <p>Revolusi kegiatan belajar<br/>mengajar di kampus secara gratis!</p>
+              <Button onClick={this.handleClick}>Daftar Sekarang</Button>
+            </div>
+            <div class='col-5 image'>
+              <img src={landerpic}/>
+            </div>
           </div>
         </div>
 
-        <div className="about" id='#about'>
-          <a name="about"></a>
-          <div>
-            <h1>Cara untuk professor dan pengajar untuk mengimplementasi active learning</h1>
+        <div className="about container area" id='#about'>
+          <div style={{padding: '2rem 6rem 2rem 6rem'}}>
+            <h1>HarusBisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi </h1>
           </div>
-
-          <div className='div1'>
-            <img src={logo}/>
-            <div className='text'>
-              <h5> Memotivasi setiap Mahasiswa untuk berpartisipasi </h5>
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
+          <div class='row'>
+            <div class='col benefit'>
+              <img src={logo} alt='icon'/>
+              <h5>Real Time Interaksi</h5>
+              <p>Dengan adanya tanya jawab secara langung</p>
+            </div>
+            <div class='col benefit'>
+              <img src={logo} alt='icon'/>
+              <h5>Mudah diakses di semua platform</h5>
+              <p>Dengan adanya tanya jawab secara langung</p>
+            </div>
+            <div class='col benefit'>
+              <img src={logo} alt='icon'/>
+              <h5>Data Oriented</h5>
+              <p>Dengan adanya tanya jawab secara langung</p>
             </div>
           </div>
 
-          <div className='div2'>
-            <div className='text'>
-              <h5> Secara langsung dapat menilai dan mengetahui kinerja siswa </h5>
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
-            </div>
-             <img src={logo} />
-          </div>
         </div>
 
-        <div className='pricing' id='#pricing'>
-          <a name="pricing"> </a>
-          <div className='content'>
-            <Card raised='true' className='card'>
-              <OverrideMaterialUICss>
-                <CardContent>
-                  <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                  Pellentesque vel facilisis eros. Praesent diam augue, semper eu commodo ac </p>
-                </CardContent> 
-              </OverrideMaterialUICss>
-            </Card>
+        <div className='pricing container area' id='#pricing'>
+          <div className='row content'>
+            <div class='col'>
+              Image
+            </div>
+            <div class='col'>
+              <p>Berkontribusi untuk negara Indonesia adalah komitment kita, maka dari itu service ini Gratis!</p>
+            </div>
           </div>
         </div>
 

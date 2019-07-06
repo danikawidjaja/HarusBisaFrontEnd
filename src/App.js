@@ -1,15 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
-//import logo from './logokrul.png';
-import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { NavHashLink as Link } from 'react-router-hash-link';
 import "./App.css";
 import Routes from "./Routes";
-import { LinkContainer } from "react-router-bootstrap";
 import AuthService from './containers/AuthService';
-import AppliedRoute from './components/AppliedRoute';
-import Logo from './containers/Logo/Logo';
-import gif from './containers/Logo/logo.gif';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar_ from './containers/Navbar_/Navbar_';
 
 const auth = new AuthService();
  
@@ -18,15 +13,12 @@ class App extends Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      navExpanded: false,
       scrollTop: true,
-      toggled: false,
       visibility: true
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
     this.isNavVisible = this.isNavVisible.bind(this);
   }
 
@@ -47,29 +39,6 @@ class App extends Component {
   Auth = auth;
   userHasAuthenticated = authenticated => {
     this.setState({isAuthenticated: authenticated});
-  }
-
-  handleToggle(event){
-    console.log(this.state.toggled)
-    if (this.state.toggled){
-      this.setState({toggled: false})
-    }
-    else{
-      this.setState({toggled: true})
-    }
-  }
-  setNavExpanded(expanded){
-    this.setState({navExpanded: expanded});
-  }
-
-  closeNav(){
-    this.setState({navExpanded: false});
-  }
-
-  handleLogout = async event => {
-    await this.Auth.logout();
-    this.userHasAuthenticated(false);
-    this.props.history.push('/');
   }
 
   async componentDidMount(){
@@ -113,50 +82,7 @@ class App extends Component {
     if (this.state.visibility){
     return (
       <div className="App">
-        <Navbar onToggle={this.handleToggle} collapseOnSelect={true} fluid fixedTop style={{ backgroundColor: (this.state.scrollTop|| this.state.toggled) ? 'transparent' : 'white'}}>
-          <Navbar.Header>
-            <Navbar.Brand>
-                <Logo style={{width: '12rem',height: '2.5rem'}} size='full' color='black' background='trans' padding={false}/>
-                {/*<img class='static' src={'./containers/Logo/PNG/Harus_Bisa-15-Logo-Blk-Trans-NoPad.png'} style={{width: '10rem',height: '10rem'}}/>
-                <img class="active" src={gif} style={{width: '10rem',height: '10rem'}}/>
-                <div className='logo'/>*/}
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-
-          <Navbar.Collapse>
-            <Nav pullRight>
-              {this.state.isAuthenticated ?
-                <Fragment>
-                  <LinkContainer to="/profile">
-                    <NavItem >Profil</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/courses">
-                    <NavItem >Mata Kuliah</NavItem>
-                  </LinkContainer>
-                  <NavItem onClick={this.handleLogout}>Logout</NavItem>
-                </Fragment>
-                : 
-                <Fragment>
-                  <LinkContainer to='/#about' className='navspec'>
-                    <NavItem >
-                      Kenapa HarusBisa?
-                    </NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/#pricing" className='navspec'>
-                    <NavItem >Harga</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/login">
-                    <NavItem >Login</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/signup">
-                    <NavItem >Daftar</NavItem>
-                  </LinkContainer>
-                </Fragment>
-              }    
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+        <Navbar_/>
         <Routes childProps={childProps}/>
       </div>
     );
