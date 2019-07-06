@@ -23,7 +23,6 @@ class Live extends Component{
 			current_quiz: this.props.quiz,
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
-			socket_data: null,
 		}
 		this.toggleShowCorrectAnswer = this.toggleShowCorrectAnswer.bind(this);
 		this.toggleStarted = this.toggleStarted.bind(this);
@@ -64,12 +63,21 @@ class Live extends Component{
 		})
 	}
 
-	toggleShowCorrectAnswer(){
-		this.setState(prevState =>{
+	async toggleShowCorrectAnswer(){
+		await this.setState(prevState =>{
 			return{
 				show_correct_answer:!prevState.show_correct_answer,
 			}
 		})
+
+		if (this.state.show_correct_answer == true){
+			var data = {
+				course_id:this.props.course_id,
+				lecture_id:this.props.lecture_id,
+				quiz_id:this.state.current_quiz.id
+			}
+			this.props.socket.emit("show_answer", data)
+		}
 	}
 
 	toggleShowStats(){
@@ -81,6 +89,11 @@ class Live extends Component{
 	}
 	
 	async componentDidMount(){
+		var current_quiz = this.state.current_quiz;
+		current_quiz.total_participants = 0;
+		this.setState({
+			current_quiz: current_quiz,
+		})
 		var data = {
 			course_id:this.props.course_id,
 			lecture_id:this.props.lecture_id,
@@ -89,6 +102,17 @@ class Live extends Component{
 		if (this.state.started){
 			this.props.socket.emit("start_question", data)
 			this.intervalHandle = setInterval(this.tick, 1000);
+			this.props.socket.on("new_answer", async ans =>{
+				await this.props.socket.emit("record_answer", ans);	
+			});
+			this.props.socket.on("new_statistic", async stats =>{
+				var current_quiz = this.state.current_quiz;
+				current_quiz.stat = stats.answers;
+				current_quiz.total_participants = stats.total_participants;
+				this.setState({
+					current_quiz: current_quiz
+				})
+			})
 		}
 	}
 	async toggleStarted(){
@@ -105,6 +129,18 @@ class Live extends Component{
 		if (this.state.started){
 			this.props.socket.emit("start_question", data)
 			this.intervalHandle = setInterval(this.tick, 1000);
+			this.props.socket.on("new_answer", ans =>{
+				this.props.socket.emit("record_answer", ans);	
+			});
+			this.props.socket.on("new_statistic", async stats =>{
+				var current_quiz = this.state.current_quiz;
+				current_quiz.stat = stats.answers;
+				current_quiz.total_participants = stats.total_participants;
+				this.setState({
+					current_quiz: current_quiz,
+				})
+			})
+			
 		}
 		else{
 			clearInterval(this.intervalHandle);
@@ -139,7 +175,7 @@ class Live extends Component{
 		return(
 			<div className='Live'>				
 				<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
+				<LiveMenu  show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
 			</div>
 		)
 	}
@@ -181,7 +217,7 @@ class LiveQuiz extends Component{
 					<p className='question'> {this.props.quiz.question} </p>
 					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
 						<div className='answers' style={{width: this.props.show_stats ? '50%':'100%' }}>{this.makeAns()}</div>
-						<div className='quiz-stat'>{this.props.show_stats ?	<QuizStat show_correct_answer={this.props.show_correct_answer} answers={this.props.quiz.answers} correct_answer={this.props.quiz.correct_answer}/> : null}</div>
+						<div className='quiz-stat'>{this.props.show_stats ?	<QuizStat stat={this.props.quiz.stat} show_correct_answer={this.props.show_correct_answer} answers={this.props.quiz.answers} correct_answer={this.props.quiz.correct_answer}/> : null}</div>
 					</div>
 				</div>
 				<div className='quiz-duration' >
@@ -197,26 +233,26 @@ class QuizStat extends Component{
 		super(props);
 	}
 
-	makeCircularBars(){
-		var data = [10,20,30,40,50]
-		var ans = this.props.answers
+	makeCircularBars(){		
+		var data = this.props.stat
+		var keys = Object.keys(data);
 		var components = []
-
-		for (let i=0; i<ans.length; i++){
+		//assume happy path. remember to implement test case when no one has answered yet.
+		for (let i=0; i<keys.length; i++){
 			if (this.props.show_correct_answer){
 				if (i==this.props.correct_answer){
 					components.push(
 						<Grid item xs={5}>
 							<CircularProgressbarWithChildren 
-							value={data[i]}
+							value={data[keys[i]]}
 							styles={buildStyles({
 					          backgroundColor: "transparent",
 					          pathColor: "#82DAA4",
 					          trailColor: "#EBEBEB",
 					        })}
 					     	>
-								<h1>{data[i]}%</h1>
-								<p>{String.fromCharCode(i+65)}.</p>
+								<h1>{data[keys[i]]}%</h1>
+								<p>{keys[i]}.</p>
 							</CircularProgressbarWithChildren>
 						</Grid>
 					)
@@ -225,15 +261,15 @@ class QuizStat extends Component{
 					components.push(
 						<Grid item xs={5}>
 							<CircularProgressbarWithChildren 
-							value={data[i]}
+							value={data[keys[i]]}
 							styles={buildStyles({
 					          backgroundColor: "transparent",
 					          pathColor: "#9B9B9B",
 					          trailColor: "#EBEBEB",
 					        })}
 					     	>
-								<h1>{data[i]}%</h1>
-								<p>{String.fromCharCode(i+65)}.</p>
+								<h1>{data[keys[i]]}%</h1>
+								<p>{keys[i]}.</p>
 							</CircularProgressbarWithChildren>
 						</Grid>
 					)
@@ -243,15 +279,15 @@ class QuizStat extends Component{
 				components.push(
 					<Grid item xs={5}>
 						<CircularProgressbarWithChildren 
-						value={data[i]}
+						value={data[keys[i]]}
 						styles={buildStyles({
 				          backgroundColor: "transparent",
 				          pathColor: "#9B9B9B",
 				          trailColor: "#EBEBEB",
 				        })}
 				     	>
-							<h1>{data[i]}%</h1>
-							<p>{String.fromCharCode(i+65)}.</p>
+							<h1>{data[keys[i]]}%</h1>
+							<p>{keys[i]}.</p>
 						</CircularProgressbarWithChildren>
 					</Grid>
 				)
@@ -324,7 +360,7 @@ class LiveMenu extends Component{
 					<Timer duration={this.props.duration} adjust={true} changeSecondsRemaining={this.props.changeSecondsRemaining}/>
 				</div>
 				<div className='counter'>
-					<p>100</p>
+					<p>{this.props.current_quiz.total_participants}</p>
 				</div>
 			</div>
 		)
