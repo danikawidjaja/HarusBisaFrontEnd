@@ -11,16 +11,20 @@ import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Grid from '@material-ui/core/Grid';
- 
+import {socket} from "../Dashboard/Dashboard";
 
 class Live extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 		this.state = {
 			show_correct_answer: false,
 			started:true,
-			current_quiz: this.props.quiz,
+			//current_quiz: this.props.quiz,
+			current_quiz: null,
+			quiz_ids: [],
+			current_quiz_id: this.props.quiz.id,
+			isLoading:true,
+
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
 		}
@@ -32,12 +36,13 @@ class Live extends Component{
 		this.tick = this.tick.bind(this);
 		this.changeSecondsRemaining = this.changeSecondsRemaining.bind(this)
 		this.toggleShowStats = this.toggleShowStats.bind(this);
+		this.startQuiz = this.startQuiz.bind(this);
 	}
 
 	findCurrentIndex(current_quiz){
 		let length =this.props.quizzes.length
 		for (let i=0; i<length; i++){
-			if (this.props.quizzes[i] === current_quiz){
+			if (this.props.quizzes[i].id === current_quiz.id){
 				return i
 			}
 		}
@@ -54,7 +59,7 @@ class Live extends Component{
 			quiz_id:this.state.current_quiz.id,
 			new_duration : dur
 		}
-		this.props.socket.emit("change_quiz_time", data);
+		socket.emit("change_quiz_time", data);
 	}
 	async changeCurrentQuiz(current_quiz){
 		await this.setState({
@@ -62,7 +67,7 @@ class Live extends Component{
 			secondsRemaining: current_quiz.time_duration
 		})
 	}
-
+	
 	async toggleShowCorrectAnswer(){
 		await this.setState(prevState =>{
 			return{
@@ -76,7 +81,7 @@ class Live extends Component{
 				lecture_id:this.props.lecture_id,
 				quiz_id:this.state.current_quiz.id
 			}
-			this.props.socket.emit("show_answer", data)
+			socket.emit("show_answer", data)
 		}
 	}
 
@@ -89,31 +94,76 @@ class Live extends Component{
 	}
 	
 	async componentDidMount(){
-		var current_quiz = this.state.current_quiz;
-		current_quiz.total_participants = 0;
-		this.setState({
-			current_quiz: current_quiz,
+		var quiz_ids = [];
+		this.props.quizzes.forEach(quiz =>{
+			quiz_ids.push(quiz.id);
 		})
-		var data = {
-			course_id:this.props.course_id,
-			lecture_id:this.props.lecture_id,
-			quiz_id:this.state.current_quiz.id
-		}
-		if (this.state.started){
-			this.props.socket.emit("start_question", data)
-			this.intervalHandle = setInterval(this.tick, 1000);
-			this.props.socket.on("new_answer", async ans =>{
-				await this.props.socket.emit("record_answer", ans);	
-			});
-			this.props.socket.on("new_statistic", async stats =>{
-				var current_quiz = this.state.current_quiz;
-				current_quiz.stat = stats.answers;
-				current_quiz.total_participants = stats.total_participants;
-				this.setState({
-					current_quiz: current_quiz
-				})
+		this.setState({
+			quiz_ids: quiz_ids
+		})
+		await this.quizSetup()
+	}
+
+	async quizSetup(){
+		await socket.emit("show_current_quiz", {
+			quiz_id: this.state.current_quiz_id
+		})
+		await socket.on("current_quiz", async data =>{
+			var quiz = data.quiz
+			quiz.total_participants = 0;
+			await this.setState({
+				current_quiz: quiz,
+				isLoading: false,
 			})
-		}
+			await this.startQuiz();
+		})
+	}
+	startQuiz(){
+		socket.emit("start_question", {quiz_id: this.state.current_quiz.id})
+		socket.on("question_is_live", async data =>{
+			var live = data.live
+			var current_quiz = this.state.current_quiz
+			current_quiz.live = live
+			await this.setState({
+				current_quiz: current_quiz
+			})
+		})
+
+		// this.intervalHandle = setInterval(this.tick, 1000);
+		// socket.on("new_answer", async ans =>{
+		// 	await socket.emit("record_answer", ans);	
+		// });
+		// socket.on("new_statistic", async stats =>{
+		// 	var current_quiz = this.state.current_quiz;
+		// 	current_quiz.stat = stats.answers;
+		// 	current_quiz.total_participants = stats.total_participants;
+		// 	this.setState({
+		// 		current_quiz: current_quiz
+		// 	})
+		// })
+		// socket.emit("start_question", {
+		// 	quiz_id: this.state.current_quiz_id
+		// })
+		// socket.on("question_is_live", data =>{
+		// 	var current_quiz = this.state.current_quiz;
+		// 	current_quiz.live = data.live
+		// 	current_quiz.total_participants = 0;
+		// 	this.setState({
+		// 		current_quiz: current_quiz
+		// 	})
+		// } )
+		// this.intervalHandle = setInterval(this.tick, 1000);
+		// socket.on("new_answer", async ans =>{
+		// 	await socket.emit("record_answer", ans);	
+		// });
+		// socket.on("new_statistic", async stats =>{
+		// 	var current_quiz = this.state.current_quiz;
+		// 	current_quiz.stat = stats.answers;
+		// 	current_quiz.total_participants = stats.total_participants;
+		// 	this.setState({
+		// 		current_quiz: current_quiz
+		// 	})
+		// })
 	}
 	async toggleStarted(){
 		await this.setState(prevState =>{
@@ -127,24 +177,12 @@ class Live extends Component{
 			quiz_id:this.state.current_quiz.id
 		}
 		if (this.state.started){
-			this.props.socket.emit("start_question", data)
-			this.intervalHandle = setInterval(this.tick, 1000);
-			this.props.socket.on("new_answer", ans =>{
-				this.props.socket.emit("record_answer", ans);	
-			});
-			this.props.socket.on("new_statistic", async stats =>{
-				var current_quiz = this.state.current_quiz;
-				current_quiz.stat = stats.answers;
-				current_quiz.total_participants = stats.total_participants;
-				this.setState({
-					current_quiz: current_quiz,
-				})
-			})
+			this.startQuiz();
 			
 		}
 		else{
 			clearInterval(this.intervalHandle);
-			this.props.socket.emit("close_question", data)
+			socket.emit("close_question", data)
 			this.setState({
 				secondsRemaining:0
 			}) 
@@ -160,7 +198,7 @@ class Live extends Component{
 		}
 		if (this.state.secondsRemaining <= 1){
 			clearInterval(this.intervalHandle);
-			this.props.socket.emit("close_question", data)
+			socket.emit("close_question", data)
 			this.toggleStarted()
 		}
 		this.setState(prevState => {
@@ -172,12 +210,16 @@ class Live extends Component{
 
 
 	render(){
-		return(
-			<div className='Live'>				
-				<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu  show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
-			</div>
-		)
+		if (this.state.isLoading){
+			return(null)
+		}else{
+			return(
+				<div className='Live'>				
+					<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
+					<LiveMenu  show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes} quiz_ids={this.state.quiz_ids}/>
+				</div>
+			)
+		}
 	}
 }
 
@@ -201,7 +243,7 @@ class LiveQuiz extends Component{
 		}
 		else{
 			for (let i=0; i<answers.length; i++){
-				components.push(<div className={this.props.started ? 'live-answer' : 'answer'}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				components.push(<div className={this.props.quiz.live ? 'live-answer' : 'answer'}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 		}
 		return components;
@@ -323,6 +365,7 @@ class LiveMenu extends Component{
 
 	nextQuiz(){
 		var current_index = this.props.findCurrentIndex(this.props.current_quiz);
+		//var current_index = this.props.quiz_ids.indexOf(this.props.current_quiz.id)
 		if (current_index == this.props.quizzes.length-1){
 			alert('already at last quiz')
 		}
