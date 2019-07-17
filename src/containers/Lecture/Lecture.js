@@ -56,7 +56,6 @@ class Lecture extends Component{
 		if (socket){
 			socket.emit("participate_lecture", {lecture_id: this.state.selected_lecture.id})
 			socket.on("lecture_status", async data =>{
-				console.log(data.quizzes)
 				await this.setState({
 					live_quizzes: data.quizzes
 				})
@@ -84,56 +83,56 @@ class Lecture extends Component{
 					live_quizzes: live_quizzes,
 					new_quiz: true,
 				})
-		  	})
-		//   socket.on("time_change", async quiz =>{
-		// 	  var quiz_id = quiz.id;
-		// 	  var live_quizzes = this.state.live_quizzes;
-		// 	  var target_quiz_index = null;
-		// 	  console.log(live_quizzes)
-		// 	  for(let i=0; i<live_quizzes.length; i++){
-		// 		  if (live_quizzes[i].id === quiz_id){
-		// 			  target_quiz_index = i
-		// 			  break;
-		// 		  }
-		// 	  }
-		// 	  live_quizzes[target_quiz_index] = quiz;
-		// 	  await this.setState({
-		// 		  live_quizzes: live_quizzes
-		// 	  })
-		//   })
-		//   socket.on("question_closed", async quiz =>{
-		// 	  var quiz_id = quiz.id;
-		// 	  var live_quizzes = this.state.live_quizzes;
-		// 	  var target_quiz_index = null;
-		// 	  console.log(live_quizzes)
-		// 	  for(let i=0; i<live_quizzes.length; i++){
-		// 		  if (live_quizzes[i].id === quiz_id){
-		// 			  target_quiz_index = i
-		// 			  break;
-		// 		  }
-		// 	  }
-		// 	  live_quizzes[target_quiz_index] = quiz;
-		// 	  await this.setState({
-		// 		  live_quizzes: live_quizzes
-		// 	  })
-		//   })
-		//   socket.on("answer_opened", data =>{
-		// 	  var quiz_answer = data.correct_answer
-		// 	  var quiz_id = data.quiz_id
-		// 	  var live_quizzes = this.state.live_quizzes;
-		// 	  var target_quiz_index = null;
-		// 	  for(let i=0; i<live_quizzes.length; i++){
-		// 		  if (live_quizzes[i].id === quiz_id){
-		// 			  target_quiz_index = i
-		// 			  break;
-		// 		  }
-		// 	  }
-		// 	  live_quizzes[target_quiz_index].show_correct_answer = true
-		// 	  live_quizzes[target_quiz_index].correct_answer = quiz_answer
-		// 	  this.setState({
-		// 		  live_quizzes: live_quizzes,
-		// 	  })
-		//   })
+			  })
+			socket.on("tick", async data =>{
+				var quiz_id = data.quiz_id;
+				var time = data.time_duration;
+				var live_quizzes = this.state.live_quizzes
+				if (live_quizzes.length != 0){
+					for(let i=0; i<live_quizzes.length; i++){
+						if (live_quizzes[i].id === quiz_id){
+							live_quizzes[i].time_duration = time
+						}
+					}
+				}
+				await this.setState({
+					live_quizzes: live_quizzes
+				})
+			})
+			socket.on("question_is_live", async data =>{
+				var quiz_id = data.quiz_id
+				var live = data.live
+				var live_quizzes = this.state.live_quizzes
+				if (live_quizzes.length != 0){
+					for(let i=0; i<live_quizzes.length; i++){
+						if (live_quizzes[i].id === quiz_id){
+							live_quizzes[i].live = live
+						}
+					}
+				}
+				await this.setState({
+					live_quizzes: live_quizzes
+				})
+			})
+		
+		
+		  	socket.on("answer_opened", data =>{
+			  	var quiz_answer = data.correct_answer
+				var quiz_id = data.quiz_id
+				var live_quizzes = this.state.live_quizzes;
+				var target_quiz_index = null;
+				for(let i=0; i<live_quizzes.length; i++){
+					if (live_quizzes[i].id === quiz_id){
+						target_quiz_index = i
+						break;
+					}
+				}
+				live_quizzes[target_quiz_index].show_correct_answer = true
+				live_quizzes[target_quiz_index].correct_answer = quiz_answer
+				this.setState({
+					live_quizzes: live_quizzes,
+				})
+		  })
 		}
 	}
 	async initialization(){
@@ -208,8 +207,11 @@ class Lecture extends Component{
   		this.props.isNavVisible(false);
 		window.scrollTo(0, 0);
 		this.initialization();
-    }
-
+	}
+	
+	componentWillUnmount(){
+		// socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
+	}
     makeQuizzes(){
     	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
     	var components = [];
@@ -289,42 +291,9 @@ export class Quiz extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			time_duration:this.props.quiz.time_duration,
 			answer: null
 		}
-		this.intervalHandle = null;
-		this.tick = this.tick.bind(this);
 		this.answerQuiz = this.answerQuiz.bind(this);
-	}
-
-	componentDidMount(){
-		if (this.props.quiz.live){
-			// this.intervalHandle = setInterval(this.tick, 1000);
-		}
-	}
-	componentDidUpdate(oldProps){
-		if (oldProps.quiz.time_duration !== this.props.quiz.time_duration){
-			this.setState({
-				time_duration: this.props.quiz.time_duration,
-			})
-			if (this.props.quiz.time_duration == 0 && this.intervalHandle != null){
-				// clearInterval(this.intervalHandle);
-				this.intervalHandle = null;
-			}
-			if (this.props.quiz.time_duration != 0 && this.intervalHandle == null){
-				// this.intervalHandle = setInterval(this.tick, 1000);
-			}
-		}
-	}
-	tick(){
-		if (this.state.time_duration <= 1){
-			// clearInterval(this.intervalHandle);
-		}
-		this.setState(prevState =>{ 
-			return{
-			time_duration: prevState.time_duration-1,
-			}
-		})
 	}
 	style(){
 		if (this.props.quiz.live){
@@ -341,13 +310,11 @@ export class Quiz extends Component{
 			this.setState({
 				answer : ans,
 			})
-			var data ={
-				course_id:this.props.course_id,
-				lecture_id:this.props.lecture_id,
+			socket.emit("answer_question", {
+				lecture_id: this.props.lecture_id,
 				quiz_id: this.props.quiz.id,
 				quiz_answer: ans 
-			}
-			socket.emit("answer_question", data);
+			});
 		}
 	}
 	makeAns(){
@@ -383,7 +350,7 @@ export class Quiz extends Component{
 					<div className='answers'>{this.makeAns()}</div>
 				</div>
 				<div className='time'>
-					<Timer duration={this.state.time_duration}/>
+					<Timer duration={this.props.quiz.time_duration}/>
 				</div>
 			</div>
 		)
