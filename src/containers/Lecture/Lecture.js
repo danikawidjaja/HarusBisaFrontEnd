@@ -34,6 +34,7 @@ class Lecture extends Component{
 		}
 		this.toggleNew = this.toggleNew.bind(this);
 		this.newQuiz = this.newQuiz.bind(this);
+		this.setShowMyAnswer = this.setShowMyAnswer.bind(this);
 	}
 
 	findSelected(id, list, type){
@@ -216,7 +217,7 @@ class Lecture extends Component{
     	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
-    		components.push(<Quiz course_id={this.state.selected_course._id} lecture_id={this.state.selected_lecture.id} quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer}/>)
+    		components.push(<Quiz course_id={this.state.selected_course._id} lecture_id={this.state.selected_lecture.id} quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer} setShowMyAnswer={this.setShowMyAnswer}/>)
     	}
     	if (components.length == 0){
 			components.push(<div style={{textAlign:'center'}}>Belum ada pertanyaan yang terbuka, mohon menunggu...</div>)
@@ -230,7 +231,13 @@ class Lecture extends Component{
   		this.setState(prevState => {
   			return{new_quiz: !prevState.new_quiz};
   		})
-  	}
+	  }
+	
+	setShowMyAnswer(state){
+		this.setState({
+			show_my_answer: state,
+		})
+	}
   	newQuiz(){
   		window.scrollTo(0,document.body.scrollHeight);
   		this.toggleNew();
@@ -303,11 +310,11 @@ export class Quiz extends Component{
 			return 'non-live-answer'
 		}
 	}
-	answerQuiz(event){
+	async answerQuiz(event){
 		event.preventDefault();
 		if (this.props.quiz.live){
 			var ans = parseInt(event.target.id);
-			this.setState({
+			await this.setState({
 				answer : ans,
 			})
 			socket.emit("answer_question", {
@@ -315,12 +322,15 @@ export class Quiz extends Component{
 				quiz_id: this.props.quiz.id,
 				quiz_answer: ans 
 			});
+			this.props.setShowMyAnswer(true);
 		}
+
 	}
 	makeAns(){
 		var answers = this.props.quiz.answers;
 		let components = [];
-		// pretend the correct answer is my answer since we have no my answer data
+		//var my_answer = (this.state.answer ? this.state.answer : this.props.quiz.correct_answer) //pretend corrent ans is my ans
+		var my_answer = this.state.answer
 		for (let i=0; i<answers.length; i++){
 			if (i == this.props.quiz.correct_answer && this.props.quiz.show_correct_answer){
 				if (this.props.show_my_answer){
@@ -330,7 +340,7 @@ export class Quiz extends Component{
 					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
 			}
-			else if (i == this.props.quiz.correct_answer && this.props.show_my_answer){
+			else if (i == my_answer && this.props.show_my_answer){
 				components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{fontWeight:'bold', border: '1px solid #6311AB'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 			else{

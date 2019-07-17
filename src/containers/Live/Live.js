@@ -19,12 +19,10 @@ class Live extends Component{
 		this.state = {
 			show_correct_answer: false,
 			started:true,
-			//current_quiz: this.props.quiz,
 			current_quiz: null,
 			quiz_ids: [],
 			current_quiz_id: this.props.quiz.id,
 			isLoading:true,
-
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
 		}
@@ -32,8 +30,6 @@ class Live extends Component{
 		this.toggleStarted = this.toggleStarted.bind(this);
 		this.changeCurrentQuizId = this.changeCurrentQuizId.bind(this);
 		this.findCurrentIndex = this.findCurrentIndex.bind(this);
-		this.intervalHandle = null;
-		// this.tick = this.tick.bind(this);
 		this.changeSecondsRemaining = this.changeSecondsRemaining.bind(this)
 		this.toggleShowStats = this.toggleShowStats.bind(this);
 		this.quizSocket = this.quizSocket.bind(this);
@@ -49,11 +45,7 @@ class Live extends Component{
 	}
 
 	async changeSecondsRemaining(dur){
-		// await this.setState({
-		// 	secondsRemaining : dur
-		// })
 		this.props.changeDuration(dur)
-		console.log(dur)
 		socket.emit("change_quiz_time", {
 			new_duration : dur,
 			quiz_id: this.state.current_quiz_id
@@ -125,7 +117,8 @@ class Live extends Component{
 				var current_quiz = this.state.current_quiz
 				current_quiz.live = live
 				await this.setState({
-					current_quiz: current_quiz
+					current_quiz: current_quiz,
+					started: live
 				})
 			})
 			socket.on("tick", async data =>{
@@ -144,7 +137,6 @@ class Live extends Component{
 				await socket.emit("record_answer", ans);	
 			});
 			socket.on("new_statistic", async stats =>{
-				console.log(stats)
 				var current_quiz = this.state.current_quiz;
 				current_quiz.stat = stats.answers;
 				current_quiz.total_participants = stats.total_participants;
@@ -161,7 +153,6 @@ class Live extends Component{
 				started:!prevState.started,
 			}
 		})
-		
 		if (this.state.started){
 			this.quizSocket();	
 		}
@@ -169,28 +160,9 @@ class Live extends Component{
 			socket.emit("close_question", {
 				quiz_id: this.state.current_quiz_id
 			})
-			//this.props.changeDuration(0);
+			this.props.changeDuration(0);
 		}
 	}
-
-	// tick(){
-	// 	var data = {
-	// 		course_id:this.props.course_id,
-	// 		lecture_id:this.props.lecture_id,
-	// 		quiz_id:this.state.current_quiz.id
-	// 	}
-	// 	if (this.state.secondsRemaining <= 1){
-	// 		clearInterval(this.intervalHandle);
-	// 		socket.emit("close_question", data)
-	// 		this.toggleStarted()
-	// 	}
-	// 	this.setState(prevState => {
-	// 		return{
-	// 			secondsRemaining: prevState.secondsRemaining-1
-	// 		}
-	// 	}) 
-	// }
-
 
 	render(){
 		if (this.state.isLoading){
@@ -198,7 +170,13 @@ class Live extends Component{
 		}else{
 			return(
 				<div className='Live'>				
-					<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
+					<LiveQuiz 
+						show_stats={this.state.show_stats} 
+						started={this.state.started} 
+						duration={this.state.secondsRemaining} 
+						quiz={this.state.current_quiz} 
+						findCurrentIndex={this.findCurrentIndex} 
+						show_correct_answer={this.state.show_correct_answer}/>
 					<LiveMenu  
 						show_stats={this.state.show_stats} 
 						toggleShowStats={this.toggleShowStats} 
