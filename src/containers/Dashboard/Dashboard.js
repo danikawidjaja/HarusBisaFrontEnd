@@ -38,6 +38,8 @@ import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import { withStyles } from '@material-ui/core/styles';
 
+export var socket;
+
 const GreenSwitch = withStyles({
   switchBase: {
     color: "#ffffff",
@@ -71,31 +73,11 @@ class Dashboard extends Component{
 			isLoading: true,
 			changingSelectedCourse: false,
 			flag: false,
-			live: false,
 		};
 		this.changeSelectedLecture = this.changeSelectedLecture.bind(this);
 		this.changeSelectedCourse = this.changeSelectedCourse.bind(this);
 		this.updateLecturesState = this.updateLecturesState.bind(this);
 		this.changeFlag = this.changeFlag.bind(this);
-		this.socket = null;
-		this.changeLive = this.changeLive.bind(this);
-	}
-
-	async changeLive(l){
-		await this.setState({
-			live: l
-		})
-
-		if (this.socket != null){
-			console.log(this.state.live)
-			var data = {
-				course_id:this.state.selected_course._id,
-				lecture_id: this.state.selected_lecture.id,
-				role: this.state.profile.role,
-				user_id: this.state.profile.id
-			}
-			this.socket.emit("toggle_lecture_live", data)
-		}
 	}
 	changeFlag(){
 		this.setState(prevState =>{
@@ -158,11 +140,8 @@ class Dashboard extends Component{
 		return null;
 	}
 
-  	async componentDidMount(){
-  		this.props.isNavVisible(false);
-    	window.scrollTo(0, 0);
-    	window.removeEventListener('scroll', this.props.handleScroll);
-    	var id = this.props.match.params.id;
+	async initialization(){
+		var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
       		await this.setState({
@@ -189,39 +168,46 @@ class Dashboard extends Component{
 	      			this.setState({
 	      				live: res.data.lectures[0].live
 	      			})
-	      		}
-
-	      		// SOCKET CONFIG
-	      		if (!this.socket){
-					this.socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
-					this.socket.on('connect', () => {
-  						if (this.socket.connected){
-  							console.log('socket connected')
-  							var data = {
-  								user_id: this.state.profile.id,
-  								user_role: this.state.profile.role,
-  								course_id: id
-  							}
-  							this.socket.emit("set_socket_data", data)
-  						}
-  						else{
-  							console.log('error with connection')
-  						}
-					});
 				}
+				this.setupSocketConnection();
 	      	})	
 	      )
       	})
       	.catch(err =>{
         	console.log(err.message)
         	alert(err.message)
-      	})
+		})
+	}
+
+	setupSocketConnection(){
+		if (!socket){
+			socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+			socket.on("connect", () =>{
+				if (socket.connected){
+					var data = {
+						user_id: this.state.profile.id,
+						course_id: this.state.selected_course._id
+					}
+					socket.emit("set_socket_data", data);
+					console.log('socket connected')
+				}
+				else{
+					console.log("error with socket connection");
+				}
+			})
+		}
+	}
+  	async componentDidMount(){
+  		this.props.isNavVisible(false);
+    	window.scrollTo(0, 0);
+    	window.removeEventListener('scroll', this.props.handleScroll);
+		await this.initialization();
   	}
 
   	
   	async componentWillUnmount(){
-  		if (this.socket){
-	    	this.socket.disconnect()
+  		if (socket){
+	    	socket.disconnect()
 	    	console.log('socket disconnected')
 	    }
   	}
@@ -236,7 +222,7 @@ class Dashboard extends Component{
 			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState} selectedCourse={this.state.selected_course}/>
 			    			</div>
 			    			<div className='right'>
-			    				<DashboardRight socket={this.socket} changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
+			    				<DashboardRight changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
 			    			</div>
 			    		</div>
 		    		</div>
@@ -550,10 +536,12 @@ class DashboardRight extends Component{
 		super(props);
 		this.state={
 			lecture : this.props.selectedLecture,
-			live: this.props.selectedLecture ? this.props.selectedLecture.live : false,
-			students_connected: [],
+			live: this.props.selectedLecture.live,
+			total_student_in_session:0
 		}
-		this.toggleLive = this.toggleLive.bind(this);
+		this.startLecture = this.startLecture.bind(this);
+		this.stopLecture = this.stopLecture.bind(this);
+		this.gettingNumberOfStudentsConnected = this.gettingNumberOfStudentsConnected.bind(this);
 	}
 	async componentDidUpdate(oldProps){
 		const newProps = this.props
@@ -564,16 +552,18 @@ class DashboardRight extends Component{
 			})
 		}
 
-		if (this.props.socket != null){
-			this.props.socket.on("new_student_join", (data) =>{
-				if (!this.state.students_connected.includes(data.user_id)){
-					console.log('new student join')
-					var arr = this.state.students_connected
-					arr.push(data.user_id)
-					this.setState({
-						students_connected: arr,
-					})
-				}
+		this.gettingNumberOfStudentsConnected();
+	}
+	
+	gettingNumberOfStudentsConnected(){
+		if (socket){
+			socket.on("new_student_join", data =>{
+				socket.emit("record_attendance", data)
+			})
+			socket.on("student_in_session", data =>{
+				this.setState({
+					total_student_in_session : data.total_student
+				})
 			})
 		}
 	}
@@ -610,19 +600,31 @@ class DashboardRight extends Component{
 		return quizzesComponent
 	}
 
-	async toggleLive(){
-		await this.setState(prevState => {
-	      return {
-	        live: !prevState.live,
-	      };
-	    });
+	startLecture(){
+		socket.emit("start_lecture",{
+			lecture_id: this.state.lecture.id
+		})
+		socket.on("lecture_is_live", async live =>{
+			await this.setState({
+				live: live.live
+			})
+		})
+	}
 
-	    this.props.changeLive(this.state.live)
-	    if (this.state.live == false){
-	    	this.setState({
-	    		students_connected:[],
-	    	})
-	    }
+	stopLecture(){
+		socket.emit("stop_lecture",{
+			lecture_id: this.state.lecture.id
+		})
+		socket.on("lecture_is_live", async live =>{
+			await this.setState({
+				live: live.live
+			})
+			if (this.state.live == false){
+				this.setState({
+					students_connected:[],
+				})
+			}
+		})
 	}
 
 
@@ -660,7 +662,7 @@ class DashboardRight extends Component{
     				</div>
     				<div className='content-option'>
     					{ this.state.live ? 
-    						<div className='interactive' onClick={this.toggleLive}>
+    						<div className='interactive' onClick={this.stopLecture}>
     							<Stop className='icon' style={{color:'#FFE01C'}}/>
     							<p> Stop Sesi </p>
     						</div>
@@ -685,7 +687,7 @@ class DashboardRight extends Component{
 			    					</div>
 			    					<p style={{marginBottom:'1rem'}}>Dengan memulai sesi, anda akan menghapus semua data dari sesi ini jika sudah pernah dimulai sebelumnya.</p>
 			    					<div className='buttons'>
-				    					<Button className='button' onClick={this.toggleLive}>Iya</Button>
+				    					<Button className='button' onClick={this.startLecture}>Iya</Button>
 				    					<Button className='button' onClick={close}>Tidak</Button>
 				    				</div>
 			    				</div>
@@ -720,7 +722,7 @@ class DashboardRight extends Component{
 						closeOnDocumentClick={false} 
 						contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px', minHeight:'40vh'}}
 						open={this.state.live}>
-		    				{close => (<LectureStat live={this.state.live} number_of_students_connected={this.state.students_connected.length} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
+		    				{close => (<LectureStat live={this.state.live} number_of_students_connected={this.state.total_student_in_session} total_enrolled_stud={this.props.selected_course.number_of_students} closefunction={close} date={this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]}/>)}
 		    			</Popup>
 
 
@@ -757,7 +759,6 @@ class LectureStat extends Component{
 
 	}
 	render(){
-		console.log(this.props.number_of_students_connected)
 		return(
 			<div className='popup'>
 				<div className='popup-header'>
@@ -1082,7 +1083,7 @@ class QuizCard extends Component{
 			          enabled={this.state.live}
 			          onChange={live => this.setState({live:live})}
 			     	>
-			          {this.state.live ? <Live changeDuration={this.changeDuration} lecture_id={this.props.lecture_id} course_id={this.props.course_id} socket={this.props.socket} quizzes={this.props.quizzes} quiz={this.props.quiz} question_number={this.state.question_number}/> : null}
+			          {this.state.live ? <Live changeDuration={this.changeDuration} lecture_id={this.props.lecture_id} course_id={this.props.course_id} quizzes={this.props.quizzes} quiz={this.props.quiz} question_number={this.state.question_number}/> : null}
 			    </Fullscreen>
 				<Popup
 			        open={this.state.showDeleteQuestionModal}

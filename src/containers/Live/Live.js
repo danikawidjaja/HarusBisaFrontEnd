@@ -11,58 +11,56 @@ import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
 import Grid from '@material-ui/core/Grid';
- 
+import {socket} from "../Dashboard/Dashboard";
 
 class Live extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 		this.state = {
 			show_correct_answer: false,
 			started:true,
-			current_quiz: this.props.quiz,
+			current_quiz: null,
+			quiz_ids: [],
+			current_quiz_id: this.props.quiz.id,
+			isLoading:true,
 			secondsRemaining: this.props.quiz.time_duration,
 			show_stats: false,
 		}
 		this.toggleShowCorrectAnswer = this.toggleShowCorrectAnswer.bind(this);
 		this.toggleStarted = this.toggleStarted.bind(this);
-		this.changeCurrentQuiz = this.changeCurrentQuiz.bind(this);
+		this.changeCurrentQuizId = this.changeCurrentQuizId.bind(this);
 		this.findCurrentIndex = this.findCurrentIndex.bind(this);
-		this.intervalHandle = null;
-		this.tick = this.tick.bind(this);
 		this.changeSecondsRemaining = this.changeSecondsRemaining.bind(this)
 		this.toggleShowStats = this.toggleShowStats.bind(this);
+		this.quizSocket = this.quizSocket.bind(this);
 	}
 
 	findCurrentIndex(current_quiz){
 		let length =this.props.quizzes.length
 		for (let i=0; i<length; i++){
-			if (this.props.quizzes[i] === current_quiz){
+			if (this.props.quizzes[i].id === current_quiz.id){
 				return i
 			}
 		}
 	}
 
 	async changeSecondsRemaining(dur){
-		await this.setState({
-			secondsRemaining : dur
-		})
-		this.props.changeDuration(dur);
-		var data = {
-			course_id:this.props.course_id,
-			lecture_id:this.props.lecture_id,
-			quiz_id:this.state.current_quiz.id,
-			new_duration : dur
-		}
-		this.props.socket.emit("change_quiz_time", data);
+		this.props.changeDuration(dur)
+		socket.emit("change_quiz_time", {
+			new_duration : dur,
+			quiz_id: this.state.current_quiz_id
+		});
 	}
-	async changeCurrentQuiz(current_quiz){
+	async changeCurrentQuizId(current_quiz_id){
 		await this.setState({
-			current_quiz: current_quiz,
-			secondsRemaining: current_quiz.time_duration
+			current_quiz_id: current_quiz_id,
+			isLoading: true,
+			show_stats: false,
+			show_correct_answer: false,
 		})
+		this.quizSetup();
 	}
-
+	
 	async toggleShowCorrectAnswer(){
 		await this.setState(prevState =>{
 			return{
@@ -71,12 +69,9 @@ class Live extends Component{
 		})
 
 		if (this.state.show_correct_answer == true){
-			var data = {
-				course_id:this.props.course_id,
-				lecture_id:this.props.lecture_id,
-				quiz_id:this.state.current_quiz.id
-			}
-			this.props.socket.emit("show_answer", data)
+			socket.emit("show_answer", {
+				quiz_id:this.state.current_quiz_id
+			})
 		}
 	}
 
@@ -89,23 +84,59 @@ class Live extends Component{
 	}
 	
 	async componentDidMount(){
-		var current_quiz = this.state.current_quiz;
-		current_quiz.total_participants = 0;
-		this.setState({
-			current_quiz: current_quiz,
+		var quiz_ids = [];
+		this.props.quizzes.forEach(quiz =>{
+			quiz_ids.push(quiz.id);
 		})
-		var data = {
-			course_id:this.props.course_id,
-			lecture_id:this.props.lecture_id,
-			quiz_id:this.state.current_quiz.id
-		}
+		this.setState({
+			quiz_ids: quiz_ids
+		})
+		await this.quizSetup()
+	}
+
+	async quizSetup(){
+		await socket.emit("show_current_quiz", {
+			quiz_id: this.state.current_quiz_id
+		})
+		await socket.on("current_quiz", async data =>{
+			var quiz = data.quiz
+			quiz.total_participants = 0;
+			await this.setState({
+				current_quiz: quiz,
+				secondsRemaining: quiz.time_duration,
+				isLoading: false,
+			})
+			await this.quizSocket();
+		})
+	}
+	quizSocket(){
 		if (this.state.started){
-			this.props.socket.emit("start_question", data)
-			this.intervalHandle = setInterval(this.tick, 1000);
-			this.props.socket.on("new_answer", async ans =>{
-				await this.props.socket.emit("record_answer", ans);	
+			socket.emit("start_question", {quiz_id: this.state.current_quiz_id})
+			socket.on("question_is_live", async data =>{
+				var live = data.live
+				var current_quiz = this.state.current_quiz
+				current_quiz.live = live
+				await this.setState({
+					current_quiz: current_quiz,
+					started: live
+				})
+			})
+			socket.on("tick", async data =>{
+				var time_duration = data.time_duration;
+				await this.setState({
+					secondsRemaining: time_duration
+				})
+			})
+			if (this.state.secondsRemaining === 0){
+				socket.emit("close_question", {
+					quiz_id: this.state.current_quiz.id
+				})
+			}
+			socket.on("new_answer", async ans =>{
+				console.log("getting new ans")
+				await socket.emit("record_answer", ans);	
 			});
-			this.props.socket.on("new_statistic", async stats =>{
+			socket.on("new_statistic", async stats =>{
 				var current_quiz = this.state.current_quiz;
 				current_quiz.stat = stats.answers;
 				current_quiz.total_participants = stats.total_participants;
@@ -114,6 +145,7 @@ class Live extends Component{
 				})
 			})
 		}
+		
 	}
 	async toggleStarted(){
 		await this.setState(prevState =>{
@@ -121,63 +153,47 @@ class Live extends Component{
 				started:!prevState.started,
 			}
 		})
-		var data = {
-			course_id:this.props.course_id,
-			lecture_id:this.props.lecture_id,
-			quiz_id:this.state.current_quiz.id
-		}
 		if (this.state.started){
-			this.props.socket.emit("start_question", data)
-			this.intervalHandle = setInterval(this.tick, 1000);
-			this.props.socket.on("new_answer", ans =>{
-				this.props.socket.emit("record_answer", ans);	
-			});
-			this.props.socket.on("new_statistic", async stats =>{
-				var current_quiz = this.state.current_quiz;
-				current_quiz.stat = stats.answers;
-				current_quiz.total_participants = stats.total_participants;
-				this.setState({
-					current_quiz: current_quiz,
-				})
-			})
-			
+			this.quizSocket();	
 		}
 		else{
-			clearInterval(this.intervalHandle);
-			this.props.socket.emit("close_question", data)
-			this.setState({
-				secondsRemaining:0
-			}) 
+			socket.emit("close_question", {
+				quiz_id: this.state.current_quiz_id
+			})
 			this.props.changeDuration(0);
 		}
 	}
 
-	tick(){
-		var data = {
-			course_id:this.props.course_id,
-			lecture_id:this.props.lecture_id,
-			quiz_id:this.state.current_quiz.id
-		}
-		if (this.state.secondsRemaining <= 1){
-			clearInterval(this.intervalHandle);
-			this.props.socket.emit("close_question", data)
-			this.toggleStarted()
-		}
-		this.setState(prevState => {
-			return{
-				secondsRemaining: prevState.secondsRemaining-1
-			}
-		}) 
-	}
-
-
 	render(){
-		return(
-			<div className='Live'>				
-				<LiveQuiz show_stats={this.state.show_stats} started={this.state.started} duration={this.state.secondsRemaining} quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} show_correct_answer={this.state.show_correct_answer}/>
-				<LiveMenu  show_stats={this.state.show_stats} toggleShowStats={this.toggleShowStats} show_correct_answer={this.state.show_correct_answer} duration={this.state.secondsRemaining} changeSecondsRemaining={this.changeSecondsRemaining} changeCurrentQuiz={this.changeCurrentQuiz} current_quiz={this.state.current_quiz} findCurrentIndex={this.findCurrentIndex} toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} toggleStarted={this.toggleStarted} started={this.state.started} current_quiz_index={this.state.current_quiz_index} quizzes={this.props.quizzes}/>
-			</div>
-		)
+		if (this.state.isLoading){
+			return(<div className="Live"></div>)
+		}else{
+			return(
+				<div className='Live'>				
+					<LiveQuiz 
+						show_stats={this.state.show_stats} 
+						started={this.state.started} 
+						duration={this.state.secondsRemaining} 
+						quiz={this.state.current_quiz} 
+						findCurrentIndex={this.findCurrentIndex} 
+						show_correct_answer={this.state.show_correct_answer}/>
+					<LiveMenu  
+						show_stats={this.state.show_stats} 
+						toggleShowStats={this.toggleShowStats} 
+						show_correct_answer={this.state.show_correct_answer} 
+						duration={this.state.secondsRemaining} 
+						changeSecondsRemaining={this.changeSecondsRemaining} 
+						changeCurrentQuizId={this.changeCurrentQuizId} 
+						current_quiz={this.state.current_quiz} 
+						findCurrentIndex={this.findCurrentIndex} 
+						toggleShowCorrectAnswer={this.toggleShowCorrectAnswer} 
+						toggleStarted={this.toggleStarted} 
+						started={this.state.started} 
+						current_quiz_id={this.state.current_quiz_id} 
+						quiz_ids={this.state.quiz_ids}/>
+				</div>
+			)
+		}
 	}
 }
 
@@ -201,7 +217,7 @@ class LiveQuiz extends Component{
 		}
 		else{
 			for (let i=0; i<answers.length; i++){
-				components.push(<div className={this.props.started ? 'live-answer' : 'answer'}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				components.push(<div className={this.props.quiz.live ? 'live-answer' : 'answer'}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 		}
 		return components;
@@ -322,21 +338,21 @@ class LiveMenu extends Component{
 	}
 
 	nextQuiz(){
-		var current_index = this.props.findCurrentIndex(this.props.current_quiz);
-		if (current_index == this.props.quizzes.length-1){
+		var current_index = this.props.quiz_ids.indexOf(this.props.current_quiz_id)
+		if (current_index == this.props.quiz_ids.length-1){
 			alert('already at last quiz')
 		}
 		else{
-			this.props.changeCurrentQuiz(this.props.quizzes[current_index+1])
+			this.props.changeCurrentQuizId(this.props.quiz_ids[current_index+1])
 		}
 	}
 	prevQuiz(){
-		var current_index = this.props.findCurrentIndex(this.props.current_quiz);
+		var current_index = this.props.quiz_ids.indexOf(this.props.current_quiz_id)
 		if (current_index == 0){
 			alert('already at the very beginning')
 		}
 		else{
-			this.props.changeCurrentQuiz(this.props.quizzes[current_index-1])
+			this.props.changeCurrentQuizId(this.props.quiz_ids[current_index-1])
 		}
 	}
 
@@ -350,7 +366,7 @@ class LiveMenu extends Component{
 					<IconButton className='icon-btn' onClick={this.nextQuiz} disabled={this.props.started ? true : false}><ExpandLessIcon className='icon'/></IconButton>
 				</div>
 				<div className='quizzes-options'>
-					<p><QuizzesOption changeCurrentQuiz={this.props.changeCurrentQuiz} current_quiz={this.props.current_quiz} quizzes={this.props.quizzes} findCurrentIndex={this.props.findCurrentIndex}/></p>
+					<p><QuizzesOption changeCurrentQuizId={this.props.changeCurrentQuizId} current_quiz={this.props.current_quiz} quiz_ids={this.props.quiz_ids} findCurrentIndex={this.props.findCurrentIndex}/></p>
 				</div>
 				<div className='icons'>
 					<IconButton className={this.props.show_correct_answer? 'icon-btn-on' : 'icon-btn-off'} disabled={this.props.started ? true : false} disableRipple={true} onClick={this.props.toggleShowCorrectAnswer}><CheckCircleOutline className='icon'/><p>Jawaban</p></IconButton>
@@ -370,7 +386,6 @@ class LiveMenu extends Component{
 class QuizzesOption extends Component{
 	constructor(props){
 		super(props);
-		console.log(props)
 		this.handleChange = this.handleChange.bind(this);
 	}
 	createMenuItem(quizzes, current_quiz){
@@ -378,7 +393,7 @@ class QuizzesOption extends Component{
 		let result = []
 
 		for (let i=0; i<length; i++){
-			if (quizzes[i] !== current_quiz){
+			if (quizzes[i] !== current_quiz.id){
 				result.push(<ToggleButton type='radio' value={i}> Pertanyaan {i+1} </ToggleButton>)
 			}
 		}
@@ -386,7 +401,7 @@ class QuizzesOption extends Component{
 	}
 
 	handleChange(value, event){
-		this.props.changeCurrentQuiz(this.props.quizzes[value])
+		this.props.changeCurrentQuizId(this.props.quiz_ids[value])
 	}
 	
 	render(){
@@ -395,7 +410,7 @@ class QuizzesOption extends Component{
 				<Dropdown.Toggle  drop={'up'} id={'quizzes'}> Pertanyaan {this.props.findCurrentIndex(this.props.current_quiz) +1} </Dropdown.Toggle>		
 				<Dropdown.Menu>		
 					<ToggleButtonGroup name='lectureDates'type='radio' onChange={this.handleChange}>	
-						{this.createMenuItem(this.props.quizzes, this.props.current_quiz)}
+						{this.createMenuItem(this.props.quiz_ids, this.props.current_quiz)}
 					</ToggleButtonGroup>	
 				</Dropdown.Menu>		
 			</Dropdown>	

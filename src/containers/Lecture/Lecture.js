@@ -34,6 +34,7 @@ class Lecture extends Component{
 		}
 		this.toggleNew = this.toggleNew.bind(this);
 		this.newQuiz = this.newQuiz.bind(this);
+		this.setShowMyAnswer = this.setShowMyAnswer.bind(this);
 	}
 
 	findSelected(id, list, type){
@@ -52,9 +53,146 @@ class Lecture extends Component{
 		return null;
 	}
 
-	async componentDidMount(){
+	socketConnection(){
+		if (socket){
+			socket.emit("participate_lecture", {lecture_id: this.state.selected_lecture.id})
+			socket.on("lecture_status", async data =>{
+				await this.setState({
+					live_quizzes: data.quizzes
+				})
+			})
+			console.log('waiting for new question')
+			socket.on("new_question", data =>{
+				var quiz = data.quiz;
+			  	var live_quizzes = this.state.live_quizzes;
+			 	var quiz_id = quiz.id;
+			  	var index = null;
+			  	if (live_quizzes.length != 0){
+				  for(let i=0; i<live_quizzes.length; i++){
+					  if (live_quizzes[i].id === quiz_id){
+						  index = i;
+					  }
+				  }
+			  	}
+				if (index == null){
+					live_quizzes.push(quiz);
+				}
+				else{
+					live_quizzes[index] = quiz;
+				}
+				this.setState({
+					live_quizzes: live_quizzes,
+					new_quiz: true,
+				})
+			  })
+			socket.on("tick", async data =>{
+				var quiz_id = data.quiz_id;
+				var time = data.time_duration;
+				var live_quizzes = this.state.live_quizzes
+				if (live_quizzes.length != 0){
+					for(let i=0; i<live_quizzes.length; i++){
+						if (live_quizzes[i].id === quiz_id){
+							live_quizzes[i].time_duration = time
+						}
+					}
+				}
+				await this.setState({
+					live_quizzes: live_quizzes
+				})
+			})
+			socket.on("question_is_live", async data =>{
+				var quiz_id = data.quiz_id
+				var live = data.live
+				var live_quizzes = this.state.live_quizzes
+				if (live_quizzes.length != 0){
+					for(let i=0; i<live_quizzes.length; i++){
+						if (live_quizzes[i].id === quiz_id){
+							live_quizzes[i].live = live
+						}
+					}
+				}
+				await this.setState({
+					live_quizzes: live_quizzes
+				})
+			})
+		
+		
+		  	socket.on("answer_opened", data =>{
+			  	var quiz_answer = data.correct_answer
+				var quiz_id = data.quiz_id
+				var live_quizzes = this.state.live_quizzes;
+				var target_quiz_index = null;
+				for(let i=0; i<live_quizzes.length; i++){
+					if (live_quizzes[i].id === quiz_id){
+						target_quiz_index = i
+						break;
+					}
+				}
+				live_quizzes[target_quiz_index].show_correct_answer = true
+				live_quizzes[target_quiz_index].correct_answer = quiz_answer
+				this.setState({
+					live_quizzes: live_quizzes,
+				})
+		  })
+		}
+	}
+	async initialization(){
 		var course_id = this.props.match.params.course_id;
 		var lecture_id = this.props.match.params.lecture_id;
+		await this.props.Auth.getData()
+		.then(async res =>{
+			await this.setState({
+				courses: res.data.courses,
+				selected_course: this.findSelected(course_id, res.data.courses, "course"),
+				profile:{
+					first_name : res.data.first_name,
+					last_name : res.data.last_name,
+					email: res.data.email,
+					role: res.data.role,
+					school: res.data.school,
+					id: res.data._id,
+				},
+			}, async () =>
+			await this.props.Auth.getLectures(this.state.selected_course._id)
+			.then(async res =>{
+				var temp = this.findSelected(lecture_id, res.data.lectures,'lecture')
+				await this.setState({
+					selected_lecture: temp,
+					isLoading: false
+				})
+				if (this.state.live){
+					this.socketConnection();
+				}
+			})	
+		)
+		})
+		.catch(err =>{
+		  console.log(err.message)
+		  alert(err.message)
+		})
+
+		if (!this.state.live){
+			if (socket){
+				socket.disconnect();
+				console.log('socket disconnected')
+			}
+		}
+		if (socket && this.state.live){
+			socket.on("lecture_is_live",(data) =>{
+				this.setState({
+				  live: data.live
+			  })
+			  if (!data.live){
+				  if (socket){
+					  socket.disconnect()
+					  console.log('socket disconnected')
+					  this.props.history.push('/student-dashboard/'+ course_id)
+				  }
+			  }
+		  })
+	  }
+	}
+	async componentDidMount(){
 		var live = this.props.match.params.live;
 		if (live == 0){
 			live = false //past session
@@ -63,148 +201,23 @@ class Lecture extends Component{
 			live = true //current session
 		}
 
+		await this.setState({
+			live: live
+		})
+
   		this.props.isNavVisible(false);
-    	window.scrollTo(0, 0);
-
-      	await this.props.Auth.getData()
-  		.then(async res =>{
-      		await this.setState({
-      			courses: res.data.courses,
-      			selected_course: this.findSelected(course_id, res.data.courses, "course"),
-      			profile:{
-      				first_name : res.data.first_name,
-      				last_name : res.data.last_name,
-      				email: res.data.email,
-      				role: res.data.role,
-      				school: res.data.school,
-      				id: res.data._id,
-      			},
-      		}, async () =>
-      		await this.props.Auth.getLectures(this.state.selected_course._id)
-	      	.then(async res =>{
-	      		var temp = this.findSelected(lecture_id, res.data.lectures,'lecture')
-	      		await this.setState({
-	      			selected_lecture: temp,
-	      			isLoading: false,
-	      			live: live
-	      		})
-	      		if (live){
-	      			var data = {
-	      				course_id: this.state.selected_course._id,
-	      				lecture_id: temp.id
-	      			}
-	      			if (socket){
-						socket.emit("participate_lecture", data)
-						console.log('waiting for new question')
-						socket.on("new_question", quiz =>{
-							var live_quizzes = this.state.live_quizzes;
-							console.log(quiz)
-							var quiz_id = quiz.id;
-							var index = null;
-							if (live_quizzes.length != 0){
-								for(let i=0; i<live_quizzes.length; i++){
-									if (live_quizzes[i].id === quiz_id){
-										index = i;
-									}
-								}
-							}
-							if (index == null){
-								live_quizzes.push(quiz);
-							}
-							else{
-								live_quizzes[index] = quiz;
-							}
-							this.setState({
-								live_quizzes: live_quizzes,
-								new_quiz: true,
-							})
-						})
-						socket.on("time_change", async quiz =>{
-							var quiz_id = quiz.id;
-							var live_quizzes = this.state.live_quizzes;
-							var target_quiz_index = null;
-							console.log(live_quizzes)
-							for(let i=0; i<live_quizzes.length; i++){
-								if (live_quizzes[i].id === quiz_id){
-									target_quiz_index = i
-									break;
-								}
-							}
-							live_quizzes[target_quiz_index] = quiz;
-							await this.setState({
-								live_quizzes: live_quizzes
-							})
-						})
-						socket.on("question_closed", async quiz =>{
-							var quiz_id = quiz.id;
-							var live_quizzes = this.state.live_quizzes;
-							var target_quiz_index = null;
-							console.log(live_quizzes)
-							for(let i=0; i<live_quizzes.length; i++){
-								if (live_quizzes[i].id === quiz_id){
-									target_quiz_index = i
-									break;
-								}
-							}
-							live_quizzes[target_quiz_index] = quiz;
-							await this.setState({
-								live_quizzes: live_quizzes
-							})
-						})
-						socket.on("answer_opened", data =>{
-							var quiz_answer = data.correct_answer
-							var quiz_id = data.quiz_id
-							var live_quizzes = this.state.live_quizzes;
-							var target_quiz_index = null;
-							for(let i=0; i<live_quizzes.length; i++){
-								if (live_quizzes[i].id === quiz_id){
-									target_quiz_index = i
-									break;
-								}
-							}
-							live_quizzes[target_quiz_index].show_correct_answer = true
-							live_quizzes[target_quiz_index].correct_answer = quiz_answer
-							this.setState({
-								live_quizzes: live_quizzes,
-							})
-						})
-	      			}
-	      		}
-	      	})	
-	      )
-      	})
-      	.catch(err =>{
-        	console.log(err.message)
-        	alert(err.message)
-      	})
-
-      	if (!live){
-      		if (socket){
-      			socket.disconnect();
-      			console.log('socket disconnected')
-      		}
-      	}
-      	if (socket && live){
-	      	socket.on("lecture_is_live",(data) =>{
-	      		this.setState({
-					live: data.live
-				})
-				if (!data.live){
-					if (socket){
-						socket.disconnect()
-						console.log('socket disconnected')
-						this.props.history.push('/student-dashboard/'+ course_id)
-					}
-				}
-			})
-	    }
-    }
-
+		window.scrollTo(0, 0);
+		this.initialization();
+	}
+	
+	componentWillUnmount(){
+		// socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
+	}
     makeQuizzes(){
     	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
-    		components.push(<Quiz course_id={this.state.selected_course._id} lecture_id={this.state.selected_lecture.id} quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer}/>)
+    		components.push(<Quiz course_id={this.state.selected_course._id} lecture_id={this.state.selected_lecture.id} quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer} setShowMyAnswer={this.setShowMyAnswer}/>)
     	}
     	if (components.length == 0){
 			components.push(<div style={{textAlign:'center'}}>Belum ada pertanyaan yang terbuka, mohon menunggu...</div>)
@@ -218,7 +231,13 @@ class Lecture extends Component{
   		this.setState(prevState => {
   			return{new_quiz: !prevState.new_quiz};
   		})
-  	}
+	  }
+	
+	setShowMyAnswer(state){
+		this.setState({
+			show_my_answer: state,
+		})
+	}
   	newQuiz(){
   		window.scrollTo(0,document.body.scrollHeight);
   		this.toggleNew();
@@ -279,42 +298,9 @@ export class Quiz extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			time_duration:this.props.quiz.time_duration,
 			answer: null
 		}
-		this.intervalHandle = null;
-		this.tick = this.tick.bind(this);
 		this.answerQuiz = this.answerQuiz.bind(this);
-	}
-
-	componentDidMount(){
-		if (this.props.quiz.live){
-			this.intervalHandle = setInterval(this.tick, 1000);
-		}
-	}
-	componentDidUpdate(oldProps){
-		if (oldProps.quiz.time_duration !== this.props.quiz.time_duration){
-			this.setState({
-				time_duration: this.props.quiz.time_duration,
-			})
-			if (this.props.quiz.time_duration == 0 && this.intervalHandle != null){
-				clearInterval(this.intervalHandle);
-				this.intervalHandle = null;
-			}
-			if (this.props.quiz.time_duration != 0 && this.intervalHandle == null){
-				this.intervalHandle = setInterval(this.tick, 1000);
-			}
-		}
-	}
-	tick(){
-		if (this.state.time_duration <= 1){
-			clearInterval(this.intervalHandle);
-		}
-		this.setState(prevState =>{ 
-			return{
-			time_duration: prevState.time_duration-1,
-			}
-		})
 	}
 	style(){
 		if (this.props.quiz.live){
@@ -324,26 +310,27 @@ export class Quiz extends Component{
 			return 'non-live-answer'
 		}
 	}
-	answerQuiz(event){
+	async answerQuiz(event){
 		event.preventDefault();
 		if (this.props.quiz.live){
 			var ans = parseInt(event.target.id);
-			this.setState({
+			await this.setState({
 				answer : ans,
 			})
-			var data ={
-				course_id:this.props.course_id,
-				lecture_id:this.props.lecture_id,
+			socket.emit("answer_question", {
+				lecture_id: this.props.lecture_id,
 				quiz_id: this.props.quiz.id,
 				quiz_answer: ans 
-			}
-			socket.emit("answer_question", data);
+			});
+			this.props.setShowMyAnswer(true);
 		}
+
 	}
 	makeAns(){
 		var answers = this.props.quiz.answers;
 		let components = [];
-		// pretend the correct answer is my answer since we have no my answer data
+		//var my_answer = (this.state.answer ? this.state.answer : this.props.quiz.correct_answer) //pretend corrent ans is my ans
+		var my_answer = this.state.answer
 		for (let i=0; i<answers.length; i++){
 			if (i == this.props.quiz.correct_answer && this.props.quiz.show_correct_answer){
 				if (this.props.show_my_answer){
@@ -353,7 +340,7 @@ export class Quiz extends Component{
 					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
 			}
-			else if (i == this.props.quiz.correct_answer && this.props.show_my_answer){
+			else if (i == my_answer && this.props.show_my_answer){
 				components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{fontWeight:'bold', border: '1px solid #6311AB'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 			else{
@@ -373,7 +360,7 @@ export class Quiz extends Component{
 					<div className='answers'>{this.makeAns()}</div>
 				</div>
 				<div className='time'>
-					<Timer duration={this.state.time_duration}/>
+					<Timer duration={this.props.quiz.time_duration}/>
 				</div>
 			</div>
 		)
