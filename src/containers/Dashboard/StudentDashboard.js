@@ -185,23 +185,50 @@ class StudentDashboard extends Component{
 		}
 	}
 }
-
+var gradebookJson = {
+	"gradebooks": [
+	  {
+		"lecture_id": "18",
+		"lecture_date": "22/9/2018",
+		"attendance": true,
+		"total_score": "90"
+	  },
+	  {
+		"lecture_id": "19",
+		"lecture_date": "3/3/2019",
+		"attendance": false,
+		"total_score": "80"
+	  }
+	]
+  }
 class LectureTable extends Component{
 	constructor(props){
 		super(props);
+		this.state={
+			gradebooks : []
+		}
 		this.handleClickRow = this.handleClickRow.bind(this); 
 	}
 
-	createData(id, date, attendance, raw_score, accuracy_score, participation_score, total_score) {
-  		return { id, date, attendance, raw_score, accuracy_score, participation_score, total_score };
+	componentDidMount(){
+		this.setState({
+			gradebooks: gradebookJson.gradebooks,
+		})
+	}
+	createData(id, date, attendance, total_score) {
+  		return { id, date, attendance, total_score };
 	}
 	createRows(){
+		console.log(this.state.gradebooks)
 		let rows = [];
-		for (let i=0; i<this.props.lectures.length; i++){
-			let lecture_date = this.props.lectures[i].date.split('/');
-			let date = 'Sesi ' + lecture_date[0] + '/' + lecture_date[1];
-			rows.push(this.createData(this.props.lectures[i].id,date,'Hadir',10,90,100,90))
-		}
+		var gradebooks = this.state.gradebooks;
+		gradebooks.forEach(gradebook =>{
+			let lecture_date = gradebook.lecture_date.split('/');
+			let date = "Sesi " + lecture_date[0] + '/' + lecture_date[1];
+			var attendance = gradebook.attendance ? "Hadir" : "Tidak Hadir"
+			var total_score = parseInt(gradebook.total_score, 10)
+			rows.push(this.createData(gradebook.lecture_id, date, attendance, total_score))
+		})
 		return rows;
 	}
 
@@ -217,9 +244,6 @@ class LectureTable extends Component{
 		          <TableRow style={{boxShadow:'none', border:'0px'}}>
 		            <TableCell className='header'>Sesi</TableCell>
 		            <TableCell className='header' >Kehadiran</TableCell>
-		            <TableCell className='header' >Nilai Mentah</TableCell>
-		            <TableCell className='header' >% Nilai Benar</TableCell>
-		            <TableCell className='header' >% Nilai Partisipasi</TableCell>
 		            <TableCell className='header' >% Nilai Total</TableCell>
 		          </TableRow>
 		        </TableHead>
@@ -234,9 +258,6 @@ class LectureTable extends Component{
 			                {row.date}
 			              </TableCell>
 			              <TableCell className='cell' >{row.attendance}</TableCell>
-			              <TableCell className='cell' >{row.raw_score}</TableCell>
-			              <TableCell className='cell' >{row.accuracy_score}</TableCell>
-			              <TableCell className='cell' >{row.participation_score}</TableCell>
 			              <TableCell className='cell' >{row.total_score}</TableCell>
 			            </TableRow>
 			            //</div>
