@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from "react-bootstrap";
 import Popup from 'reactjs-popup';
-import './ProfileAvatar.css'
+import './ProfileAvatar.css';
+
 
 class ProfileAvatar extends Component{
 	constructor(props){

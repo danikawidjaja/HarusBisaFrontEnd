@@ -22,7 +22,8 @@ div{
 }
 
 .login .content{
-  padding: 3.8vw 30vw 3.8vw 30vw;
+  padding: 5% 30%;
+  width: 100%;
 }
 .login h1{
   font-weight: 500;
@@ -108,7 +109,7 @@ div{
 
 @media only screen and (max-width: 997px){
   .login .content{
-    padding: 4rem 8rem 4rem 8rem;
+    padding: 4rem;
   }
   .login h1{
     font-weight: 500;

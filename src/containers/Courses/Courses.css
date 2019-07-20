@@ -72,7 +72,7 @@ html, body{
 	justify-content: space-between; 
 }
 
-.Courses .right .search-bar{
+.search-bar{
 	display: flex;
 	flex-direction: row;
 	background-color: #F1F2F6;
@@ -84,11 +84,11 @@ html, body{
 	padding: 0 0.5rem 0 0.5rem;
 }
 
-.Courses .right .search-bar .icon{
+.search-bar .icon{
 	margin: auto 0 auto 0;
 }
 
-.Courses .right .search-bar input, .Courses .right .search-bar input:focus{
+.search-bar input, .search-bar input:focus{
 	background-color: transparent;
 	border-style: none;
 	outline: none;
@@ -187,6 +187,7 @@ html, body{
 .Courses .right .course-card .MuiCardContent-root-29 p{
 	font-size: 1vw;
 	color: black;
+	margin: 0;
 }
 
 .Courses .right .course-popup{

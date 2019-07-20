@@ -219,7 +219,6 @@ class LectureTable extends Component{
   		return { id, date, attendance, total_score };
 	}
 	createRows(){
-		console.log(this.state.gradebooks)
 		let rows = [];
 		var gradebooks = this.state.gradebooks;
 		gradebooks.forEach(gradebook =>{
