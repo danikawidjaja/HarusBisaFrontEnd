@@ -77,11 +77,37 @@ class StudentDashboard extends Component{
 		return null;
 	}
 	
-
-	async componentDidMount(){
-  		this.props.isNavVisible(false);
-    	window.scrollTo(0, 0);
-    	var id = this.props.match.params.id;
+	setupSocketConnection(){
+		if (!socket){
+			socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+			socket.on('connect', () => {
+				  if (socket.connected){
+					  console.log('socket connected')
+					  var data = {
+						  user_id: this.state.profile.id,
+						  course_id: this.state.selected_course._id
+					  }
+					  socket.emit("set_socket_data", data)
+					  socket.on("lecture_is_live",(data) =>{
+						var temp_date = data.date.split('/')
+						this.setState({
+							new_active_lecture:{
+								live: data.live,
+								lecture_id: data.lecture_id,
+								date: temp_date[0] + '/' + temp_date[1]
+							}
+						})
+					})
+				  }
+				  else{
+					  console.log('error with connection')
+				  }
+			});
+		}
+	}
+	
+	async initialization(){
+		var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
       		await this.setState({
@@ -104,41 +130,18 @@ class StudentDashboard extends Component{
 	      			isLoading: false,
 	      		})
 
-	      		if (!socket){
-					socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
-					socket.on('connect', () => {
-  						if (socket.connected){
-  							console.log('socket connected')
-  							var data = {
-  								user_id: this.state.profile.id,
-  								user_role: this.state.profile.role,
-  								course_id: id
-  							}
-  							socket.emit("set_socket_data", data)
-  						}
-  						else{
-  							console.log('error with connection')
-  						}
-					});
-				}
-				if (socket){
-					socket.on("lecture_is_live",(data) =>{
-						var temp_date = data.date.split('/')
-						this.setState({
-							new_active_lecture:{
-								live: data.live,
-								lecture_id: data.lecture_id,
-								date: temp_date[0] + '/' + temp_date[1]
-							}
-						})
-					})
-				}
+	      		this.setupSocketConnection();
 	      	})	
 	      )
       	})
       	.catch(err =>{
         	console.log(err.message)
       	}) 	
+	}
+	async componentDidMount(){
+  		this.props.isNavVisible(false);
+    	window.scrollTo(0, 0);
+    	this.initialization();
   	}
 
   	toNewLecture(){
