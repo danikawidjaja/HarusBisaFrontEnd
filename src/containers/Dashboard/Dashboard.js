@@ -190,6 +190,9 @@ class Dashboard extends Component{
 					}
 					socket.emit("set_socket_data", data);
 					console.log('socket connected')
+					socket.on("student_leave", async data =>{
+						await socket.emit("remove_student", data);	
+					});
 				}
 				else{
 					console.log("error with socket connection");

@@ -211,7 +211,10 @@ class Lecture extends Component{
 	}
 	
 	componentWillUnmount(){
-		// socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
+		if (this.state.isLoading == false){
+			console.log(socket)
+			socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
+		}
 	}
     makeQuizzes(){
     	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
