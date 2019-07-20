@@ -37,8 +37,21 @@
     flex-direction: column;
     background: #FFE01C;
     border-radius: 8px;
-    padding: 2rem;
+    padding: 1rem 3rem;
     margin-bottom: 1rem;
+    text-align: center;
+}
+
+.Gradebook .content .information .statistics .statistics-box h1{
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.Gradebook .content .information .statistics .statistics-box p{
+    font-weight: 300;
+    font-size: 0.75rem;
+    margin: 0;
 }
 
 .Gradebook .content .selector{
@@ -48,6 +61,50 @@
     margin-bottom: 1rem;
 }
 
+.Gradebook .content .selector p{
+    margin: auto 0;
+}
+
+.Gradebook .content .selector .buttons .button, .Gradebook .content .selector .buttons .button:active{
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 358%;
+    color: #9B9B9B;
+    padding: 0 auto;
+    text-transform: none;
+    outline: none;
+}
+
 .Gradebook .content .table{
     color:black;
+}
+
+.Gradebook .content .warning-button{
+    background: #FFE01C;
+    border-radius: 8px;
+    text-transform: none;
+    font-family: Rubik;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 157%;
+    letter-spacing: 1.8px;
+    color: #000000;
+}
+
+.Gradebook .table .header-row{
+    box-shadow:none;
+    border:0px;
+}
+
+.Gradebook .table .header-row .head-cell{
+    font-weight: 300;
+}
+.Gradebook .table .t-row{
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+    margin-bottom: 1rem;
+}
+.Gradebook .table .t-row .cell{
+    font-weight: 500;
 }
