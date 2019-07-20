@@ -54,13 +54,12 @@ html, body{
 }
 
 .Courses .right{
-	padding-left: 89px;
-	padding-right: 89px;
+	padding: 0 10%;
 	margin-left: 33%;
 }
 .Courses .right .header h1{
 	font-weight: 400;
-	font-size: 36px;
+	font-size: 2rem;
 	margin-top: auto;
 	margin-bottom: auto;
 	color: black;
@@ -114,6 +113,7 @@ html, body{
 	height: 32px;
 	margin-top: auto;
 	margin-bottom: auto;
+	width: 100%;
 }
 
 .Courses .right .button-student:hover{

@@ -172,7 +172,7 @@ class Courses extends Component{
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				    <div className='header row container'>
+				    <div className='header'>
 			            <div class="col-md-4"><h1>Kelas Anda</h1></div>
 						<div className="d-none d-md-block col-md-4" style={{margin:"auto 0 auto 0"}}>
 							<div className='search-bar'>
