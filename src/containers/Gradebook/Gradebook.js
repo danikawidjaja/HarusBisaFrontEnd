@@ -118,7 +118,7 @@ var lectures_json = {
 	"gradebooks": [
 	  {
 		"lecture_id": "18",
-		"lecture_date": "22/9/2018",
+		"date": "22/9/2018",
 		"attendance":"50",
 		"participation_average_score": "80",
 		"correctness_average_score": "90",
@@ -126,7 +126,7 @@ var lectures_json = {
 	  },
 	  {
 		"lecture_id": "19",
-		"lecture_date": "3/3/2019",
+		"date": "3/3/2019",
 		"attendance":"80",
 		"participation_average_score": "90",
 		"correctness_average_score": "90",
@@ -140,17 +140,17 @@ var students_json = {
 	"class_average": "76.09",
 	"gradebooks": [
 	  {
-		"student_firstname": "John",
-		"student_lastname": "Doe",
-		"student_email": "john.doe@gmail.com",
+		"firstname": "John",
+		"lastname": "Doe",
+		"email": "john.doe@gmail.com",
 		"participation_average_score": "90",
 		"correctness_average_score": "90",
 		"total_average_score": "90"
 	  },
 	  {
-		"student_firstname": "James",
-		"student_lastname": "Smith",
-		"student_email": "james.smith@gmail.com",
+		"firstname": "James",
+		"lastname": "Smith",
+		"email": "james.smith@gmail.com",
 		"participation_average_score": "90",
 		"correctness_average_score": "90",
 		"total_average_score": "90"
@@ -243,10 +243,10 @@ class ScoreTable extends Component{
 		let rows = [];
 		var gradebooks = this.props.gradebooks;
 		gradebooks.forEach(gradebook =>{
-			if (gradebook.lecture_date !== undefined && !gradebook.lecture_date.includes("Sesi")){
-				let lecture_date = gradebook.lecture_date.split('/');
+			if (gradebook.date !== undefined && !gradebook.date.includes("Sesi")){
+				let lecture_date = gradebook.date.split('/');
 				let date = "Sesi " + lecture_date[0] + '/' + lecture_date[1];
-				gradebook.lecture_date = date;
+				gradebook.date = date;
 			}
 			rows.push(gradebook)
 		})
@@ -300,14 +300,14 @@ class ScoreTable extends Component{
 			            <TableRow className='t-row' key={row.lecture_id}>
 						{this.props.type === "lecture" ?
 							<React.Fragment>
-								<TableCell className='cell'>{row.lecture_date}</TableCell>
+								<TableCell className='cell'>{row.date}</TableCell>
 								<TableCell className='cell'>{row.attendance}</TableCell>
 							</React.Fragment>
 							:
 							<React.Fragment>
-								<TableCell className='cell'>{row.student_firstname}</TableCell>
-								<TableCell className='cell'>{row.student_lastname}</TableCell>
-								<TableCell className='cell'>{row.student_email}</TableCell>
+								<TableCell className='cell'>{row.firstname}</TableCell>
+								<TableCell className='cell'>{row.lastname}</TableCell>
+								<TableCell className='cell'>{row.email}</TableCell>
 							</React.Fragment> 
 						} 
 			              <TableCell className='cell'>{row.participation_average_score}</TableCell>

@@ -211,7 +211,7 @@ class Lecture extends Component{
 	}
 	
 	componentWillUnmount(){
-		if (this.state.isLoading == false){
+		if (this.state.isLoading == false && socket!== null){
 			console.log(socket)
 			socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
 		}

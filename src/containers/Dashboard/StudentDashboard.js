@@ -192,13 +192,13 @@ var gradebookJson = {
 	"gradebooks": [
 	  {
 		"lecture_id": "18",
-		"lecture_date": "22/9/2018",
+		"date": "22/9/2018",
 		"attendance": true,
 		"total_score": "90"
 	  },
 	  {
 		"lecture_id": "19",
-		"lecture_date": "3/3/2019",
+		"date": "3/3/2019",
 		"attendance": false,
 		"total_score": "80"
 	  }
@@ -225,7 +225,7 @@ class LectureTable extends Component{
 		let rows = [];
 		var gradebooks = this.state.gradebooks;
 		gradebooks.forEach(gradebook =>{
-			let lecture_date = gradebook.lecture_date.split('/');
+			let lecture_date = gradebook.date.split('/');
 			let date = "Sesi " + lecture_date[0] + '/' + lecture_date[1];
 			var attendance = gradebook.attendance ? "Hadir" : "Tidak Hadir"
 			var total_score = parseInt(gradebook.total_score, 10)
