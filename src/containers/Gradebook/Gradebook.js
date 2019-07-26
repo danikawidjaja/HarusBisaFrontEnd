@@ -8,7 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Button, IconButton, Divider } from '@material-ui/core';
+import { Button, IconButton, Divider, Checkbox } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import {LectureTable} from '../Dashboard/StudentDashboard';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -37,10 +37,16 @@ class Gradebook extends Component{
 		this.toggleDisplayScore = this.toggleDisplayScore.bind(this);
 		this.return = this.return.bind(this);
 	}
-	findSelectedCourse(id, courses){
-		for (let i=0; i<courses.length; i++){
-			if (courses[i]._id == id){
-				return courses[i];
+	findSelected(id, array){
+		for (let i=0; i<array.length; i++){
+			if (array[i]._id === id){
+				return array[i];
+			}
+			else{
+				id = parseInt(id)
+				if (array[i].id === id){
+					return array[i]
+				}
 			}
 		}
 		return null;
@@ -49,12 +55,12 @@ class Gradebook extends Component{
 		this.props.isNavVisible(false);
 	  	window.scrollTo(0, 0);
 		var course_id = this.props.match.params.course_id;
-		var id = this.props.match.params.id;
+		var lecture_id = this.props.match.params.lecture_id;
 		await this.props.Auth.getData()
 			.then(async res =>{
 				await this.setState({
 					courses: res.data.courses,
-					selected_course: this.findSelectedCourse(course_id, res.data.courses),
+					selected_course: this.findSelected(course_id, res.data.courses),
 					profile:{
 						first_name : res.data.first_name,
 						last_name : res.data.last_name,
@@ -68,15 +74,15 @@ class Gradebook extends Component{
 				.then(async res =>{
 					await this.setState({
 						lectures: res.data.lectures,
-						selected_lecture: res.data.lectures[0],
+						selected_lecture: lecture_id ? this.findSelected(lecture_id, res.data.lectures): null,
 						isLoading: false,
 						})
 					})	
 				)
 			})
 			.catch(err =>{
-			console.log(err.message)
-			alert(err.message)
+				console.log(err.message)
+				alert(err.message)
 			})
 	}
 
@@ -97,7 +103,7 @@ class Gradebook extends Component{
 					<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 					<div className='Gradebook'>
 						{this.state.displayScore ?
-						<ScorePage/> :
+						<ScorePage history={this.props.history} course_id={this.state.selected_course._id} selected_lecture={this.state.selected_lecture}/> :
 						<WarningMessage toggleDisplayScore={this.toggleDisplayScore} return={this.return}/>
 						}
 					</div>
@@ -157,6 +163,42 @@ var students_json = {
 	  },
 	]
   }
+
+var  lecture_students_json = {
+	"gradebooks": [
+		{
+		  "firstname": "John",
+		  "lastname": "Doe",
+		  "email": "john.doe@gmail.com",
+		  "participation_average_score": "90",
+		  "correctness_average_score": "90",
+		  "total_average_score": "90"
+		},
+		{
+		  "firstname": "James",
+		  "lastname": "Smith",
+		  "email": "james.smith@gmail.com",
+		  "participation_average_score": "90",
+		  "correctness_average_score": "90",
+		  "total_average_score": "90"
+		},
+	  ]
+  }
+
+  var lecture_questions_json = {
+	"gradebooks": [
+		{
+		  "question": "What is it?",
+		  "total_participants": "129",
+		  "average_score": "70.32"
+		},
+		{
+			"question": "What is that?",
+			"total_participants": "170",
+			"average_score": "90"
+		  }
+	  ]
+  }
 class ScorePage extends Component{
 	constructor(props){
 		super(props);
@@ -166,30 +208,63 @@ class ScorePage extends Component{
 			gradebooks_by_lectures: [],
 			gradebooks_by_students:[],
 			gradebooks:[],
-			type:"lecture"
+			isLoading: true
 		}
 		this.buttonClick = this.buttonClick.bind(this);
 	}
 
 	componentDidMount(){
-		var res = lectures_json;
-		this.setState({
-			number_of_students: res.number_of_students,
-			class_average: res.class_average,
-			gradebooks_by_lectures: lectures_json.gradebooks,
-			gradebooks_by_students: students_json.gradebooks,
-			gradebooks: lectures_json.gradebooks
-		})
+		if (this.props.selected_lecture){
+			this.setState({
+				lecture_gradebooks_by_students : lecture_students_json.gradebooks,
+				lecture_gradebooks_by_questions: lecture_questions_json.gradebooks,
+				gradebooks: lecture_students_json.gradebooks,
+				type: "Murid",
+				type_options: ["Murid", "Pertanyaan"],
+				isLoading: false
+			})
+
+		}else{
+			var res = lectures_json;
+			this.setState({
+				number_of_students: res.number_of_students,
+				class_average: res.class_average,
+				gradebooks_by_lectures: lectures_json.gradebooks,
+				gradebooks_by_students: students_json.gradebooks,
+				gradebooks: lectures_json.gradebooks,
+				type_options: ["Sesi", "Murid"],
+				type: "Sesi",
+				isLoading: false,
+			})
+		}
 	}
 
 	async buttonClick(type){
+		var gradebooks = this.state.gradebooks
+		if (type === "Sesi"){
+			gradebooks = this.state.gradebooks_by_lectures
+		}
+		else if (type === "Murid"){
+			if (this.props.selected_lecture){
+				gradebooks = this.state.lecture_gradebooks_by_students
+			}
+			else{
+				gradebooks = this.state.gradebooks_by_students
+			}
+		}
+		else if (type === "Pertanyaan"){
+			gradebooks = this.state.lecture_gradebooks_by_questions
+		}
+
 		await this.setState({
 			type: type,
-			gradebooks: type === "lecture" ? this.state.gradebooks_by_lectures : this.state.gradebooks_by_students 
+			gradebooks: gradebooks
 		})
-		console.log(this.state)
 	}
 	render(){
+		if (this.state.isLoading){
+			return <LoadingPage/>
+		} else{
 		return(
 			<div className='content'>
 				<div className='header'>
@@ -204,33 +279,41 @@ class ScorePage extends Component{
 				</div>
 				
 				<div className='information'>
-					<div>Graph</div>
-					<div className='statistics'>
-						<div className='statistics-box'>
-							<h1>{this.state.number_of_students}</h1>
-							<p>Jumlah murid terdaftar</p>
+					{this.props.selected_lecture ?
+					<p style={{fontWeight:"bold"}}>Sesi {this.props.selected_lecture.date.split("/")[0] + "/" + this.props.selected_lecture.date.split("/")[1]}</p>
+					:
+					<React.Fragment>
+						<div>Graph</div>
+						<div className='statistics'>
+							<div className='statistics-box'>
+								<h1>{this.state.number_of_students}</h1>
+								<p>Jumlah murid terdaftar</p>
+							</div>
+							<div className='statistics-box'>
+								<h1>{this.state.class_average}%</h1>
+								<p>Rata-rata kelas</p>
+							</div>
 						</div>
-						<div className='statistics-box'>
-							<h1>{this.state.class_average}%</h1>
-							<p>Rata-rata kelas</p>
-						</div>
-					</div>
+					</React.Fragment>
+					}
+					
 				</div>
 				
 				<div className='selector'>
-					<p>Nilai Tiap {this.state.type === "lecture" ? "Sesi" : "Murid"}</p>
+					<p>Nilai Tiap {this.state.type}</p>
 					<div className='buttons'>
-						<Button disableFocusRipple disableRipple className='button' style={{fontWeight:(this.state.type === "lecture" ? '500' :'300')}} onClick={()=> this.buttonClick("lecture")}>Lihat Berdasarkan Sesi</Button>
-						<Button disableFocusRipple disableRipple className='button' style={{fontWeight:(this.state.type === "student" ? '500' :'300')}} onClick={() => this.buttonClick("student")}>Lihat Berdasarkan Murid</Button>
+						<Button disableFocusRipple disableRipple className='button' style={{fontWeight:(this.state.type === this.state.type_options[0] ? '500' :'300')}} onClick={()=> this.buttonClick(this.state.type_options[0])}>Lihat Berdasarkan {this.state.type_options[0]}</Button>
+						<Button disableFocusRipple disableRipple className='button' style={{fontWeight:(this.state.type === this.state.type_options[1] ? '500' :'300')}} onClick={() => this.buttonClick(this.state.type_options[1])}>Lihat Berdasarkan {this.state.type_options[1]}</Button>
 					</div>
 				</div>
 
 				<div className='table'>
-					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type}/>
+					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true}/>
 				</div>
 
 			</div>
 		)
+				}
 	}
 }
 
@@ -271,13 +354,35 @@ class ScoreTable extends Component{
 			</React.Fragment>
 		)
 	}
+
+	createHeaderByQuestion(){
+		return(
+			<React.Fragment>
+				<TableCell className='head-cell'>No</TableCell>
+				<TableCell className='head-cell'>Pertanyaan</TableCell>
+				<TableCell className='head-cell'>Nilai Rata-rata(%)</TableCell>
+				<TableCell className='head-cell'>Jumlah Partisipan</TableCell>
+				<TableCell className='head-cell'>Masuk daftar nilai?</TableCell>
+			</React.Fragment>
+		)
+	}
 	createTableHeader(){
-		if (this.props.type === "lecture"){
+		if (this.props.type === "Sesi"){
 			return this.createHeaderByLecture();
 		}
-		else{
+		else if (this.props.type === "Murid"){
 			return this.createHeaderByStudent();
 		}
+		else if (this.props.type === "Pertanyaan"){
+			return this.createHeaderByQuestion();
+		}
+		else{
+			return null
+		}
+	}
+
+	toGradebookByLecture(lecture_id){
+		this.props.history.push("/"+this.props.course_id+"/gradebook/"+lecture_id)
 	}
 	render(){
 		const rows = this.createRows();
@@ -286,10 +391,15 @@ class ScoreTable extends Component{
 		        <TableHead style={{border:'0px'}}>
 		          <TableRow className='header-row'>
 					{this.createTableHeader()}
-					<TableCell className='head-cell'>Nilai partisipasi(%)</TableCell>
-					<TableCell className='head-cell'>Nilai kebenaran(%)</TableCell>
-					<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
-					<TableCell className='head-cell'>{""}</TableCell>
+					{this.props.type === "Pertanyaan" ? 
+						null:
+						<React.Fragment>
+							<TableCell className='head-cell'>Nilai partisipasi(%)</TableCell>
+							<TableCell className='head-cell'>Nilai kebenaran(%)</TableCell>
+							<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
+							<TableCell className='head-cell'>{""}</TableCell>
+						</React.Fragment>
+					}
 		          </TableRow>
 		        </TableHead>
 		        {rows.length == 0 ? 
@@ -297,23 +407,39 @@ class ScoreTable extends Component{
 			        :
 			        <TableBody>
 			          {rows.map(row => (
-			            <TableRow className='t-row' key={row.lecture_id}>
-						{this.props.type === "lecture" ?
+			            <TableRow className='t-row' key={row.lecture_id} onClick={this.props.type === "Sesi" ? (()=>{this.toGradebookByLecture(row.lecture_id)}) : null}>
+						{this.props.type === "Sesi" &&
 							<React.Fragment>
 								<TableCell className='cell'>{row.date}</TableCell>
 								<TableCell className='cell'>{row.attendance}</TableCell>
 							</React.Fragment>
-							:
+						}
+						{this.props.type === "Murid" &&
 							<React.Fragment>
 								<TableCell className='cell'>{row.firstname}</TableCell>
 								<TableCell className='cell'>{row.lastname}</TableCell>
 								<TableCell className='cell'>{row.email}</TableCell>
 							</React.Fragment> 
+						}
+						{this.props.type === "Pertanyaan" &&
+							<React.Fragment>
+								<TableCell className='cell'>1</TableCell>
+								<TableCell className='cell'>{row.question}</TableCell>
+								<TableCell className='cell'>{row.average_score}</TableCell>
+								<TableCell className='cell'>{row.total_participants}</TableCell>
+								<TableCell className='cell'><Checkbox/></TableCell>
+							</React.Fragment>
 						} 
-			              <TableCell className='cell'>{row.participation_average_score}</TableCell>
-						  <TableCell className='cell'>{row.correctness_average_score}</TableCell>
-						  <TableCell className='cell'>{row.total_average_score}</TableCell>
-						  <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell>
+						{this.props.type !== "Pertanyaan" ?
+							<React.Fragment> 
+								<TableCell className='cell'>{row.participation_average_score}</TableCell>
+								<TableCell className='cell'>{row.correctness_average_score}</TableCell>
+								<TableCell className='cell'>{row.total_average_score}</TableCell>
+								{this.props.showButton ? <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell> : null}
+							</React.Fragment>
+							:
+							null
+						}
 			            </TableRow>
 			          ))}
 			        </TableBody>

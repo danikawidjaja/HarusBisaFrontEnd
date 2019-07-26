@@ -23,10 +23,11 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/signup" exact component = {SignUp} props={childProps}/>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
-        <AppliedRoute path='/dashboard/:id' component={Dashboard} props={childProps}/>
-        <AppliedRoute path='/student-dashboard/:id' component={StudentDashboard} props={childProps}/>
-        <AppliedRoute path='/:course_id/lecture/:lecture_id/:live' component={Lecture} props={childProps}/>
-        <AppliedRoute path='/:course_id/gradebook' component={Gradebook} props={childProps}/>
+        <AppliedRoute path='/dashboard/:id' exact component={Dashboard} props={childProps}/>
+        <AppliedRoute path='/student-dashboard/:id' exact component={StudentDashboard} props={childProps}/>
+        <AppliedRoute path='/:course_id/lecture/:lecture_id/:live' exact component={Lecture} props={childProps}/>
+        <AppliedRoute path='/:course_id/gradebook' exact component={Gradebook} props={childProps}/>
+        <AppliedRoute path='/:course_id/gradebook/:lecture_id' exact component={Gradebook} props={childProps}/>
         <AppliedRoute path='/termsandconditions' component={TermsAndConditions} props={childProps}/>
         <AppliedRoute path='/faq' component={FAQ} props={childProps}/>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
