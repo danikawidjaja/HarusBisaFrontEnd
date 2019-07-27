@@ -126,16 +126,12 @@ var lectures_json = {
 		"lecture_id": "18",
 		"date": "22/9/2018",
 		"attendance":"50",
-		"participation_average_score": "80",
-		"correctness_average_score": "90",
 		"total_average_score": "85"
 	  },
 	  {
 		"lecture_id": "19",
 		"date": "3/3/2019",
 		"attendance":"80",
-		"participation_average_score": "90",
-		"correctness_average_score": "90",
 		"total_average_score": "90"
 	  }
 	]
@@ -190,12 +186,14 @@ var  lecture_students_json = {
 		{
 		  "question": "What is it?",
 		  "total_participants": "129",
-		  "average_score": "70.32"
+		  "average_score": "70.32",
+		  "include": true
 		},
 		{
 			"question": "What is that?",
 			"total_participants": "170",
-			"average_score": "90"
+			"average_score": "90",
+			"include": false
 		  }
 	  ]
   }
@@ -351,6 +349,7 @@ class ScoreTable extends Component{
 			<React.Fragment>
 				<TableCell className='head-cell'>Sesi</TableCell>
 				<TableCell className='head-cell'>Kehadiran</TableCell>
+				<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
 			</React.Fragment>
 		)
 	}
@@ -391,15 +390,16 @@ class ScoreTable extends Component{
 		        <TableHead style={{border:'0px'}}>
 		          <TableRow className='header-row'>
 					{this.createTableHeader()}
-					{this.props.type === "Pertanyaan" ? 
-						null:
+					{this.props.type === "Murid" ? 
 						<React.Fragment>
 							<TableCell className='head-cell'>Nilai partisipasi(%)</TableCell>
 							<TableCell className='head-cell'>Nilai kebenaran(%)</TableCell>
 							<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
-							<TableCell className='head-cell'>{""}</TableCell>
 						</React.Fragment>
+						:
+						null
 					}
+					{this.props.showButton ? <TableCell className='head-cell'>{""}</TableCell> : null}
 		          </TableRow>
 		        </TableHead>
 		        {rows.length == 0 ? 
@@ -412,6 +412,7 @@ class ScoreTable extends Component{
 							<React.Fragment>
 								<TableCell className='cell'>{row.date}</TableCell>
 								<TableCell className='cell'>{row.attendance}</TableCell>
+								<TableCell className='cell'>{row.total_average_score}</TableCell>
 							</React.Fragment>
 						}
 						{this.props.type === "Murid" &&
@@ -419,27 +420,21 @@ class ScoreTable extends Component{
 								<TableCell className='cell'>{row.firstname}</TableCell>
 								<TableCell className='cell'>{row.lastname}</TableCell>
 								<TableCell className='cell'>{row.email}</TableCell>
+								<TableCell className='cell'>{row.participation_average_score}</TableCell>
+								<TableCell className='cell'>{row.correctness_average_score}</TableCell>
+								<TableCell className='cell'>{row.total_average_score}</TableCell>
 							</React.Fragment> 
 						}
 						{this.props.type === "Pertanyaan" &&
 							<React.Fragment>
-								<TableCell className='cell'>1</TableCell>
+								<TableCell className='cell'>{1}</TableCell>
 								<TableCell className='cell'>{row.question}</TableCell>
 								<TableCell className='cell'>{row.average_score}</TableCell>
 								<TableCell className='cell'>{row.total_participants}</TableCell>
-								<TableCell className='cell'><Checkbox/></TableCell>
+								<TableCell className='cell'><Checkbox checked={row.include}/></TableCell>
 							</React.Fragment>
 						} 
-						{this.props.type !== "Pertanyaan" ?
-							<React.Fragment> 
-								<TableCell className='cell'>{row.participation_average_score}</TableCell>
-								<TableCell className='cell'>{row.correctness_average_score}</TableCell>
-								<TableCell className='cell'>{row.total_average_score}</TableCell>
-								{this.props.showButton ? <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell> : null}
-							</React.Fragment>
-							:
-							null
-						}
+						{this.props.showButton ? <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell> : null}
 			            </TableRow>
 			          ))}
 			        </TableBody>
