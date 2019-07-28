@@ -14,6 +14,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Popup from 'reactjs-popup';
 import EditIcon from "@material-ui/icons/Edit";
 import ReactSlider from 'react-slider';
+import {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,} from 'recharts';
 
 class Gradebook extends Component{
 	constructor(props){
@@ -112,7 +113,7 @@ class Gradebook extends Component{
 					<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 					<div className='Gradebook'>
 						{this.state.displayScore ?
-						<ScorePage history={this.props.history} course_id={this.state.selected_course._id} selected_lecture={this.state.selected_lecture} Auth={this.props.Auth}/> :
+						<ScorePage history={this.props.history} course_id={this.state.selected_course._id} selected_lecture={this.state.selected_lecture} Auth={this.props.Auth} course_name={this.state.selected_course.course_name}/> :
 						<WarningMessage toggleDisplayScore={this.toggleDisplayScore} return={this.return}/>
 						}
 					</div>
@@ -127,6 +128,23 @@ class Gradebook extends Component{
 	}
 }
 
+class Graph extends Component{
+	render(){
+		return(
+			<BarChart
+				width={500}
+				height={200}
+				data={this.props.data}
+			>
+				<CartesianGrid strokeDasharray="3 3" />
+				<XAxis dataKey="Date" />
+				<YAxis />
+				<Tooltip />
+				<Bar dataKey="Average" fill="#FFE01C" />
+			</BarChart>
+		)
+	}
+}
 class ScorePage extends Component{
 	constructor(props){
 		super(props);
@@ -141,6 +159,7 @@ class ScorePage extends Component{
 		this.buttonClick = this.buttonClick.bind(this);
 		this.changeGradebooks = this.changeGradebooks.bind(this);
 		this.submitEdit = this.submitEdit.bind(this);
+		this.submitQuestionInclude = this.submitQuestionInclude.bind(this);
 	}
 
 	changeGradebooks(gradebooks){
@@ -166,12 +185,6 @@ class ScorePage extends Component{
 				})
 			})
 
-			this.setState({
-				type: "Murid",
-				type_options: ["Murid", "Pertanyaan"],
-				isLoading: false
-			})
-
 		}else{
 			await this.props.Auth.getGradebooksByLectures(this.props.course_id)
 			.then(result =>{
@@ -189,11 +202,22 @@ class ScorePage extends Component{
 					gradebooks_by_students: result.gradebooks
 				})
 			})
+			var graphData = []
+			this.state.gradebooks.forEach(gradebook =>{
+				var temp={
+					Date: "",
+					Average: ""
+				}
+				temp.Date = "Sesi " + gradebook.date.split("/")[0] + "/" + gradebook.date.split("/")[1]
+				temp.Average = parseFloat(gradebook.total_average_score,10)
+				graphData.push(temp)
+			})
 
 			this.setState({
 				type_options: ["Sesi", "Murid"],
 				type: "Sesi",
 				isLoading: false,
+				graphData: graphData
 			})
 		}
 	}
@@ -231,6 +255,23 @@ class ScorePage extends Component{
 			})
 		})
 	}
+	async submitQuestionInclude(){
+		var quizzes = []
+		this.state.gradebooks.forEach(gradebook =>{
+			var temp = {quiz_id:"", include:""};
+			temp.quiz_id = gradebook.quiz_id
+			temp.include = gradebook.include
+			quizzes.push(temp)
+		})
+		await this.props.Auth.editIncludeQuestion(this.props.course_id, this.props.selected_lecture.id, quizzes)
+		.then(result =>{
+			this.setState({
+				lecture_gradebooks_by_questions: result.gradebooks_by_quizzes,
+				lecture_gradebooks_by_students: result.gradebooks_by_students,
+				gradebooks : result.gradebooks_by_quizzes,
+			})
+		})
+	}
 	render(){
 		if (this.state.isLoading){
 			return <LoadingPage/>
@@ -253,7 +294,10 @@ class ScorePage extends Component{
 					<p style={{fontWeight:"bold"}}>Sesi {this.props.selected_lecture.date.split("/")[0] + "/" + this.props.selected_lecture.date.split("/")[1]}</p>
 					:
 					<React.Fragment>
-						<div>Graph</div>
+						<div style={{display:'flex', flexDirection:'column'}}>
+							<p style={{fontWeight:'bold'}}>{this.props.course_name}</p>
+							<Graph data={this.state.graphData}/>
+						</div>
 						<div className='statistics'>
 							<div className='statistics-box'>
 								<h1>{this.state.number_of_students}</h1>
@@ -278,12 +322,12 @@ class ScorePage extends Component{
 				</div>
 
 				<div className='table'>
-					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true} changeGradebooks={this.changeGradebooks} Auth={this.props.Auth} submitEdit={this.submitEdit}/>
+					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true} changeGradebooks={this.changeGradebooks} Auth={this.props.Auth} submitEdit={this.submitEdit} submitQuestionInclude={this.submitQuestionInclude}/>
 				</div>
 
 			</div>
-		)
-				}
+			)
+		}
 	}
 }
 
@@ -300,6 +344,7 @@ class ScoreTable extends Component{
 		this.toggleShowEditPercentage = this.toggleShowEditPercentage.bind(this);	
 		this.handleSliderChange = this.handleSliderChange.bind(this)	
 		this.submitEdit = this.submitEdit.bind(this)
+		this.submitQuestionInclude = this.submitQuestionInclude.bind(this)
 	}
 	toggleShowEditPercentage(state, participation_reward_percentage, lecture_id){
 		this.setState({
@@ -390,9 +435,16 @@ class ScoreTable extends Component{
 	handleSliderChange(value){
 		this.setState({participation_reward_percentage: value})
 	}
-	submitEdit(participation_reward_percentage, lecture_id){
+	submitEdit(){
 		this.props.submitEdit(this.state.participation_reward_percentage, this.state.lecture_id);
 		this.toggleShowEditPercentage(false)
+	}
+	
+	submitQuestionInclude(){
+		this.props.submitQuestionInclude()
+		this.setState({
+			showSubmit: false,
+		})
 	}
 	render(){
 		const rows = this.createRows();
@@ -420,7 +472,7 @@ class ScoreTable extends Component{
 						:
 						null
 					}
-					{this.props.showButton ? <TableCell className='head-cell'>{""}</TableCell> : null}
+					{this.props.showButton && this.props.type==="Sesi" ? <TableCell className='head-cell'>{""}</TableCell> : null}
 		          </TableRow>
 		        </TableHead>
 		        {rows.length == 0 ? 
@@ -466,7 +518,7 @@ class ScoreTable extends Component{
 								<TableCell className='cell'><Checkbox value={row.quiz_id} onChange={this.changeIncluded} checked={row.include}/></TableCell>
 							</React.Fragment>
 						} 
-						{this.props.showButton ?
+						{this.props.showButton && this.props.type==="Sesi" ?
 							<Popup
 								trigger={<TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell>}
 								position="bottom left"
@@ -506,13 +558,13 @@ class ScoreTable extends Component{
 								<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
 								<p className='slider-text'> Benar: {100 - this.state.participation_reward_percentage}% </p>
 							</div>
-							<Button onClick={() => this.submitEdit(this.state.participation_reward_percentage, this.state.lecture_id)}>Submit</Button>
+							<Button onClick={() => this.submitEdit()}>Submit</Button>
 							<Button onClick={()=>this.toggleShowEditPercentage(false)}>Batalkan</Button>
   						</div>
   					)}
 								
 				</Popup>
-			  {this.state.showSubmit && <div style={{display:'flex', justifyContent:'flex-end'}}><Button style={{textTransform:'none'}}>Submit</Button></div>}
+			  {this.state.showSubmit && <div style={{display:'flex', justifyContent:'flex-end'}}><Button style={{textTransform:'none'}} onClick={this.submitQuestionInclude}>Submit</Button></div>}
 			  </React.Fragment>
 		)
 	}

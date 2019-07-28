@@ -291,6 +291,16 @@ export default class AuthService {
             return res;
         })
     }
+    editIncludeQuestion(course_id, lecture_id, quizzes){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/quizzes`,{
+            method:'PUT',
+            body: JSON.stringify({
+                quizzes
+            })
+        }).then(res => {
+            return res;
+        })
+    }
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
