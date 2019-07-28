@@ -185,6 +185,12 @@ class ScorePage extends Component{
 				})
 			})
 
+			this.setState({
+				type_options: ["Murid", "Pertanyaan"],
+				type: "Murid",
+				isLoading: false,
+			})
+
 		}else{
 			await this.props.Auth.getGradebooksByLectures(this.props.course_id)
 			.then(result =>{

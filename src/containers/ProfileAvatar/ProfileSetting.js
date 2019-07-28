@@ -144,7 +144,7 @@ class ProfileSetting extends Component{
 			}
 			return(
 				<div className='Dashboard'> 
-					<DashboardNavigation course_option={false} profile={profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history}/>
+					<DashboardNavigation course_option={false} profile={profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} gradebook={false}/>
 			    	<div className='ProfileSetting'>
 			    		<h1> Pengaturan Akun </h1>
 			    		<div className='content'>
