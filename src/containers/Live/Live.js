@@ -6,7 +6,8 @@ import CheckCircleOutline from '@material-ui/icons/CheckCircleOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import PlayArrow from '@material-ui/icons/PlayArrow';
-import { Button, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown, ButtonToolbar} from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import "react-circular-progressbar/dist/styles.css";
@@ -366,7 +367,7 @@ class LiveMenu extends Component{
 					<IconButton className='icon-btn' onClick={this.nextQuiz} disabled={this.props.started ? true : false}><ExpandLessIcon className='icon'/></IconButton>
 				</div>
 				<div className='quizzes-options'>
-					<p><QuizzesOption changeCurrentQuizId={this.props.changeCurrentQuizId} current_quiz={this.props.current_quiz} quiz_ids={this.props.quiz_ids} findCurrentIndex={this.props.findCurrentIndex}/></p>
+					<p><QuizzesOption changeCurrentQuizId={this.props.changeCurrentQuizId} current_quiz={this.props.current_quiz} quiz_ids={this.props.quiz_ids} findCurrentIndex={this.props.findCurrentIndex} started={this.props.started}/></p>
 				</div>
 				<div className='icons'>
 					<IconButton className={this.props.show_correct_answer? 'icon-btn-on' : 'icon-btn-off'} disabled={this.props.started ? true : false} disableRipple={true} onClick={this.props.toggleShowCorrectAnswer}><CheckCircleOutline className='icon'/><p>Jawaban</p></IconButton>
@@ -384,9 +385,26 @@ class LiveMenu extends Component{
 }
 
 class QuizzesOption extends Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.handleChange = this.handleChange.bind(this);
+		this.state = {
+		  dropdownOpen: false
+		};
+		this.toggle = this.toggle.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+	  }
+	
+	toggle() {
+		this.setState(prevState => ({
+			dropdownOpen: !prevState.dropdownOpen
+		}));
+		if (this.props.changeFlag){
+			this.props.changeFlag();
+		}
+	}
+
+	handleClick(index){
+		this.props.changeCurrentQuizId(this.props.quiz_ids[index])
 	}
 	createMenuItem(quizzes, current_quiz){
 		let length = quizzes.length
@@ -394,28 +412,22 @@ class QuizzesOption extends Component{
 
 		for (let i=0; i<length; i++){
 			if (quizzes[i] !== current_quiz.id){
-				result.push(<ToggleButton type='radio' value={i}> Pertanyaan {i+1} </ToggleButton>)
+				result.push(<DropdownItem value={i} onClick={()=>this.handleClick(i)}>Pertanyaan {i+1}</DropdownItem>)
 			}
 		}
 		return result;
 	}
-
-	handleChange(value, event){
-		this.props.changeCurrentQuizId(this.props.quiz_ids[value])
-	}
-	
-	render(){
-		return(
-			<Dropdown drop={'up'} id={'quizzes'}>						
-				<Dropdown.Toggle  drop={'up'} id={'quizzes'}> Pertanyaan {this.props.findCurrentIndex(this.props.current_quiz) +1} </Dropdown.Toggle>		
-				<Dropdown.Menu>		
-					<ToggleButtonGroup name='lectureDates'type='radio' onChange={this.handleChange}>	
-						{this.createMenuItem(this.props.quiz_ids, this.props.current_quiz)}
-					</ToggleButtonGroup>	
-				</Dropdown.Menu>		
-			</Dropdown>	
-	
-		)
+	render() {
+		return (
+			<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+				<DropdownToggle caret className='toggle-button' disabled={this.props.started}>
+					Pertanyaan {this.props.findCurrentIndex(this.props.current_quiz) +1}
+				</DropdownToggle>
+				<DropdownMenu>
+					{this.createMenuItem(this.props.quiz_ids, this.props.current_quiz)}
+				</DropdownMenu>
+			</Dropdown>
+		);
 	}
 }
 export default Live;

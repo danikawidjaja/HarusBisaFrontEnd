@@ -155,7 +155,8 @@ html, body{
     padding-bottom: 1px;
     margin-left: 1rem;
     margin-right: 1rem;
-    width: 5rem;
+	width: 5rem;
+	background: white;
 }
 
 .LiveMenu .navigator .button[disabled]{
@@ -183,8 +184,13 @@ html, body{
 	width: 100%;
 }
 
-.LiveMenu .quizzes-options .toggle-button{
-	margin: auto
+.LiveMenu .quizzes-options .toggle-button, .LiveMenu .quizzes-options .toggle-button:active, .LiveMenu .quizzes-options .toggle-button:focus, .LiveMenu .quizzes-options .toggle-button:active:focus{
+	margin: auto;
+	background-color: transparent !important;
+	border: 0;
+	outline: 0;
+	box-shadow: none !important;
+	color: white;
 }
 
 .LiveMenu .icons{
@@ -205,6 +211,7 @@ html, body{
 	margin-right: 1rem;
 	margin-left: 1rem;
 	color: white;
+	margin: auto;
 }
 
 .LiveMenu .icons .icon-btn-on{
@@ -216,6 +223,7 @@ html, body{
 	margin-right: 1rem;
 	margin-left: 1rem;
 	color: #FFE01C;
+	margin: auto;
 }
 
 .LiveMenu .icons .icon-btn-off[disabled]{
@@ -248,7 +256,10 @@ html, body{
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	margin: auto;
+}
+
+.LiveMenu .counter p{
+	margin: auto
 }
 
 
