@@ -11,6 +11,9 @@ import TableRow from '@material-ui/core/TableRow';
 import { Button, IconButton, Divider, Checkbox } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Popup from 'reactjs-popup';
+import EditIcon from "@material-ui/icons/Edit";
+import ReactSlider from 'react-slider';
 
 class Gradebook extends Component{
 	constructor(props){
@@ -137,6 +140,7 @@ class ScorePage extends Component{
 		}
 		this.buttonClick = this.buttonClick.bind(this);
 		this.changeGradebooks = this.changeGradebooks.bind(this);
+		this.submitEdit = this.submitEdit.bind(this);
 	}
 
 	changeGradebooks(gradebooks){
@@ -216,6 +220,17 @@ class ScorePage extends Component{
 			gradebooks: gradebooks
 		})
 	}
+	submitEdit(participation_reward_percentage, lecture_id){
+		this.props.Auth.editParticipationRewardPercentage(this.props.course_id, lecture_id, participation_reward_percentage)
+		.then (result =>{
+			this.setState({
+				number_of_students: result.number_of_students,
+				class_average: result.class_average,
+				gradebooks_by_lectures: result.gradebooks,
+				gradebooks: result.gradebooks
+			})
+		})
+	}
 	render(){
 		if (this.state.isLoading){
 			return <LoadingPage/>
@@ -263,7 +278,7 @@ class ScorePage extends Component{
 				</div>
 
 				<div className='table'>
-					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true} changeGradebooks={this.changeGradebooks}/>
+					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true} changeGradebooks={this.changeGradebooks} Auth={this.props.Auth} submitEdit={this.submitEdit}/>
 				</div>
 
 			</div>
@@ -277,10 +292,23 @@ class ScoreTable extends Component{
 		super(props);
 		this.state={
 			showSubmit: false,
+			participation_reward_percentage: 0,
+			showEditPercentage: false,
+			lecture_id: 0
 		}
-		this.changeIncluded = this.changeIncluded.bind(this)		
+		this.changeIncluded = this.changeIncluded.bind(this)
+		this.toggleShowEditPercentage = this.toggleShowEditPercentage.bind(this);	
+		this.handleSliderChange = this.handleSliderChange.bind(this)	
+		this.submitEdit = this.submitEdit.bind(this)
 	}
-
+	toggleShowEditPercentage(state, participation_reward_percentage, lecture_id){
+		this.setState({
+			showEditPercentage: state,
+			participation_reward_percentage: participation_reward_percentage,
+			lecture_id: lecture_id
+		})
+	}
+	
 	createRows(){
 		let rows = [];
 		var gradebooks = this.props.gradebooks;
@@ -359,6 +387,13 @@ class ScoreTable extends Component{
 			})
 		}
 	}
+	handleSliderChange(value){
+		this.setState({participation_reward_percentage: value})
+	}
+	submitEdit(participation_reward_percentage, lecture_id){
+		this.props.submitEdit(this.state.participation_reward_percentage, this.state.lecture_id);
+		this.toggleShowEditPercentage(false)
+	}
 	render(){
 		const rows = this.createRows();
 		return(
@@ -393,10 +428,10 @@ class ScoreTable extends Component{
 			        :
 			        <TableBody>
 			          {rows.map(row => (
-			            <TableRow className='t-row' key={row.lecture_id} onClick={this.props.type === "Sesi" ? (()=>{this.toGradebookByLecture(row.lecture_id)}) : null}>
+			            <TableRow className='t-row' key={row.lecture_id}>
 						{this.props.type === "Sesi" &&
 							<React.Fragment>
-								<TableCell className='cell'>{row.date}</TableCell>
+								<TableCell className='cell' onClick={this.props.type === "Sesi" ? (()=>{this.toGradebookByLecture(row.lecture_id)}) : null}>{row.date}</TableCell>
 								<TableCell className='cell'>{row.attendance}</TableCell>
 								<TableCell className='cell'>{row.total_average_score}</TableCell>
 							</React.Fragment>
@@ -431,13 +466,53 @@ class ScoreTable extends Component{
 								<TableCell className='cell'><Checkbox value={row.quiz_id} onChange={this.changeIncluded} checked={row.include}/></TableCell>
 							</React.Fragment>
 						} 
-						{this.props.showButton ? <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell> : null}
+						{this.props.showButton ?
+							<Popup
+								trigger={<TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell>}
+								position="bottom left"
+								on = "click"
+								closeOnDocumentClick
+								arrow={false}
+								contentStyle={{borderRadius:'8px', boxShadow:'0px 4px 4px rgba(0,0,0,0.25)'}}
+								mouseLeaveDelay={1}
+								offsetY={-10}
+							>
+								{close => (
+									<div onClick={close}>
+										<Button style={{textTransform:'none', display:'flex'}} onClick={()=>this.toggleShowEditPercentage(true, row.participation_reward_percentage, row.lecture_id)}><EditIcon style={{color:"#FFE01C", marginRight:'1rem'}}/>Edit Persentase Nilai</Button>
+									</div>
+								)}							
+							</Popup>    
+						: null}
 			            </TableRow>
 			          ))}
 			        </TableBody>
 		    	}
 		      </Table>
-			  {this.state.showSubmit && <div style={{display:'flex', justifyContent:'flex-end'}}><Button>Submit</Button></div>}
+			  	<Popup 
+					open={this.state.showEditPercentage}
+					modal 
+					closeOnDocumentClick={false}
+					contentStyle={{boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}>
+					{close => (
+  						<div className='popup'>
+	  						<div className= "popup-header">
+	        					<h2> Setting Nilai Sesi </h2>
+		    				</div>
+							
+							<label> Persentase Nilai </label>
+							<ReactSlider onChange={this.handleSliderChange} defaultValue={this.state.participation_reward_percentage}/> 
+							<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+								<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
+								<p className='slider-text'> Benar: {100 - this.state.participation_reward_percentage}% </p>
+							</div>
+							<Button onClick={() => this.submitEdit(this.state.participation_reward_percentage, this.state.lecture_id)}>Submit</Button>
+							<Button onClick={()=>this.toggleShowEditPercentage(false)}>Batalkan</Button>
+  						</div>
+  					)}
+								
+				</Popup>
+			  {this.state.showSubmit && <div style={{display:'flex', justifyContent:'flex-end'}}><Button style={{textTransform:'none'}}>Submit</Button></div>}
 			  </React.Fragment>
 		)
 	}

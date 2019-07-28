@@ -281,6 +281,16 @@ export default class AuthService {
             console.log(err.message)
         }) 
     }
+    editParticipationRewardPercentage(course_id, lecture_id, participation_reward_percentage){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}`,{
+            method:'PUT',
+            body: JSON.stringify({
+                participation_reward_percentage
+            })
+        }).then(res => {
+            return res;
+        })
+    }
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
