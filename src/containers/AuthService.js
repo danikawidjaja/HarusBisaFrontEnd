@@ -270,7 +270,15 @@ export default class AuthService {
             return (res); 
         }).catch(err =>{
             console.log(err.message)
-
+        }) 
+    }
+    getStudentGradebooks(course_id){
+        return this.fetch(`${this.domain}/gradebook/student/courses/${course_id}/lectures`, {
+            method: 'GET',
+        }).then(res => {
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
         }) 
     }
     loggedIn() {

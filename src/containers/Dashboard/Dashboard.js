@@ -160,7 +160,7 @@ class Dashboard extends Component{
 	      	.then(async res =>{
 	      		await this.setState({
 	      			lectures: res.data.lectures,
-	      			selected_lecture: res.data.lectures[0],
+	      			selected_lecture: res.data.lectures.length === 0 ? null : res.data.lectures[0],
 	      			isLoading: false,
 	      		})
 
@@ -539,7 +539,7 @@ class DashboardRight extends Component{
 		super(props);
 		this.state={
 			lecture : this.props.selectedLecture,
-			live: this.props.selectedLecture.live,
+			live: this.props.selectedLecture ? this.props.selectedLecture.live : null,
 			total_student_in_session:0
 		}
 		this.startLecture = this.startLecture.bind(this);

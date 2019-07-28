@@ -164,7 +164,7 @@ class StudentDashboard extends Component{
 		    					: null
 		    				}
 		    				<p> Sesi yang telah berlangsung </p>
-		    				<LectureTable course_id={this.props.match.params.id} lectures={this.state.lectures} history={this.props.history}/>
+		    				<LectureTable course_id={this.props.match.params.id} lectures={this.state.lectures} history={this.props.history} Auth={this.props.Auth}/>
 		    				<div className='text'>
 		    					<p>"Gantungkan cita-cita mu setinggi langit! Bermimpilah setinggi langit. Jika engkau jatuh, engkau akan jatuh di antara bintang-bintang."</p>
 		    					<br/><br/><p>Soekarno</p>
@@ -188,22 +188,7 @@ class StudentDashboard extends Component{
 		}
 	}
 }
-var gradebookJson = {
-	"gradebooks": [
-	  {
-		"lecture_id": "18",
-		"date": "22/9/2018",
-		"attendance": true,
-		"total_score": "90"
-	  },
-	  {
-		"lecture_id": "19",
-		"date": "3/3/2019",
-		"attendance": false,
-		"total_score": "80"
-	  }
-	]
-  }
+
 class LectureTable extends Component{
 	constructor(props){
 		super(props);
@@ -214,12 +199,15 @@ class LectureTable extends Component{
 	}
 
 	componentDidMount(){
-		this.setState({
-			gradebooks: gradebookJson.gradebooks,
+		this.props.Auth.getStudentGradebooks(this.props.course_id)
+		.then(result =>{
+			this.setState({
+				gradebooks: result.gradebooks,
+			})
 		})
 	}
-	createData(id, date, attendance, total_score) {
-  		return { id, date, attendance, total_score };
+	createData(id, date, attendance, average_score) {
+  		return { id, date, attendance, average_score };
 	}
 	createRows(){
 		let rows = [];
@@ -228,8 +216,7 @@ class LectureTable extends Component{
 			let lecture_date = gradebook.date.split('/');
 			let date = "Sesi " + lecture_date[0] + '/' + lecture_date[1];
 			var attendance = gradebook.attendance ? "Hadir" : "Tidak Hadir"
-			var total_score = parseInt(gradebook.total_score, 10)
-			rows.push(this.createData(gradebook.lecture_id, date, attendance, total_score))
+			rows.push(this.createData(gradebook.lecture_id, date, attendance, gradebook.average_score))
 		})
 		return rows;
 	}
@@ -254,15 +241,13 @@ class LectureTable extends Component{
 			        :
 			        <TableBody>
 			          {rows.map(row => (
-			          	//<div className='row'>
 			            <TableRow className='t-row' key={row.id} onClick={() => this.handleClickRow(row.id)}>
 			              <TableCell className='cell' component="th" scope="row">
 			                {row.date}
 			              </TableCell>
 			              <TableCell className='cell' >{row.attendance}</TableCell>
-			              <TableCell className='cell' >{row.total_score}</TableCell>
+			              <TableCell className='cell' >{row.average_score}</TableCell>
 			            </TableRow>
-			            //</div>
 			          ))}
 			        </TableBody>
 

@@ -35,6 +35,7 @@ class Gradebook extends Component{
 		};
 		this.toggleDisplayScore = this.toggleDisplayScore.bind(this);
 		this.return = this.return.bind(this);
+		this.changeSelectedCourse = this.changeSelectedCourse.bind(this)
 	}
 	findSelected(id, array){
 		for (let i=0; i<array.length; i++){
@@ -42,8 +43,8 @@ class Gradebook extends Component{
 				return array[i];
 			}
 			else{
-				id = parseInt(id)
-				if (array[i].id === id){
+				var tempid = parseInt(id)
+				if (array[i].id === tempid){
 					return array[i]
 				}
 			}
@@ -95,6 +96,12 @@ class Gradebook extends Component{
 			}
 		})
 	}
+	changeSelectedCourse(course){
+		this.setState({
+			selected_course: course,
+		})
+		this.props.history.push("/"+ course._id + "/gradebook")
+	}
 	render(){
 		if (!this.state.isLoading){
 			return(
@@ -129,8 +136,14 @@ class ScorePage extends Component{
 			isLoading: true
 		}
 		this.buttonClick = this.buttonClick.bind(this);
+		this.changeGradebooks = this.changeGradebooks.bind(this);
 	}
 
+	changeGradebooks(gradebooks){
+		this.setState({
+			gradebooks: gradebooks
+		})
+	}
 	async componentDidMount(){
 		if (this.props.selected_lecture){
 			await this.props.Auth.getLectureGradebooksByStudents(this.props.course_id, this.props.selected_lecture.id)
@@ -250,7 +263,7 @@ class ScorePage extends Component{
 				</div>
 
 				<div className='table'>
-					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true}/>
+					<ScoreTable gradebooks={this.state.gradebooks} type={this.state.type} course_id={this.props.course_id} history={this.props.history} showButton={this.props.selected_lecture ? false: true} changeGradebooks={this.changeGradebooks}/>
 				</div>
 
 			</div>
@@ -261,7 +274,11 @@ class ScorePage extends Component{
 
 class ScoreTable extends Component{
 	constructor(props){
-		super(props);		
+		super(props);
+		this.state={
+			showSubmit: false,
+		}
+		this.changeIncluded = this.changeIncluded.bind(this)		
 	}
 
 	createRows(){
@@ -326,6 +343,21 @@ class ScoreTable extends Component{
 
 	toGradebookByLecture(lecture_id){
 		this.props.history.push("/"+this.props.course_id+"/gradebook/"+lecture_id)
+	}
+	changeIncluded(event){
+		var quiz_id = parseInt(event.target.value,10);
+		var gradebooks = this.props.gradebooks;
+		gradebooks.forEach(gradebook=>{
+			if (gradebook.quiz_id === quiz_id){
+				gradebook.include = !gradebook.include
+			}
+		})
+		this.props.changeGradebooks(gradebooks)
+		if (!this.state.showSubmit){
+			this.setState({
+				showSubmit: true
+			})
+		}
 	}
 	render(){
 		const rows = this.createRows();
@@ -396,7 +428,7 @@ class ScoreTable extends Component{
 								<TableCell className='cell'>{row.question}</TableCell>
 								<TableCell className='cell'>{row.average_score}</TableCell>
 								<TableCell className='cell'>{row.total_participants}</TableCell>
-								<TableCell className='cell'><Checkbox checked={row.include}/></TableCell>
+								<TableCell className='cell'><Checkbox value={row.quiz_id} onChange={this.changeIncluded} checked={row.include}/></TableCell>
 							</React.Fragment>
 						} 
 						{this.props.showButton ? <TableCell><IconButton><MoreHorizIcon/></IconButton></TableCell> : null}
@@ -405,7 +437,7 @@ class ScoreTable extends Component{
 			        </TableBody>
 		    	}
 		      </Table>
-			  {this.props.type === "Pertanyaan" ? <Button>Submit</Button> : null}
+			  {this.state.showSubmit && <div style={{display:'flex', justifyContent:'flex-end'}}><Button>Submit</Button></div>}
 			  </React.Fragment>
 		)
 	}
