@@ -317,11 +317,13 @@ html{
 	padding:6px;
 }
 
-.Dashboard .navigation .CoursesOption .toggle-button, .Dashboard .navigation .CoursesOption .toggle-button:active {
+.Dashboard .navigation .CoursesOption .toggle-button, .Dashboard .navigation .CoursesOption .toggle-button:active, .Dashboard .navigation .CoursesOption .toggle-button:focus, .Dashboard .navigation .CoursesOption .toggle-button:active:focus {
 	background: transparent;
 	min-width: 5rem;
 	border:none;
 	box-shadow: none;
+	color: black;
+	outline: 0;
 }
 .Dashboard .navigation .CoursesOption .buttons{
 	display: flex;

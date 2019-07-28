@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import 'react-table/react-table.css';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Stop from '@material-ui/icons/Stop';
@@ -467,37 +468,49 @@ AddEditLecture.defaultProps={
 }
 
 class CoursesOption extends Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.handleChange = this.handleChange.bind(this);
+		this.state = {
+		  dropdownOpen: false
+		};
+		this.toggle = this.toggle.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+	  }
+	
+	toggle() {
+		this.setState(prevState => ({
+			dropdownOpen: !prevState.dropdownOpen
+		}));
+		if (this.props.changeFlag){
+			this.props.changeFlag();
+		}
+	}
+
+	handleClick(course){
+		this.props.changeSelectedCourse(course);
 	}
 	createMenuItem(courses, selected_course){
-		let length = courses.length
-		let result = []
+	let length = courses.length
+	let result = []
 
-		for (let i=0; i<length; i++){
-			if (courses[i].course_name !== selected_course.course_name){
-				result.push(<ToggleButton className='button' type='radio' value={courses[i]}> {courses[i].course_name} </ToggleButton>)
-			}
+	for (let i=0; i<length; i++){
+		if (courses[i].course_name !== selected_course.course_name){
+			result.push(<DropdownItem value={courses[i]} onClick={()=>this.handleClick(courses[i])}> {courses[i].course_name} </DropdownItem>)
 		}
-		return result;
 	}
-
-	handleChange(value, event){
-		this.props.changeSelectedCourse(value);
+	return result;
 	}
-	render(){
-		return(
-			<Dropdown className='CoursesOption'>
-				<Dropdown.Toggle className='toggle-button' onClick={this.props.changeFlag ? this.props.changeFlag : null}> {this.props.selected_course.course_name} </Dropdown.Toggle>
-				
-				<Dropdown.Menu>
-					<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' onChange={this.handleChange}>
-						{this.createMenuItem(this.props.courses, this.props.selected_course)}
-					</ToggleButtonGroup>
-				</Dropdown.Menu>
+	render() {
+		return (
+			<Dropdown className='CoursesOption' isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+			<DropdownToggle caret className='toggle-button'>
+				{this.props.selected_course.course_name}
+			</DropdownToggle>
+			<DropdownMenu>
+				{this.createMenuItem(this.props.courses, this.props.selected_course)}
+			</DropdownMenu>
 			</Dropdown>
-		)
+		);
 	}
 }
 
