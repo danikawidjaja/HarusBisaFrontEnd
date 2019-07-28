@@ -232,6 +232,47 @@ export default class AuthService {
         })
     }
 
+
+    getLectureGradebooksByStudents(course_id, lecture_id){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/students`, {
+            method: 'GET',
+        }).then(res => {
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
+        }) 
+    }
+    getLectureGradebooksByQuizzes(course_id, lecture_id){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/quizzes`, {
+            method: 'GET',
+        }).then(res => {
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
+        }) 
+    }
+    getGradebooksByStudents(course_id){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/students`, {
+            method: 'GET',
+        }).then(res => {
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
+        }) 
+    }
+    getGradebooksByLectures(course_id){
+        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures`, {
+            method: 'GET',
+        }).then(res => {
+            return (res); 
+        }).catch(err =>{
+            console.log(err.message)
+
+        }) 
+    }
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage

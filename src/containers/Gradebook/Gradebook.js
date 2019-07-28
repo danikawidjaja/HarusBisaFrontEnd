@@ -10,7 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button, IconButton, Divider, Checkbox } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import {LectureTable} from '../Dashboard/StudentDashboard';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 class Gradebook extends Component{
@@ -103,7 +102,7 @@ class Gradebook extends Component{
 					<DashboardNavigation course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
 					<div className='Gradebook'>
 						{this.state.displayScore ?
-						<ScorePage history={this.props.history} course_id={this.state.selected_course._id} selected_lecture={this.state.selected_lecture}/> :
+						<ScorePage history={this.props.history} course_id={this.state.selected_course._id} selected_lecture={this.state.selected_lecture} Auth={this.props.Auth}/> :
 						<WarningMessage toggleDisplayScore={this.toggleDisplayScore} return={this.return}/>
 						}
 					</div>
@@ -118,85 +117,6 @@ class Gradebook extends Component{
 	}
 }
 
-var lectures_json = {
-	"number_of_students": "100",
-	"class_average": "76.09",
-	"gradebooks": [
-	  {
-		"lecture_id": "18",
-		"date": "22/9/2018",
-		"attendance":"50",
-		"total_average_score": "85"
-	  },
-	  {
-		"lecture_id": "19",
-		"date": "3/3/2019",
-		"attendance":"80",
-		"total_average_score": "90"
-	  }
-	]
-  }
-
-var students_json = {
-	"number_of_students": "100",
-	"class_average": "76.09",
-	"gradebooks": [
-	  {
-		"firstname": "John",
-		"lastname": "Doe",
-		"email": "john.doe@gmail.com",
-		"participation_average_score": "90",
-		"correctness_average_score": "90",
-		"total_average_score": "90"
-	  },
-	  {
-		"firstname": "James",
-		"lastname": "Smith",
-		"email": "james.smith@gmail.com",
-		"participation_average_score": "90",
-		"correctness_average_score": "90",
-		"total_average_score": "90"
-	  },
-	]
-  }
-
-var  lecture_students_json = {
-	"gradebooks": [
-		{
-		  "firstname": "John",
-		  "lastname": "Doe",
-		  "email": "john.doe@gmail.com",
-		  "participation_average_score": "90",
-		  "correctness_average_score": "90",
-		  "total_average_score": "90"
-		},
-		{
-		  "firstname": "James",
-		  "lastname": "Smith",
-		  "email": "james.smith@gmail.com",
-		  "participation_average_score": "90",
-		  "correctness_average_score": "90",
-		  "total_average_score": "90"
-		},
-	  ]
-  }
-
-  var lecture_questions_json = {
-	"gradebooks": [
-		{
-		  "question": "What is it?",
-		  "total_participants": "129",
-		  "average_score": "70.32",
-		  "include": true
-		},
-		{
-			"question": "What is that?",
-			"total_participants": "170",
-			"average_score": "90",
-			"include": false
-		  }
-	  ]
-  }
 class ScorePage extends Component{
 	constructor(props){
 		super(props);
@@ -211,25 +131,49 @@ class ScorePage extends Component{
 		this.buttonClick = this.buttonClick.bind(this);
 	}
 
-	componentDidMount(){
+	async componentDidMount(){
 		if (this.props.selected_lecture){
+			await this.props.Auth.getLectureGradebooksByStudents(this.props.course_id, this.props.selected_lecture.id)
+			.then(result =>{
+				this.setState({
+					lecture_gradebooks_by_students: result.gradebooks,
+					gradebooks: result.gradebooks
+				})
+			})
+
+			await this.props.Auth.getLectureGradebooksByQuizzes(this.props.course_id, this.props.selected_lecture.id)
+			.then(result =>{
+				console.log(result.gradebooks)
+				this.setState({
+					lecture_gradebooks_by_questions: result.gradebooks
+				})
+			})
+
 			this.setState({
-				lecture_gradebooks_by_students : lecture_students_json.gradebooks,
-				lecture_gradebooks_by_questions: lecture_questions_json.gradebooks,
-				gradebooks: lecture_students_json.gradebooks,
 				type: "Murid",
 				type_options: ["Murid", "Pertanyaan"],
 				isLoading: false
 			})
 
 		}else{
-			var res = lectures_json;
+			await this.props.Auth.getGradebooksByLectures(this.props.course_id)
+			.then(result =>{
+				this.setState({
+					number_of_students: result.number_of_students,
+					class_average: result.class_average,
+					gradebooks_by_lectures: result.gradebooks,
+					gradebooks: result.gradebooks
+				})
+			})
+
+			await this.props.Auth.getGradebooksByStudents(this.props.course_id)
+			.then(result =>{
+				this.setState({
+					gradebooks_by_students: result.gradebooks
+				})
+			})
+
 			this.setState({
-				number_of_students: res.number_of_students,
-				class_average: res.class_average,
-				gradebooks_by_lectures: lectures_json.gradebooks,
-				gradebooks_by_students: students_json.gradebooks,
-				gradebooks: lectures_json.gradebooks,
 				type_options: ["Sesi", "Murid"],
 				type: "Sesi",
 				isLoading: false,
@@ -386,14 +330,24 @@ class ScoreTable extends Component{
 	render(){
 		const rows = this.createRows();
 		return(
+			<React.Fragment>
 			<Table className='table'>
 		        <TableHead style={{border:'0px'}}>
 		          <TableRow className='header-row'>
 					{this.createTableHeader()}
-					{this.props.type === "Murid" ? 
+					{this.props.type === "Murid" && this.props.showButton ? 
 						<React.Fragment>
 							<TableCell className='head-cell'>Nilai partisipasi(%)</TableCell>
 							<TableCell className='head-cell'>Nilai kebenaran(%)</TableCell>
+							<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
+						</React.Fragment>
+						:
+						null
+					}
+					{this.props.type === "Murid" && !this.props.showButton ? 
+						<React.Fragment>
+							<TableCell className='head-cell'>Nilai partisipasi</TableCell>
+							<TableCell className='head-cell'>Nilai kebenaran</TableCell>
 							<TableCell className='head-cell'>Nilai rata-rata(%)</TableCell>
 						</React.Fragment>
 						:
@@ -415,19 +369,30 @@ class ScoreTable extends Component{
 								<TableCell className='cell'>{row.total_average_score}</TableCell>
 							</React.Fragment>
 						}
-						{this.props.type === "Murid" &&
+						{this.props.type === "Murid" && !this.props.selected_lecture &&
 							<React.Fragment>
-								<TableCell className='cell'>{row.firstname}</TableCell>
-								<TableCell className='cell'>{row.lastname}</TableCell>
+								<TableCell className='cell'>{row.first_name}</TableCell>
+								<TableCell className='cell'>{row.last_name}</TableCell>
 								<TableCell className='cell'>{row.email}</TableCell>
 								<TableCell className='cell'>{row.participation_average_score}</TableCell>
-								<TableCell className='cell'>{row.correctness_average_score}</TableCell>
+								<TableCell className='cell'>{row.accuracy_average_score}</TableCell>
+								<TableCell className='cell'>{row.total_average_score}</TableCell>
+							</React.Fragment> 
+						}
+						{this.props.type === "Murid" && this.props.selected_lecture &&
+							<React.Fragment>
+								<TableCell className='cell'>{row.first_name}</TableCell>
+								<TableCell className='cell'>{row.last_name}</TableCell>
+								<TableCell className='cell'>{row.email}</TableCell>
+								<TableCell className='cell'>{row.attendance ? "Hadir" : "Tidak Hadir"}</TableCell>
+								<TableCell className='cell'>{row.participation_average_score}</TableCell>
+								<TableCell className='cell'>{row.accuracy_average_score}</TableCell>
 								<TableCell className='cell'>{row.total_average_score}</TableCell>
 							</React.Fragment> 
 						}
 						{this.props.type === "Pertanyaan" &&
 							<React.Fragment>
-								<TableCell className='cell'>{1}</TableCell>
+								<TableCell className='cell'>{row.quiz_number}</TableCell>
 								<TableCell className='cell'>{row.question}</TableCell>
 								<TableCell className='cell'>{row.average_score}</TableCell>
 								<TableCell className='cell'>{row.total_participants}</TableCell>
@@ -438,9 +403,10 @@ class ScoreTable extends Component{
 			            </TableRow>
 			          ))}
 			        </TableBody>
-
 		    	}
 		      </Table>
+			  {this.props.type === "Pertanyaan" ? <Button>Submit</Button> : null}
+			  </React.Fragment>
 		)
 	}
 }
