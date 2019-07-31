@@ -122,7 +122,7 @@ class SignUpForm extends Component{
     return(
       <div className='signup-form'>
       <form onSubmit={this.handleSubmit}>
-        <div className='form-row'>
+        <div className='row'>
             <label className='radio-btn'>
               <input
                 type='radio'
@@ -145,8 +145,8 @@ class SignUpForm extends Component{
           
         </div>
 
-        <div className="form-row">
-          <FormGroup className="form-element-l" controlId="firstname" bsSize="medium">
+        <div className="row">
+          <FormGroup className="col-lg-6" controlId="firstname" bsSize="medium">
             <ControlLabel>Nama Depan</ControlLabel>
             <FormControl
               type="text"
@@ -155,7 +155,7 @@ class SignUpForm extends Component{
             />
           </FormGroup>
 
-          <FormGroup className="form-element-r" controlId="lastname" bsSize="medium">
+          <FormGroup className="col-lg-6" controlId="lastname" bsSize="medium">
             <ControlLabel>Nama Belakang</ControlLabel>
             <FormControl
               type="text"
@@ -165,8 +165,8 @@ class SignUpForm extends Component{
           </FormGroup>
         </div>
 
-        <div className='form-row'>
-        <FormGroup className="form-element" controlId="school" bsSize="medium">
+        <div className='row'>
+        <FormGroup className="col" controlId="school" bsSize="medium">
           <ControlLabel> Nama Universitas </ControlLabel>
           <Select
             isClearable
@@ -177,8 +177,8 @@ class SignUpForm extends Component{
         </FormGroup> 
         </div>
 
-        <div className='form-row'>
-        <FormGroup className="form-element" controlId="email" bsSize="medium">
+        <div className='row'>
+        <FormGroup className="col" controlId="email" bsSize="medium">
           <ControlLabel>Email</ControlLabel>
           <FormControl
             type="email"
@@ -188,8 +188,8 @@ class SignUpForm extends Component{
         </FormGroup>
         </div>
 
-        <div className="form-row">      
-        <FormGroup className="form-element-l" controlId="password" bsSize="medium">
+        <div className="row">      
+        <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
           <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
@@ -198,7 +198,7 @@ class SignUpForm extends Component{
           />
         </FormGroup> 
 
-        <FormGroup className="form-element-r" controlId="confirmPassword" bsSize="medium">
+        <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
           <ControlLabel>Ulangi Password</ControlLabel>
           <FormControl
             type="password"
@@ -209,7 +209,7 @@ class SignUpForm extends Component{
         </div>
           
          
-        <div className="form-row">
+        <div className="row">
         <Button
           block
           bsSize="large"
