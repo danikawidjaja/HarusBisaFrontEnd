@@ -24,14 +24,28 @@ class SignUp extends Component {
     }
   render() {
     return (
+      // <div className='signup'>
+      //   <Logo size='logo' color='black' background='trans' padding={false} style={{width:'10rem'}}/>
+      //   <div className='content'>
+      //     <div style={{justifyContent:'flex-start', width:'70%'}}>
+      //       <h1> Daftar </h1>
+      //     </div>
+      //     <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
+      //   </div>
+      // </div>
       <div className='signup'>
-        <Logo size='logo' color='black' background='trans' padding={false} style={{width:'10rem'}}/>
-        <div className='content'>
-          <div style={{justifyContent:'flex-start', width:'70%'}}>
+      <div className='row justify-content-center'>
+        <div className="col-md-3">
+          <Logo size='logo' color='black' background='trans' padding={false} className="logo"/>
+        </div>
+        
+        <div className='col-md-9'>
+          <div style={{justifyContent:'flex-start'}}>
             <h1> Daftar </h1>
           </div>
           <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
         </div>
+      </div>
       </div>
     );
   }
@@ -121,106 +135,107 @@ class SignUpForm extends Component{
   render(){
     return(
       <div className='signup-form'>
-      <form onSubmit={this.handleSubmit}>
-        <div className='row'>
-            <label className='radio-btn'>
+        <form onSubmit={this.handleSubmit}>
+          <div className='row'>
+            <div className="col-6" style={{display:'flex', justifyContent:'space-evenly'}}>
               <input
                 type='radio'
                 value='student'
                 checked={this.state.role === "student"}
                 onChange={this.handleChangeRole}
               />
-              Mahasiswa
-            </label>
+              <label>Mahasiswa</label>
+            </div>
 
-            <label className='radio-btn'>
+            <div className='col-6' style={{display:'flex', justifyContent:'space-evenly'}}>
               <input
                 type='radio'
                 value='faculty'
                 checked={this.state.role === "faculty"}
                 onChange={this.handleChangeRole}
               />
-              Dosen
-            </label>
-          
-        </div>
+              <label>Dosen</label>
+            </div>
+          </div>
 
-        <div className="row">
-          <FormGroup className="col-lg-6" controlId="firstname" bsSize="medium">
-            <ControlLabel>Nama Depan</ControlLabel>
+          <div className="row">
+            <FormGroup className="col-lg-6" controlId="firstname" bsSize="medium">
+              <ControlLabel>Nama Depan</ControlLabel>
+              <FormControl
+                type="text"
+                value={this.state.firstname}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+
+            <FormGroup className="col-lg-6" controlId="lastname" bsSize="medium">
+              <ControlLabel>Nama Belakang</ControlLabel>
+              <FormControl
+                type="text"
+                value={this.state.lastname}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+          </div>
+
+          <div className='row'>
+          <FormGroup className="col" controlId="school" bsSize="medium">
+            <ControlLabel> Nama Universitas </ControlLabel>
+            <Select
+              isClearable
+              value={this.state.school}
+              onChange={this.handleChangeSchool}
+              options={options}
+            />
+          </FormGroup> 
+          </div>
+
+          <div className='row'>
+          <FormGroup className="col" controlId="email" bsSize="medium">
+            <ControlLabel>Email</ControlLabel>
             <FormControl
-              type="text"
-              value={this.state.firstname}
+              type="email"
+              value={this.state.email}
               onChange={this.handleChange}
             />
           </FormGroup>
+          </div>
 
-          <FormGroup className="col-lg-6" controlId="lastname" bsSize="medium">
-            <ControlLabel>Nama Belakang</ControlLabel>
+          <div className="row">      
+          <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
+            <ControlLabel>Password</ControlLabel>
             <FormControl
-              type="text"
-              value={this.state.lastname}
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </FormGroup> 
+
+          <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
+            <ControlLabel>Ulangi Password</ControlLabel>
+            <FormControl
+              type="password"
+              value={this.state.confirmPassword}
               onChange={this.handleChange}
             />
           </FormGroup>
-        </div>
-
-        <div className='row'>
-        <FormGroup className="col" controlId="school" bsSize="medium">
-          <ControlLabel> Nama Universitas </ControlLabel>
-          <Select
-            isClearable
-            value={this.state.school}
-            onChange={this.handleChangeSchool}
-            options={options}
-           />
-        </FormGroup> 
-        </div>
-
-        <div className='row'>
-        <FormGroup className="col" controlId="email" bsSize="medium">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        </div>
-
-        <div className="row">      
-        <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </FormGroup> 
-
-        <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
-          <ControlLabel>Ulangi Password</ControlLabel>
-          <FormControl
-            type="password"
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        </div>
+          </div>
+            
           
-         
-        <div className="row">
-        <Button
-          block
-          bsSize="large"
-          disabled={!this.validateForm()}
-          type="submit"
-          className="button"
-        >
-          Daftar
-        </Button> 
-        </div>
-      </form>
+          <div className="row">
+            <div className='col-12'>
+              <Button
+                block
+                bsSize="large"
+                disabled={!this.validateForm()}
+                type="submit"
+                className="button"
+              >
+                Daftar
+              </Button> 
+            </div>
+          </div>
+        </form>
       </div>
 
 

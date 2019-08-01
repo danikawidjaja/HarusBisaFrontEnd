@@ -8,10 +8,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .signup {
-  margin-top: 0vw;
-  padding-top: 5vw; 
-  margin-right: 0px;
-  padding-right: 0px;
+  padding: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,6 +18,21 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: 100%
 }
 
+.signup h1{
+  margin-bottom: 1rem;
+}
+
+.signup .logo{
+  width: 100%;
+  margin: auto;
+}
+
+@media (max-width: 768px){
+  .signup .logo{
+    width: 50%;
+  }
+}
+
 .signup .content{
   height: 100%;
   align-items: center;
@@ -28,84 +40,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   flex-direction: column;
   margin: 0px;
   border: 0px solid black;
-  width: 60%;
   justify-content: flex-start;
   text-align: left;
 }
 
 .signup .content h1{
   font-weight: 500;
-  font-size: 4vw;
 }
 
 .signup .content p{
   text-align: left;
   margin-bottom: 0.2vw;
   font-weight: 300;
-  font-size: 1.2vw;
 }
 
 .signup .content a{
   font-weight: 300;
   text-align: left;
-  font-size: 1.2vw;
   color: #5960A3;
   text-decoration: underline;
-}
-
-.signup .content .signup-form{
-  text-align: left;
-  width: 70%;
-  justify-content: center;
-}
-
-.signup .content .form-row{
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  text-align: left;
-  width: 100%;
-  margin-top: 1.5vw;
-  margin-bottom: 1.5vw;
-  padding: 0px;
-  font-size: 1.25vw;
-}
-
-.signup .content .form-column{
-  display:inline-flex;
-  flex-direction: column;
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
-}
-
-.signup .form-element{
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.signup .form-element-l{
-  text-align: left;
-  padding: 0px;
-  margin-left: 0vw;
-  margin-right: 3vw;
-  width: 100%;
-}
-
-.signup .form-element-r{
-  margin-left: 3vw;
-  margin-right: 0vw;
-  width: 100%;
-  text-align: left;
-}
-.signup .radio-btn{
-  align-self: center;
-  padding-right: 5vw;
-  padding-left: 5vw;
 }
 
 .signup .form-control, .signup .css-vj8t7z, .signup .css-vj8t7z:focus , .signup .css-vj8t7z:hover, .signup .form-control:focus{
@@ -123,6 +76,5 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-right: 1px;
   background-color: #ffe01c;
   color: black;
-  font-size: 1.5vw;
 }
 

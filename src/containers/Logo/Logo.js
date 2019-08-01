@@ -52,18 +52,18 @@ class Logo extends Component{
 			if (this.props.color == 'black'){
 				if (this.props.background == 'white'){
 					if (this.props.padding){
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_padding_1}/><img src={full_black_white_padding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_padding_1}/><img src={full_black_white_padding_2}/></div></Link>)
 					}
 					else{
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_nopadding_1}/><img src={full_black_white_nopadding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_nopadding_1}/><img src={full_black_white_nopadding_2}/></div></Link>)
 					}
 				}
 				else if (this.props.background == 'trans'){
 					if (this.props.padding){
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_padding_1}/><img src={full_black_trans_padding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_padding_1}/><img src={full_black_trans_padding_2}/></div></Link>)
 					}
 					else{
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_nopadding_1}/><img src={full_black_trans_nopadding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_nopadding_1}/><img src={full_black_trans_nopadding_2}/></div></Link>)
 					}
 				}
 				else{
@@ -74,19 +74,19 @@ class Logo extends Component{
 			else if (this.props.color == 'white'){
 				if (this.props.background == 'black'){
 					if (this.props.padding){
-						return( <Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_black_padding_1}/><img src={full_white_black_padding_2}/></div></Link>)
+						return( <Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_black_padding_1}/><img src={full_white_black_padding_2}/></div></Link>)
 					}
 					else{
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_black_nopadding_1}/><img src={full_white_black_nopadding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_black_nopadding_1}/><img src={full_white_black_nopadding_2}/></div></Link>)
 					}
 
 				}
 				else if (this.props.background == 'trans'){
 					if (this.props.padding){
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_trans_padding_1}/><img src={full_white_trans_padding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_trans_padding_1}/><img src={full_white_trans_padding_2}/></div></Link>)
 					}
 					else{
-						return(<Link to="/"><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className='full' style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_trans_nopadding_1}/><img src={full_white_trans_nopadding_2}/></div></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_white_trans_nopadding_1}/><img src={full_white_trans_nopadding_2}/></div></Link>)
 					}
 				}
 				else{
@@ -103,18 +103,18 @@ class Logo extends Component{
 			if (this.props.color == 'black'){
 				if (this.props.background == 'white'){
 					if (this.props.padding){
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_black_white_padding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_black_white_padding}/></Link>)
 					}
 					else{
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_black_white_nopadding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_black_white_nopadding}/></Link>)
 					}
 				}
 				else if (this.props.background == 'trans'){
 					if (this.props.padding){
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_black_trans_padding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_black_trans_padding}/></Link>)
 					}
 					else{
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_black_trans_nopadding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_black_trans_nopadding}/></Link>)
 					}
 				}
 				else{
@@ -125,19 +125,19 @@ class Logo extends Component{
 			else if (this.props.color == 'white'){
 				if (this.props.background == 'black'){
 					if (this.props.padding){
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_white_black_padding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_white_black_padding}/></Link>)
 					}
 					else{
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_white_black_nopadding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_white_black_nopadding}/></Link>)
 					}
 
 				}
 				else if (this.props.background == 'trans'){
 					if (this.props.padding){
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_white_trans_padding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_white_trans_padding}/></Link>)
 					}
 					else{
-						return(<Link to="/"><img className='hvr-bob' style={this.props.style} src={logo_white_trans_nopadding}/></Link>)
+						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><img className={'hvr-bob ' + this.props.className} style={this.props.style} src={logo_white_trans_nopadding}/></Link>)
 					}
 				}
 				else{
