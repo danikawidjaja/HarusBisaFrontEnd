@@ -39,10 +39,10 @@ export default class Navbar_ extends React.Component {
               <NavItem style={{borderColor:'transparent'}}>
                 <NavLink href="/#pricing">Harga</NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{maxHeight:"max-content"}}>
                 <NavLink href="/login">Login</NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{maxHeight:"max-content"}} >
                 <NavLink href="/signup">Daftar</NavLink>
               </NavItem>
             </Nav>

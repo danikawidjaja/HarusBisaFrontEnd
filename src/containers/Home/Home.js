@@ -12,6 +12,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from "react-router-dom";
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import Footer from '../Footer/Footer';
+import laptop_img from "../Home/laptop.png";
+import stack_img from "../Home/stack.png";
+import time_img from "../Home/time.png";
 
 export default class Home extends Component {
   constructor(props){
@@ -49,22 +52,22 @@ export default class Home extends Component {
         </div>
 
         <div className="about container area" id='#about'>
-          <div style={{padding: '2rem 6rem 2rem 6rem'}}>
+          <div style={{padding: '6rem'}}>
             <h1>HarusBisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi </h1>
           </div>
-          <div class='row'>
-            <div class='col benefit'>
-              <img src={logo} alt='icon'/>
+          <div class='row justify-content-center'>
+            <div class='col-lg-3 benefit'>
+              <img src={time_img} alt='icon'/>
               <h5>Real Time Interaksi</h5>
               <p>Dengan adanya tanya jawab secara langung</p>
             </div>
-            <div class='col benefit'>
-              <img src={logo} alt='icon'/>
+            <div class='col-lg-3 benefit'>
+              <img src={laptop_img} alt='icon'/>
               <h5>Mudah diakses di semua platform</h5>
               <p>Dengan adanya tanya jawab secara langung</p>
             </div>
-            <div class='col benefit'>
-              <img src={logo} alt='icon'/>
+            <div class='col-lg-3 benefit'>
+              <img src={stack_img} alt='icon'/>
               <h5>Data Oriented</h5>
               <p>Dengan adanya tanya jawab secara langung</p>
             </div>
