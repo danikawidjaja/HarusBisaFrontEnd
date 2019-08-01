@@ -173,10 +173,10 @@ html, body{
 
 .Courses .right .course-card .MuiCardContent-root-29 a{
 	font-weight: 500;
-	font-size: 1.5vw;
 	color: black;
 	margin: 0;
 	padding: 0;
+	font-size: 1.25rem;
 }
 
 .Courses .right .course-card .MuiCardContent-root-29 a:hover{
@@ -185,9 +185,9 @@ html, body{
 }
 
 .Courses .right .course-card .MuiCardContent-root-29 p{
-	font-size: 1vw;
 	color: black;
 	margin: 0;
+	font-size: 0.75rem;
 }
 
 .Courses .right .course-popup{
@@ -210,11 +210,10 @@ html, body{
   flex: row;
   justify-content: center;
   text-align: center;
-  font-size: calc(15px + 2vmin);
+  font-size: 1rem;
   font-weight: 500;
   color: black;
-  margin-bottom: 1.5vw;
-  margin-top: 1.5vw;
+  margin: 1rem 0;
 }
 
 

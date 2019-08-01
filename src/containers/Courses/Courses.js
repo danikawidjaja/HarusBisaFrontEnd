@@ -159,7 +159,7 @@ class Courses extends Component{
 	}					
 	render(){
 		return(
-	    	<div className="Courses row">
+	    	<div className="Courses"><div className="row" style={{width:"100%"}}>
 	    		<CoursesLeft role={this.state.profile.role} name={this.state.profile.first_name}/>
 	    		<div className = 'right col-md-8 order-1'>
 	    			<div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
@@ -249,7 +249,7 @@ class Courses extends Component{
 				  		</div>}
 					</div>
 	        	</div>
-	        </div>
+	        </div></div>
 		)
 	}
 }

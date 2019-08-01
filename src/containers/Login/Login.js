@@ -39,11 +39,8 @@ class LoginForm extends Component{
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    //this.Auth = new AuthService();
     this.Auth = this.props.Auth
   }
-
-  //Auth = this.props.Auth
 
   displayErrorMessage(){
     if (this.state.error == true){     
@@ -98,7 +95,6 @@ class LoginForm extends Component{
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
-              /*style={{height:'3vw', borderRadius:'0px'}}*/
             />
           </FormGroup>
 
@@ -108,7 +104,6 @@ class LoginForm extends Component{
               type="password"
               value={this.state.password}
               onChange={this.handleChange}
-              /*style={{height:'3vw', borderRadius:'0px'}}*/
             />
           </FormGroup>
 
