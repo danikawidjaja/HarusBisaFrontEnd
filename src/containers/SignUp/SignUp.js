@@ -56,12 +56,10 @@ class SignUpForm extends Component{
       schoolSelected: false,
       roleSelected: false
     };
-    //this.Auth = new AuthService();
     this.Auth = this.props.Auth
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  //Auth = this.props.Auth
   async componentWillMount(){
     if(this.Auth.loggedIn()){
       this.props.history.push('/courses');
@@ -228,8 +226,6 @@ class SignUpForm extends Component{
           </div>
         </form>
       </div>
-
-
     );
   }
 }
