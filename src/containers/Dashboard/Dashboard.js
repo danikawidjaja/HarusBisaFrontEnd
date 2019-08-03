@@ -526,7 +526,7 @@ export class DashboardNavigation extends Component{
 	render(){
 		return(
 			<div className='navigation'>
-				<Logo color='black' size='full' background='trans' padding={false} style={{width:'9.2rem', height:'2rem'}}/>
+				<Logo color='black' size='full' background='trans' padding={false} style={{marginTop:"0.25rem", height:'1.75rem'}}/>
 				<div style={{display:'flex', justifyContent:'space-between', width:'85%'}}>
 					<div>
 						{this.props.course_option == true ? <CoursesOption changeFlag={this.props.changeFlag} selected_course={this.props.selected_course} courses={this.props.courses} changeSelectedCourse={this.props.changeSelectedCourse}/> : null
