@@ -25,7 +25,7 @@ html, body{
 }
 
 .Home .area{
-  margin-top: 4rem;
+  padding: 2rem 8rem;
 }
 .Home .lander {
   text-align: left;
@@ -33,6 +33,7 @@ html, body{
   justify-content: space-around;
   background-color: transparent;
   align-items: center;
+  padding: 4rem;
 }
 
 .Home .lander .row .image img{
@@ -53,7 +54,6 @@ html, body{
   color: white;
   padding-left: 3rem;
   padding-right: 3rem;
-  font-size: 1.5vw;
 }
 .Home .lander .row .text .btn:hover{
   background-color: black;
@@ -64,12 +64,12 @@ html, body{
 .Home  .lander .row .text h1 {
   color: black;
   padding-bottom: 0px;
-  font-size: 5vw;
+  font-size: 3.5rem;
   font-weight: 500;
 }
 
 .Home .lander .row .text p{
-  font-size: 2vw;
+  font-size: 1.2rem;
   font-weight: 300;
 }
 
@@ -80,19 +80,17 @@ html, body{
   width: 100% !important;
   justify-content: space-around;
   background-color: transparent;
-  margin-top: 1rem;
 }
 
 .Home .about h1{
   color: black;
   padding-bottom: 0px;
-  font-size: 3vw;
+  font-size: 2rem;
   font-weight: 400;
 }
 
 .Home .about img{
-  height: 50%;
-  width: 20%;
+  max-width: 50%;
   margin: auto;
 }
 
@@ -120,35 +118,39 @@ html, body{
   justify-content: center;
   background-color: transparent;
   align-items: center;
-  padding: 5vw;
+  padding-bottom: 8rem;
 }
 
-.Home .pricing h1{
-  color: black;
-  font-size: 4vw;
-  margin-bottom: 0px;
-  text-align: center;
-  font-weight: 500;
+
+.Home .pricing .content .example{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.Home .pricing .header{
-  border-bottom: 2px purple solid;
+.Home .pricing .content .example p{
+  margin: 0;
+  font-size: 1.25rem;
+  text-align: left;
 }
 
-.Home .pricing .content{
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 40px;
-  margin-left: 50px;
-  margin-right: 50px;
-}
+@media only screen and (max-width: 768px){
+  .Home .about img{
+    max-width: 20%;
+  }
 
-.Home .pricing .card{
-  height: 100%;
-  margin: 10px;
-}
+  .Home .about h1{
+    font-size: 1.5rem;
+  }
 
-.Home .pricing .media{
-  height: 100%;
+  .Home .area{
+    padding: 1rem 4rem;
+  }
+  .Home .lander{
+    padding: 1.5rem;
+  }
+
+  .Home .lander .row .text{
+    text-align: center;
+  }
 }
