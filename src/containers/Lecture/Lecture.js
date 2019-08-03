@@ -333,7 +333,7 @@ export class Quiz extends Component{
 		var answers = this.props.quiz.answers;
 		let components = [];
 		//var my_answer = (this.state.answer ? this.state.answer : this.props.quiz.correct_answer) //pretend corrent ans is my ans
-		var my_answer = this.state.answer ? this.state.answer : this.props.quiz.answer
+		var my_answer = this.state.answer ? this.state.answer : this.props.quiz.student_answer
 		for (let i=0; i<answers.length; i++){
 			if (i == this.props.quiz.correct_answer && (this.props.quiz.show_correct_answer || this.props.show_correct_answer)){
 				if ( i == my_answer && this.props.show_my_answer){
