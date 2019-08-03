@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import "./App.css";
 import Routes from "./Routes";
 import AuthService from './containers/AuthService';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import Navbar_ from './containers/Navbar_/Navbar_';
 
 const auth = new AuthService();
