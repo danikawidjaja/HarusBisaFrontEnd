@@ -211,7 +211,7 @@ class Lecture extends Component{
 	}
 	
 	componentWillUnmount(){
-		if (this.state.isLoading == false && socket!== null){
+		if (this.state.isLoading == false && socket!== undefined){
 			console.log(socket)
 			socket.emit("leave_lecture",{lecture_id: this.state.selected_lecture.id})
 		}
@@ -333,10 +333,10 @@ export class Quiz extends Component{
 		var answers = this.props.quiz.answers;
 		let components = [];
 		//var my_answer = (this.state.answer ? this.state.answer : this.props.quiz.correct_answer) //pretend corrent ans is my ans
-		var my_answer = this.state.answer
+		var my_answer = this.state.answer ? this.state.answer : this.props.quiz.answer
 		for (let i=0; i<answers.length; i++){
-			if (i == this.props.quiz.correct_answer && this.props.quiz.show_correct_answer){
-				if (this.props.show_my_answer){
+			if (i == this.props.quiz.correct_answer && (this.props.quiz.show_correct_answer || this.props.show_correct_answer)){
+				if ( i == my_answer && this.props.show_my_answer){
 					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4', fontWeight:'bold'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
 				else{
