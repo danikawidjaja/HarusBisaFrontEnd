@@ -2,20 +2,22 @@ import React, { Component } from "react";
 import "./FAQ.css";
 import { ToggleButtonGroup, ToggleButton} from "react-bootstrap";
 import Footer from '../Footer/Footer';
+import { Button } from "@material-ui/core";
 
 export default class FAQ extends Component {
   constructor(props){
     super(props);
     this.state ={
-      role:'faculty'
+      role:'faculty',
+      search: "",
     }
-
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleChangeRole = this.handleChangeRole.bind(this);
   }
   async componentDidMount(){
     window.scrollTo(0, 0);
   }
-  handleChangeRole(value, event) {
+  handleChangeRole(value) {
     this.setState({
       role: value
     });
@@ -29,6 +31,13 @@ export default class FAQ extends Component {
       return (<StudentFAQ/>)
     }
   }
+
+  handleSearch(event){
+    var value = event.target.value;
+    this.setState({
+      search: value,
+    })
+  }
   render() {
     return (
       <React.Fragment>
@@ -36,14 +45,18 @@ export default class FAQ extends Component {
           <div className='content'> 
             <h1>Bantuan</h1>
             <p>Informasi mengenai harusbisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna</p>
-            <form><input type='text' placeholder='Cari bantuan'/></form>
-            <ToggleButtonGroup className='buttons' name='role'type='radio' defaultValue={'faculty'} onChange={this.handleChangeRole}>
-              <ToggleButton className='button' value='faculty' defaultChecked> Dosen </ToggleButton>
-              <ToggleButton className='button' value='student'> Mahasiswa </ToggleButton>
-            </ToggleButtonGroup>
+            <input type='text' placeholder='Cari bantuan' value={this.state.search} onChange={this.handleSearch}/>
+            <div className="row buttons">
+              <div className="col">
+                <Button onClick={() => this.handleChangeRole("faculty")} className={this.state.role === "faculty" ? "button-selected button" : "button"}>Dosen</Button>
+              </div>
+              <div className="col">
+                <Button onClick={() => this.handleChangeRole("student")} className={this.state.role === "student" ? "button-selected button" : "button"}>Mahasiswa</Button>
+              </div>
+            </div>
           </div>
 
-          {this.informationDisplay()}
+          {this.state.search !== "" ? this.informationDisplay() : null}
 
         </div>
         <Footer/>

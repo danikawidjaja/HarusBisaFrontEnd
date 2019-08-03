@@ -46,30 +46,23 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .faq .buttons{
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-	justify-content: space-between;
-	margin-top:2rem;
+	margin: 4rem 0rem;
 }
 
-.faq .buttons .btn, .faq .buttons .btn:focus{
-	background-color: white;
+.faq .button, .faq .button:focus{
+	background-color: transparent;
 	color: black;
-	width: 15vw;
-	border: 1px solid #ffe01c;
+	width: 100%;
+	border: 2px solid #ffe01c;
 	border-radius: 22px;
-	text-transform: uppercase;
 	letter-spacing: 2px;
-	font-weight: 400;
+	font-weight: bold;
 	outline: 0px;
 }
 
 
-.faq .buttons .button:hover, .faq .buttons .button:active, .faq .buttons>.btn.active{
-	color: black;
-	background-color: #ffe01c;
-	border: 1px black solid;
+.faq .buttons .button:hover, .faq .buttons .button:active, .faq .buttons>.btn.active, .faq .button-selected{
+	border: 2px solid #6311AB;
 	box-shadow: 0;
 	-webkit-box-shadow: 0;
 }
