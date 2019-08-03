@@ -4,7 +4,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border: 0;
     font-size: 100%;
     font: inherit; 
-    vertical-align: baseline;
+	vertical-align: baseline;
+	font-family: 'Rubik', sans-serif ;
 }
 
 .faq{
@@ -12,7 +13,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	justify-content: space-around;
 	display: flex;
 	flex-direction: column;
-	font-family: 'Rubik', sans-serif;
+	font-family: 'Rubik', sans-serif !important;
 	align-items: center;
 	padding-top:10vh ;
 	text-align: left;
@@ -45,11 +46,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font-size: 1rem;
 }
 
+.faq .content .searchbar, .faq .content .searchbar:focus{
+	border: 0;
+	border-bottom: 2px solid black;
+	font-size: 1.5rem;
+	outline: 0;
+}
 .faq .buttons{
 	margin: 4rem 0rem;
 }
 
-.faq .button, .faq .button:focus{
+.faq .buttons .button, .faq .buttons .button:focus{
 	background-color: transparent;
 	color: black;
 	width: 100%;
@@ -61,55 +68,32 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 
-.faq .buttons .button:hover, .faq .buttons .button:active, .faq .buttons>.btn.active, .faq .button-selected{
-	border: 2px solid #6311AB;
+.faq .buttons .button:hover, .faq .buttons .button:active, .faq .buttons>.btn.active, .faq .buttons .button-selected{
+	border: 2px solid #6311AB !important;
 	box-shadow: 0;
 	-webkit-box-shadow: 0;
 }
 
-.faq .info{
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	width: 100%;
-	background-color: transparent;
+
+.faq .information{
+	margin-bottom: 4rem;
 }
 
-.faq .info .right{
-	background-color: green;
+.faq .sidebar{
 	display: flex;
 	flex-direction: column;
-	width: 55%;
-	padding: 2vw;
+	position: sticky;
+	top:0;
 }
 
-
-.faq .info .left{
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	width: 45%;
-	padding: 2vw;
-	padding-left: 3vw;
-	padding-right: 3vw;
-	justify-content: space-between;
+.faq .sidebar .button{
+	text-transform: none;
+	outline: none;
+	font-weight: 500;
+	font-family: 'Rubik', sans-serif ;
+	justify-content: flex-start
 }
 
-.faq .info .left .button{
-	border: 0px;
-	font-weight: bold;
-	background-color: transparent;
-	color: black;
-	width: 100%;
-	text-align: left;
+.faq .sidebar .button-selected{
+	font-weight: 600;
 }
-
-.faq .info .left>.btn.active, .faq .info .left .button:active{
-	border: 0px;
-	font-weight: bold;
-	color: grey;
-	width: 100%;
-	box-shadow: none;
-
-}
-
