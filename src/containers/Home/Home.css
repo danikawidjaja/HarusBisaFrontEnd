@@ -4,7 +4,7 @@ html, body{
 }
 
 .Home {
-  padding-top:66px;
+  padding-top:114px;
   justify-content: space-around;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ html, body{
 }
 
 .Home .lander .row .text .btn {
-  background-color: #5960A3;
+  background-color: #6311AB;
   border: none;
   border-radius: 22px;
   transition: 0.3s opacity ease;

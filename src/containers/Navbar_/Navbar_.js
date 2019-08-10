@@ -40,10 +40,10 @@ export default class Navbar_ extends React.Component {
                 <NavLink href="/#pricing">Harga</NavLink>
               </NavItem>
               <NavItem style={{maxHeight:"max-content"}}>
-                <NavLink href="/login">Login</NavLink>
+                <NavLink className="nav-link-special" href="/login">Login</NavLink>
               </NavItem>
               <NavItem style={{maxHeight:"max-content"}} >
-                <NavLink href="/signup">Daftar</NavLink>
+                <NavLink  className="nav-link-special" href="/signup">Daftar</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
