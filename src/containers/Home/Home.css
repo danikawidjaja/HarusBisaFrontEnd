@@ -4,7 +4,7 @@ html, body{
 }
 
 .Home {
-  padding-top:10vh ;
+  padding-top:66px;
   justify-content: space-around;
   display: flex;
   flex-direction: column;

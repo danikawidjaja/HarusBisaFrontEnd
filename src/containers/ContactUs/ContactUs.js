@@ -20,18 +20,16 @@ export default class ContactUs extends Component {
   render() {
     return (
       <div className='contactus'>
-        <div className='text'> 
-          <h1> Hubungi Kami </h1>
-          <p> Apabila terdapat pertanyaan seputar HarusBisa atau kerjasama dan hal lainnya, hubungi kami di +62 00 000 43000 atau isi formulir dibawah ini. Anda juga dapat melihat daftar pertanyaan yang sering ditanyakan di halaman Bantuan. </p>
+        <div className='text container'> 
+          <h1>Hubungi Kami</h1>
+          <p>Kami di sini untuk membantu. Email kami melalui formulir di bawah ini. Saat mengirim pesan kepada kami, silakan cantumkan alamat email yang Anda gunakan saat mendaftar dengan HarusBisa.</p>
           <br/>
           <ContactUsForm />
           
           <div style={{marginTop: '7vw'}}>
-            <p> Email support request to: <br/> admin@harusbisa.com </p>
-            <br/>
-            <p> PT. HARUS BISA INDONESIA </p>
-            <br/>
-            <p> Jl. Tebet Barat Dalam Raya No. 22 RT. 11/Rw.3. Kec. Tebet. Kota Jakarta Selatan. Daerah Khusus Ibukota Jakarta 12810. Indonesia </p>
+            <p>PT Harus Bisa Indonesia</p>
+            <p>Email: harusbisagroup@gmail.com</p>
+            <p>Jam: 9:00 - 17:00 WIB, Senin-Jumat</p>
           </div>
         </div>
         <Footer/>

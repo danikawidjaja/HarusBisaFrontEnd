@@ -11,33 +11,36 @@ export default class Footer extends Component {
           <div className='container'>
             <div class='content row'>
               <div class='col-6'>
-                <p> HarusBisa menyediakan alat untuk para insturktur memberikan lecture yang berkualitas. menggunakan alat yang canggih dan dapat bisa memudahkan secara GRATIS sampai ke seluruh pelosok Indonesia. </p>
-                <br/> <br/>
-                <p> Copyright PT. HarusBisa Indonesia | HarusBisa 2018 </p>
+                <p>Harus Bisa adalah platform edukasi yang merevolusi kegiatan belajar mengajar di dalam kelas. Dengan menggunakan Harus Bisa, dosen dapat menguji tingkat pemahaman mahasiswa di setiap sesi secara instan dengan memberikan kuis-kuis singkat yang dinilai secara otomatis. Harus Bisa juga memberikan kesempatan untuk mahasiswa untuk berinteraksi dan berpartisipasi lebih banyak di dalam kelas.</p>
               </div>
               <div class='col-6'>
                 <div class='row justify-content-end'>
                   <div class='col-4 links'>
-                    <a href='/#top' className='f-link'> Home </a>
-                    <a href='/#about' className='f-link'> Kenapa <br/> HarusBisa? </a>
-                    <a href='/#pricing' className='f-link'> Pricing </a>
+                    <a href='/#top' className='f-link'>Home</a>
+                    <a href='/#about' className='f-link'>Kenapa HarusBisa?</a>
+                    <a href='/#pricing' className='f-link'>Harga</a>
                   </div>
                   <div class='col-4 links'>
-                    <a href='/faq' className='f-link'> FAQ </a>
-                    <a href='/termsandconditions' className='f-link'> Syarat dan <br/> Ketentuan </a>
-                    <a href='/contactus' className='f-link'> Hubungi Kami </a>
+                    <a href='/faq' className='f-link'>Bantuan</a>
+                    <a href='/termsandconditions' className='f-link'>Syarat dan Ketentuan</a>
+                    <a href='/contactus' className='f-link'>Hubungi Kami</a>
                   </div>
                 </div>
-                <br/>
-                <div class='row justify-content-end'>
-                  <div class='col-1'><FaFacebookF class='icon'/></div>
-                  <div class='col-1'><FaTwitter class='icon'/></div>
-                  <div class='col-1'><FaInstagram class='icon'/></div>
-                  <div class='col-1'><FaLinkedinIn class='icon'/></div>
-                  
-                </div>              
               </div>
             </div>
+            <div className="row content">
+                <div className="col">
+                  <p>Copyright PT. HarusBisaGroup Indonesia | HarusBisa 2018</p>
+                </div>
+                <div className='col'>
+                  <div class='row justify-content-end'>
+                    <div class='col-1'><FaFacebookF/></div>
+                    <div class='col-1'><FaTwitter/></div>
+                    <div class='col-1'><FaInstagram/></div>
+                    <div class='col-1'><FaLinkedinIn/></div>
+                  </div> 
+                </div>
+              </div>
           </div>
         </div>
     );

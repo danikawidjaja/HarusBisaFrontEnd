@@ -45,23 +45,23 @@ export default class Home extends Component {
 
         <div className="about container area" id='#about'>
           <div style={{padding: '3rem 3rem 5rem'}}>
-            <h1>HarusBisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi </h1>
+            <h1>HarusBisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi di dalam ruang kelas.</h1>
           </div>
           <div class='row justify-content-center'>
             <div class='col-lg-4 benefit'>
               <img src={time_img} alt='icon'/>
-              <h5>Real Time Interaksi</h5>
-              <p>Dengan adanya tanya jawab secara langung</p>
+              <h5>Interaksi Real Time</h5>
+              <p>Mempermudah interaksi antara dosen dan mahasiswa. Dosen dapat mengerti secara langsung apa yang dipahami oleh mahasiswanya.</p>
             </div>
             <div class='col-lg-4 benefit'>
               <img src={laptop_img} alt='icon'/>
-              <h5>Mudah diakses di semua platform</h5>
-              <p>Dengan adanya tanya jawab secara langung</p>
+              <h5>Mudah diakses</h5>
+              <p>HarusBisa dapat dibuka dengan segala jenis platform seperti laptop, smartphone, dan tablet.</p>
             </div>
             <div class='col-lg-4 benefit'>
               <img src={stack_img} alt='icon'/>
               <h5>Data Oriented</h5>
-              <p>Dengan adanya tanya jawab secara langung</p>
+              <p>Kami menyimpan dan melindungi data nilai secara aman untuk dosen dan mahasiswa.</p>
             </div>
           </div>
 
@@ -73,7 +73,7 @@ export default class Home extends Component {
               <img src={example_img} alt="example" style={{maxWidth:"100%"}}/>
             </div>
             <div class='col-lg-4 example'>
-              <p>Berkontribusi untuk negara Indonesia adalah komitment kita, maka dari itu service ini <span style={{fontWeight:"bold", color:"#5960A3" }}>Gratis!</span></p>
+              <p>Harus Bisa dibuat oleh sekelompok mahasiswa Indonesia yang tergerak untuk mengubah kegiatan belajar mengajar di Indonesia setelah terinspirasi saat berkuliah di Amerika Serikat.</p>
             </div>
           </div>
         </div>

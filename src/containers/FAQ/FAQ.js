@@ -135,8 +135,8 @@ export default class FAQ extends Component {
         <div className='faq container'>
           <div className='content'> 
             <h1>Bantuan</h1>
-            <p>Informasi mengenai harusbisa dan beberapa hal pertanyaan yang sering diajukan oleh pengguna</p>
-            <input className="searchbar" type='text' placeholder='Cari bantuan' value={this.state.search} onChange={this.handleSearch}/>
+            <p>Kumpulan informasi dan pertanyaan yang sering diajukan oleh pengguna. Temukan jawaban Anda di sini </p>
+            <input className="searchbar" type='text' placeholder='Ketik topik yang anda cari (misal: membuat pertanyaan)' value={this.state.search} onChange={this.handleSearch}/>
             <div className="row buttons">
               <div className="col">
                 <Button onClick={() => this.handleChangeRole("faculty")} className={this.state.role === "faculty" ? "button-selected button" : "button"}>Dosen</Button>

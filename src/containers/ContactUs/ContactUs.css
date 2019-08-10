@@ -6,31 +6,19 @@
 	flex-direction: column;
 	font-family: 'Rubik', sans-serif;
 	align-items: center;
-	padding-top: 6vw;
+	padding-top: 66px;
 	text-align: left;
 }
 
-.contactus h1{
-	font-weight: 500;
-	font-size: 5vw;
-	justify-content: flex-start;
-	text-align: left;
-	margin-bottom: 1.5vw;
-	color: black;
+@media screen and (min-width:990px){
+	.contactus .text{
+		width: 60%;
+	}
 }
 
 
 .contactus .text{
-	text-align: justify;
-	display: flex;
-	flex-direction: column;
-	width: 60%;
-	justify-content: space-around;
-	background-color: transparent;
-	align-items: left;
-	padding: 5vw;
-	margin-bottom: 1.4vw;
-	height: 100%;
+	padding: 4rem;
 }
 
 .contactus .form{
