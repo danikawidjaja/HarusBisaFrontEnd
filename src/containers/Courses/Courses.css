@@ -149,12 +149,12 @@ html, body{
 
 
 
-.Courses .right .course-card .MuiCardContent-root-29 .text{
+.Courses .right .course-card .MuiCardContent-root .text{
 	display: flex;
 	background-color: pink;
 }
 
-.Courses .right .course-card .MuiCardContent-root-29{
+.Courses .right .course-card .MuiCardContent-root{
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -162,7 +162,7 @@ html, body{
   margin: 0;
 }
 
-.Courses .right .course-card .MuiCardContent-root-29 a{
+.Courses .right .course-card .MuiCardContent-root a{
 	font-weight: 500;
 	color: black;
 	margin: 0;
@@ -170,12 +170,12 @@ html, body{
 	font-size: 1.25rem;
 }
 
-.Courses .right .course-card .MuiCardContent-root-29 a:hover{
+.Courses .right .course-card .MuiCardContent-root a:hover{
 	color: lightgrey;
 	text-decoration: none;
 }
 
-.Courses .right .course-card .MuiCardContent-root-29 p{
+.Courses .right .course-card .MuiCardContent-root p{
 	color: black;
 	margin: 0;
 	font-size: 0.75rem;
@@ -328,7 +328,7 @@ html, body{
 	color: lightgrey;
 }
 
-.Courses .student-course-card .student-course-card-content .MuiIconButton-root-1{
+.Courses .student-course-card .student-course-card-content .MuiIconButton-root{
 	padding: 0px;
 }
 
