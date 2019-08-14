@@ -3,15 +3,17 @@ import './Courses.css';
 import { Button, FormGroup, FormControl, ControlLabel,Dropdown} from "react-bootstrap";
 import { Link} from "react-router-dom";
 import withAuth from '../withAuth';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
+import {Card, CardActions, CardContent, IconButton, Select, OutlinedInput} from "@material-ui/core";
+// import {MoreVertIcon, ProfileAvatar, SettingsOutlined, NotificationsOutlined, Edit, Delete, FileCopyOutlined, SearchIcon} from "@material-ui/icons"
+// import Card from '@material-ui/core/Card';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
+// import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popup from 'reactjs-popup';
 import { OverrideMaterialUICss } from "override-material-ui-css";
 import FormControlUI from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+// import Select from '@material-ui/core/Select';
 import ProfileAvatar from '../ProfileAvatar/ProfileAvatar';
 import SettingsOutlined from '@material-ui/icons/SettingsOutlined';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
@@ -21,7 +23,7 @@ import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+// import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 
 class Courses extends Component{ 
