@@ -79,7 +79,7 @@ class StudentDashboard extends Component{
 	
 	setupSocketConnection(){
 		if (!socket){
-			socket = socketIOClient('http://ec2-54-174-154-58.compute-1.amazonaws.com:8080', {transports : ['websocket']});
+			socket = socketIOClient('https://www.api.harusbisa.net', {transports : ['websocket']});
 			socket.on('connect', () => {
 				  if (socket.connected){
 					  console.log('socket connected')
