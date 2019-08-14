@@ -257,7 +257,7 @@ class DashboardLeft extends Component{
 		}
 		this.handleChangeLecture = this.handleChangeLecture.bind(this);
 	}
-	handleChangeLecture(value, event) {
+	handleChangeLecture(value) {
 		this.props.changeSelectedLecture(value)
   	}
 
@@ -277,12 +277,12 @@ class DashboardLeft extends Component{
 	  		for (let i=0; i<lectures.length; i++){
 	  			if (lectures[i] === this.props.selectedLecture){
 	  				toggleButtons.push(
-	  					<ToggleButton className='button' type='radio' value={lectures[i]} defaultChecked > Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </ToggleButton>
+	  					<Button className='button-active' value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
 		  			)
 	  			}
 	  			else{
 	  				toggleButtons.push(
-	  					<ToggleButton className='button' type='radio' value={lectures[i]}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </ToggleButton>
+	  					<Button className='button' value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
 	  				)
 	  			}
 	  		}
@@ -291,10 +291,13 @@ class DashboardLeft extends Component{
   	}
 	render(){
 		return(
-			<div style={{marginLeft:'auto', marginRight:'auto', height:'100%', justifyContent:'space-between'}}>
-				<ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.props.selectedLecture} onChange={this.handleChangeLecture}>
-            		{this.makeToggleButtons(/*[]*/this.state.lectures)}
-          		</ToggleButtonGroup>
+			<div style={{width:"100%", height:'100%', justifyContent:'space-between'}}>
+				{/* <ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.props.selectedLecture} onChange={this.handleChangeLecture}>
+            		{this.makeToggleButtons(this.state.lectures)}
+				  </ToggleButtonGroup> */}
+				<div className='buttons'>
+            		{this.makeToggleButtons(this.state.lectures)}
+          		</div>
           		<Popup 
           		trigger={<Button className='addButton'> + Tambah Sesi </Button>} 
           		modal 

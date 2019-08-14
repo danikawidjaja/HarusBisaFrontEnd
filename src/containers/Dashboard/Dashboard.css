@@ -59,13 +59,27 @@ html{
 	padding-bottom: 3vh;
 }
 
-.Dashboard .left .buttons .button:active, .Dashboard .left .buttons .button:focus, .Dashboard .left .buttons>.btn.active{
+.Dashboard .left .buttons .button-active{
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	border-right:0.30vw transparent solid;
+	box-shadow: none;
+	box-sizing: border-box;
+	border-radius: 0;
+	display: flex;
+	text-align: left;
+	padding-left: 3rem;
+	margin: auto;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
 	border: none;
 	border-right: 0.30vw #ffe01c solid;
 	outline: none;
 	color:black;
 	font-weight: bold;
 	background-color:#F7F3DC;
+	
 }
 
 .Dashboard .left .buttons .button:hover:not(.active){
