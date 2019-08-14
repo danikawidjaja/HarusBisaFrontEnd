@@ -54,5 +54,9 @@
   ],
   "devDependencies": {
     "override-material-ui-css": "^1.1.3"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^1.0.0",
+    "@material-ui/icons": "^1.0.0"
   }
 }
