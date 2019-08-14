@@ -3,7 +3,7 @@ export default class AuthService {
 
     // Initializing important variables
     constructor(domain) {
-        this.domain = 'http://ec2-54-174-154-58.compute-1.amazonaws.com:8080/api' // API server domain
+        this.domain = 'https://www.api.harusbisa.net/api' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.signup= this.signup.bind(this)
