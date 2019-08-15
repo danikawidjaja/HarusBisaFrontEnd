@@ -320,7 +320,7 @@ html{
 	max-height: 100%;
 }
 
-.Dashboard .navigation .MuiIconButton-root-1{
+.Dashboard .navigation .MuiIconButton-root{
 	padding:6px;
 }
 
@@ -443,7 +443,7 @@ html{
 .Dashboard .right .content .content-option .interactive .btn:active{
 	outline: none;
 }
-.Dashboard .right .content .content-option  .interactive .fab .MuiSvgIcon-root-10{
+.Dashboard .right .content .content-option  .interactive .fab .MuiSvgIcon-root{
 	font-size: 15px;
 	margin: 0px;
 }
@@ -509,7 +509,7 @@ html{
 	opacity: 0.5;
 }
 
-.arrows .MuiIconButton-root-1, .card-content .MuiIconButton-root-1 {
+.arrows .MuiIconButton-root, .card-content .MuiIconButton-root {
 	padding: 0.2rem;
 }
 .Dashboard .right .quizzes .question-card{

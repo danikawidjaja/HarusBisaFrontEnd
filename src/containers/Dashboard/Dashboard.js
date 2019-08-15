@@ -219,17 +219,24 @@ class Dashboard extends Component{
 		if (this.props.Auth.loggedIn()){
 			if (!this.state.isLoading){
 				return(
-		    		<div className='Dashboard'>
-		    			<DashboardNavigation changeFlag={this.changeFlag} course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
-						<div style={{display:'flex', flexDirection:'column', marginTop:'2.97rem'}}>
-			    			<div className='left'>
-			    				<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState} selectedCourse={this.state.selected_course}/>
-			    			</div>
-			    			<div className='right'>
-			    				<DashboardRight changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
-			    			</div>
-			    		</div>
-		    		</div>
+					<React.Fragment>
+						<div className="d-none d-lg-block">
+							<div className='Dashboard'>
+								<DashboardNavigation changeFlag={this.changeFlag} course_option={true} selected_course={this.state.selected_course} courses={this.state.courses} profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.userHasAuthenticated} history={this.props.history} changeSelectedCourse={this.changeSelectedCourse}/>
+								<div style={{display:'flex', flexDirection:'column', marginTop:'2.97rem'}}>
+									<div className='left'>
+										<DashboardLeft flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} lectures={this.state.lectures} changeSelectedLecture={this.changeSelectedLecture}  Auth={this.props.Auth} selectedCourseId={this.state.selected_course._id} updateLecturesState={this.updateLecturesState} selectedCourse={this.state.selected_course}/>
+									</div>
+									<div className='right'>
+										<DashboardRight changeLive={this.changeLive} flag={this.state.flag} changeFlag={this.changeFlag} selectedLecture={this.state.selected_lecture} changeSelectedLecture={this.changeSelectedLecture} selected_course={this.state.selected_course}  Auth={this.props.Auth} history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} updateLecturesState={this.updateLecturesState}/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="d-lg-none">
+							<p>Layar anda terlalu kecil. Untuk melihat content ini, silahkan buka di Desktop anda.</p>
+						</div>
+					</React.Fragment>
 				)
 			}
 			else{
