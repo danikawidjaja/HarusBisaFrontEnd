@@ -819,7 +819,7 @@ class LectureSetting extends Component{
 		this.handleChange = this.handleChange.bind(this);
 		this.deleteLecture = this.deleteLecture.bind(this);
 	}
-	handleChange(value, event) {
+	handleChange(value) {
 		this.setState({
 			setting:value
 		})
@@ -866,14 +866,16 @@ class LectureSetting extends Component{
 						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
 					</div>
 				</div>
-				<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', height:'40vh'}}>
-					<div style={{width:'30%', textAlign:'center', borderRight:'1px solid #bdbdbd'}}>
-						<ToggleButtonGroup name='lecture_setting'type='radio' defaultValue={'edit'} className='vert-buttons' onChange={this.handleChange}>
-							<ToggleButton className='vert-button' value={'edit'} defaultChecked> Edit Sesi </ToggleButton>
-							<ToggleButton className='vert-button' value={'delete'}> Hapus Sesi </ToggleButton>
-						</ToggleButtonGroup>
+				<div className="row" style={{minHeight:"60vh"}}>
+					<div className="col-md-4" style={{marginBottom:'1rem'}}>
+						<div style={{textAlign:'center', borderRight:'1px solid #bdbdbd'}}>
+							<div  className='vert-buttons'>
+								<Button className={ this.state.setting === "edit" ? "vert-button-active":'vert-button'} value={'edit'} onClick={() => this.handleChange("edit")}> Edit Sesi </Button>
+								<Button className={ this.state.setting === "delete" ? "vert-button-active":'vert-button'} value={'delete'} onClick={() => this.handleChange("delete")}> Hapus Sesi </Button>
+							</div>
+						</div>
 					</div>
-					<div style={{width:'70%', paddingLeft:'1rem', verticalAlign:'middle', margin:'auto'}}>
+					<div className="col">
 						{this.content(this.state.setting)}
 					</div>
 				</div>
@@ -901,11 +903,11 @@ class AddQuestion extends Component{
 			returnComponents.push(
 				<div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'space-between'}}>
 					<div style={{width:'100%'}}>
-					<ToggleButtonGroup className='buttons' name='role'type='radio' onChange={this.handleChangeQuestionType}>
-						<ToggleButton className='button' value='multiple_choice'> Pilihan Ganda </ToggleButton>
-	            		<ToggleButton className='button' value='string_input'> Isian </ToggleButton>
-	            		<ToggleButton className='button' value='numeric_input' style={{border:'none'}}> Jawaban Angka </ToggleButton>
-	          		</ToggleButtonGroup>
+					 	<div className='buttons'>
+							<Button className='button' onClick={() =>this.handleChangeQuestionType('multiple_choice')}> Pilihan Ganda </Button>
+							<Button className='button' onClick={() =>this.handleChangeQuestionType('string_input')}> Isian </Button>
+							<Button className='button'  style={{border:'none'}} onClick={() =>this.handleChangeQuestionType('numeric_input')}> Jawaban Angka </Button>
+	          			</div>
 	          		</div>
 	          		<div>
 						<IconButton onClick={this.props.closefunction} ><Close/></IconButton>
@@ -1013,10 +1015,10 @@ class QuizCard extends Component{
 		let answerButtons=[]
 		for (let i=0; i<answerArray.length; i++){
 			if (answerArray[i] == this.state.correct_answer){
-				answerButtons.push(<ToggleButton className= {this.state.showCorrectAns ? 'answer-correct' : 'answer'}> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
+				answerButtons.push(<Button className= {this.state.showCorrectAns ? 'answer-correct' : 'answer'}> {String.fromCharCode(i+65)}. {answerArray[i]}</Button>)
 			}
 			else{
-				answerButtons.push(<ToggleButton className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</ToggleButton>)
+				answerButtons.push(<Button className='answer'> {String.fromCharCode(i+65)}. {answerArray[i]}</Button>)
 			}
 			
 		}
@@ -1176,9 +1178,9 @@ class QuizCard extends Component{
 						</CardContent> </OverrideMaterialUICss>
 						
 						<OverrideMaterialUICss><Collapse in={this.state.expanded} timeout='auto' unmountOnExit style={{marginBottom:'2vh'}}>
-							<ToggleButtonGroup className='answers' name='lectureDates'type='radio'>
+							<div className="answers">
 								{this.createAnswerButtons(this.state.possible_answers)}
-							</ToggleButtonGroup>
+							</div>
 						</Collapse></OverrideMaterialUICss>
 
 						<OverrideMaterialUICss> <CardActions className='card-action' /*style={{justifyContent:'space-between', backgroundColor:'lightgrey'}}*/>

@@ -226,7 +226,7 @@ html{
 	width: 100%;
 }
 
-.Dashboard .popup .vert-buttons .vert-button:active, .Dashboard .popup .vert-buttons .vert-button:focus, .Dashboard .popup .vert-buttons>.btn.active{
+.Dashboard .popup .vert-buttons .vert-button:active, .Dashboard .popup .vert-buttons .vert-button:focus, .Dashboard .popup .vert-buttons>.btn.active, .Dashboard .popup .vert-button-active{
 	border-right: 0.25rem solid #ffe01c;
 	box-shadow: none;
 	background-color: #F7F3DC;
