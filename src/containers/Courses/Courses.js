@@ -114,7 +114,7 @@ class Courses extends Component{
 			}
 		} else {
 			if (this.state.search_bar == ''){
-				coursesComponent.push(<p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p>)
+				coursesComponent.push(this.state.profile.role !== "faculty" ? <p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p> : <p>Buat kelas pertama anda!</p>)
 			}
 			else{
 				coursesComponent.push(<p>Kelas yang anda cari tidak ada.</p>)
