@@ -234,7 +234,7 @@ export default class AuthService {
 
 
     getLectureGradebooksByStudents(course_id, lecture_id){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/students`, {
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/lectures/${lecture_id}/students`, {
             method: 'GET',
         }).then(res => {
             return (res); 
@@ -244,7 +244,7 @@ export default class AuthService {
         }) 
     }
     getLectureGradebooksByQuizzes(course_id, lecture_id){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/quizzes`, {
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/lectures/${lecture_id}/quizzes`, {
             method: 'GET',
         }).then(res => {
             return (res); 
@@ -254,7 +254,7 @@ export default class AuthService {
         }) 
     }
     getGradebooksByStudents(course_id){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/students`, {
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/students`, {
             method: 'GET',
         }).then(res => {
             return (res); 
@@ -264,7 +264,7 @@ export default class AuthService {
         }) 
     }
     getGradebooksByLectures(course_id){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures`, {
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/lectures`, {
             method: 'GET',
         }).then(res => {
             return (res); 
@@ -282,7 +282,7 @@ export default class AuthService {
         }) 
     }
     editParticipationRewardPercentage(course_id, lecture_id, participation_reward_percentage){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}`,{
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/lectures/${lecture_id}`,{
             method:'PUT',
             body: JSON.stringify({
                 participation_reward_percentage
@@ -292,7 +292,7 @@ export default class AuthService {
         })
     }
     editIncludeQuestion(course_id, lecture_id, quizzes){
-        return this.fetch(`${this.domain}/gradebook/professor/courses/${course_id}/lectures/${lecture_id}/quizzes`,{
+        return this.fetch(`${this.domain}/gradebook/faculty/courses/${course_id}/lectures/${lecture_id}/quizzes`,{
             method:'PUT',
             body: JSON.stringify({
                 quizzes

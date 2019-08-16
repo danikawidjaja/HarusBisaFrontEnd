@@ -102,7 +102,7 @@ class Courses extends Component{
 		let numberOfCourses =listOfCourse.length;
 		let coursesComponent = []
 		if (numberOfCourses > 0){
-			if (this.state.profile.role == 'professor'){
+			if (this.state.profile.role == 'faculty'){
 				for (let i=0; i<numberOfCourses; i++){
 				coursesComponent.push(<ProfCourseCard course={listOfCourse[i]} history={this.state.history} Auth={this.Auth} changeShowUpdateCourseModal={this.changeShowUpdateCourseModal} changeshowDeleteCourseModal={this.changeshowDeleteCourseModal}/>)
 				} 
@@ -133,7 +133,7 @@ class Courses extends Component{
 	}
 
 	addCourseComponent(close){
-		if (this.state.profile.role == 'professor'){
+		if (this.state.profile.role == 'faculty'){
 			return(<UpdateCourse form_type={'add'} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
 		}
 		else{
@@ -189,7 +189,7 @@ class Courses extends Component{
 						<div class="col-md-4" style={{margin:'auto', justifyContent:'flex-end', justifyItems:"flex-end"}}>
 							<Popup
 								trigger={
-									<Button className={this.state.profile.role == 'professor' ? "button" : 'button-student'}> + Tambah Kelas </Button>
+									<Button className={this.state.profile.role == 'faculty' ? "button" : 'button-student'}> + Tambah Kelas </Button>
 								}
 								modal
 								closeOnDocumentClick={false}
@@ -243,7 +243,7 @@ class Courses extends Component{
 			        	)}
 			        </Popup>
 					<div className='content'>
-						{this.state.profile.role == 'professor' ? 
+						{this.state.profile.role == 'faculty' ? 
 						this.makingCourses(this.state.courses_to_show)
 						:
 						<div className='row'>
@@ -268,7 +268,7 @@ class CoursesLeft extends Component{
 				<div style={{padding:'2rem'}}>
 					<h2> Selamat Datang ke HarusBisa, <br/> {this.props.name[0].toUpperCase() + this.props.name.slice(1, this.props.name.length)} </h2>
     			</div>
-    			{this.props.role == 'professor' ? <img className='image' src={LeftPanelPictureProf}/> : <img className='image' src={LeftPanelPictureStud}/>}
+    			{this.props.role == 'faculty' ? <img className='image' src={LeftPanelPictureProf}/> : <img className='image' src={LeftPanelPictureStud}/>}
     		</div>
 		)
 	}

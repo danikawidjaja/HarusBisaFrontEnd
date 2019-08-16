@@ -14,7 +14,7 @@ class LoadingPage extends Component{
 					<br/>
 					<p> Soekarno </p>
 					<br/>
-					<ClipLoader color={this.props.role == "professor" ? '#ffe01c' : '#6311AB'} sizeUnit={'em'} size={5}/>
+					<ClipLoader color={this.props.role == "faculty" ? '#ffe01c' : '#6311AB'} sizeUnit={'em'} size={5}/>
 				</div>
 			</div>
 		)
@@ -22,7 +22,7 @@ class LoadingPage extends Component{
 }
 
 LoadingPage.defaultProps = {
-	role: 'professor'
+	role: 'faculty'
 }
 
 export default LoadingPage;
