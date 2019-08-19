@@ -25,18 +25,18 @@ class SignUp extends Component {
   render() {
     return (
       <div className='signup'>
-      <div className='row justify-content-center'>
-        <div className="col-md-3">
-          <Logo size='logo' color='black' background='trans' padding={false} className="logo"/>
-        </div>
-        
-        <div className='col-md-9'>
-          <div style={{justifyContent:'flex-start'}}>
-            <h1> Daftar </h1>
+        <div className='row justify-content-center'>
+          <div className="col-md-3">
+            <Logo size='logo' color='black' background='trans' padding={false} className="logo"/>
           </div>
-          <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
+          
+          <div className='col-md-9'>
+            <div style={{justifyContent:'flex-start'}}>
+              <h1> Daftar </h1>
+            </div>
+            <SignUpForm history={this.props.history} userHasAuthenticated={this.props.userHasAuthenticated} Auth={this.props.Auth}/>
+          </div>
         </div>
-      </div>
       </div>
     );
   }
@@ -169,7 +169,7 @@ class SignUpForm extends Component{
 
           <div className='row'>
           <FormGroup className="col" controlId="school" bsSize="medium">
-            <ControlLabel> Nama Universitas </ControlLabel>
+            <ControlLabel> Nama Perguruan Tinggi </ControlLabel>
             <Select
               isClearable
               value={this.state.school}

@@ -179,7 +179,7 @@ class ProfileSetting extends Component{
 								    </FormGroup>
 
 								    <FormGroup controlId='school' className='form-group'>
-								    	<ControlLabel className='form-group-label'>Universitas</ControlLabel>
+								    	<ControlLabel className='form-group-label'>Perguruan Tinggi</ControlLabel>
 								    	<FormControl
 								    		type='text'
 								    		value={this.state.school}
