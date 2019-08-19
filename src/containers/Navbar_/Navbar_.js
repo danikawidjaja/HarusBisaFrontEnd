@@ -26,7 +26,6 @@ export default class Navbar_ extends React.Component {
     });
   }
   render() {
-    console.log(window.scrollY)
     return (
       <div>
         <Navbar light expand="md" style={{backgroundColor: window.scrollY === 0 ? 'transparent': 'white'}}>
