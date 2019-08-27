@@ -17,7 +17,7 @@ export default class Footer extends Component {
                 <div class='row justify-content-end'>
                   <div class='col-4 links'>
                     <a href='/#top' className='f-link'>Home</a>
-                    <a href='/#about' className='f-link'>Kenapa HarusBisa?</a>
+                    <a href='/#about' className='f-link'>Kenapa Harus Bisa?</a>
                     <a href='/#pricing' className='f-link'>Harga</a>
                   </div>
                   <div class='col-4 links'>
@@ -30,7 +30,7 @@ export default class Footer extends Component {
             </div>
             <div className="row content">
                 <div className="col">
-                  <p>Copyright PT. HarusBisaGroup Indonesia | HarusBisa 2018</p>
+                  <p>Copyright PT. Harus Bisa Group Indonesia | Harus Bisa 2019</p>
                 </div>
                 <div className='col'>
                   <div class='row justify-content-end'>

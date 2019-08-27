@@ -45,7 +45,7 @@ export default class Home extends Component {
 
         <div className="about container area" id='#about'>
           <div style={{padding: '3rem 3rem 5rem'}}>
-            <h1>HarusBisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi di dalam ruang kelas.</h1>
+            <h1>Harus Bisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi di dalam ruang kelas.</h1>
           </div>
           <div class='row justify-content-center'>
             <div class='col-lg-4 benefit'>
@@ -56,7 +56,7 @@ export default class Home extends Component {
             <div class='col-lg-4 benefit'>
               <img src={laptop_img} alt='icon'/>
               <h5>Mudah diakses</h5>
-              <p>HarusBisa dapat dibuka dengan segala jenis platform seperti laptop, smartphone, dan tablet.</p>
+              <p>Harus Bisa dapat dibuka dengan segala jenis platform seperti laptop, smartphone, dan tablet.</p>
             </div>
             <div class='col-lg-4 benefit'>
               <img src={stack_img} alt='icon'/>
