@@ -246,7 +246,7 @@ class Courses extends Component{
 						{this.state.profile.role == 'faculty' ? 
 						this.makingCourses(this.state.courses_to_show)
 						:
-						<div className='row'>
+						<div className='row' style={{width: "-webkit-fill-available"}}>
 				  			{this.makingCourses(this.state.courses_to_show)}
 				  		</div>}
 					</div>
@@ -433,7 +433,7 @@ class StudentAddCourse extends Component{
 		if (this.state.haveSubmited && this.state.course != null){
 			return(
 				<div style={{textAlign:'left'}}>
-					<StudCourseCard course={this.state.course}/>
+					<StudCourseCard course={this.state.course} disableLink={true}/>
 					<div class='buttons'>
 						<Button className='transparent-button' onClick={this.props.closefunction}>Batalkan</Button>
 						<Button className='student-button' onClick={this.handleAddClass}>Tambahkan</Button>
@@ -795,7 +795,8 @@ class StudCourseCard extends Component{
 				<Card raised='true' className='student-course-card'>
 					<CardContent className='student-course-card-content'>
 						<div className='info col-10'>
-							<Link to={{pathname:'/student-dashboard/' + this.props.course._id}}>{this.props.course.course_name}</Link>
+							{!this.props.disableLink && <Link to={{pathname:'/student-dashboard/' + this.props.course._id}}>{this.props.course.course_name}</Link>}
+							{this.props.disableLink && <p className="class-name">{this.props.course.course_name}</p>}
 							<p>Dosen/Pembimbing: {nameFormatting(this.props.course.instructor)}</p>
 							<p>{translateToIndo(this.props.course.start_term)} - {translateToIndo(this.props.course.end_term)}</p>
 							<p>Kode Bergabung: {this.props.course.join_code}</p>

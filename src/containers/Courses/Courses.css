@@ -316,7 +316,7 @@ html, body{
 	margin-bottom: 0;
 }
 
-.Courses .student-course-card .student-course-card-content .info a{
+.Courses .student-course-card .student-course-card-content .info a, .Courses .student-course-card .student-course-card-content .info .class-name{
 	font-size: 1.1rem;
 	line-height: 22px;
 	color: black;
