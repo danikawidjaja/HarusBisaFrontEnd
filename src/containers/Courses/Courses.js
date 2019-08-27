@@ -23,6 +23,7 @@ import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
+import Error from '../Error/Error';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 
@@ -388,11 +389,13 @@ class StudentAddCourse extends Component{
 			join_code:'',
 			haveSubmited:false,
 			course: null,
+			error: null,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleAddClass = this.handleAddClass.bind(this);
 		this.toggleHaveSubmited = this.toggleHaveSubmited.bind(this);
+		this.handleBack = this.handleBack.bind(this);
 	}
 
 	handleSubmit(event){
@@ -402,6 +405,12 @@ class StudentAddCourse extends Component{
 			await this.setState({
 				course: res.data,
 				haveSubmited: true
+			})
+		})
+		.catch(error =>{
+			console.log(error)
+			this.setState({
+				error: error
 			})
 		})
 	}
@@ -429,6 +438,11 @@ class StudentAddCourse extends Component{
 	      [event.target.id]: event.target.value
 	    });
 	}
+	handleBack(){
+		this.setState({
+			error: null
+		})
+	}
 	render(){
 		if (this.state.haveSubmited && this.state.course != null){
 			return(
@@ -437,6 +451,17 @@ class StudentAddCourse extends Component{
 					<div class='buttons'>
 						<Button className='transparent-button' onClick={this.props.closefunction}>Batalkan</Button>
 						<Button className='student-button' onClick={this.handleAddClass}>Tambahkan</Button>
+					</div>
+				</div>
+			)
+		}
+		else if (this.state.error){
+			return(
+				<div>
+					<Error msg={this.state.error.message}/>
+					<div class='buttons'>
+						<Button className='transparent-button' onClick={this.props.closefunction}>Batalkan</Button>
+						<Button className='student-button' onClick={this.handleBack}>Kembali</Button>
 					</div>
 				</div>
 			)
