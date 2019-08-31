@@ -24,6 +24,7 @@ import Delete from '@material-ui/icons/Delete';
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Error from '../Error/Error';
+import { ErrorMessage } from '../Login/Login';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 
@@ -395,7 +396,6 @@ class StudentAddCourse extends Component{
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleAddClass = this.handleAddClass.bind(this);
 		this.toggleHaveSubmited = this.toggleHaveSubmited.bind(this);
-		this.handleBack = this.handleBack.bind(this);
 	}
 
 	handleSubmit(event){
@@ -438,11 +438,6 @@ class StudentAddCourse extends Component{
 	      [event.target.id]: event.target.value
 	    });
 	}
-	handleBack(){
-		this.setState({
-			error: null
-		})
-	}
 	render(){
 		if (this.state.haveSubmited && this.state.course != null){
 			return(
@@ -455,20 +450,10 @@ class StudentAddCourse extends Component{
 				</div>
 			)
 		}
-		else if (this.state.error){
-			return(
-				<div>
-					<Error msg={this.state.error.message}/>
-					<div class='buttons'>
-						<Button className='transparent-button' onClick={this.props.closefunction}>Batalkan</Button>
-						<Button className='student-button' onClick={this.handleBack}>Kembali</Button>
-					</div>
-				</div>
-			)
-		}
 		else{
 			return(
 				<div className="form">
+					{this.state.error && <ErrorMessage msg={"Maaf, kami tidak dapat menemukan kelas ini. Tolong coba lagi."}/>}
 					<form onSubmit={this.handleSubmit}>
 						<FormGroup controlId="join_code">
 							<ControlLabel>Kode Bergabung</ControlLabel>

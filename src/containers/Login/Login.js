@@ -44,7 +44,7 @@ class LoginForm extends Component{
 
   displayErrorMessage(){
     if (this.state.error == true){     
-      return(<ErrorMessage />)
+      return(<ErrorMessage msg={'Alamat email atau password tidak ditemukan'}/>)
     }
     else{
       return null
@@ -123,19 +123,14 @@ class LoginForm extends Component{
 }
 
 class ErrorMessage extends Component{
-  constructor(props){
-    super(props);
-    this.state ={
-      error: 'Alamat email atau password tidak ditemukan' //this.props.message
-    }
-  }
   render(){
     return(
       <div className='errormessage'>
         <ErrorOutline className='icon'/>
-        <p> {this.state.error} </p>
+        <p> {this.props.msg} </p>
       </div>
     )
   }
 }
 export default Login;
+export {ErrorMessage};
