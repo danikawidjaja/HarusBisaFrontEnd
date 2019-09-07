@@ -408,7 +408,6 @@ class StudentAddCourse extends Component{
 			})
 		})
 		.catch(error =>{
-			console.log(error)
 			this.setState({
 				error: error
 			})
@@ -453,7 +452,7 @@ class StudentAddCourse extends Component{
 		else{
 			return(
 				<div className="form">
-					{this.state.error && <ErrorMessage msg={"Maaf, kami tidak dapat menemukan kelas ini. Tolong coba lagi."}/>}
+					{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 					<form onSubmit={this.handleSubmit}>
 						<FormGroup controlId="join_code">
 							<ControlLabel>Kode Bergabung</ControlLabel>
@@ -777,7 +776,8 @@ class StudCourseCard extends Component{
 			this.props.updateCoursesState(res.data.courses)
 		})
 		.catch(err =>{
-        	console.log(err.message)
+			alert(err.message)
+			this.toggleShowDeleteCourseModal();
       	})
 	}
 	render(){
@@ -811,7 +811,7 @@ class StudCourseCard extends Component{
 							<p>{translateToIndo(this.props.course.start_term)} - {translateToIndo(this.props.course.end_term)}</p>
 							<p>Kode Bergabung: {this.props.course.join_code}</p>
 						</div>
-						<div className='col-2' style={{justifyContent:'flex-end', margin:'0'}}>
+						{!this.props.disableLink && <div className='col-2' style={{justifyContent:'flex-end', margin:'0'}}>
 							<IconButton>
 								<Popup
 									trigger={<MoreVertIcon />}
@@ -829,7 +829,7 @@ class StudCourseCard extends Component{
 									)}							
 								</Popup>    
 					        </IconButton>
-						</div>
+						</div>}
 					</CardContent>
 					<OverrideMaterialUICss><CardActions className='student-course-card-action'>
 					<p> {this.props.course.number_of_lectures} Sesi</p>

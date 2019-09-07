@@ -32,7 +32,6 @@ class ProfileSetting extends Component{
     	var user_id = this.props.match.params.id;
     	this.props.Auth.getUser(user_id)
     	.then(res => {
-    		//console.log(res.data._id)
     		this.setState({
     			first_name: res.data.first_name[0].toUpperCase() + res.data.first_name.slice(1, res.data.first_name.length),
 				last_name: res.data.last_name[0].toUpperCase() + res.data.last_name.slice(1, res.data.last_name.length),
@@ -47,7 +46,8 @@ class ProfileSetting extends Component{
     		})
     	})
     	.catch(err =>{
-    		console.log(err.message)
+			console.log(err.message)
+			this.props.history.push("/notfound")
     	})
     	
     }

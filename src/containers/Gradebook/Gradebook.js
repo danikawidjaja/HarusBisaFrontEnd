@@ -62,9 +62,13 @@ class Gradebook extends Component{
 		var lecture_id = this.props.match.params.lecture_id;
 		await this.props.Auth.getData()
 			.then(async res =>{
+				var selected_course = this.findSelected(course_id, res.data.courses);
+				if (!selected_course){
+					throw new Error()
+				}
 				await this.setState({
 					courses: res.data.courses,
-					selected_course: this.findSelected(course_id, res.data.courses),
+					selected_course: selected_course,
 					profile:{
 						first_name : res.data.first_name,
 						last_name : res.data.last_name,
@@ -76,17 +80,28 @@ class Gradebook extends Component{
 				}, async () =>
 				await this.props.Auth.getLectures(this.state.selected_course._id)
 				.then(async res =>{
+					var selected_lecture = null
+					if (lecture_id){
+						selected_lecture =  this.findSelected(lecture_id, res.data.lectures)
+						if (!selected_lecture){
+							throw new Error()
+						}
+					}
 					await this.setState({
 						lectures: res.data.lectures,
-						selected_lecture: lecture_id ? this.findSelected(lecture_id, res.data.lectures): null,
+						selected_lecture: selected_lecture,
 						isLoading: false,
 						})
 					})	
-				)
+				.catch(err =>{
+					console.log(err.message)
+					this.props.history.push("/notfound")
+				})
+			)
 			})
 			.catch(err =>{
 				console.log(err.message)
-				alert(err.message)
+				this.props.history.push("/notfound")
 			})
 	}
 

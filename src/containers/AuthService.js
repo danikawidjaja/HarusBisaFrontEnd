@@ -337,8 +337,6 @@ export default class AuthService {
     }
 
     getData() {
-        {/* Using jwt-decode npm package to decode the token
-        //return decode(this.getToken());*/}
         return this.fetch(`${this.domain}/courses`, {
             method: 'GET',
         }).then(res => {
@@ -372,14 +370,14 @@ export default class AuthService {
             .then(response => response.json())
     }
 
-    _checkStatus(response) {
+    async _checkStatus(response) {
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
             return response
         } else {
-            var error = new Error(response.statusText)
-            console.log(response)
-            error.response = response
+           var json_response = await response.json()
+            var error = new Error()
+            error.message = json_response.message
             throw error
         }
     }

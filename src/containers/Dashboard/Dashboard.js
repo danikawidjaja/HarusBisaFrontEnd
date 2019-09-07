@@ -145,38 +145,47 @@ class Dashboard extends Component{
 		var id = this.props.match.params.id;
 		await this.props.Auth.getData()
   		.then(async res =>{
-      		await this.setState({
-      			courses: res.data.courses,
-      			selected_course: this.findSelectedCourse(id, res.data.courses),
-      			profile:{
-      				first_name : res.data.first_name,
-      				last_name : res.data.last_name,
-      				email: res.data.email,
-      				role: res.data.role,
-      				school: res.data.school,
-      				id: res.data._id
-      			},
-      		}, async () =>
-      		await this.props.Auth.getLectures(this.state.selected_course._id)
-	      	.then(async res =>{
-	      		await this.setState({
-	      			lectures: res.data.lectures,
-	      			selected_lecture: res.data.lectures.length === 0 ? null : res.data.lectures[0],
-	      			isLoading: false,
-	      		})
-
-	      		if (res.data.lectures[0] != null){
-	      			this.setState({
-	      				live: res.data.lectures[0].live
-	      			})
-				}
-				this.setupSocketConnection();
-	      	})	
-	      )
+			var selected_course = this.findSelectedCourse(id, res.data.courses)
+			if (!selected_course){
+				var error = new Error()
+				error.message = "Selected course not found"
+				throw error
+			}
+			else{
+				await this.setState({
+					courses: res.data.courses,
+					selected_course: selected_course,
+					profile:{
+						first_name : res.data.first_name,
+						last_name : res.data.last_name,
+						email: res.data.email,
+						role: res.data.role,
+						school: res.data.school,
+						id: res.data._id
+					},
+				}, async () =>
+				await this.props.Auth.getLectures(this.state.selected_course._id)
+				.then(async res =>{
+					await this.setState({
+						lectures: res.data.lectures,
+						selected_lecture: res.data.lectures.length === 0 ? null : res.data.lectures[0],
+						isLoading: false,
+					})
+  
+					if (res.data.lectures[0] != null){
+						this.setState({
+							live: res.data.lectures[0].live
+						})
+				  }
+				  this.setupSocketConnection();
+				})	
+			)
+			}
+      		
       	})
       	.catch(err =>{
         	console.log(err.message)
-        	alert(err.message)
+        	this.props.history.push("/notfound")
 		})
 	}
 

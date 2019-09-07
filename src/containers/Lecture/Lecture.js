@@ -141,9 +141,13 @@ class Lecture extends Component{
 		var lecture_id = this.props.match.params.lecture_id;
 		await this.props.Auth.getData()
 		.then(async res =>{
+			var selected_course = this.findSelected(course_id, res.data.courses, "course")
+			if (!selected_course){
+				throw new Error()
+			}
 			await this.setState({
 				courses: res.data.courses,
-				selected_course: this.findSelected(course_id, res.data.courses, "course"),
+				selected_course: selected_course,
 				profile:{
 					first_name : res.data.first_name,
 					last_name : res.data.last_name,
@@ -156,6 +160,9 @@ class Lecture extends Component{
 			await this.props.Auth.getLectures(this.state.selected_course._id)
 			.then(async res =>{
 				var temp = this.findSelected(lecture_id, res.data.lectures,'lecture')
+				if (!temp){
+					throw new Error()
+				}
 				await this.setState({
 					selected_lecture: temp,
 					isLoading: false
@@ -163,12 +170,16 @@ class Lecture extends Component{
 				if (this.state.live){
 					this.socketConnection();
 				}
-			})	
+			})
+			.catch(err =>{
+				console.log(err.message)
+				this.props.history.push("/notfound")
+			  })	
 		)
 		})
 		.catch(err =>{
 		  console.log(err.message)
-		  alert(err.message)
+		  this.props.history.push("/notfound")
 		})
 
 		if (!this.state.live){
