@@ -191,26 +191,29 @@ class SignUpForm extends Component{
           </div>
 
           <div className="row">      
-          <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </FormGroup> 
+            <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </FormGroup> 
 
-          <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
-            <ControlLabel>Ulangi Password</ControlLabel>
-            <FormControl
-              type="password"
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
+            <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
+              <ControlLabel>Ulangi Password</ControlLabel>
+              <FormControl
+                type="password"
+                value={this.state.confirmPassword}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
           </div>
-            
-          
+          <div className='row'>
+            <div className='col'>
+              <p>Password anda {this.state.password !== this.state.confirmPassword ? "tidak" : ""} sama</p>
+            </div>
+          </div>
           <div className="row">
             <div className='col-12'>
               <Button
