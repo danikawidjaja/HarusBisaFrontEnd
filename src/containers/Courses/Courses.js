@@ -707,24 +707,26 @@ class ProfCourseCard extends Component{
 			<OverrideMaterialUICss>
 			<Card className='course-card' raised='true'>
 				<CardContent>
-						<div style={{display:'flex', flexDirection:'row', margin: '28px', marginTop:'20px', marginBottom:'20px', flexDirection:'space-between'}}>
-							<div>
+						<div className="row" style={{margin:'1.5rem'}}>
+							<div className="col-5">
 								<Link to={'/dashboard/'+ this.state.course_id} > {this.state.course_name} </Link>
 								<p> {translateToIndo(this.state.start_term)} - {translateToIndo(this.state.end_term)} </p>
 								<p> Kode Bergabung: {this.state.join_code} </p>
 							</div>
 
-							<div style={{display:'flex', flexDirection:'row', margin:'auto'}}>
-								<div style={{display:'flex', flexDirection:'column'}}>
-									<h4 style={{color:'black', textAlign:'center'}}> {this.state.num_student} </h4>
-									<p> Mahasiswa </p>
-								</div>
-								<div style={{display:'flex', flexDirection:'column', marginLeft:'48px'}}>
-									<h4 style={{color:'black', textAlign:'center'}}> {this.state.num_lecture} </h4>
-									<p> Sesi </p>
+							<div className='col-5'>
+								<div className="row">
+									<div className='col' style={{color:'black', textAlign:'center'}}>
+										<h4>{this.state.num_student}</h4>
+										<p>Mahasiswa</p>
+									</div>
+									<div className='col' style={{color:'black', textAlign:'center'}}>
+										<h4>{this.state.num_lecture}</h4>
+										<p>Sesi</p>
+									</div>
 								</div>
 							</div>
-							<div style={{display:'flex', justifyContent:'space-between', margin:'0'}}>
+							<div className='col-2'>
 								<IconButton>
 									<Popup
 										trigger={<MoreVertIcon />}
@@ -744,10 +746,8 @@ class ProfCourseCard extends Component{
 										)}							
 									</Popup>    
 					        	</IconButton>
-							</div>
-							
+							</div>	
 						</div>
-					
 				</CardContent>
 			 </Card>
 			 </OverrideMaterialUICss>
