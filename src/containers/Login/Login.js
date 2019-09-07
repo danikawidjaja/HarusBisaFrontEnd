@@ -34,7 +34,7 @@ class LoginForm extends Component{
     this.state = {
       email: '',
       password: '',
-      error: false,
+      error: null,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,14 +42,14 @@ class LoginForm extends Component{
     this.Auth = this.props.Auth
   }
 
-  displayErrorMessage(){
-    if (this.state.error == true){     
-      return(<ErrorMessage msg={'Alamat email atau password tidak ditemukan'}/>)
-    }
-    else{
-      return null
-    }
-  }
+  // displayErrorMessage(){
+  //   if (this.state.error == true){     
+  //     return(<ErrorMessage msg={'Alamat email atau password tidak ditemukan'}/>)
+  //   }
+  //   else{
+  //     return null
+  //   }
+  // }
   validateForm(){
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -66,13 +66,13 @@ class LoginForm extends Component{
     this.Auth.login(this.state.email, this.state.password)
       .then(res =>{
         if (this.Auth.loggedIn()){
-          this.setState({error: false});
           this.props.userHasAuthenticated(true);
           this.props.history.push('/courses');
         }
       })
       .catch(err =>{
-        this.setState({ error: true});
+        this.setState({ error: err});
+        console.log(err)
       })
   }
 
@@ -86,7 +86,7 @@ class LoginForm extends Component{
   render(){
     return(
       <div >
-        {this.displayErrorMessage()}
+        {this.state.error && <ErrorMessage msg={this.state.error.message}/>}
         <form className='login-form' onSubmit={this.handleSubmit}>
           <FormGroup className="form-element" controlId="email" bsSize="small" style={{marginBottom:'1vw'}}>
             <ControlLabel className='form-control-label'> Email </ControlLabel>

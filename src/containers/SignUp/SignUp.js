@@ -14,6 +14,7 @@ import {
   ToggleButton
 } from "react-bootstrap";
 import Logo from '../Logo/Logo';
+import { ErrorMessage } from '../Login/Login';
 
 
 
@@ -54,7 +55,8 @@ class SignUpForm extends Component{
       school: '',
       role:'',
       schoolSelected: false,
-      roleSelected: false
+      roleSelected: false,
+      error: null
     };
     this.Auth = this.props.Auth
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -106,11 +108,15 @@ class SignUpForm extends Component{
             }
           })
           .catch(err =>{
-            alert(err.message);
+            this.setState({
+              error: err
+            })
           })
       })
       .catch(err =>{
-        alert(err.message);
+        this.setState({
+          error: err
+        })
       })
   }
 
@@ -124,6 +130,7 @@ class SignUpForm extends Component{
   render(){
     return(
       <div className='signup-form'>
+        {this.state.error && <ErrorMessage msg={this.state.error.message}/>}
         <form onSubmit={this.handleSubmit}>
           <div className='row'>
             <div className="col-6" style={{display:'flex', justifyContent:'space-evenly'}}>
