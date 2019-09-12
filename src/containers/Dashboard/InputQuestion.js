@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import Close from '@material-ui/icons/Close';
 import Timer from '../Timer/Timer.js';
 import { withStyles } from '@material-ui/core/styles';
+import { socket } from './Dashboard';
 
 const GreenSwitch = withStyles({
 	switchBase: {
@@ -143,7 +144,11 @@ class MultipleChoiceUpdate extends Component{
   				if (res.data.lectures[i].id == this.props.lecture_id){
   					this.props.changeSelectedLecture(res.data.lectures[i])
   				}
-  			}
+			  }
+			  socket.emit("change_quiz_time", {
+				new_duration : this.state.time_duration,
+				quiz_id: this.props.quiz.id
+			});
 		})
 		.catch(err =>{
         	console.log(err.message)
