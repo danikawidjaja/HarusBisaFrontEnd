@@ -132,25 +132,27 @@ class SignUpForm extends Component{
       <div className='signup-form'>
         {this.state.error && <ErrorMessage msg={this.state.error.message}/>}
         <form onSubmit={this.handleSubmit}>
-          <div className='row'>
-            <div className="col-6" style={{display:'flex', justifyContent:'space-evenly'}}>
+          <div className='row justify-content-center' style={{marginBottom:'1rem'}}>
+            <div className="col-3" style={{display:'flex', justifyContent:'space-evenly'}}>
               <input
                 type='radio'
                 value='student'
                 checked={this.state.role === "student"}
                 onChange={this.handleChangeRole}
+                style={{margin:'auto'}}
               />
-              <label>Mahasiswa</label>
+              <label style={{margin:'auto'}}>Mahasiswa</label>
             </div>
 
-            <div className='col-6' style={{display:'flex', justifyContent:'space-evenly'}}>
+            <div className='col-3' style={{display:'flex', justifyContent:'space-evenly'}}>
               <input
                 type='radio'
                 value='faculty'
                 checked={this.state.role === "faculty"}
                 onChange={this.handleChangeRole}
+                style={{margin:'auto'}}
               />
-              <label>Dosen</label>
+              <label style={{margin:'auto'}}>Dosen</label>
             </div>
           </div>
 
@@ -216,11 +218,11 @@ class SignUpForm extends Component{
               />
             </FormGroup>
           </div>
-          <div className='row'>
+          {(this.state.password !== this.state.confirmPassword) && <div className='row'>
             <div className='col'>
-              <p>Password anda {this.state.password !== this.state.confirmPassword ? "tidak" : ""} sama</p>
+              <ErrorMessage msg={"Password yang anda masukan tidak cocok"}/>
             </div>
-          </div>
+          </div>}
           <div className="row">
             <div className='col-12'>
               <Button
