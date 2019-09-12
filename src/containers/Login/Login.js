@@ -14,7 +14,7 @@ class Login extends Component {
     return (
       <div className='login container'>
           <div class='content'>
-            <Logo size='logo' color='black' background='trans' padding={false} style={{width:'6rem'}}/>
+            <Logo size='logo' color='black' background='trans' padding={false} style={{width:'10vh', height:"12vh"}}/>
             <h1> Log In </h1>
             <div style={{alignItems: 'flex-start', display: 'flex', flexDirection: 'column'}}>
               <p> Tidak punya akun? </p>
