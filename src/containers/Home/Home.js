@@ -47,23 +47,7 @@ export default class Home extends Component {
           <div style={{padding: '3rem 3rem 5rem'}}>
             <h1>Harus Bisa memberikan kesempatan untuk mahasiswa berinteraksi dan berpartisipasi di dalam ruang kelas.</h1>
           </div>
-          <div class='row justify-content-center'>
-            <div class='col-lg-4 benefit'>
-              <img src={time_img} alt='icon'/>
-              <h5>Interaksi Real Time</h5>
-              <p>Mempermudah interaksi antara dosen dan mahasiswa. Dosen dapat mengerti secara langsung apa yang dipahami oleh mahasiswanya.</p>
-            </div>
-            <div class='col-lg-4 benefit'>
-              <img src={laptop_img} alt='icon'/>
-              <h5>Mudah diakses</h5>
-              <p>Harus Bisa dapat dibuka dengan segala jenis platform seperti laptop, smartphone, dan tablet.</p>
-            </div>
-            <div class='col-lg-4 benefit'>
-              <img src={stack_img} alt='icon'/>
-              <h5>Data Oriented</h5>
-              <p>Kami menyimpan dan melindungi data nilai secara aman untuk dosen dan mahasiswa.</p>
-            </div>
-          </div>
+          <Benefit/>
 
         </div>
 
@@ -82,5 +66,47 @@ export default class Home extends Component {
 
       </div>
     );
+  }
+}
+
+class Benefit extends React.Component{
+  render(){
+    return(
+      <React.Fragment>
+        <div class='row justify-content-center'>
+            <div class='col-lg-4 benefit'>
+              <img src={time_img} alt='icon'/>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <img src={laptop_img} alt='icon'/>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <img src={stack_img} alt='icon'/>
+            </div>
+          </div>
+          <div class='row justify-content-center'>
+            <div class='col-lg-4 benefit'>
+              <h5>Interaksi Real Time</h5>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <h5>Mudah diakses</h5>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <h5>Data Oriented</h5>
+            </div>
+          </div>
+          <div class='row justify-content-center'>
+            <div class='col-lg-4 benefit'>
+              <p>Mempermudah interaksi antara dosen dan mahasiswa. Dosen dapat mengerti secara langsung apa yang dipahami oleh mahasiswanya.</p>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <p>Harus Bisa dapat dibuka dengan segala jenis platform seperti laptop, smartphone, dan tablet.</p>
+            </div>
+            <div class='col-lg-4 benefit'>
+              <p>Kami menyimpan dan melindungi data nilai secara aman untuk dosen dan mahasiswa.</p>
+            </div>
+          </div>
+      </React.Fragment>
+    )
   }
 }

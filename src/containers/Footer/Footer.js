@@ -4,6 +4,9 @@ import { FaInstagram, FaLinkedinIn, FaTwitter, FaFacebookF } from "react-icons/f
 import { Link } from "react-router-dom";
  
 export default class Footer extends Component {
+  navigate(id){   
+    document.getElementById(id).scrollIntoView() 
+  }
 
   render() {
     return (
@@ -17,8 +20,8 @@ export default class Footer extends Component {
                 <div class='row justify-content-end'>
                   <div class='col-4 links'>
                     <a href='/#top' className='f-link'>Home</a>
-                    <a href='/#about' className='f-link'>Kenapa Harus Bisa?</a>
-                    <a href='/#pricing' className='f-link'>Harga</a>
+                    <a href='/#about'  onClick={() => this.navigate("#about")} className='f-link'>Kenapa Harus Bisa?</a>
+                    <a href='/#pricing' onClick={() => this.navigate("#pricing")} className='f-link'>Harga</a>
                   </div>
                   <div class='col-4 links'>
                     <a href='/faq' className='f-link'>Bantuan</a>
