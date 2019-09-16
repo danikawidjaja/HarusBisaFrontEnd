@@ -7,6 +7,7 @@ import { Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import Popup from 'reactjs-popup';
 import { options } from '../SignUp/UniversityList';
 import Select from 'react-select';
+import { ErrorMessage } from '../Login/Login';
 
 class ProfileSetting extends Component{
 	constructor(props){
@@ -21,6 +22,7 @@ class ProfileSetting extends Component{
 			old_password:'',
 			new_password:'',
 			verify_new_password:'',
+			error: null,
 		};
 		this.handleSubmitInfo = this.handleSubmitInfo.bind(this);
 		this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
@@ -55,8 +57,6 @@ class ProfileSetting extends Component{
 
     handleSubmitInfo(event){
     	event.preventDefault();
-    	console.log(this.state)
-    	console.log('hello')
     	this.props.Auth.updateUser(this.state.id, this.state.first_name, this.state.last_name, this.state.email, null, null, this.state.school)
     	.then(res =>{
     		alert(res.message)
@@ -75,8 +75,9 @@ class ProfileSetting extends Component{
     		})
     	})
     	.catch(err =>{
-    		console.log(err)
+			console.log(err)
     		this.setState({
+				error: err,
     			old_password:'',
       			new_password:'',
       			verify_new_password:''
@@ -87,8 +88,12 @@ class ProfileSetting extends Component{
     handleSubmitPassword(event){
     	event.preventDefault();
     	
-    	if (this.state.new_password != this.state.verify_new_password){
-    		alert('Kata sandi anda berbeda.')
+    	if (this.state.new_password !== "" && this.state.new_password !== this.state.verify_new_password){
+			var error = new Error()
+			error.message = 'Kata sandi baru anda berbeda.'
+			this.setState({
+				error: error
+			})
     	}
     	else{
     		this.props.Auth.updateUser(this.state.id, this.state.first_name, this.state.last_name, this.state.email, this.state.old_password, this.state.new_password, this.state.school)
@@ -108,11 +113,11 @@ class ProfileSetting extends Component{
     			})
     		})
     		.catch(err =>{
-    			console.log(err)
     			this.setState({
     				old_password:'',
       				new_password:'',
-      				verify_new_password:''
+					verify_new_password:'',
+					error: err  
     			})
     		})
     	}
@@ -160,6 +165,7 @@ class ProfileSetting extends Component{
 
 
 			    			<div className='content-right'>
+								{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 			    				<label>Informasi Anda</label>
 			    				<form onSubmit={this.handleSubmitInfo}>
 									<FormGroup controlId='first_name' className='form-group'>
@@ -195,8 +201,10 @@ class ProfileSetting extends Component{
 										<ControlLabel className='form-group-label'>Nama Perguruan Tinggi</ControlLabel>
 										<Select
 										isClearable
+										defaultInputValue={this.state.school}
 										defaultValue={this.state.school}
-										// value={this.state.school}
+										// defaultMenuIsOpen={this.state.school}
+										value={this.state.school}
 										onChange={this.handleChangeSchool}
 										options={options}
 										className="form-group-entry"
