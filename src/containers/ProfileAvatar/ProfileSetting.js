@@ -3,9 +3,10 @@ import {DashboardNavigation} from '../Dashboard/Dashboard';
 import  '../Dashboard/Dashboard.css';
 import './ProfileSetting.css';
 import Logo from '../Logo/Logo';
-import { Button, FormGroup, FormControl, ControlLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import Popup from 'reactjs-popup';
-
+import { options } from '../SignUp/UniversityList';
+import Select from 'react-select';
 
 class ProfileSetting extends Component{
 	constructor(props){
@@ -87,7 +88,7 @@ class ProfileSetting extends Component{
     	event.preventDefault();
     	
     	if (this.state.new_password != this.state.verify_new_password){
-    		alert('Password anda berbeda. Ulangi')
+    		alert('Kata sandi anda berbeda.')
     	}
     	else{
     		this.props.Auth.updateUser(this.state.id, this.state.first_name, this.state.last_name, this.state.email, this.state.old_password, this.state.new_password, this.state.school)
@@ -131,7 +132,10 @@ class ProfileSetting extends Component{
 	    this.setState({
 	    	[event.target.id]: event.target.value
 	    });
-  	}
+	  }
+	handleChangeSchool = (school) => {
+		this.setState({ school});
+	}
 	render(){
 		if (!this.state.isLoading){
 			var profile = {
@@ -187,6 +191,18 @@ class ProfileSetting extends Component{
 								    		className='form-group-entry'
 								    	/>
 								    </FormGroup>
+									{/* <FormGroup className="form-group" controlId="school">
+										<ControlLabel className='form-group-label'>Nama Perguruan Tinggi</ControlLabel>
+										<Select
+										isClearable
+										defaultValue={this.state.school}
+										// value={this.state.school}
+										onChange={this.handleChangeSchool}
+										options={options}
+										className="form-group-entry"
+										style={{border:'none'}}
+										/>
+									</FormGroup>  */}
 								    <div className='buttons'>
 									    <Button
 										    type="submit"
