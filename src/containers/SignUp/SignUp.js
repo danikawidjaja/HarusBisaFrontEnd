@@ -68,17 +68,6 @@ class SignUpForm extends Component{
     }
   }
 
-  validateForm() {
-    return (
-      this.state.email.length > 0 &&
-      this.state.password.length > 0 &&
-      this.state.password === this.state.confirmPassword &&
-      this.state.firstname.length > 0 &&
-      this.state.lastname.length >0 &&
-      this.state.schoolSelected && this.state.roleSelected
-    );
-  }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -98,7 +87,27 @@ class SignUpForm extends Component{
 
   handleSubmit= async event =>{
     event.preventDefault();
-    this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
+    var error = new Error()
+    if (this.state.firstname == "" || this.state.lastname == ""){
+      error.message = "Nama tidak diberikan."
+      this.setState({
+        error: error
+      })
+    }
+    else if (this.state.password !== "" && this.state.password !== this.state.confirmPassword){
+      error.message = "Kata sandi anda tidak sama."
+      this.setState({
+        error: error
+      })
+    }
+    else if(!this.state.schoolSelected){
+      error.message = "Perguruan tinggi belum dipilih."
+      this.setState({
+        error: error
+      })
+    }
+    else{
+      this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
       .then(res =>{
         this.Auth.login(this.state.email, this.state.password)
           .then(res=>{
@@ -118,6 +127,7 @@ class SignUpForm extends Component{
           error: err
         })
       })
+    }
   }
 
   async componentWillMount(){
@@ -158,7 +168,7 @@ class SignUpForm extends Component{
 
           <div className="row">
             <FormGroup className="col-lg-6" controlId="firstname" bsSize="medium">
-              <ControlLabel>Nama Depan</ControlLabel>
+              <ControlLabel>Nama Depan*</ControlLabel>
               <FormControl
                 type="text"
                 value={this.state.firstname}
@@ -167,7 +177,7 @@ class SignUpForm extends Component{
             </FormGroup>
 
             <FormGroup className="col-lg-6" controlId="lastname" bsSize="medium">
-              <ControlLabel>Nama Belakang</ControlLabel>
+              <ControlLabel>Nama Belakang*</ControlLabel>
               <FormControl
                 type="text"
                 value={this.state.lastname}
@@ -178,7 +188,7 @@ class SignUpForm extends Component{
 
           <div className='row'>
           <FormGroup className="col" controlId="school" bsSize="medium">
-            <ControlLabel> Nama Perguruan Tinggi </ControlLabel>
+            <ControlLabel>Nama Perguruan Tinggi*</ControlLabel>
             <Select
               isClearable
               value={this.state.school}
@@ -190,7 +200,7 @@ class SignUpForm extends Component{
 
           <div className='row'>
           <FormGroup className="col" controlId="email" bsSize="medium">
-            <ControlLabel>Email</ControlLabel>
+            <ControlLabel>Email*</ControlLabel>
             <FormControl
               type="email"
               value={this.state.email}
@@ -201,7 +211,7 @@ class SignUpForm extends Component{
 
           <div className="row">      
             <FormGroup className="col-lg-6" controlId="password" bsSize="medium">
-              <ControlLabel>Password</ControlLabel>
+              <ControlLabel>Password*</ControlLabel>
               <FormControl
                 type="password"
                 value={this.state.password}
@@ -210,7 +220,7 @@ class SignUpForm extends Component{
             </FormGroup> 
 
             <FormGroup className="col-lg-6" controlId="confirmPassword" bsSize="medium">
-              <ControlLabel>Ulangi Password</ControlLabel>
+              <ControlLabel>Ulangi Password*</ControlLabel>
               <FormControl
                 type="password"
                 value={this.state.confirmPassword}
@@ -218,17 +228,11 @@ class SignUpForm extends Component{
               />
             </FormGroup>
           </div>
-          {(this.state.password !== this.state.confirmPassword) && <div className='row'>
-            <div className='col'>
-              <ErrorMessage msg={"Password yang anda masukan tidak cocok"}/>
-            </div>
-          </div>}
           <div className="row">
             <div className='col-12'>
               <Button
                 block
                 bsSize="large"
-                disabled={!this.validateForm()}
                 type="submit"
                 className="button"
               >
