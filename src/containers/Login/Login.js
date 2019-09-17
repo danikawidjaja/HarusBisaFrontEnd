@@ -42,18 +42,6 @@ class LoginForm extends Component{
     this.Auth = this.props.Auth
   }
 
-  // displayErrorMessage(){
-  //   if (this.state.error == true){     
-  //     return(<ErrorMessage msg={'Alamat email atau password tidak ditemukan'}/>)
-  //   }
-  //   else{
-  //     return null
-  //   }
-  // }
-  validateForm(){
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -89,7 +77,7 @@ class LoginForm extends Component{
         {this.state.error && <ErrorMessage msg={this.state.error.message}/>}
         <form className='login-form' onSubmit={this.handleSubmit}>
           <FormGroup className="form-element" controlId="email" bsSize="small" style={{marginBottom:'1vw'}}>
-            <ControlLabel className='form-control-label'> Email </ControlLabel>
+            <ControlLabel className='form-control-label'> Email* </ControlLabel>
             <FormControl
               autoFocus
               type="email"
@@ -99,7 +87,7 @@ class LoginForm extends Component{
           </FormGroup>
 
           <FormGroup className="form-element" controlId="password" bsSize="small">
-            <ControlLabel className='form-control-label'> Password </ControlLabel>
+            <ControlLabel className='form-control-label'> Password* </ControlLabel>
             <FormControl
               type="password"
               value={this.state.password}
@@ -110,7 +98,6 @@ class LoginForm extends Component{
           <Button
             block
             bsSize="medium"
-            disabled={!this.validateForm()}
             type="submit"
             style={{backgroundColor: '#ffe01c', fontWeight: '300', borderRadius:'0px', border:'0px', fontSize:'1.5vw'}}
           >

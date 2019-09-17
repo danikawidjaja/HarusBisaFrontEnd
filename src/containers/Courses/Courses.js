@@ -116,7 +116,7 @@ class Courses extends Component{
 			}
 		} else {
 			if (this.state.search_bar == ''){
-				coursesComponent.push(this.state.profile.role !== "faculty" ? <p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p> : <p>Buat kelas pertama anda!</p>)
+				coursesComponent.push(this.state.profile.role !== "faculty" ? <div className='col'><p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p></div> : <p>Buat kelas pertama anda!</p>)
 			}
 			else{
 				coursesComponent.push(<p>Kelas yang anda cari tidak ada.</p>)
@@ -136,7 +136,7 @@ class Courses extends Component{
 
 	addCourseComponent(close){
 		if (this.state.profile.role == 'faculty'){
-			return(<UpdateCourse form_type={'add'} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
+			return(<UpdateAddCourse form_type={'add'} closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState} />)
 		}
 		else{
 			return(<StudentAddCourse closefunction={close} Auth={this.Auth} updateCoursesState={this.updateCoursesState}/>)
@@ -175,7 +175,7 @@ class Courses extends Component{
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				    <div className='header'>
+				    <div className='header row'>
 			            <div class="col-md-4"><h1>Kelas Anda</h1></div>
 						<div className="d-none d-md-block col-md-4" style={{margin:"auto 0 auto 0"}}>
 							<div className='search-bar'>
@@ -220,7 +220,7 @@ class Courses extends Component{
 								<div className= "course-popup-header">
 									<h2> Edit Kelas </h2>
 								</div>
-								<UpdateCourse form_type={'update'} course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
+								<UpdateAddCourse form_type={'update'} course={this.state.courseToUpdate} closefunction={close} Auth={this.Auth} toggleShowUpdateCourseModal={this.toggleShowUpdateCourseModal} updateCoursesState={this.updateCoursesState}/>
 							</div>
 							)
 	  					}
@@ -483,7 +483,7 @@ class StudentAddCourse extends Component{
 		}
   	}
 }
-class UpdateCourse extends Component{
+class UpdateAddCourse extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -492,7 +492,8 @@ class UpdateCourse extends Component{
 			end_term: this.props.course.end_term,
 			description:this.props.course.description,
 			id: this.props.course._id,
-			form_type: this.props.form_type
+			form_type: this.props.form_type,
+			error: null,
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeStartTerm = this.changeStartTerm.bind(this);
@@ -517,6 +518,7 @@ class UpdateCourse extends Component{
 	}
   	handleSubmit(event){
 		event.preventDefault();
+		var error = new Error();
 		if (this.state.form_type == 'update'){ 
 			this.props.Auth.updateCourse(this.state.id, this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
 			.then(res =>{
@@ -527,18 +529,32 @@ class UpdateCourse extends Component{
 			})
 			.catch(err =>{
 				console.log(err.message)
+				error.message = err.message
+				this.setState({
+					error: error
+				})
 			})
 		}
 		else if (this.state.form_type == 'add'){
-			this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
-			.then(res =>{
-				this.props.closefunction()
-				alert(this.state.course_name+' course added')
-				this.props.updateCoursesState(res.data.courses)
-			})
-			.catch(err =>{
-				console.log(err.message)
-			})
+			if (this.state.start_term == "" || this.state.end_term == ""){
+				error.message = "Mohon berikan tanggal mulai dan berakhir kelas."
+				this.setState({error: error})
+			}
+			else{
+				this.props.Auth.addCourse(this.state.course_name, this.state.start_term, this.state.end_term, this.state.description)
+				.then(res =>{
+					this.props.closefunction()
+					alert(this.state.course_name+' course added')
+					this.props.updateCoursesState(res.data.courses)
+				})
+				.catch(err =>{
+					console.log(err.message)
+					error.message = err.message
+					this.setState({
+						error: error
+					})
+				})
+			}
 		}
 		else{
 			console.log('error.')
@@ -549,9 +565,10 @@ class UpdateCourse extends Component{
 	render(){
 	    return(
 	      	<div className="form">
+				{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="course_name">
-	            		<ControlLabel>Nama Kelas</ControlLabel>
+	            		<ControlLabel>Nama Kelas*</ControlLabel>
 			            <FormControl
 			              autoFocus
 			              type="text"
@@ -561,12 +578,27 @@ class UpdateCourse extends Component{
 			            />
 	          		</FormGroup>
 					
-					<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginBottom:'1rem'}}> 
-						<TermDropdown label={'Mulai Kelas'} id={'start_term'} handleChange={this.changeStartTerm} month={this.state.start_term.split(" ")[0]} year={this.state.start_term.split(" ")[1]}/>
-						<p style={{margin:'auto', marginTop:'1.5rem'}}>-</p>
-						<TermDropdown label={'Akhir Kelas'} id={'end_term'} handleChange={this.changeEndTerm} month={this.state.end_term.split(" ")[0]} year={this.state.end_term.split(" ")[1]}/>
-					</div>
-	          		
+	          		<div style={{marginBottom:'1rem'}}> 
+					  <div className='row justify-content-between'>
+						<div className='col col-45'>
+							<label>Mulai Kelas*</label>
+						</div>
+						<div className='col col-45'>
+							<label>Akhir Kelas*</label>
+						</div>
+					  </div>
+					  <div className='row'>
+						<div className='col col-45'>
+							<TermDropdown label={''} id={'start_term'} handleChange={this.changeStartTerm} month={this.state.start_term.split(" ")[0]} year={this.state.start_term.split(" ")[1]}/>
+						</div>
+						<div className='col col-1-max' style={{display:'flex'}}>
+							<p style={{margin:'auto'}}>-</p>
+						</div>
+						<div className='col col-45'>
+							<TermDropdown label={''} id={'end_term'} handleChange={this.changeEndTerm} month={this.state.end_term.split(" ")[0]} year={this.state.end_term.split(" ")[1]}/>
+						</div>
+					  </div>
+					</div>  
 	          		<FormGroup controlId="description">
 	            		<ControlLabel>Deskripsi</ControlLabel>
 			            <FormControl
@@ -597,7 +629,7 @@ class UpdateCourse extends Component{
   	}
 }
 
-UpdateCourse.defaultProps={
+UpdateAddCourse.defaultProps={
 	course:{
 		course_name:'',
 		start_term:"",

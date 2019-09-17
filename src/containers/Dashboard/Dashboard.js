@@ -38,6 +38,7 @@ import socketIOClient from "socket.io-client";
 import Timer from '../Timer/Timer';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import { withStyles } from '@material-ui/core/styles';
+import { ErrorMessage } from '../Login/Login';
 
 export var socket;
 
@@ -94,9 +95,14 @@ class Dashboard extends Component{
 	}
 	async changeSelectedLecture(new_selected_lecture){
 		if (new_selected_lecture == "default"){
-			this.setState({
-				selected_lecture: this.state.lectures[0],
-			})
+			if (this.state.lectures.length === 0){
+				this.setState({selected_lecture: null})
+			}
+			else{
+				this.setState({
+					selected_lecture: this.state.lectures[0],
+				})
+			}
 		}
 		else{
 			this.setState({
@@ -346,7 +352,8 @@ class AddEditLecture extends Component{
 			participation_reward_percentage: this.props.lecture.participation_reward_percentage,
 			form_type: this.props.form_type,
 			minDate:this.convertToDateObject(this.props.minDate),
-			maxDate:this.convertToDateObject(this.props.maxDate) 
+			maxDate:this.convertToDateObject(this.props.maxDate),
+			error: null
 		}
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -390,6 +397,7 @@ class AddEditLecture extends Component{
   	}
   	async handleSubmit(event){
 		event.preventDefault();
+		var error = new Error();
 		if (this.state.form_type == 'edit'){  
 			this.props.Auth.updateLecture(this.props.selected_course_id, this.props.lecture.id, this.convertToString(this.state.date), this.state.description, this.state.participation_reward_percentage)
 			.then(res =>{
@@ -400,6 +408,12 @@ class AddEditLecture extends Component{
 						this.props.changeSelectedLecture(res.data.lectures[i])
 					}
 				}
+			})
+			.catch(err =>{
+				error.message = err.message
+				this.setState({
+					error: error
+				})
 			})
 		}
 		else if (this.state.form_type == 'add'){
@@ -417,7 +431,10 @@ class AddEditLecture extends Component{
 			})
 			.catch(err =>{
 				console.log(err.message)
-				alert(err.message)
+				error.message = err.message
+				this.setState({
+					error: error
+				})
 			})
 		}
 		else{
@@ -431,10 +448,11 @@ class AddEditLecture extends Component{
 	render(){
 	    return(
 	      	<div className="form">
+				{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 	        	<form onSubmit={this.handleSubmit}>
 	          		<FormGroup controlId="class_date" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
 			            <img src={calIcon} style={{height:'5vh', marginTop:'auto', marginBottom:'auto'}}/>
-						{this.state.form_type == 'add' ? <p style={{marginTop:'auto', marginBottom:'auto', fontWeight:'500', letterSpacing:'1.8px'}}>Tanggal Kelas</p> : null}
+						{this.state.form_type == 'add' ? <p style={{marginTop:'auto', marginBottom:'auto', fontWeight:'500', letterSpacing:'1.8px'}}>Tanggal Kelas*</p> : null}
 			            <DatePicker 
 			            	selected={this.state.date}
 			            	onChange={this.handleDateChange}
@@ -447,7 +465,7 @@ class AddEditLecture extends Component{
 
 	          		</FormGroup>
 	          		<FormGroup>
-	          			<ControlLabel> Persentase Nilai </ControlLabel>
+	          			<ControlLabel> Persentase Nilai* </ControlLabel>
 	          			<ReactSlider onChange={this.handleSliderChange} defaultValue={this.state.participation_reward_percentage}/> 
 	          			<div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
 	          				<p className='slider-text'> Partisipasi: {this.state.participation_reward_percentage}% </p>
@@ -461,7 +479,7 @@ class AddEditLecture extends Component{
 			              type="text"
 			              value={this.state.description}
 			              onChange={this.handleChange}
-			              placeholder= 'Eg. Anatomi (optional)'
+			              placeholder= 'Eg. Anatomi (opsional)'
 			            />
 	          		</FormGroup>
 					<div className='buttons'>
@@ -583,7 +601,7 @@ class DashboardRight extends Component{
 		if (oldProps.selectedLecture !== newProps.selectedLecture){
 			this.setState({
 				lecture: newProps.selectedLecture,
-				live: newProps.selectedLecture.live
+				live: newProps.selectedLecture ? newProps.selectedLecture.live  : null
 			})
 		}
 
@@ -630,7 +648,7 @@ class DashboardRight extends Component{
 				quizzesComponent.push(<QuizCard course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} socket={this.props.socket} quizzes={this.state.lecture.quizzes} live={this.state.live} updateLecturesState={this.props.updateLecturesState} changeSelectedLecture={this.props.changeSelectedLecture} quiz={quizzes[i]} question_number={i+1} Auth={this.props.Auth} selected_lecture_id={this.state.lecture.id} selected_course_id={this.props.selected_course._id}/>)
 			} 
 		} else {
-			quizzesComponent.push(<p>You don't have any questions yet!</p>)
+			quizzesComponent.push(<p>Sesi baru! Buatlah pertanyaan pertama anda.</p>)
 		}
 		return quizzesComponent
 	}
@@ -640,9 +658,15 @@ class DashboardRight extends Component{
 			lecture_id: this.state.lecture.id
 		})
 		socket.on("lecture_is_live", async live =>{
+			console.log(live)
 			await this.setState({
-				live: live.live
+				live: live.live,
 			})
+			if (live.live){
+				var lecture = this.state.lecture
+				lecture.has_lived = true
+				this.setState({lecture: lecture})
+			}
 		})
 	}
 
@@ -678,12 +702,54 @@ class DashboardRight extends Component{
 			return(<h1> Sesi {this.state.lecture.date.split("/")[0] + '/' + this.state.lecture.date.split("/")[1]} </h1>)
 		}
 	}
+	
+	startLectureComponent(){
+		if (this.state.lecture.has_lived){
+			return(
+				<Popup
+				trigger={
+					<div className='interactive'>
+						<OverrideMaterialUICss>
+							<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
+						</OverrideMaterialUICss>
+						<p> Mulai Sesi </p>
+					</div>
+				}
+				modal
+				closeOnDocumentClick={false}
+				contentStyle={{minHeight:'40vh', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
+				>
+				{close => (
+					<div className='popup'>
+						<div className='popup-header'>
+							<p>Apakah anda yakin?</p>
+						</div>
+						<p style={{marginBottom:'1rem'}}>Dengan memulai sesi, anda akan menghapus semua data dari sesi ini jika sudah pernah dimulai sebelumnya.</p>
+						<div className='buttons'>
+							<Button className='button' onClick={this.startLecture}>Iya</Button>
+							<Button className='button' onClick={close}>Tidak</Button>
+						</div>
+					</div>
+					)
+				}
+				</Popup>
+			)
+		}
+		else{
+			return(
+				<div className='interactive' onClick={this.startLecture}>
+					<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
+					<p> Mulai Sesi </p>
+				</div>
+			)
+		}
+	}
 
 	render(){
 		if (!this.state.lecture){
 			return(
 				<div className='content' style={{zIndex: this.props.flag ? 0 : 1}}>
-					<p> Kelas baru! Buatlah sesi pertama anda </p>
+					<p> Kelas baru! Buatlah sesi pertama anda. </p>
 				</div>)
 		}
 		else{
@@ -701,34 +767,8 @@ class DashboardRight extends Component{
     							<Stop className='icon' style={{color:'#FFE01C'}}/>
     							<p> Stop Sesi </p>
     						</div>
-    						:
-    						<Popup
-    						trigger={
-			    				<div className='interactive'>
-			    					<OverrideMaterialUICss>
-			    						<PlayArrow className='icon' style={{color: "#FFE01C"}}/>
-			    					</OverrideMaterialUICss>
-			    					<p> Mulai Sesi </p>
-			    				</div>
-			    			}
-			    			modal
-			    			closeOnDocumentClick={false}
-			    			contentStyle={{minHeight:'40vh', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',borderRadius: '8px'}}
-			    			>
-			    			{close => (
-			    				<div className='popup'>
-			    					<div className='popup-header'>
-			    						<p>Apakah anda yakin?</p>
-			    					</div>
-			    					<p style={{marginBottom:'1rem'}}>Dengan memulai sesi, anda akan menghapus semua data dari sesi ini jika sudah pernah dimulai sebelumnya.</p>
-			    					<div className='buttons'>
-				    					<Button className='button' onClick={this.startLecture}>Iya</Button>
-				    					<Button className='button' onClick={close}>Tidak</Button>
-				    				</div>
-			    				</div>
-			    				)
-			    			}
-			    			</Popup>
+							:
+							this.startLectureComponent()
 		    			}
 	    				<div className='interactive'>
 	    					<Popup trigger={	    								
