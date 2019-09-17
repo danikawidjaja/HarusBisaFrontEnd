@@ -116,7 +116,7 @@ class Courses extends Component{
 			}
 		} else {
 			if (this.state.search_bar == ''){
-				coursesComponent.push(this.state.profile.role !== "faculty" ? <p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p> : <p>Buat kelas pertama anda!</p>)
+				coursesComponent.push(this.state.profile.role !== "faculty" ? <div className='col'><p>Anda belum masuk dalam kelas apapun. Hubungi dosen anda.</p></div> : <p>Buat kelas pertama anda!</p>)
 			}
 			else{
 				coursesComponent.push(<p>Kelas yang anda cari tidak ada.</p>)
@@ -175,7 +175,7 @@ class Courses extends Component{
 						</IconButton></OverrideMaterialUICss>
 						<ProfileAvatar profile={this.state.profile} Auth={this.props.Auth} userHasAuthenticated={this.props.props.userHasAuthenticated} history={this.props.history}/>
 					</div>
-				    <div className='header'>
+				    <div className='header row'>
 			            <div class="col-md-4"><h1>Kelas Anda</h1></div>
 						<div className="d-none d-md-block col-md-4" style={{margin:"auto 0 auto 0"}}>
 							<div className='search-bar'>
