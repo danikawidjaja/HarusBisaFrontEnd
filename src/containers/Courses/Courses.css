@@ -186,6 +186,8 @@ html, body{
 	align-items: center;
 	justify-content: center;
 	align-content: center;
+	max-height: 100vh;
+	overflow-y: auto;
 
 }
 
@@ -211,8 +213,8 @@ html, body{
 .Courses .right .course-popup .form{
 	align-items: center;
 	padding: 1rem;
-	padding-left: 6rem;
-	padding-right: 6rem;
+	/* padding-left: 6rem;
+	padding-right: 6rem; */
 }
 
 /* .Courses .right .course-popup .form .MuiInputBase-input-31{
@@ -220,7 +222,22 @@ html, body{
 	border-radius: 8px;
 } */
 
+.col-45{
+	flex: 0 0 45% !important;
+	-webkit-flex: 0 0 45% !important;
+	max-width: 45%;
+}
 
+.col-1-max{
+	flex: 0 0 10% !important;
+	-webkit-flex: 0 0 10% !important;
+	max-width: 10%;
+}
+
+.Courses .right .course-popup .form .MuiOutlinedInput-input{
+	padding: 0.65rem;
+    padding-right: 1.9em;
+}
 .Courses .right .course-popup .form .dropdown .MuiSelect-select-2{	
 	padding: 0.5rem 1rem 0.5rem 1rem;
 	border-radius: 8px;
