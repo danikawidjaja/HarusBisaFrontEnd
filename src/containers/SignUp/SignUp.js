@@ -109,18 +109,19 @@ class SignUpForm extends Component{
     else{
       this.Auth.signup(this.state.password, this.state.email, this.state.firstname, this.state.lastname, this.state.school.value, this.state.role)
       .then(res =>{
-        this.Auth.login(this.state.email, this.state.password)
-          .then(res=>{
-            if (this.Auth.loggedIn()){
-              this.props.userHasAuthenticated(true);
-              this.props.history.push('/courses');
-            }
-          })
-          .catch(err =>{
-            this.setState({
-              error: err
-            })
-          })
+        // this.Auth.login(this.state.email, this.state.password)
+        //   .then(res=>{
+        //     if (this.Auth.loggedIn()){
+        //       this.props.userHasAuthenticated(true);
+        //       this.props.history.push('/courses');
+        //     }
+        //   })
+        //   .catch(err =>{
+        //     this.setState({
+        //       error: err
+        //     })
+        //   })
+        this.props.history.push('/confirmEmail');
       })
       .catch(err =>{
         this.setState({

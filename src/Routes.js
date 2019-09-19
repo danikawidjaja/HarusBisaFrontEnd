@@ -15,6 +15,7 @@ import StudentDashboard from './containers/Dashboard/StudentDashboard';
 import ProfileSetting from './containers/ProfileAvatar/ProfileSetting';
 import Lecture from './containers/Lecture/Lecture';
 import Gradebook from './containers/Gradebook/Gradebook';
+import ConfirmEmail from "./containers/SignUp/ConfirmEmail";
  
 export default ({ childProps }) =>
   <Switch>
@@ -33,5 +34,6 @@ export default ({ childProps }) =>
         <AppliedRoute path='/contactus' component={ContactUs} props={childProps}/>
         <AppliedRoute path='/forgetpassword' component={ForgetPassword} props={childProps}/>
         <AppliedRoute path='/profilesetting/:id' component={ProfileSetting} props={childProps}/>
+        <AppliedRoute path='/confirmEmail' exact component={ConfirmEmail} props={childProps}/>
         <AppliedRoute component={NotFound} props={childProps}/>
   </Switch>;
