@@ -9,6 +9,7 @@ import Close from '@material-ui/icons/Close';
 import Timer from '../Timer/Timer.js';
 import { withStyles } from '@material-ui/core/styles';
 import { socket } from './Dashboard';
+import { ErrorMessage } from '../Login/Login';
 
 const GreenSwitch = withStyles({
 	switchBase: {
@@ -118,7 +119,7 @@ class MultipleChoiceUpdate extends Component{
 			number_of_answers: this.props.quiz.answers.length,
 			time_duration: this.props.quiz.time_duration,
 			point: this.props.quiz.point,
-			error:false,
+			error:null,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -151,6 +152,7 @@ class MultipleChoiceUpdate extends Component{
 			});
 		})
 		.catch(err =>{
+			this.setState({error: err})
         	console.log(err.message)
       	})
 	}
@@ -204,6 +206,7 @@ class MultipleChoiceUpdate extends Component{
 	render(){
 		return(
 			<div className='form'>
+				{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 			<form onSubmit={this.handleSubmit}>
 				<FormGroup controlId='question' className='question'>
 					<ControlLabel>Pertanyaan</ControlLabel>
@@ -452,6 +455,7 @@ class MultipleChoiceQuestionForm extends Component{
 			number_of_answers: 2,
 			time_duration: 60,
 			point: 1,
+			error:null,
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -479,6 +483,9 @@ class MultipleChoiceQuestionForm extends Component{
   			}
 		})
 		.catch(err =>{
+			this.setState({
+				error: err
+			})
         	console.log(err.message)
       	})
 	}
@@ -534,6 +541,7 @@ class MultipleChoiceQuestionForm extends Component{
 	render(){
 		return(
 			<div className='form'>
+				{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
 			<form onSubmit={this.handleSubmit}>
 				<FormGroup controlId='question' className='question'>
 					<ControlLabel>Pertanyaan</ControlLabel>
