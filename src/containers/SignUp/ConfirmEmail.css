@@ -1,0 +1,53 @@
+.confirmEmail{
+    padding-top: 2rem;
+}
+.confirmEmail .text{
+    text-align: center;
+    padding: 2rem
+}
+
+.confirmEmail .text h1{
+    font-style: normal;
+}
+
+.confirmEmail .text p{
+    font-weight: lighter;
+}
+
+.confirmEmail .buttons{
+    align-content: center;
+    padding: 2rem;
+}
+
+.confirmEmail .buttons .button{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 122%;
+    text-transform: none;
+    text-align: center;
+
+    background: #FFE01C;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.confirmEmail .buttons .transparent{
+    border: 1px solid #979797;
+    border-radius: 3px;
+    background-color: transparent;
+}
+
+@media screen and (min-width: 991px){
+    .confirmEmail{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: Rubik;
+    }
+    .confirmEmail .container{
+        padding-left: 10rem;
+        padding-right: 10rem;
+    }
+}
