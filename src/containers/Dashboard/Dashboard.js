@@ -779,10 +779,14 @@ class DashboardRight extends Component{
 							this.startLectureComponent()
 		    			}
 	    				<div className='interactive'>
-	    					<Popup trigger={	    								
-		    					<IconButton style={{background:'transparent', border:'None'}}>
-						    	<OverrideMaterialUICss> <AddIcon className='icon' style={{color: "#FFE01C"}}/> </OverrideMaterialUICss>
-							    </IconButton>
+	    					<Popup trigger={
+								<div className='interactive'>
+									<IconButton style={{background:'transparent', border:'None'}}>
+									<OverrideMaterialUICss> <AddIcon className='icon' style={{color: "#FFE01C"}}/> </OverrideMaterialUICss>
+									</IconButton>
+									<p> Tambah<br/>Pertanyaan </p>
+								</div>	    								
+		    					
 							}
 								modal
 								closeOnDocumentClick={false}
@@ -790,7 +794,7 @@ class DashboardRight extends Component{
 							>
 								{close => (<AddQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
 						  	</Popup>
-							<p> Tambah<br/>Pertanyaan </p>
+							{/* <p> Tambah<br/>Pertanyaan </p> */}
 	    				</div>
 
 	    				<Popup trigger={
