@@ -55,12 +55,14 @@ class Lecture extends Component{
 
 	socketConnection(){
 		if (socket){
+			console.log(this.state)
 			socket.emit("participate_lecture", {lecture_id: this.state.selected_lecture.id})
 			socket.on("lecture_status", async data =>{
 				await this.setState({
 					live_quizzes: data.quizzes
 				})
 			})
+			console.log(this.state)
 			console.log('waiting for new question')
 			socket.on("new_question", data =>{
 				var quiz = data.quiz;
@@ -324,41 +326,46 @@ export class Quiz extends Component{
 			return 'non-live-answer'
 		}
 	}
-	async answerQuiz(event){
-		event.preventDefault();
+	async answerQuiz(i){
+		// event.preventDefault();
+		// console.log(i)
 		if (this.props.quiz.live){
-			var ans = parseInt(event.target.id);
+			this.props.setShowMyAnswer(true);
+			var ans = parseInt(i);
 			await this.setState({
 				answer : ans,
 			})
+			console.log(this.state.answer)
 			socket.emit("answer_question", {
 				lecture_id: this.props.lecture_id,
 				quiz_id: this.props.quiz.id,
 				quiz_answer: ans 
 			});
-			this.props.setShowMyAnswer(true);
 		}
 
 	}
 	makeAns(){
 		var answers = this.props.quiz.answers;
 		let components = [];
-		//var my_answer = (this.state.answer ? this.state.answer : this.props.quiz.correct_answer) //pretend corrent ans is my ans
-		var my_answer = this.state.answer ? this.state.answer : this.props.quiz.student_answer
+		var my_answer = this.state.answer
+		if (this.state.answer === null){
+			my_answer = this.props.quiz.student_answer
+		}
+		
 		for (let i=0; i<answers.length; i++){
 			if (i == this.props.quiz.correct_answer && (this.props.quiz.show_correct_answer || this.props.show_correct_answer)){
 				if ( i == my_answer && this.props.show_my_answer){
-					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4', fontWeight:'bold'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+					components.push(<div id={i} onClick={()=> this.answerQuiz(i)} className={this.style()} style={{backgroundColor:'#82DAA4', fontWeight:'bold'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
 				else{
-					components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{backgroundColor:'#82DAA4'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+					components.push(<div id={i} onClick={()=> this.answerQuiz(i)} className={this.style()} style={{backgroundColor:'#82DAA4'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 				}
 			}
 			else if (i == my_answer && this.props.show_my_answer){
-				components.push(<div id={i} onClick={this.answerQuiz} className={this.style()} style={{fontWeight:'bold', border: '1px solid #6311AB'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				components.push(<div id={i} onClick={()=> this.answerQuiz(i)} className={this.style()} style={{fontWeight:'bold', border: '1px solid #6311AB'}}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 			else{
-				components.push(<div id={i} onClick={this.answerQuiz} className={this.style()}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
+				components.push(<div id={i} onClick={()=> this.answerQuiz(i)} className={this.style()}>{String.fromCharCode(i+65)}. {answers[i]}</div>)
 			}
 		}
 		return components;
