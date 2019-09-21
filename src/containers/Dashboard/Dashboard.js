@@ -286,19 +286,22 @@ class DashboardLeft extends Component{
 	}
 	handleChangeLecture(value) {
 		this.props.changeSelectedLecture(value)
-  	}
-
+		console.log(this.props.selectedLecture.live)
+	}
+	
   	async componentDidUpdate(oldProps){
   		if (oldProps.lectures !== this.props.lectures){
   			this.setState({
   				lectures: this.props.lectures
   			})
-  		}
+		}
   	}
 
-  	makeToggleButtons(lectures){
+  	makeToggleButtons(){
+		var lectures = this.state.lectures
+		console.log(this.props.selectedLecture)
   		let toggleButtons = []
-  		if (lectures.length == 0){
+  		if (lectures.length === 0){
   		}
   		else{
 	  		for (let i=0; i<lectures.length; i++){
@@ -308,9 +311,17 @@ class DashboardLeft extends Component{
 		  			)
 	  			}
 	  			else{
-	  				toggleButtons.push(
-	  					<Button className='button' value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
-	  				)
+					if (this.props.selectedLecture.live){
+						//TODO: DISABLING BUTTON IS IN PROGRESS --> NOT DONE
+						toggleButtons.push(
+							<Button className='button' disabled={true} value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
+						)
+					}
+					else{
+						toggleButtons.push(
+							<Button className='button' value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
+						)
+					}
 	  			}
 	  		}
 	  	}
@@ -319,11 +330,8 @@ class DashboardLeft extends Component{
 	render(){
 		return(
 			<div style={{width:"100%", height:'100%', justifyContent:'space-between'}}>
-				{/* <ToggleButtonGroup className='buttons' name='lectureDates'type='radio' defaultValue={this.props.selectedLecture} onChange={this.handleChangeLecture}>
-            		{this.makeToggleButtons(this.state.lectures)}
-				  </ToggleButtonGroup> */}
 				<div className='buttons'>
-            		{this.makeToggleButtons(this.state.lectures)}
+            		{this.makeToggleButtons()}
           		</div>
           		<Popup 
           		trigger={<Button className='addButton'> + Tambah Sesi </Button>} 
@@ -663,7 +671,7 @@ class DashboardRight extends Component{
 			lecture_id: this.state.lecture.id
 		})
 		socket.on("lecture_is_live", async live =>{
-			console.log(live)
+			// console.log(live)
 			await this.setState({
 				live: live.live,
 			})
@@ -794,7 +802,6 @@ class DashboardRight extends Component{
 							>
 								{close => (<AddQuestion changeSelectedLecture={this.props.changeSelectedLecture} updateLecturesState={this.props.updateLecturesState} Auth={this.props.Auth} course_id={this.props.selected_course._id} lecture_id={this.props.selectedLecture.id} closefunction={close}/>)}			
 						  	</Popup>
-							{/* <p> Tambah<br/>Pertanyaan </p> */}
 	    				</div>
 
 	    				<Popup trigger={
