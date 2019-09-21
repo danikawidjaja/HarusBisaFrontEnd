@@ -94,20 +94,25 @@ class Dashboard extends Component{
 		})
 	}
 	async changeSelectedLecture(new_selected_lecture){
-		if (new_selected_lecture == "default"){
-			if (this.state.lectures.length === 0){
-				this.setState({selected_lecture: null})
+		if (this.state.selected_lecture.live == false){
+			if (new_selected_lecture == "default"){
+				if (this.state.lectures.length === 0){
+					this.setState({selected_lecture: null})
+				}
+				else{
+					this.setState({
+						selected_lecture: this.state.lectures[0],
+					})
+				}
 			}
 			else{
 				this.setState({
-					selected_lecture: this.state.lectures[0],
+					selected_lecture: new_selected_lecture,
 				})
 			}
 		}
 		else{
-			this.setState({
-				selected_lecture: new_selected_lecture,
-			})
+			console.log('a lecture is currently live. cannot move. ')
 		}
 		
 	}
@@ -662,6 +667,9 @@ class DashboardRight extends Component{
 			await this.setState({
 				live: live.live,
 			})
+			var lecture = this.state.lecture
+			lecture.live = live.live
+			this.props.changeSelectedLecture(lecture)
 			if (live.live){
 				var lecture = this.state.lecture
 				lecture.has_lived = true
