@@ -94,7 +94,8 @@ class Dashboard extends Component{
 		})
 	}
 	async changeSelectedLecture(new_selected_lecture){
-		if (this.state.selected_lecture.live == false){
+		var currentlive = this.state.selected_lecture ? this.state.selected_lecture.live : false
+		if (currentlive  == false){
 			if (new_selected_lecture == "default"){
 				if (this.state.lectures.length === 0){
 					this.setState({selected_lecture: null})
@@ -311,17 +312,17 @@ class DashboardLeft extends Component{
 		  			)
 	  			}
 	  			else{
-					if (this.props.selectedLecture.live){
-						//TODO: DISABLING BUTTON IS IN PROGRESS --> NOT DONE
-						toggleButtons.push(
-							<Button className='button' disabled={true} value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
-						)
-					}
-					else{
+					// if (this.props.selectedLecture.live){
+					// 	//TODO: DISABLING BUTTON IS IN PROGRESS --> NOT DONE
+					// 	toggleButtons.push(
+					// 		<Button className='button' disabled={true} value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
+					// 	)
+					// }
+					// else{
 						toggleButtons.push(
 							<Button className='button' value={lectures[i]} onClick={()=> this.handleChangeLecture(lectures[i])}> Sesi {lectures[i].date.split('/')[0]} / {lectures[i].date.split('/')[1]} </Button>
 						)
-					}
+					// }
 	  			}
 	  		}
 	  	}
@@ -360,7 +361,7 @@ class AddEditLecture extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			date: this.props.lecture.date == "" ? this.convertToDateObject(this.props.minDate) : this.convertToDateObject(this.props.lecture.date),
+			date: (this.props.lecture.date === "" | undefined) ? this.convertToDateObject(this.props.minDate) : this.convertToDateObject(this.props.lecture.date),
 			description:this.props.lecture.description,
 			participation_reward_percentage: this.props.lecture.participation_reward_percentage,
 			form_type: this.props.form_type,
@@ -436,6 +437,7 @@ class AddEditLecture extends Component{
 			var date  = day + '/' + month + '/' + year
 			this.props.Auth.addLecture(this.props.selectedCourseId, date, this.state.description, this.state.participation_reward_percentage)
 			.then(res =>{
+				console.log(res)
 				this.props.closefunction()
 				this.props.updateLecturesState(res.data.lectures)
 				this.props.changeSelectedLecture(res.data.lectures[0])
@@ -459,6 +461,7 @@ class AddEditLecture extends Component{
   		this.setState({date: date});
   	}
 	render(){
+		console.log(this.state)
 	    return(
 	      	<div className="form">
 				{this.state.error && <ErrorMessage msg={this.state.error.message}/>}
