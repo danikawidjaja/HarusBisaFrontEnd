@@ -16,7 +16,7 @@ import ProfileSetting from './containers/ProfileAvatar/ProfileSetting';
 import Lecture from './containers/Lecture/Lecture';
 import Gradebook from './containers/Gradebook/Gradebook';
 import ConfirmEmail from "./containers/SignUp/ConfirmEmail";
- 
+import Dashboardv2 from './containers/Dashboard/Dashboard_v2';
 export default ({ childProps }) =>
   <Switch>
         <AppliedRoute path="/home" exact component={Home} props={childProps}/>
@@ -25,6 +25,7 @@ export default ({ childProps }) =>
         <AppliedRoute path ="/login" exact component = {Login} props={childProps} />
         <AppliedRoute path="/courses" component ={Courses} props={childProps}/>
         <AppliedRoute path='/dashboard/:id' exact component={Dashboard} props={childProps}/>
+        <AppliedRoute path="/dashboardv2" exact component={Dashboardv2} props={childProps}/>
         <AppliedRoute path='/student-dashboard/:id' exact component={StudentDashboard} props={childProps}/>
         <AppliedRoute path='/:course_id/lecture/:lecture_id/:live' exact component={Lecture} props={childProps}/>
         <AppliedRoute path='/:course_id/gradebook' exact component={Gradebook} props={childProps}/>
