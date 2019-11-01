@@ -32,7 +32,7 @@ export default class Navbar_ extends React.Component {
     return (
       <div>
         <Navbar light expand="md" style={{backgroundColor: window.scrollY === 0 ? 'transparent': 'white'}}>
-          <NavbarBrand href="/#top" onClick={() => this.navigate("#top")}><Logo style={{width: '12rem',height: '2.5rem'}} size='full' color='black' background='trans' padding={false}/></NavbarBrand>
+          <NavbarBrand href="/#top" onClick={() => this.navigate("#top")} className="col-md-3 col"><Logo style={{width: '12rem',height: '2.5rem'}} size='full' color='black' background='trans' padding={false}/></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
