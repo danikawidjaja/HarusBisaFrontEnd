@@ -53,6 +53,7 @@ class Logo extends Component{
 				if (this.props.background == 'white'){
 					if (this.props.padding){
 						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_padding_1}/><img src={full_black_white_padding_2}/></div></Link>)
+						
 					}
 					else{
 						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_white_nopadding_1}/><img src={full_black_white_nopadding_2}/></div></Link>)
@@ -63,7 +64,15 @@ class Logo extends Component{
 						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_padding_1}/><img src={full_black_trans_padding_2}/></div></Link>)
 					}
 					else{
-						return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_nopadding_1}/><img src={full_black_trans_nopadding_2}/></div></Link>)
+						// return(<Link to="/" style={{display:'flex', justifyContent:'center'}}><div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} className={'full ' + this.props.className} style={this.props.style}><img className={this.state.hover ? 'on-hover' : 'hvr-bob'} src={full_black_trans_nopadding_1}/><img src={full_black_trans_nopadding_2}/></div></Link>)
+						return(<div className="row" style={{maxWidth:'100%', margin:'auto'}}>
+							<div className="col-3" style={{padding:"0"}}>
+								<img src={full_black_trans_nopadding_1}/>
+							</div>
+							<div className="col" style={{padding:"0"}}>
+								<img src={full_black_trans_nopadding_2} style={{padding:"0.5vh 0"}}/>
+							</div>
+						</div>)
 					}
 				}
 				else{
