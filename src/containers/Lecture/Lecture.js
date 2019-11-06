@@ -309,14 +309,7 @@ class Lecture extends Component{
 												<p>Unduh</p>
 												<div>
 													<IconButton style={{color:'#E22819', padding:'0.25rem'}} onClick={this.downloadPDF}>
-														<FaFilePdf style={{margin:'auto'}}>
-															{/* <PDFDownloadLink document={<PDFQuizzes courseName={this.state.selected_course.course_name} lecture={this.state.selected_lecture} show_correct_answer={this.state.show_correct_answer} show_my_answer={this.state.show_my_answer}/>} fileName="filename.pdf">
-																{({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
-															</PDFDownloadLink> */}
-														</FaFilePdf>
-													</IconButton> 
-													<IconButton style={{color:'#4889FA', padding:'0.25rem'}}>
-														<FaFileWord style={{margin:'auto'}}/>
+														<FaFilePdf style={{margin:'auto'}}/>
 													</IconButton>
 												</div>
 											</div>
