@@ -10,6 +10,8 @@ import { FaFilePdf, FaFileWord } from "react-icons/fa";
 import Logo from '../Logo/Logo';
 import Timer from '../Timer/Timer';
 import { socket } from '../Dashboard/StudentDashboard';
+import {PDFViewer, PDFDownloadLink, pdf} from '@react-pdf/renderer';
+import PDFQuizzes from './PDFQuizzes';
 
 class Lecture extends Component{
 	constructor(props){
@@ -35,6 +37,7 @@ class Lecture extends Component{
 		this.toggleNew = this.toggleNew.bind(this);
 		this.newQuiz = this.newQuiz.bind(this);
 		this.setShowMyAnswer = this.setShowMyAnswer.bind(this);
+		this.downloadPDF = this.downloadPDF.bind(this);
 	}
 
 	findSelected(id, list, type){
@@ -230,7 +233,7 @@ class Lecture extends Component{
 		}
 	}
     makeQuizzes(){
-    	var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
+		var quizzes = this.state.live ? this.state.live_quizzes : this.state.selected_lecture.quizzes
     	var components = [];
     	for (let i=0; i<quizzes.length; i++){
     		components.push(<Quiz course_id={this.state.selected_course._id} lecture_id={this.state.selected_lecture.id} quiz={quizzes[i]} quiz_number={i+1} live={this.state.live} show_my_answer={this.state.show_my_answer} show_correct_answer={this.state.show_correct_answer} setShowMyAnswer={this.setShowMyAnswer}/>)
@@ -257,7 +260,19 @@ class Lecture extends Component{
   	newQuiz(){
   		window.scrollTo(0,document.body.scrollHeight);
   		this.toggleNew();
-  	}
+	}
+	downloadPDF(){
+		var date = this.state.selected_lecture.date
+		var file = (<PDFQuizzes courseName={this.state.selected_course.course_name} lecture={this.state.selected_lecture} show_correct_answer={this.state.show_correct_answer} show_my_answer={this.state.show_my_answer}/>);
+		pdf(file).toBlob().then(blob =>{
+			let url = window.URL.createObjectURL(blob);
+			let a = document.createElement('a');
+			a.href = url;
+			a.download = "Sesi " + this.state.selected_lecture.date;
+			a.click();
+		});
+		
+	}  
 	render(){
 		if (!this.state.isLoading){
 			return(
@@ -290,7 +305,21 @@ class Lecture extends Component{
 										<div className='popup'>
 											<div className='popup-options'><p>Jawaban Anda</p><Checkbox checked={this.state.show_my_answer} onChange={this.handleChange('show_my_answer')} style={{padding:'0px', color:'black'}}/></div>
 											<div className='popup-options'><p>Jawaban Benar</p><Checkbox checked={this.state.show_correct_answer} onChange={this.handleChange('show_correct_answer')} style={{padding:'0px', color:'black'}}/></div>
-											<div className='popup-options'><p>Unduh</p><div><IconButton style={{color:'	#E22819', padding:'0.25rem'}}><FaFilePdf style={{margin:'auto'}}/></IconButton> <IconButton style={{color:'#4889FA', padding:'0.25rem'}}><FaFileWord style={{margin:'auto'}}/></IconButton></div></div>
+											<div className='popup-options'>
+												<p>Unduh</p>
+												<div>
+													<IconButton style={{color:'#E22819', padding:'0.25rem'}} onClick={this.downloadPDF}>
+														<FaFilePdf style={{margin:'auto'}}>
+															{/* <PDFDownloadLink document={<PDFQuizzes courseName={this.state.selected_course.course_name} lecture={this.state.selected_lecture} show_correct_answer={this.state.show_correct_answer} show_my_answer={this.state.show_my_answer}/>} fileName="filename.pdf">
+																{({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
+															</PDFDownloadLink> */}
+														</FaFilePdf>
+													</IconButton> 
+													<IconButton style={{color:'#4889FA', padding:'0.25rem'}}>
+														<FaFileWord style={{margin:'auto'}}/>
+													</IconButton>
+												</div>
+											</div>
 										</div>
 									)}							
 							</Popup>
@@ -300,6 +329,9 @@ class Lecture extends Component{
 						<div className='quizzes'>
 							{this.makeQuizzes()}
 						</div>
+						<PDFViewer>
+							<PDFQuizzes courseName={this.state.selected_course.course_name} lecture={this.state.selected_lecture} show_correct_answer={this.state.show_correct_answer} show_my_answer={this.state.show_my_answer}/>
+						</PDFViewer>
 				    </div>
 				</div>
 			)
@@ -387,4 +419,6 @@ export class Quiz extends Component{
 		)
 	}
 }
+
+
 export default Lecture;
