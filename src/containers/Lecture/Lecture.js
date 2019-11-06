@@ -329,9 +329,6 @@ class Lecture extends Component{
 						<div className='quizzes'>
 							{this.makeQuizzes()}
 						</div>
-						<PDFViewer>
-							<PDFQuizzes courseName={this.state.selected_course.course_name} lecture={this.state.selected_lecture} show_correct_answer={this.state.show_correct_answer} show_my_answer={this.state.show_my_answer}/>
-						</PDFViewer>
 				    </div>
 				</div>
 			)
